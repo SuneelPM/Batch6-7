@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Datatypes</title>
+  </head>
+  <body>
+    <script>
+      // Number datatype
+      let num = 10;
+      console.log(num);
+      console.log(typeof num);
+
+      // String datatype
+      let name = "Virat Kohli";
+      console.log("name: ", name, "Datatype: ", typeof name);
+
+      // Boolean datatype true, false
+      let bool = true;
+      console.log("bool: ", bool, "Datatype: ", typeof bool);
+
+      // Undefined datatype
+      let undefinedVar;
+      console.log(
+        "undefinedVar: ",
+        undefinedVar,
+        "Datatype: ",
+        typeof undefinedVar,
+      );
+
+      // Null datatype
+      let nullVar = null;
+      console.log("nullVar: ", nullVar, "Datatype: ", typeof nullVar);
+
+      // Symbol
+      let sym1 = Symbol("Mahesh");
+      let sym2 = Symbol();
+      console.log("sym1: ", sym1, "Datatype: ", typeof sym1);
+      console.log("sym2: ", sym2, "Datatype: ", typeof sym2);
+      console.log(sym1 == sym2);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,871 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Tuples Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Python Tuples Mastery
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Immutable Sequences Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Packing, Unpacking, and Memory Efficiency.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Basic Unpacking",
+          difficulty: "easy",
+          description:
+            "Given the tuple point = (10, 20), unpack it into variables x and y and print them.",
+          solution: "point = (10, 20)\nx, y = point\nprint(f'x: {x}, y: {y}')",
+        },
+        {
+          id: 2,
+          title: "The Singleton Trap",
+          difficulty: "easy",
+          description:
+            "Create a tuple containing only the number 5. Verify its type is 'tuple' and not 'int'.",
+          solution:
+            "single_item = (5,)\nprint(type(single_item)) # <class 'tuple'>\n# Without the comma, it would just be an integer",
+        },
+        {
+          id: 3,
+          title: "Variable Swap",
+          difficulty: "easy",
+          description:
+            "Swap the values of a = 1 and b = 2 using tuple unpacking (no third variable).",
+          solution: "a, b = 1, 2\na, b = b, a\nprint(f'a: {a}, b: {b}')",
+        },
+        {
+          id: 4,
+          title: "Counting Occurrences",
+          difficulty: "easy",
+          description:
+            "Count how many times 'apple' appears in the tuple ('apple', 'banana', 'apple', 'cherry').",
+          solution:
+            "fruits = ('apple', 'banana', 'apple', 'cherry')\nprint(fruits.count('apple'))",
+        },
+        {
+          id: 5,
+          title: "Finding Index",
+          difficulty: "easy",
+          description:
+            "Find the index of the first occurrence of 10 in (5, 10, 15, 10, 20).",
+          solution: "nums = (5, 10, 15, 10, 20)\nprint(nums.index(10))",
+        },
+        {
+          id: 6,
+          title: "Tuple Concatenation",
+          difficulty: "easy",
+          description:
+            "Join two tuples (1, 2) and (3, 4) to create a new tuple.",
+          solution: "t1 = (1, 2)\nt2 = (3, 4)\nresult = t1 + t2\nprint(result)",
+        },
+        {
+          id: 7,
+          title: "Immutability Proof",
+          difficulty: "easy",
+          description:
+            "Try to change the first element of t = (1, 2, 3) and catch the TypeError.",
+          solution:
+            "t = (1, 2, 3)\ntry:\n    t[0] = 99\nexcept TypeError as e:\n    print(f'Error caught: {e}')",
+        },
+        {
+          id: 8,
+          title: "Extended Unpacking",
+          difficulty: "medium",
+          description:
+            "Given colors = ('red', 'blue', 'green', 'yellow'), unpack the first into 'primary' and the rest into 'others'.",
+          solution:
+            "colors = ('red', 'blue', 'green', 'yellow')\nprimary, *others = colors\nprint(f'Primary: {primary}')\nprint(f'Others: {others}')",
+        },
+        {
+          id: 9,
+          title: "Ignoring Values",
+          difficulty: "medium",
+          description:
+            "Unpack only the first and last items from (1, 2, 3, 4, 5) into 'start' and 'end', ignoring the middle.",
+          solution:
+            "nums = (1, 2, 3, 4, 5)\nstart, *_, end = nums\nprint(f'Start: {start}, End: {end}')",
+        },
+        {
+          id: 10,
+          title: "Nested Unpacking",
+          difficulty: "medium",
+          description:
+            "Unpack 'city' from the nested structure info = ('Alice', (25, 'New York')).",
+          solution:
+            "info = ('Alice', (25, 'New York'))\nname, (age, city) = info\nprint(city)",
+        },
+        {
+          id: 11,
+          title: "Tuple Multiplication",
+          difficulty: "medium",
+          description:
+            "Create a tuple that contains the pattern (0, 1) repeated 5 times.",
+          solution: "pattern = (0, 1) * 5\nprint(pattern)",
+        },
+        {
+          id: 12,
+          title: "Tuple to List Conversion",
+          difficulty: "medium",
+          description:
+            "Convert t = (1, 2, 3) to a list, append 4, then convert it back to a tuple.",
+          solution:
+            "t = (1, 2, 3)\nt_list = list(t)\nt_list.append(4)\nt = tuple(t_list)\nprint(t)",
+        },
+        {
+          id: 13,
+          title: "Namedtuple Basics",
+          difficulty: "medium",
+          description:
+            "Use collections.namedtuple to create a 'Point' type with 'x' and 'y' fields.",
+          solution:
+            "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(10, 20)\nprint(p.x, p.y)",
+        },
+        {
+          id: 14,
+          title: "Sorting a Tuple",
+          difficulty: "medium",
+          description:
+            "Sort the tuple (5, 2, 8, 1) and store the result as a new tuple.",
+          solution:
+            "t = (5, 2, 8, 1)\n# sorted() returns a list, so we cast it back\nsorted_t = tuple(sorted(t))\nprint(sorted_t)",
+        },
+        {
+          id: 15,
+          title: "Returning Multiple Values",
+          difficulty: "medium",
+          description:
+            "Write a function that returns the min and max of a list as a packed tuple.",
+          solution:
+            "def get_stats(numbers):\n    return min(numbers), max(numbers)\n\nresult = get_stats([10, 5, 20, 15])\nprint(result) # (5, 20)",
+        },
+        {
+          id: 16,
+          title: "Unpacking Generator Expressions",
+          difficulty: "hard",
+          description:
+            "Convert a generator that yields squares of 1-3 into a tuple using the constructor.",
+          solution:
+            "squares = tuple(x**2 for x in range(1, 4))\nprint(squares)",
+        },
+        {
+          id: 17,
+          title: "The Mutable-in-Immutable Paradox",
+          difficulty: "hard",
+          description:
+            "Create a tuple containing a list: ([1, 2], 3). Modify the list and explain the result.",
+          solution:
+            "t = ([1, 2], 3)\nt[0].append(3)\nprint(t) # ([1, 2, 3], 3)\n# The tuple is immutable (it stores the reference to the list),\n# but the object it refers to (the list) is mutable.",
+        },
+        {
+          id: 18,
+          title: "Enumerated Tuples",
+          difficulty: "hard",
+          description:
+            "Iterate through ['a', 'b', 'c'] and create a tuple of (index, value) tuples.",
+          solution:
+            "items = ['a', 'b', 'c']\nresult = tuple(enumerate(items))\nprint(result) # ((0, 'a'), (1, 'b'), (2, 'c'))",
+        },
+        {
+          id: 19,
+          title: "Deep Slicing and Step",
+          difficulty: "hard",
+          description:
+            "Reverse a tuple and skip every second item using a single slice operation.",
+          solution: "t = (1, 2, 3, 4, 5, 6)\nprint(t[::-2]) # (6, 4, 2)",
+        },
+        {
+          id: 20,
+          title: "Safe Tuple Unpacking with Default",
+          difficulty: "hard",
+          description:
+            "Write code that unpacks a tuple of unknown length (at least 1) into 'first' and 'rest', where 'rest' is empty if only 1 item exists.",
+          solution:
+            "t = (1,)\nfirst, *rest = t\nprint(f'First: {first}, Rest: {rest}')",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "Tuple Mutability",
+          difficulty: "easy",
+          question: "Can a tuple's elements be changed after creation?",
+          options: [
+            "Yes",
+            "No",
+            "Only if it contains strings",
+            "Only using the update() method",
+          ],
+          answer: "No (Tuples are immutable)",
+        },
+        {
+          id: 2,
+          title: "Tuple Syntax",
+          difficulty: "easy",
+          question: "Which is required to define a tuple with one element?",
+          options: ["(5)", "[5]", "(5,)", "tuple(5)"],
+          answer: "(5,)",
+        },
+        {
+          id: 3,
+          title: "Methods available",
+          difficulty: "easy",
+          question: "Which methods does the tuple class have?",
+          options: [
+            "append, pop",
+            "add, remove",
+            "count, index",
+            "sort, reverse",
+          ],
+          answer: "count, index",
+        },
+        {
+          id: 4,
+          title: "Performance",
+          difficulty: "easy",
+          question: "Compared to lists, tuples are generally...",
+          options: [
+            "Slower",
+            "Faster and more memory efficient",
+            "Same speed",
+            "Larger in memory",
+          ],
+          answer: "Faster and more memory efficient",
+        },
+        {
+          id: 5,
+          title: "Empty Tuple",
+          difficulty: "easy",
+          question: "How do you create an empty tuple?",
+          options: ["()", "tuple()", "{}", "Both A and B"],
+          answer: "Both A and B",
+        },
+        {
+          id: 6,
+          title: "Index Error",
+          difficulty: "easy",
+          question: "What happens if you use t[5] on a tuple of length 3?",
+          options: ["Returns None", "Returns []", "IndexError", "ValueError"],
+          answer: "IndexError",
+        },
+        {
+          id: 7,
+          title: "Unpacking match",
+          difficulty: "easy",
+          question: "What happens if you try x, y = (1, 2, 3)?",
+          options: ["x=1, y=2", "ValueError", "x=1, y=(2,3)", "None"],
+          answer: "ValueError (too many values to unpack)",
+        },
+        {
+          id: 8,
+          title: "Data Integrity",
+          difficulty: "easy",
+          question: "Why use tuples for constant data?",
+          options: [
+            "Syntactic sugar",
+            "Prevents accidental modification",
+            "Forces encryption",
+            "No reason",
+          ],
+          answer: "Prevents accidental modification",
+        },
+        {
+          id: 9,
+          title: "Dictionary Keys",
+          difficulty: "medium",
+          question: "Can a tuple be used as a dictionary key?",
+          options: [
+            "Always",
+            "Never",
+            "Only if all its elements are hashable",
+            "Only if it is empty",
+          ],
+          answer: "Only if all its elements are hashable (immutable)",
+        },
+        {
+          id: 10,
+          title: "Tuple Addition",
+          difficulty: "medium",
+          question: "What is (1, 2) + (3,)?",
+          options: ["(4, 2)", "(1, 2, 3)", "Error", "[1, 2, 3]"],
+          answer: "(1, 2, 3)",
+        },
+        {
+          id: 11,
+          title: "Memory Allocation",
+          difficulty: "medium",
+          question: "Tuples are allocated as...",
+          options: [
+            "Linked lists",
+            "A single block of memory",
+            "Dynamic pointers",
+            "Stacks",
+          ],
+          answer: "A single block of memory",
+        },
+        {
+          id: 12,
+          title: "Hashability",
+          difficulty: "medium",
+          question: "Is ([1], 2) hashable?",
+          options: [
+            "Yes",
+            "No",
+            "Depends on Python version",
+            "Only if cast to string",
+          ],
+          answer: "No (It contains a mutable list)",
+        },
+        {
+          id: 13,
+          title: "Packing",
+          difficulty: "medium",
+          question: "What is result of: x = 1, 2, 3?",
+          options: [
+            "Integer 1",
+            "List [1, 2, 3]",
+            "Tuple (1, 2, 3)",
+            "SyntaxError",
+          ],
+          answer: "Tuple (1, 2, 3) - this is 'implicit' tuple packing",
+        },
+        {
+          id: 14,
+          title: "sorted() result",
+          difficulty: "medium",
+          question: "What does sorted((3, 1, 2)) return?",
+          options: ["(1, 2, 3)", "[1, 2, 3]", "None", "3, 1, 2"],
+          answer: "[1, 2, 3]",
+        },
+        {
+          id: 15,
+          title: "Boolean value",
+          difficulty: "medium",
+          question: "What is bool((0,))?",
+          options: ["True", "False", "None", "Error"],
+          answer: "True (The tuple is not empty)",
+        },
+        {
+          id: 16,
+          title: "Structural vs Semantic",
+          difficulty: "hard",
+          question: "Semantically, tuples are often used like...",
+          options: [
+            "Homogeneous arrays",
+            "Records with fixed positions",
+            "Stacks",
+            "Queues",
+          ],
+          answer: "Records with fixed positions (e.g., coordinates, DB rows)",
+        },
+        {
+          id: 17,
+          title: "Large Tuple memory",
+          difficulty: "hard",
+          question:
+            "Why are tuples more efficient for large numbers of records?",
+          options: [
+            "They use compression",
+            "No over-allocation of overhead space",
+            "They use C-structs",
+            "They don't store indices",
+          ],
+          answer: "No over-allocation of overhead space (unlike lists)",
+        },
+        {
+          id: 18,
+          title: "Interning",
+          difficulty: "hard",
+          question: "Does Python intern empty tuples?",
+          options: [
+            "No",
+            "Yes, they are singleton objects",
+            "Only if named",
+            "Depends on garbage collector",
+          ],
+          answer: "Yes, they are singleton objects",
+        },
+        {
+          id: 19,
+          title: "Namedtuple overhead",
+          difficulty: "hard",
+          question:
+            "How much more memory does a namedtuple use than a regular tuple?",
+          options: [
+            "Twice as much",
+            "Zero (same amount)",
+            "Depends on field names",
+            "10% more",
+          ],
+          answer: "Zero (same amount - they use slots internally)",
+        },
+        {
+          id: 20,
+          title: "Slicing copy",
+          difficulty: "hard",
+          question: "Is t[:] on a tuple a shallow or deep copy?",
+          options: [
+            "Shallow",
+            "Deep",
+            "Neither (it returns the same object)",
+            "Depends on items",
+          ],
+          answer: "Neither (it returns the same object because it's immutable)",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "Tuple vs List",
+          difficulty: "easy",
+          question:
+            "Explain the fundamental difference between a Tuple and a List.",
+          answer:
+            "The primary difference is mutability. Lists are mutable (dynamic arrays), while tuples are immutable (fixed-size). This leads to tuples being faster and usable as dictionary keys.",
+        },
+        {
+          id: 2,
+          title: "When to use Tuples?",
+          difficulty: "easy",
+          question:
+            "Give a real-world scenario for using a tuple instead of a list.",
+          answer:
+            "Use tuples for data that should not change during execution, such as geographical coordinates (latitude, longitude), RGB color values, or database records (rows).",
+        },
+        {
+          id: 3,
+          title: "Packing and Unpacking",
+          difficulty: "easy",
+          question: "What is tuple packing and unpacking?",
+          answer:
+            "Packing is putting multiple values into a single tuple (e.g., `t = 1, 2`). Unpacking is extracting those values back into variables (e.g., `x, y = t`).",
+        },
+        {
+          id: 4,
+          title: "The Comma Requirement",
+          difficulty: "easy",
+          question: "Why is `t = (1)` not a tuple?",
+          answer:
+            "Without a comma, Python interprets parentheses as mathematical grouping. To create a tuple with one element, you must use a trailing comma: `t = (1,)`.",
+        },
+        {
+          id: 5,
+          title: "Memory Efficiency",
+          difficulty: "easy",
+          question: "Why are tuples more memory-efficient than lists?",
+          answer:
+            "Lists must over-allocate memory to allow for efficient appends (O(1) amortized). Since tuples cannot grow, Python allocates exactly the required space.",
+        },
+        {
+          id: 6,
+          title: "Return Values",
+          difficulty: "medium",
+          question: "Why is it common to return tuples from functions?",
+          answer:
+            "It allows a function to return multiple distinct pieces of data simultaneously, which can then be elegantly unpacked by the caller.",
+        },
+        {
+          id: 7,
+          title: "Hashability and Dict Keys",
+          difficulty: "medium",
+          question: "Can a tuple always be a dictionary key?",
+          answer:
+            "No. A tuple can only be a dictionary key if all its elements are themselves hashable (immutable). A tuple containing a list cannot be a key.",
+        },
+        {
+          id: 8,
+          title: "Immutability & Safety",
+          difficulty: "medium",
+          question: "How does immutability benefit code safety?",
+          answer:
+            "It guarantees that once a tuple is passed to a function or stored, its contents cannot be accidentally changed by other parts of the program, preventing side-effect bugs.",
+        },
+        {
+          id: 9,
+          title: "Namedtuples",
+          difficulty: "medium",
+          question: "What is a namedtuple and when should you use it?",
+          answer:
+            "It's a factory function in the `collections` module. Use it when you want the memory efficiency of a tuple but the readability of accessing fields by name (e.g., `car.color` vs `car[1]`).",
+        },
+        {
+          id: 10,
+          title: "Swapping Variables",
+          difficulty: "medium",
+          question: "How does `a, b = b, a` work internally?",
+          answer:
+            "Python first packs `b, a` into a temporary tuple on the stack, then immediately unpacks that tuple into the variables `a` and `b`.",
+        },
+        {
+          id: 11,
+          title: "The *rest syntax",
+          difficulty: "medium",
+          question: "Explain extended iterable unpacking.",
+          answer:
+            "Using the `*` operator during unpacking allows you to capture an arbitrary number of elements into a list (e.g., `first, *middle, last = my_tuple`).",
+        },
+        {
+          id: 12,
+          title: "Nested Mutability",
+          difficulty: "medium",
+          question: "What happens if a tuple contains a list?",
+          answer:
+            "The tuple itself remains immutable—you cannot replace the list object. However, you can modify the contents of the list inside the tuple because the list object itself is mutable.",
+        },
+        {
+          id: 13,
+          title: "Tuple Iteration Speed",
+          difficulty: "medium",
+          question: "Why is iterating over a tuple faster than a list?",
+          answer:
+            "Tuples have less overhead and better cache locality because their elements are stored in a single contiguous block of memory without the possibility of resizing.",
+        },
+        {
+          id: 14,
+          title: "Tuple Conversion",
+          difficulty: "medium",
+          question: "Is it expensive to convert a list to a tuple?",
+          answer:
+            "It is O(n). It requires allocating a new memory block and copying the pointers. It's fine for occasional use but shouldn't be done in a high-frequency loop if not necessary.",
+        },
+        {
+          id: 15,
+          title: "Slicing Behavior",
+          difficulty: "medium",
+          question: "What does `my_tuple[:]` return?",
+          answer:
+            "Unlike a list, where `[:]` creates a new shallow copy, slicing an entire tuple usually returns the exact same object to save memory, as it cannot change anyway.",
+        },
+        {
+          id: 16,
+          title: "Internal Allocation",
+          difficulty: "hard",
+          question: "How does Python optimize small tuple allocation?",
+          answer:
+            "Python maintains a 'free list' for small tuples (usually size 1-20). When these are deleted, they aren't fully freed; they go to the list to be reused for future tuple creations.",
+        },
+        {
+          id: 17,
+          title: "Deepcopy on Tuples",
+          difficulty: "hard",
+          question: "How does `copy.deepcopy()` handle tuples?",
+          answer:
+            "If the tuple contains only immutable objects, deepcopy returns the original tuple. If it contains mutable objects, it creates a new tuple containing deep copies of those objects.",
+        },
+        {
+          id: 18,
+          title: "Hash calculation",
+          difficulty: "hard",
+          question: "When is a tuple's hash calculated?",
+          answer:
+            "It is calculated when needed (like when used as a key). The hash depends on the hashes of all its elements. If an element's hash changes (which it shouldn't for hashables), the tuple's hash becomes invalid.",
+        },
+        {
+          id: 19,
+          title: "Tuples as fixed-length sequences",
+          difficulty: "hard",
+          question: "Why are tuples considered 'structural'?",
+          answer:
+            "In many languages, tuples represent a specific data structure (like a 'struct'), where the index implies the meaning (e.g., index 0 is Name, 1 is Age). Lists are typically homogeneous (all items have same meaning).",
+        },
+        {
+          id: 20,
+          title: "Thread Safety in Tuples",
+          difficulty: "hard",
+          question: "Are tuples more thread-safe than lists?",
+          answer:
+            "Yes. Because they are immutable, multiple threads can read from them simultaneously without any risk of data corruption or needing locks for synchronization during access.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Prep #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

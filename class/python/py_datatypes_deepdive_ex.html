@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pythonic Data Types Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f1f5f9;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #6366f1;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Pythonic Data Types
+        </h1>
+        <p
+          class="text-indigo-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Deep Dive Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Numbers, Advanced Strings, and Boolean Logic Mastery.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Precision Rounding",
+          difficulty: "easy",
+          description:
+            "Given x = 12.34567, print it rounded to 3 decimal places using the round() function.",
+          solution: "x = 12.34567\nprint(round(x, 3))",
+        },
+        {
+          id: 2,
+          title: "Complex Power",
+          difficulty: "easy",
+          description:
+            "Define a complex number z = 2 + 3j and print its value when raised to the power of 2.",
+          solution: "z = 2 + 3j\nprint(z ** 2)",
+        },
+        {
+          id: 3,
+          title: "String Reversal",
+          difficulty: "easy",
+          description:
+            "Use slicing to print the string 'Python' in reverse order.",
+          solution: "s = 'Python'\nprint(s[::-1])",
+        },
+        {
+          id: 4,
+          title: "The Split-Join Combo",
+          difficulty: "easy",
+          description:
+            "Given s = 'apple,banana,cherry', split it into a list and then join it back with a space separator.",
+          solution:
+            "s = 'apple,banana,cherry'\nitems = s.split(',')\nresult = ' '.join(items)\nprint(result)",
+        },
+        {
+          id: 5,
+          title: "Input Cleaning",
+          difficulty: "easy",
+          description:
+            "Take a string '   user_name   ' and remove all leading/trailing whitespace using a string method.",
+          solution:
+            "raw_input = '   user_name   '\nclean_input = raw_input.strip()\nprint(f'|{clean_input}|')",
+        },
+        {
+          id: 6,
+          title: "f-string Arithmetic",
+          difficulty: "easy",
+          description:
+            "Using f-strings, print the result of 15 * 5 directly inside the string: 'Result is 75'.",
+          solution: "a, b = 15, 5\nprint(f'Result is {a * b}')",
+        },
+        {
+          id: 7,
+          title: "Boolean Casting",
+          difficulty: "easy",
+          description:
+            "Print the boolean value of an empty dictionary and a dictionary with one item.",
+          solution:
+            "print(bool({})) # False\nprint(bool({'key': 'val'})) # True",
+        },
+        {
+          id: 8,
+          title: "Slicing Steps",
+          difficulty: "medium",
+          description:
+            "Extract every second character from the string 'Education' starting from the first character.",
+          solution: "s = 'Education'\nprint(s[::2])",
+        },
+        {
+          id: 9,
+          title: "String Replacement",
+          difficulty: "medium",
+          description:
+            "Replace all occurrences of 'no' with 'yes' in the sentence 'no way, no how'.",
+          solution: "s = 'no way, no how'\nprint(s.replace('no', 'yes'))",
+        },
+        {
+          id: 10,
+          title: "Binary to Int",
+          difficulty: "medium",
+          description:
+            "Convert the string '1010' (binary) into a decimal integer using the int() function.",
+          solution: "binary_str = '1010'\nprint(int(binary_str, 2))",
+        },
+        {
+          id: 11,
+          title: "Formatting Percentages",
+          difficulty: "medium",
+          description:
+            "Given score = 0.857, use an f-string to format it as a percentage with one decimal place ('85.7%').",
+          solution: "score = 0.857\nprint(f'{score:.1%}')",
+        },
+        {
+          id: 12,
+          title: "None Truthiness",
+          difficulty: "medium",
+          description:
+            "Write an if-statement that checks if a variable 'data' is None and prints 'No data found' if it is.",
+          solution: "data = None\nif data is None:\n    print('No data found')",
+        },
+        {
+          id: 13,
+          title: "CSV to List of Ints",
+          difficulty: "medium",
+          description:
+            "Convert '1,2,3,4,5' into a list of integers using split() and list comprehension.",
+          solution:
+            "csv = '1,2,3,4,5'\nnums = [int(x) for x in csv.split(',')]\nprint(nums)",
+        },
+        {
+          id: 14,
+          title: "Padding Strings",
+          difficulty: "medium",
+          description:
+            "Use f-strings to pad the string 'Hi' with 5 underscores on both sides ('_____Hi_____').",
+          solution: "text = 'Hi'\nprint(f'{text:_^12}')",
+        },
+        {
+          id: 15,
+          title: "Truthy Logic Gate",
+          difficulty: "medium",
+          description:
+            "Ask for user input. If they press enter without typing, print 'Empty!', otherwise print their input.",
+          solution:
+            "val = input('Enter something: ')\nif not val:\n    print('Empty!')\nelse:\n    print(val)",
+        },
+        {
+          id: 16,
+          title: "Memory Efficiency: bit_length",
+          difficulty: "hard",
+          description:
+            "Find out how many bits are required to represent the integer 1024.",
+          solution: "n = 1024\nprint(n.bit_length())",
+        },
+        {
+          id: 17,
+          title: "Complex Conjugate",
+          difficulty: "hard",
+          description: "Calculate the product of z = 4 + 5j and its conjugate.",
+          solution:
+            "z = 4 + 5j\nresult = z * z.conjugate()\nprint(result.real)",
+        },
+        {
+          id: 18,
+          title: "The .format() Mapping",
+          difficulty: "hard",
+          description:
+            "Use the .format() method to fill a template 'Coords: {lat}, {lon}' using a dictionary mapping.",
+          solution:
+            "coords = {'lat': '40.7N', 'lon': '74.0W'}\nprint('Coords: {lat}, {lon}'.format(**coords))",
+        },
+        {
+          id: 19,
+          title: "Sub-slice Replacement",
+          difficulty: "hard",
+          description:
+            "Take string 'abcdef', replace the middle 'cd' with 'XX' without using .replace().",
+          solution: "s = 'abcdef'\ns = s[:2] + 'XX' + s[4:]\nprint(s)",
+        },
+        {
+          id: 20,
+          title: "Truthy Object Check",
+          difficulty: "hard",
+          description:
+            "Create a list containing several values and filter to only keep Truthy ones.",
+          solution:
+            "items = [0, '', [], None, False, 1, 'Hi']\ntruthy = [x for x in items if x]\nprint(truthy)",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "Numeric result",
+          difficulty: "easy",
+          question: "What is the type of result for 3 / 3?",
+          options: ["int", "float", "complex", "Error"],
+          answer: "float (Division / always returns a float in Python 3)",
+        },
+        {
+          id: 2,
+          title: "Negative Indexing",
+          difficulty: "easy",
+          question: "What does 'Python'[-1] return?",
+          options: ["P", "n", "o", "Error"],
+          answer: "n (Last character)",
+        },
+        {
+          id: 3,
+          title: "Strip functionality",
+          difficulty: "easy",
+          question: "What does ' hello '.strip() return?",
+          options: ["'hello '", "' hello'", "'hello'", "'h e l l o'"],
+          answer: "'hello'",
+        },
+        {
+          id: 4,
+          title: "Boolean 0",
+          difficulty: "easy",
+          question: "What is bool(0.0)?",
+          options: ["True", "False", "None", "Error"],
+          answer: "False",
+        },
+        {
+          id: 5,
+          title: "Slicing start",
+          difficulty: "easy",
+          question: "What is 'abcde'[:2]?",
+          options: ["'abc'", "'ab'", "'cde'", "'a'"],
+          answer: "'ab'",
+        },
+        {
+          id: 6,
+          title: "Complex Syntax",
+          difficulty: "easy",
+          question: "Which is a valid complex number in Python?",
+          options: ["3 + 2i", "3 + 2j", "complex(3, 2j)", "3j + 2i"],
+          answer: "3 + 2j",
+        },
+        {
+          id: 7,
+          title: "Join Error",
+          difficulty: "medium",
+          question: "What happens if you run: '-'.join([1, 2])?",
+          options: ["'1-2'", "TypeError", "'12'", "None"],
+          answer: "TypeError (join requires a list of strings)",
+        },
+        {
+          id: 8,
+          title: "Slicing Step",
+          difficulty: "medium",
+          question: "Result of '123456'[1:4:2]?",
+          options: ["'13'", "'24'", "'234'", "'135'"],
+          answer: "'24' (Index 1 is '2', index 3 is '4')",
+        },
+        {
+          id: 9,
+          title: "f-string escape",
+          difficulty: "medium",
+          question: "How do you display a literal curly brace in an f-string?",
+          options: ["\\{", "{{", "^{", "[{"],
+          answer: "{{",
+        },
+        {
+          id: 10,
+          title: "Replace count",
+          difficulty: "medium",
+          question: "What is 'banana'.replace('a', 'o', 1)?",
+          options: ["'bonono'", "'bonana'", "'banana'", "Error"],
+          answer: "'bonana' (Replaces only the first occurrence)",
+        },
+        {
+          id: 11,
+          title: "Truthy list",
+          difficulty: "medium",
+          question: "Is bool([0]) True or False?",
+          options: ["True", "False", "None", "Error"],
+          answer:
+            "True (A list with elements is truthy, even if the element is 0)",
+        },
+        {
+          id: 12,
+          title: "Split empty",
+          difficulty: "medium",
+          question: "What does 'a b c'.split() return?",
+          options: ["['a', 'b', 'c']", "['a b c']", "('a', 'b', 'c')", "Error"],
+          answer: "['a', 'b', 'c']",
+        },
+        {
+          id: 13,
+          title: "Int base",
+          difficulty: "medium",
+          question: "Result of int('10', 16)?",
+          options: ["10", "16", "2", "Error"],
+          answer: "16 (Base-16 '10' is 16)",
+        },
+        {
+          id: 14,
+          title: "String add",
+          difficulty: "medium",
+          question: "Result of 'A' * 3 + 'B'?",
+          options: ["'AAAB'", "'AB AB AB'", "'A3B'", "Error"],
+          answer: "'AAAB'",
+        },
+        {
+          id: 15,
+          title: "None identity",
+          difficulty: "medium",
+          question: "Best way to check if x is None?",
+          options: ["x == None", "x is None", "if not x", "x.isNone()"],
+          answer: "x is None (Identity check is faster and safer for None)",
+        },
+        {
+          id: 16,
+          title: "Large Ints",
+          difficulty: "hard",
+          question: "Python 3 integers have what property?",
+          options: [
+            "Fixed 64-bit",
+            "32-bit only",
+            "Arbitrary precision",
+            "Float-based",
+          ],
+          answer: "Arbitrary precision (Limited only by memory)",
+        },
+        {
+          id: 17,
+          title: "Float precision",
+          difficulty: "hard",
+          question: "Why is 0.1 + 0.2 == 0.3 False?",
+          options: [
+            "Python bug",
+            "Binary floating point inaccuracy",
+            "Base-10 error",
+            "Integer rounding",
+          ],
+          answer: "Binary floating point inaccuracy",
+        },
+        {
+          id: 18,
+          title: "Format Align",
+          difficulty: "hard",
+          question: "What does '{:>10}'.format('test') do?",
+          options: [
+            "Left align width 10",
+            "Right align width 10",
+            "Center align",
+            "Error",
+          ],
+          answer: "Right align width 10",
+        },
+        {
+          id: 19,
+          title: "Complex phase",
+          difficulty: "hard",
+          question: "Which module is used for complex number math?",
+          options: ["math", "cmath", "complexlib", "numbers"],
+          answer: "cmath",
+        },
+        {
+          id: 20,
+          title: "Bool check",
+          difficulty: "hard",
+          question:
+            "If a class has __len__ returning 0, what is bool(instance)?",
+          options: ["True", "False", "Error", "Depends on __bool__"],
+          answer: "False",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "Memory: Ints",
+          difficulty: "easy",
+          question: "How are small integers (-5 to 256) stored in memory?",
+          answer:
+            "Python interns (caches) these integers. Any variable assigned these values points to the same object in memory to save space.",
+        },
+        {
+          id: 2,
+          title: "String Immutability",
+          difficulty: "easy",
+          question: "Why are strings immutable in Python?",
+          answer:
+            "Immutability allows strings to be used as dictionary keys, enables string interning, and makes them thread-safe.",
+        },
+        {
+          id: 3,
+          title: "Falsy values",
+          difficulty: "easy",
+          question:
+            "List 5 objects that evaluate to False in a boolean context.",
+          answer: "None, False, 0, 0.0, '', [], {}, ().",
+        },
+        {
+          id: 4,
+          title: "f-string speed",
+          difficulty: "easy",
+          question: "Why are f-strings faster than .format()?",
+          answer:
+            "f-strings are evaluated at runtime as expressions rather than being parsed as constant strings with method calls.",
+        },
+        {
+          id: 5,
+          title: "Complex real/imag",
+          difficulty: "easy",
+          question: "How do you access the real part of a complex number z?",
+          answer: "Using z.real. Both .real and .imag return float values.",
+        },
+        {
+          id: 6,
+          title: "Slicing out of bounds",
+          difficulty: "medium",
+          question: "What happens if a slice index is out of range?",
+          answer:
+            "Slicing is forgiving and returns an empty sequence or whatever part is available instead of an IndexError.",
+        },
+        {
+          id: 7,
+          title: "format() vs f-strings",
+          difficulty: "medium",
+          question: "When would you use .format() instead of an f-string?",
+          answer:
+            "When the template string is defined elsewhere (e.g., config) and needs to be filled later dynamically.",
+        },
+        {
+          id: 8,
+          title: "Short-circuiting",
+          difficulty: "medium",
+          question: "What is boolean short-circuiting?",
+          answer:
+            "Logic where the second operand is only evaluated if the first is not sufficient to determine the result.",
+        },
+        {
+          id: 9,
+          title: "The 'is' operator",
+          difficulty: "medium",
+          question:
+            "Why not use 'is' to compare two strings for content equality?",
+          answer:
+            "'is' checks memory address (identity). Use '==' to compare values.",
+        },
+        {
+          id: 10,
+          title: "Split(None) vs Split(' ')",
+          difficulty: "medium",
+          question:
+            "What is the difference between s.split() and s.split(' ')?",
+          answer:
+            "split() groups multiple whitespaces; split(' ') treats every single space as a delimiter.",
+        },
+        {
+          id: 11,
+          title: "Decimal vs Float",
+          difficulty: "medium",
+          question: "When would you use the 'decimal' module over 'float'?",
+          answer:
+            "For financial applications where exact decimal representation is required to avoid rounding errors.",
+        },
+        {
+          id: 12,
+          title: "String join performance",
+          difficulty: "medium",
+          question: "Why is ''.join(list) better than += inside a loop?",
+          answer:
+            "''.join() calculates memory once, while += creates new objects repeatedly (O(n²)).",
+        },
+        {
+          id: 13,
+          title: "Indexing errors",
+          difficulty: "medium",
+          question:
+            "How to safely get the first character of a string that might be empty?",
+          answer: "Use slicing s[:1], which returns '' instead of an error.",
+        },
+        {
+          id: 14,
+          title: "In-place string mods",
+          difficulty: "medium",
+          question: "Can you change one character of a string in Python?",
+          answer: "No. Strings are immutable. You must create a new string.",
+        },
+        {
+          id: 15,
+          title: "Python 2 vs 3: Division",
+          difficulty: "medium",
+          question: "What changed in division from Python 2 to 3?",
+          answer:
+            "In Python 3, 3/2 is 1.5 (true division). In Python 2, it was 1 (floor division).",
+        },
+        {
+          id: 16,
+          title: "Internal: Hashability",
+          difficulty: "hard",
+          question: "Are complex numbers hashable?",
+          answer: "Yes, because they are immutable. They can be used as keys.",
+        },
+        {
+          id: 17,
+          title: "f-string debug",
+          difficulty: "hard",
+          question: "What does f'{var=}' do in Python 3.8+?",
+          answer:
+            "It prints the variable name and its value automatically (useful for debugging).",
+        },
+        {
+          id: 18,
+          title: "is vs ==",
+          difficulty: "hard",
+          question: "Identity vs Equality?",
+          answer:
+            "== checks values; 'is' checks object identity (memory location).",
+        },
+        {
+          id: 19,
+          title: "String encode/decode",
+          difficulty: "hard",
+          question: "Difference between a string and bytes?",
+          answer: "Strings are Unicode text; Bytes are raw 8-bit integers.",
+        },
+        {
+          id: 20,
+          title: "Custom Truthiness",
+          difficulty: "hard",
+          question: "How do you define truthiness for a custom class?",
+          answer: "By implementing __bool__(self) or __len__(self).",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy Snippet
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-indigo-100 rounded-full text-xs font-bold text-indigo-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-indigo-50 border-t border-slate-200">
+                            <p class="text-indigo-900 font-medium">Solution:</p>
+                            <p class="text-indigo-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

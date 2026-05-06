@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conditional Statements</title>
+    <style>
+      body {
+        background-color: darkslategray;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JS Conditional Statements</h1>
+    <script>
+      let age = 19; //Number(prompt("Enter your age"));
+
+      // if
+
+      if (age > 0) {
+        console.log("You are alive");
+      }
+
+      // if else
+
+      if (age >= 18) {
+        console.log("You are eligible to vote");
+      } else {
+        console.log("You are not eligible to vote");
+      }
+
+      // if else if else
+      // 18+ you can buy cigarettes
+      // 21 + you can buy alcohol
+
+      if (age >= 21) {
+        console.log("You are eligible to buy both tobacco and alcohol");
+      } else if (age < 21 && age >= 18) {
+        console.log("you are eligible to buy only tobacco but not alcohol");
+      } else {
+        console.log("You are eligible to buy neither tobacco nor alcohol");
+      }
+
+      // grade A - >=90 - 100
+      // grade B - >=80 - <90
+      // grade C - >=70 - <80
+      // grade D - >=40 - <70
+      // grade F - >=0 - <40
+
+      let marks = Number(prompt("Enter your %"));
+
+      if (marks <= 100 && marks >= 90) {
+        console.log("Grade: A");
+      } else if (marks < 90 && marks >= 80) {
+        console.log("Grade: B");
+      } else if (marks < 80 && marks >= 70) {
+        console.log("Grade: C");
+      } else if (marks < 70 && marks >= 40) {
+        console.log("Grade: D");
+      } else if (marks < 40 && marks >= 0) {
+        console.log("Grade: F");
+      } else {
+        console.log("Please enter a valid % of marks between 0 to 100");
+      }
+
+      // a student is preparing for UPSC exam, we need to find the eligibility of the student based on
+      // category and age -> no of attempts
+
+      // Minimum Age: 21 years.
+      // General/EWS: 32 years (6 attempts).
+      // OBC (Non-Creamy Layer): 35 years (9 attempts).
+      // SC/ST: 37 years (Unlimited attempts).
+      // Persons with Benchmark Disabilities (PwBD): 42 years.
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Strings</title>
+  </head>
+  <body>
+    <h1>JS Strings</h1>
+    <script>
+      let firstName = "Mahesh";
+      let lastName = "Gattamaneni";
+      let age = 50;
+      let fullName = firstName + lastName;
+
+      // regular string concatenation
+      let description1 =
+        'my name is "' +
+        firstName +
+        " " +
+        lastName +
+        '". My age is ' +
+        '"' +
+        age +
+        '"' +
+        ".";
+      // "My 'name' is '" + firstName + "'. \n" + "My age is " + age + ".";
+      // template literal - string construction or concatenation
+
+      let description2 = `My name is "${firstName}" ${lastName}. \nMy age is ${age}.`;
+
+      console.log(firstName, lastName);
+      console.log(fullName);
+      console.log(description1);
+      console.log(description2);
+
+      console.log(firstName + age);
+      console.log(typeof (age + firstName));
+
+      // JavaScript's power is "unlimited"!
+
+      let js1 = 'Javascript\'s power is "unlimited"!';
+      let js2 = `Javascript\'s power is "unlimited"!`;
+      console.log(js1 + "\n" + js2);
+
+      // Welcome, Guest! Today is Wednesday.
+      let username = "Guest";
+      let weekday = "Wednesday";
+      let greeting = `Welcome, ${username}! Today is ${weekday}.`;
+
+      console.log(greeting);
+
+      (true && true) || true;
+      (true && true) || false;
+      (true && false) || false;
+      (false && false) || false;
+      (true && false) || true;
+      (false && false) || true;
+      (false && true) || true;
+      (false && true) || false;
+
+      (!true && true) || true;
+
+      !true || (false && true);
+
+      !false || (true && false);
+
+      (false && true) || (!true && true) || (false && !false);
+    </script>
+  </body>
+</html>

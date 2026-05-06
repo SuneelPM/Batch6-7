@@ -1,0 +1,1682 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 6 — Workflows & Best Practices</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #0f172a;
+        --secondary-bg: #1e293b;
+        --accent-bg: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --accent-orange: #fb923c;
+        --accent-red: #f87171;
+        --border-color: #334155;
+        --max-width: 90%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .breadcrumb {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--accent-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .breadcrumb a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .goal {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .goal p {
+        font-size: 1.125rem;
+        color: var(--accent-green);
+        font-weight: 600;
+      }
+
+      .toc {
+        background: var(--accent-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .toc h2 {
+        font-size: 1.5rem;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+      }
+
+      .toc ol {
+        padding-left: 1.5rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .toc a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-cyan);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent-orange);
+        margin: 2rem 0 1rem 0;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-green);
+        margin: 1.5rem 0 0.5rem 0;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .ascii-diagram {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      .highlight {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-orange);
+      }
+
+      .highlight p {
+        font-style: italic;
+        color: var(--text-primary);
+      }
+
+      .use-case {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-bg) 0%,
+          var(--accent-bg) 100%
+        );
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
+      }
+
+      .use-case p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .code-block {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.875rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+      }
+
+      .code-block .comment {
+        color: var(--text-muted);
+      }
+
+      .code-block .output {
+        color: var(--accent-green);
+      }
+
+      .code-block .diff {
+        color: var(--accent-red);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--secondary-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--accent-bg);
+        font-weight: 600;
+        color: var(--accent-cyan);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: var(--text-secondary);
+      }
+
+      tbody tr:hover {
+        background: var(--accent-bg);
+      }
+
+      .command {
+        font-family: "JetBrains Mono", monospace;
+        background: #020617;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        color: var(--accent-cyan);
+        font-weight: 500;
+      }
+
+      .step {
+        background: var(--accent-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .step h4 {
+        color: var(--accent-green);
+        margin-bottom: 0.5rem;
+      }
+
+      .step p {
+        color: var(--text-secondary);
+      }
+
+      .warning {
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid var(--accent-red);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .warning p {
+        color: var(--accent-red);
+        font-weight: 500;
+      }
+
+      .summary {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .summary h2 {
+        color: var(--accent-orange);
+      }
+
+      .summary p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .toc {
+          padding: 1.5rem;
+        }
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
+        }
+
+        .code-block {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumb">
+        <p>
+          ←
+          <a href="day05_rewriting_undoing_history.html"
+            >Day 5 — Rewriting History & Undoing Things</a
+          >
+          | <a href="index.html">Index</a> |
+          <a href="day07_practice_project.html"
+            >Day 7 — Practice Project & Review</a
+          >
+          →
+        </p>
+      </nav>
+
+      <header>
+        <h1>Git Learning Curriculum</h1>
+        <p class="subtitle">Day 6 — Workflows & Best Practices</p>
+      </header>
+
+      <div class="goal">
+        <p>
+          <strong>Goal:</strong> Zoom out from individual commands and learn how
+          real teams use Git at scale — the workflows, conventions, and
+          guardrails that make collaboration smooth and predictable.
+        </p>
+      </div>
+
+      <nav class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+          <li><a href="#1-why-workflows-matter">Why Workflows Matter</a></li>
+          <li><a href="#2-git-flow">Git Flow</a></li>
+          <li><a href="#3-github-flow">GitHub Flow</a></li>
+          <li>
+            <a href="#4-trunk-based-development">Trunk-Based Development</a>
+          </li>
+          <li>
+            <a href="#5-choosing-the-right-workflow"
+              >Choosing the Right Workflow</a
+            >
+          </li>
+          <li><a href="#6-writing-a-gitignore">Writing a .gitignore</a></li>
+          <li>
+            <a href="#7-tagging-releases--git-tag"
+              >Tagging Releases — git tag</a
+            >
+          </li>
+          <li>
+            <a href="#8-branch-protection-rules">Branch Protection Rules</a>
+          </li>
+          <li><a href="#9-git-hooks">Git Hooks</a></li>
+          <li><a href="#10-team-best-practices">Team Best Practices</a></li>
+          <li>
+            <a href="#11-day-6-hands-on-exercise">Day 6 Hands-On Exercise</a>
+          </li>
+          <li><a href="#12-key-commands-summary">Key Commands Summary</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <section id="1-why-workflows-matter">
+          <h2>1. Why Workflows Matter</h2>
+          <p>
+            Knowing individual Git commands is like knowing how to swing a
+            hammer. A <strong>workflow</strong> is the blueprint — it tells you
+            <em>when</em>, <em>where</em>, and <em>how</em> to use those
+            commands so that a team of 2, 20, or 200 developers can work on the
+            same codebase without chaos.
+          </p>
+
+          <p>Without an agreed workflow, teams end up with:</p>
+          <ul>
+            <li>Broken <code>main</code> branches that block everyone</li>
+            <li>
+              Mysterious bugs that are impossible to trace back to a single
+              change
+            </li>
+            <li>Merge conflicts that take hours to untangle</li>
+            <li>No clear process for hotfixing a production emergency</li>
+            <li>Developers stepping on each other's work constantly</li>
+          </ul>
+
+          <p>
+            The three workflows below are the most widely used in the industry.
+            Each makes different tradeoffs between simplicity, control, and
+            release speed.
+          </p>
+        </section>
+
+        <section id="2-git-flow">
+          <h2>2. Git Flow</h2>
+          <p>
+            Git Flow was introduced by Vincent Driessen in 2010 and became the
+            dominant workflow for the next decade. It is structured, strict, and
+            well-suited to software with
+            <strong>scheduled releases</strong> (e.g., versioned desktop apps,
+            libraries, or mobile apps with an app store review cycle).
+          </p>
+
+          <h3>The Branch Structure</h3>
+
+          <div class="ascii-diagram">
+            main ──●────────────────────────────────●────────► │ (only tagged
+            releases) │ │ │ develop ──●──●──●──●──●──●──●──●──●──●──●──●──●──► │
+            │ │ feature/login ─────●──●──●─────┘ │ │ │ feature/payments
+            ──────────────●──●──●─────┘
+          </div>
+
+          <h3>The Five Branch Types</h3>
+
+          <p>
+            <strong>1. <code>main</code></strong
+            ><br />
+            The sacred branch. Contains only production-ready, tagged releases.
+            Nobody commits here directly — ever. Only release and hotfix
+            branches merge into it.
+          </p>
+
+          <p>
+            <strong>2. <code>develop</code></strong
+            ><br />
+            The integration branch. All completed features merge here first.
+            This is what gets tested before a release.
+          </p>
+
+          <p>
+            <strong>3. <code>feature/*</code></strong
+            ><br />
+            One branch per feature. Branches off <code>develop</code>, merges
+            back to <code>develop</code> when done.
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Start a feature</span><br />git switch
+            develop<br />git switch -c feature/user-notifications<br /><br /><span
+              class="comment"
+              ># Work, commit, work, commit...</span
+            ><br /><br /><span class="comment"># Finish the feature</span
+            ><br />git switch develop<br />git merge --no-ff
+            feature/user-notifications<br />git branch -d
+            feature/user-notifications
+          </div>
+
+          <p>
+            <strong>4. <code>release/*</code></strong
+            ><br />
+            Created from <code>develop</code> when a release is being prepared.
+            Only bug fixes go here — no new features. When ready, merges into
+            both <code>main</code> (tagged) and <code>develop</code>.
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Prepare a release</span><br />git switch
+            develop<br />git switch -c release/v2.1.0<br /><br /><span
+              class="comment"
+              ># Fix any last-minute bugs...</span
+            ><br />git commit -m "fix: correct rounding error in invoice
+            totals"<br /><br /><span class="comment"># Finish the release</span
+            ><br />git switch main<br />git merge --no-ff release/v2.1.0<br />git
+            tag -a v2.1.0 -m "Release version 2.1.0"<br /><br />git switch
+            develop<br />git merge --no-ff release/v2.1.0<br /><br />git branch
+            -d release/v2.1.0
+          </div>
+
+          <p>
+            <strong>5. <code>hotfix/*</code></strong
+            ><br />
+            For urgent production bugs. Branches off <code>main</code> (not
+            <code>develop</code>) so you can fix production without pulling in
+            unfinished <code>develop</code> work. Merges back into both
+            <code>main</code> and <code>develop</code>.
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Critical bug in production</span><br />git
+            switch main<br />git switch -c hotfix/v2.1.1-payment-crash<br /><br />git
+            commit -m "fix: prevent null pointer in checkout on Safari"<br /><br /><span
+              class="comment"
+              ># Deploy the fix</span
+            ><br />git switch main<br />git merge --no-ff
+            hotfix/v2.1.1-payment-crash<br />git tag -a v2.1.1 -m "Hotfix:
+            payment crash on Safari"<br /><br />git switch develop<br />git
+            merge --no-ff hotfix/v2.1.1-payment-crash<br /><br />git branch -d
+            hotfix/v2.1.1-payment-crash
+          </div>
+
+          <h3>Git Flow — Pros and Cons</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Very structured — everyone knows the rules</td>
+                  <td>Complex — 5 branch types to manage</td>
+                </tr>
+                <tr>
+                  <td>Clear separation of in-progress vs production</td>
+                  <td>Slow — long-lived branches mean big merge conflicts</td>
+                </tr>
+                <tr>
+                  <td>Great for versioned/scheduled releases</td>
+                  <td>Overkill for teams that deploy continuously</td>
+                </tr>
+                <tr>
+                  <td>Hotfix path is clean and isolated</td>
+                  <td>
+                    <code>develop</code> can fall far behind <code>main</code>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A mobile game studio uses Git Flow for their iOS game. Features
+              are developed over 2-3 week sprints on
+              <code>feature/*</code> branches. When a sprint ends, a
+              <code>release/v3.4.0</code> branch is cut, QA tests on it, and any
+              bugs found are fixed there. When Apple approves the build, it
+              merges to <code>main</code> with a tag and ships. Hotfixes to live
+              issues go through <code>hotfix/*</code> and skip the full release
+              cycle.
+            </p>
+          </div>
+        </section>
+
+        <section id="3-github-flow">
+          <h2>3. GitHub Flow</h2>
+          <p>
+            GitHub Flow is a much simpler, leaner workflow created by GitHub in
+            2011. It has just
+            <strong>one long-lived branch</strong> (<code>main</code>) and
+            short-lived feature branches. Anything on <code>main</code> is
+            considered deployable at all times.
+          </p>
+
+          <h3>The Branch Structure</h3>
+
+          <div class="ascii-diagram">
+            main ──●────────────────────────────●────────────────●──► │ │ │
+            feature-A ──●──●──●── PR ──────────────┘ │ │ feature-B
+            ──────────────────────●──●── PR ──────────────┘
+          </div>
+
+          <h3>The Workflow — 6 Steps</h3>
+
+          <p>
+            <strong>Step 1 — Anything on <code>main</code> is deployable</strong
+            ><br />
+            The first rule. <code>main</code> is never broken. CI passes. Tests
+            pass. If you merge something that breaks <code>main</code>, you fix
+            it immediately — it is the highest priority.
+          </p>
+
+          <p><strong>Step 2 — Create a branch for every change</strong></p>
+
+          <div class="code-block">
+            git switch main<br />git pull<br />git switch -c feature/dark-mode
+          </div>
+
+          <p>
+            Branch names should be short and descriptive. One branch = one
+            logical unit of work.
+          </p>
+
+          <p><strong>Step 3 — Commit to your branch regularly</strong></p>
+
+          <div class="code-block">
+            git add .<br />git commit -m "feat: add dark mode toggle to
+            settings"<br />git push -u origin feature/dark-mode
+          </div>
+
+          <p>
+            Push often — your work is backed up and teammates can see your
+            progress.
+          </p>
+
+          <p>
+            <strong>Step 4 — Open a Pull Request early</strong><br />
+            Don't wait until a feature is 100% done to open a PR. Open it early
+            with a <code>[WIP]</code> label for visibility, feedback, and
+            discussion. When it's ready, remove the label and request a review.
+          </p>
+
+          <p>
+            <strong>Step 5 — Review and discuss</strong><br />
+            Teammates review the code on GitHub. They leave comments, request
+            changes, and approve. The author addresses feedback with new commits
+            — the PR updates automatically.
+          </p>
+
+          <p><strong>Step 6 — Merge and deploy</strong></p>
+
+          <div class="code-block">
+            <span class="comment"
+              ># After merging on GitHub, clean up locally</span
+            ><br />git switch main<br />git pull<br />git branch -d
+            feature/dark-mode<br />git push origin --delete feature/dark-mode
+          </div>
+
+          <h3>GitHub Flow — Pros and Cons</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Simple — one rule: main is always deployable</td>
+                  <td>Requires strong CI/CD and automated testing</td>
+                </tr>
+                <tr>
+                  <td>Fast — no waiting for release windows</td>
+                  <td>No built-in hotfix path (just another branch)</td>
+                </tr>
+                <tr>
+                  <td>Encourages small, frequent PRs</td>
+                  <td>Harder to manage versioned releases</td>
+                </tr>
+                <tr>
+                  <td>Easy to learn and remember</td>
+                  <td>Requires discipline to keep PRs small</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A SaaS startup with 8 developers uses GitHub Flow. Every developer
+              branches off <code>main</code>, opens a PR, and deploys to a
+              preview environment automatically via GitHub Actions. After
+              approval, merging to <code>main</code> triggers an automatic
+              deployment to production. The team ships dozens of times per day
+              with zero scheduled release ceremonies.
+            </p>
+          </div>
+        </section>
+
+        <section id="4-trunk-based-development">
+          <h2>4. Trunk-Based Development</h2>
+          <p>
+            Trunk-Based Development (TBD) takes simplicity even further.
+            Developers commit
+            <strong>directly to <code>main</code></strong> (the "trunk")
+            multiple times per day, keeping changes extremely small. Feature
+            flags are used to hide incomplete features from users even when
+            their code is deployed.
+          </p>
+
+          <h3>The Core Principle</h3>
+
+          <div class="ascii-diagram">
+            main (trunk) ──●──●──●──●──●──●──●──●──●──●──●──► ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑ ↑
+            ↑ ↑ Dev A B A C A B A C B A C (everyone commits directly to main)
+          </div>
+
+          <h3>How It Works</h3>
+
+          <p>
+            Developers work in very small increments — each commit is a tiny,
+            self-contained, always-passing change. Features that take multiple
+            days to build are hidden behind <strong>feature flags</strong> until
+            complete:
+          </p>
+
+          <div class="code-block">
+            <span class="comment">// Feature flag in code</span><br />if
+            (featureFlags.isEnabled('new-checkout-flow', user)) {<br />
+            return &lt;NewCheckout /&gt;;<br />}<br />return &lt;OldCheckout
+            /&gt;;
+          </div>
+
+          <p>
+            When the feature is complete and tested, the flag is flipped on.
+            When it's being retired, the flag (and the old code) is deleted.
+          </p>
+
+          <h3>Short-Lived Feature Branches (TBD Variant)</h3>
+
+          <p>
+            Strict TBD (commit directly to <code>main</code>) is intense. Many
+            teams use a relaxed variant where short-lived feature branches are
+            allowed but must merge within <strong>1-2 days maximum</strong>:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Create a branch</span><br />git switch -c
+            feat/update-avatar-upload<br /><br /><span class="comment"
+              ># Work for a day, keep it small</span
+            ><br />git commit -m "feat: replace file picker with
+            drag-and-drop"<br />git push -u origin feat/update-avatar-upload<br /><br /><span
+              class="comment"
+              ># Open PR, get quick review, merge same day</span
+            ><br /><span class="comment"
+              ># Never let branches live longer than 2 days</span
+            >
+          </div>
+
+          <h3>TBD — Pros and Cons</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pros</th>
+                  <th>Cons</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Fastest possible integration — no long merge conflicts
+                  </td>
+                  <td>Requires mature CI/CD pipeline</td>
+                </tr>
+                <tr>
+                  <td>Used by Google, Meta, Netflix, and Microsoft</td>
+                  <td>Feature flags add code complexity</td>
+                </tr>
+                <tr>
+                  <td>Forces small, reviewable changes</td>
+                  <td>Hard to adopt without team discipline</td>
+                </tr>
+                <tr>
+                  <td>No branch management overhead</td>
+                  <td>Less isolation — bad code reaches main fast</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              Google has over 35,000 engineers all committing to a single
+              monorepo trunk. Every commit is small, tested by automated systems
+              in minutes, and integrated immediately. Feature flags control what
+              users see. This extreme discipline is what lets Google ship
+              reliably at that scale.
+            </p>
+          </div>
+        </section>
+
+        <section id="5-choosing-the-right-workflow">
+          <h2>5. Choosing the Right Workflow</h2>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Factor</th>
+                  <th>Git Flow</th>
+                  <th>GitHub Flow</th>
+                  <th>Trunk-Based Dev</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Team size</td>
+                  <td>Any</td>
+                  <td>Small to medium</td>
+                  <td>Medium to large</td>
+                </tr>
+                <tr>
+                  <td>Release cadence</td>
+                  <td>Scheduled (weekly/monthly)</td>
+                  <td>Continuous</td>
+                  <td>Multiple times per day</td>
+                </tr>
+                <tr>
+                  <td>CI/CD maturity</td>
+                  <td>Low to medium</td>
+                  <td>Medium</td>
+                  <td>High (required)</td>
+                </tr>
+                <tr>
+                  <td>App type</td>
+                  <td>Versioned / mobile / library</td>
+                  <td>Web SaaS</td>
+                  <td>Web SaaS / large systems</td>
+                </tr>
+                <tr>
+                  <td>Branch complexity</td>
+                  <td>High</td>
+                  <td>Low</td>
+                  <td>Very low</td>
+                </tr>
+                <tr>
+                  <td>Learning curve</td>
+                  <td>Steep</td>
+                  <td>Gentle</td>
+                  <td>Moderate</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>Quick guide:</strong></p>
+          <ul>
+            <li>
+              Building a mobile app or library with versioned releases →
+              <strong>Git Flow</strong>
+            </li>
+            <li>
+              Small web team deploying continuously →
+              <strong>GitHub Flow</strong>
+            </li>
+            <li>
+              Large org with strong automation and CI/CD →
+              <strong>Trunk-Based Development</strong>
+            </li>
+            <li>
+              Just starting out or solo →
+              <strong>GitHub Flow</strong> (simplest, most transferable skill)
+            </li>
+          </ul>
+        </section>
+
+        <section id="6-writing-a-gitignore">
+          <h2>6. Writing a .gitignore</h2>
+          <p>
+            A <code>.gitignore</code> file tells Git which files and folders to
+            never track. These are files that shouldn't be in version control —
+            generated files, secrets, dependencies, and OS artifacts.
+          </p>
+
+          <h3>Create a .gitignore</h3>
+
+          <div class="code-block">touch .gitignore</div>
+
+          <h3>Common .gitignore Patterns</h3>
+
+          <div class="code-block">
+            <span class="comment"
+              ># ── Dependencies ──────────────────────────</span
+            ><br />node_modules/<br />vendor/<br />.venv/<br />__pycache__/<br /><br /><span
+              class="comment"
+              ># ── Environment & Secrets ─────────────────</span
+            ><br />.env<br />.env.local<br />.env.*.local<br />*.pem<br />*.key<br />secrets.json<br /><br /><span
+              class="comment"
+              ># ── Build Output ──────────────────────────</span
+            ><br />dist/<br />build/<br />out/<br />.next/<br />target/<br />*.class<br />*.pyc<br /><br /><span
+              class="comment"
+              ># ── Logs ──────────────────────────────────</span
+            ><br />*.log<br />logs/<br />npm-debug.log*<br /><br /><span
+              class="comment"
+              ># ── OS Files ──────────────────────────────</span
+            ><br />.DS_Store <span class="comment"># macOS</span><br />Thumbs.db
+            <span class="comment"># Windows</span><br />desktop.ini
+            <span class="comment"># Windows</span><br /><br /><span
+              class="comment"
+              ># ── IDE & Editor Files ────────────────────</span
+            ><br />.vscode/<br />.idea/<br />*.swp<br />*.swo<br />.vim/<br /><br /><span
+              class="comment"
+              ># ── Testing & Coverage ────────────────────</span
+            ><br />coverage/<br />.nyc_output/<br />*.snap<br /><br /><span
+              class="comment"
+              ># ── Temporary Files ───────────────────────</span
+            ><br />*.tmp<br />*.temp<br />.cache/
+          </div>
+
+          <h3>Pattern Syntax</h3>
+
+          <div class="code-block">
+            <span class="comment"># Ignore a specific file</span
+            ><br />secrets.json<br /><br /><span class="comment"
+              ># Ignore all files with an extension</span
+            ><br />*.log<br /><br /><span class="comment"
+              ># Ignore a directory</span
+            ><br />node_modules/<br /><br /><span class="comment"
+              ># Ignore everywhere in the repo</span
+            ><br />**/.DS_Store<br /><br /><span class="comment"
+              ># Ignore in a specific subdirectory only</span
+            ><br />build/output/<br /><br /><span class="comment"
+              ># Negate (do NOT ignore this, even if a pattern above
+              matches)</span
+            ><br />!important.log<br /><br /><span class="comment"
+              ># Ignore files starting with a dot</span
+            ><br />.*<br /><br /><span class="comment"
+              ># Wildcard — matches any characters except /</span
+            ><br />config.*.json
+          </div>
+
+          <h3>Start from a Template</h3>
+
+          <p>
+            <a href="https://github.com/github/gitignore" target="_blank"
+              >https://github.com/github/gitignore</a
+            >
+            has templates for every language and framework. You can also
+            generate one at
+            <a href="https://gitignore.io" target="_blank"
+              >https://gitignore.io</a
+            >.
+          </p>
+
+          <h3>If You Already Committed Something That Should Be Ignored</h3>
+
+          <div class="code-block">
+            <span class="comment"
+              ># Remove the file from Git tracking but keep it on disk</span
+            ><br />git rm --cached .env<br /><br /><span class="comment"
+              ># Add the file to .gitignore</span
+            ><br />echo ".env" >> .gitignore<br /><br /><span class="comment"
+              ># Commit the removal</span
+            ><br />git add .gitignore<br />git commit -m "chore: stop tracking
+            .env file"
+          </div>
+
+          <div class="warning">
+            <p>
+              <strong>⚠️ If you accidentally committed secrets</strong>, simply
+              removing them from tracking is not enough — they still exist in
+              the commit history. You should rotate the secrets immediately
+              (generate new API keys, passwords, etc.) and consider using
+              <code>git filter-repo</code> to scrub the history.
+            </p>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A developer accidentally pushes their AWS credentials in a
+              <code>.env</code> file to a public GitHub repository. Within
+              minutes, automated bots scan GitHub for exposed keys and use them.
+              AWS shuts down the account after detecting thousands of dollars in
+              fraudulent charges. A proper <code>.gitignore</code> would have
+              prevented this entirely. This scenario happens hundreds of times
+              per day across GitHub.
+            </p>
+          </div>
+        </section>
+
+        <section id="7-tagging-releases--git-tag">
+          <h2>7. Tagging Releases — <span class="command">git tag</span></h2>
+          <p>
+            Tags are named pointers to specific commits — most commonly used to
+            mark <strong>release versions</strong>. Unlike branches, tags don't
+            move as new commits are added.
+          </p>
+
+          <h3>Two Types of Tags</h3>
+
+          <p>
+            <strong>Lightweight tags</strong> — just a pointer, no metadata:
+          </p>
+
+          <div class="code-block">git tag v1.0.0</div>
+
+          <p>
+            <strong>Annotated tags</strong> — include a message, author, date,
+            and can be signed. These are the professional standard for releases:
+          </p>
+
+          <div class="code-block">
+            git tag -a v1.0.0 -m "Release version 1.0.0 — initial public
+            release"
+          </div>
+
+          <h3>Tag a Specific Past Commit</h3>
+
+          <div class="code-block">
+            git tag -a v0.9.0 a1b2c3d -m "Beta release"
+          </div>
+
+          <h3>List All Tags</h3>
+
+          <div class="code-block">git tag</div>
+
+          <h3>Filter by Pattern</h3>
+
+          <div class="code-block">git tag -l "v1.*"</div>
+
+          <h3>View Tag Details</h3>
+
+          <div class="code-block">git show v1.0.0</div>
+
+          <h3>Push Tags to Remote</h3>
+
+          <p>
+            Tags are <strong>not pushed automatically</strong> with
+            <code>git push</code>. You must push them explicitly:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Push a specific tag</span><br />git push
+            origin v1.0.0<br /><br /><span class="comment"
+              ># Push all tags at once</span
+            ><br />git push origin --tags
+          </div>
+
+          <h3>Checkout a Tag (Detached HEAD)</h3>
+
+          <div class="code-block">git checkout v1.0.0</div>
+
+          <p>
+            This puts you in "detached HEAD" state — you can look around but any
+            commits you make won't belong to a branch. To make changes, create a
+            branch first:
+          </p>
+
+          <div class="code-block">git switch -c hotfix-from-v1.0.0</div>
+
+          <h3>Delete a Tag</h3>
+
+          <div class="code-block">
+            <span class="comment"># Delete locally</span><br />git tag -d
+            v1.0.0<br /><br /><span class="comment"># Delete from remote</span
+            ><br />git push origin --delete v1.0.0
+          </div>
+
+          <h3>Semantic Versioning (SemVer)</h3>
+
+          <p>
+            Most projects tag releases using semantic versioning:
+            <code>vMAJOR.MINOR.PATCH</code>
+          </p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>When to Increment</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>MAJOR</td>
+                  <td>Breaking changes — incompatible API changes</td>
+                  <td><code>v1.0.0</code> → <code>v2.0.0</code></td>
+                </tr>
+                <tr>
+                  <td>MINOR</td>
+                  <td>New features — backward compatible</td>
+                  <td><code>v1.0.0</code> → <code>v1.1.0</code></td>
+                </tr>
+                <tr>
+                  <td>PATCH</td>
+                  <td>Bug fixes — backward compatible</td>
+                  <td><code>v1.0.0</code> → <code>v1.0.1</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              An npm package maintainer tags every release with an annotated
+              SemVer tag and pushes it to GitHub. GitHub Actions automatically
+              detects the new tag, runs tests, builds the package, and publishes
+              it to npm — all without any manual steps. The tag is the trigger
+              for the entire release pipeline.
+            </p>
+          </div>
+        </section>
+
+        <section id="8-branch-protection-rules">
+          <h2>8. Branch Protection Rules</h2>
+          <p>
+            Branch protection rules prevent accidental or unauthorized changes
+            to important branches. They're configured on GitHub (or
+            GitLab/Bitbucket) at the repository level.
+          </p>
+
+          <h3>Common Protection Rules for <code>main</code></h3>
+
+          <p>
+            <strong>Require pull request reviews before merging</strong><br />
+            Nobody can merge to <code>main</code> without at least 1 (or 2)
+            approvals. Prevents solo developers from self-merging unreviewed
+            code.
+          </p>
+
+          <p>
+            <strong>Require status checks to pass</strong><br />
+            CI must pass (tests, linting, build) before a PR can be merged.
+            Prevents broken code from reaching <code>main</code>.
+          </p>
+
+          <p>
+            <strong>Require branches to be up to date</strong><br />
+            The PR branch must include the latest <code>main</code> commits
+            before merging. Prevents merge-before-test scenarios.
+          </p>
+
+          <p>
+            <strong>Restrict who can push to <code>main</code></strong
+            ><br />
+            Only admins or certain teams can push directly. Enforces the PR
+            workflow for everyone else.
+          </p>
+
+          <p>
+            <strong>Require signed commits</strong><br />
+            All commits must be cryptographically signed with a GPG key.
+            Verifies commit authorship for security-sensitive projects.
+          </p>
+
+          <h3>Setting Up on GitHub</h3>
+
+          <p>
+            Go to your repository → Settings → Branches → Add branch protection
+            rule → type <code>main</code> → select your desired rules → Save.
+          </p>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A fintech startup requires 2 reviewer approvals AND passing CI
+              before any code reaches <code>main</code>. When a developer tries
+              to push directly to <code>main</code> out of habit, GitHub rejects
+              the push instantly:
+              <code>"remote: error: GH006: Protected branch update failed"</code
+              >. The rules enforce the team's process automatically — no manager
+              needed to police it.
+            </p>
+          </div>
+        </section>
+
+        <section id="9-git-hooks">
+          <h2>9. Git Hooks</h2>
+          <p>
+            Git hooks are scripts that Git runs automatically at specific points
+            in the workflow — before a commit, after a push, before a merge,
+            etc. They live in the <code>.git/hooks/</code> directory.
+          </p>
+
+          <h3>Common Hooks</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Hook</th>
+                  <th>When It Runs</th>
+                  <th>Common Uses</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>pre-commit</code></td>
+                  <td>Before a commit is created</td>
+                  <td>Run linter, formatter, tests</td>
+                </tr>
+                <tr>
+                  <td><code>commit-msg</code></td>
+                  <td>After commit message is written</td>
+                  <td>Enforce message format</td>
+                </tr>
+                <tr>
+                  <td><code>pre-push</code></td>
+                  <td>Before pushing to remote</td>
+                  <td>Run full test suite</td>
+                </tr>
+                <tr>
+                  <td><code>post-merge</code></td>
+                  <td>After a merge completes</td>
+                  <td>Run <code>npm install</code> if package.json changed</td>
+                </tr>
+                <tr>
+                  <td><code>prepare-commit-msg</code></td>
+                  <td>Before commit message editor opens</td>
+                  <td>Pre-populate message with branch name</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Create a pre-commit Hook</h3>
+
+          <div class="code-block">
+            <span class="comment"># Navigate to hooks directory</span><br />cat
+            > .git/hooks/pre-commit << 'EOF'<br />#!/bin/sh<br />echo "Running
+            linter before commit..."<br />npm run lint<br />if [ $? -ne 0 ];
+            then<br />
+            echo "Lint failed. Commit aborted."<br />
+            exit 1<br />fi<br />EOF<br /><br /><span class="comment"
+              ># Make it executable</span
+            ><br />chmod +x .git/hooks/pre-commit
+          </div>
+
+          <p>
+            Now every time you try to commit, the linter runs first. If it
+            fails, the commit is blocked.
+          </p>
+
+          <h3>Enforce Commit Message Format</h3>
+
+          <div class="code-block">
+            cat > .git/hooks/commit-msg << 'EOF'<br />#!/bin/sh<br />commit_msg=$(cat
+            "$1")<br />pattern="^(feat|fix|docs|style|refactor|test|chore)(\(.+\))?:
+            .{1,72}$"<br /><br />if ! echo "$commit_msg" | grep -qE "$pattern";
+            then<br />
+            echo "ERROR: Commit message does not follow Conventional Commits
+            format."<br />
+            echo "Example: feat: add user authentication"<br />
+            exit 1<br />fi<br />EOF<br /><br />chmod +x .git/hooks/commit-msg
+          </div>
+
+          <h3>Sharing Hooks with Your Team</h3>
+
+          <p>
+            The <code>.git/hooks/</code> folder is not committed to the
+            repository — so hooks aren't shared automatically. Solutions:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"
+              ># Option 1 — Store hooks in a tracked folder and symlink</span
+            ><br />mkdir .githooks<br /><span class="comment"
+              ># Move hooks there, then configure Git to use them:</span
+            ><br />git config core.hooksPath .githooks<br /><br /><span
+              class="comment"
+              ># Option 2 — Use a tool like Husky (for Node.js projects)</span
+            ><br />npm install --save-dev husky<br />npx husky init
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A team uses a <code>pre-commit</code> hook via Husky to run
+              Prettier (code formatter) automatically. Every commit is
+              automatically formatted consistently, regardless of each
+              developer's editor settings. Code reviews never waste time on
+              formatting debates — the hook enforces it for everyone.
+            </p>
+          </div>
+        </section>
+
+        <section id="10-team-best-practices">
+          <h2>10. Team Best Practices</h2>
+          <p>
+            These are the habits that separate junior developers from senior
+            ones when it comes to Git.
+          </p>
+
+          <h3>Commit Discipline</h3>
+
+          <ul>
+            <li>
+              <strong>Commit early, commit often.</strong> Small commits are
+              easy to review, easy to revert, and easy to understand.
+            </li>
+            <li>
+              <strong>One commit = one logical change.</strong> Don't mix a bug
+              fix with a refactor in the same commit.
+            </li>
+            <li>
+              <strong>Never commit broken code.</strong> Every commit should
+              leave the project in a working state.
+            </li>
+            <li>
+              <strong>Write for your future self.</strong> If your commit
+              message doesn't explain <em>why</em>, it's not complete.
+            </li>
+          </ul>
+
+          <h3>Branch Discipline</h3>
+
+          <ul>
+            <li>
+              <strong>Keep branches short-lived.</strong> The longer a branch
+              lives, the bigger the merge conflict. Aim for hours or days, not
+              weeks.
+            </li>
+            <li>
+              <strong>Pull or rebase from <code>main</code> regularly.</strong>
+              Stay in sync to avoid drift and large conflicts.
+            </li>
+            <li>
+              <strong>Delete merged branches.</strong> Stale branches are
+              clutter. Clean up as you go.
+            </li>
+            <li>
+              <strong>Never force-push to shared branches.</strong> Only
+              force-push to your own personal branches.
+            </li>
+          </ul>
+
+          <h3>Pull Request Best Practices</h3>
+
+          <ul>
+            <li>
+              <strong>Keep PRs small and focused.</strong> A PR with 50 lines of
+              changes gets reviewed faster and better than a 500-line PR.
+            </li>
+            <li>
+              <strong>Write a useful PR description.</strong> Explain what, why,
+              and how to test. Include screenshots for UI changes.
+            </li>
+            <li>
+              <strong>Review your own PR first.</strong> Go through the diff on
+              GitHub before requesting review — catch the obvious stuff
+              yourself.
+            </li>
+            <li>
+              <strong>Respond to all review comments.</strong> Even if you
+              disagree, acknowledge and explain your decision.
+            </li>
+            <li>
+              <strong>Don't merge your own PRs.</strong> Have at least one other
+              person review and approve.
+            </li>
+          </ul>
+
+          <h3>Repository Hygiene</h3>
+
+          <ul>
+            <li>
+              <strong>Tag every release.</strong> Always. Even if it's just an
+              internal tool.
+            </li>
+            <li>
+              <strong>Keep <code>.gitignore</code> updated.</strong> Every new
+              tool or framework you add probably generates files that should be
+              ignored.
+            </li>
+            <li>
+              <strong>Document your workflow in the README.</strong> New team
+              members shouldn't have to guess which branching strategy the team
+              uses.
+            </li>
+            <li>
+              <strong>Use a <code>CHANGELOG.md</code>.</strong> Track what
+              changed between versions in human-readable form.
+            </li>
+          </ul>
+
+          <div class="code-block">
+            <span class="comment"># Changelog</span><br /><br />## [2.1.0] -
+            2025-02-17<br />### Added<br />- Dark mode support<br />- Export to
+            PDF feature<br /><br />### Fixed<br />- Crash on empty search
+            results<br />- Incorrect date formatting in German locale<br /><br />##
+            [2.0.1] - 2025-02-03<br />### Fixed<br />- Payment rounding error on
+            invoices over $10,000
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A senior engineer at a startup introduced a rule: PRs must have
+              fewer than 400 lines changed. Initially developers complained.
+              Within a month, code review time dropped from an average of 3 days
+              to same-day. Bugs that reached production dropped by 40%. Small,
+              focused PRs are one of the highest-leverage practices a team can
+              adopt.
+            </p>
+          </div>
+        </section>
+
+        <section id="11-day-6-hands-on-exercise">
+          <h2>11. Day 6 Hands-On Exercise</h2>
+          <p>Simulate a complete team workflow solo using GitHub Flow.</p>
+
+          <div class="step">
+            <h4>Step 1 — Set Up Branch Protection on GitHub</h4>
+            <ol>
+              <li>Go to your <code>learning-git</code> repository on GitHub</li>
+              <li>
+                Navigate to Settings → Branches → Add branch protection rule
+              </li>
+              <li>Set branch name pattern to <code>main</code></li>
+              <li>Enable "Require a pull request before merging"</li>
+              <li>
+                Enable "Require status checks to pass" (if you have CI set up)
+              </li>
+              <li>Save</li>
+            </ol>
+          </div>
+
+          <div class="step">
+            <h4>Step 2 — Create a Proper .gitignore</h4>
+            <div class="code-block">
+              cd ~/Desktop/learning-git<br /><br />cat > .gitignore << 'EOF'<br /><span
+                class="comment"
+                ># Dependencies</span
+              ><br />node_modules/<br />.venv/<br /><br /><span class="comment"
+                ># Environment</span
+              ><br />.env<br />.env.local<br />*.pem<br /><br /><span
+                class="comment"
+                ># Build output</span
+              ><br />dist/<br />build/<br /><br /><span class="comment"
+                ># OS files</span
+              ><br />.DS_Store<br />Thumbs.db<br /><br /><span class="comment"
+                ># Logs</span
+              ><br />*.log<br /><br /><span class="comment"># IDE</span
+              ><br />.vscode/<br />.idea/<br />EOF<br /><br />git add
+              .gitignore<br />git commit -m "chore: add comprehensive
+              .gitignore"<br />git push
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 3 — Simulate GitHub Flow End-to-End</h4>
+            <div class="code-block">
+              <span class="comment"># Step 1 — Start from clean main</span
+              ><br />git switch main<br />git pull<br /><br /><span
+                class="comment"
+                ># Step 2 — Create a feature branch</span
+              ><br />git switch -c feature/add-changelog<br /><br /><span
+                class="comment"
+                ># Step 3 — Do the work</span
+              ><br />cat > CHANGELOG.md << 'EOF'<br /># Changelog<br /><br />##
+              [Unreleased]<br />### Added<br />- Initial project structure<br />-
+              Contributing guide<br />- MIT License<br /><br />## [0.1.0] -
+              2025-02-23<br />### Added<br />- README with project overview<br />EOF<br /><br />git
+              add CHANGELOG.md<br />git commit -m "docs: add changelog file"<br /><br /><span
+                class="comment"
+                ># Step 4 — Push branch to remote</span
+              ><br />git push -u origin feature/add-changelog
+            </div>
+
+            <p>
+              Now go to GitHub and open a Pull Request for this branch. Write a
+              description, then merge it.
+            </p>
+
+            <div class="code-block">
+              <span class="comment"># Step 5 — Clean up after merge</span
+              ><br />git switch main<br />git pull<br />git branch -d
+              feature/add-changelog<br />git push origin --delete
+              feature/add-changelog
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 4 — Tag a Release</h4>
+            <div class="code-block">
+              <span class="comment"
+                ># Make sure you're on main and up to date</span
+              ><br />git switch main<br />git pull<br /><br /><span
+                class="comment"
+                ># Create an annotated release tag</span
+              ><br />git tag -a v0.1.0 -m "Initial release — learning project
+              with README, license, and changelog"<br /><br /><span
+                class="comment"
+                ># View the tag details</span
+              ><br />git show v0.1.0<br /><br /><span class="comment"
+                ># Push the tag to GitHub</span
+              ><br />git push origin v0.1.0
+            </div>
+
+            <p>
+              Go to GitHub → your repo → Tags — your release is now visible with
+              the full message.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4>Step 5 — Set Up a pre-commit Hook</h4>
+            <div class="code-block">
+              <span class="comment"
+                ># Create a simple hook that checks for debug statements</span
+              ><br />cat > .git/hooks/pre-commit << 'EOF'<br />#!/bin/sh<br />echo
+              "Checking for debug statements..."<br /><br />if git diff --cached
+              | grep -E "^\+" | grep -qE
+              "(console\.log|debugger|binding\.pry|dd\(|var_dump)"; then<br />
+              echo ""<br />
+              echo "ERROR: Commit blocked — debug statement detected in staged
+              changes."<br />
+              exit 1<br />fi<br /><br />echo "No debug statements found.
+              Proceeding with commit."<br />exit 0<br />EOF<br /><br />chmod +x
+              .git/hooks/pre-commit<br /><br /><span class="comment"
+                ># Test it — try to commit a console.log</span
+              ><br />echo "console.log('debug');" >> app.js<br />git add
+              app.js<br />git commit -m "test: this should be blocked"<br /><span
+                class="comment"
+                ># The hook should block the commit!</span
+              ><br /><br /><span class="comment"># Clean up</span><br />git
+              restore app.js<br />git restore --staged app.js
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 6 — Review Your Full Project History</h4>
+            <div class="code-block">
+              <span class="comment"># See the full decorated history</span
+              ><br />git log --oneline --graph --all --decorate<br /><br /><span
+                class="comment"
+                ># See all tags</span
+              ><br />git tag<br /><br /><span class="comment"
+                ># See all branches (local + remote)</span
+              ><br />git branch -a<br /><br /><span class="comment"
+                ># See remote tracking status</span
+              ><br />git branch -vv
+            </div>
+          </div>
+
+          <div class="highlight">
+            <p>
+              <strong>✅ What You Should Have After This Exercise:</strong
+              ><br />
+              - Branch protection rules active on your GitHub repository<br />
+              - A committed and pushed <code>.gitignore</code><br />
+              - A completed GitHub Flow cycle — branch, PR, merge, clean up<br />
+              - An annotated release tag pushed to GitHub<br />
+              - A working <code>pre-commit</code> hook that blocks debug
+              statements
+            </p>
+          </div>
+        </section>
+
+        <section id="12-key-commands-summary">
+          <h2>12. Key Commands Summary</h2>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                  <th>Common Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>git tag -a &lt;tag&gt; -m</code></td>
+                  <td>Create an annotated tag</td>
+                  <td><code>git tag -a v1.0.0 -m "Release v1.0.0"</code></td>
+                </tr>
+                <tr>
+                  <td><code>git tag</code></td>
+                  <td>List all tags</td>
+                  <td><code>git tag</code></td>
+                </tr>
+                <tr>
+                  <td><code>git tag -l "v1.*"</code></td>
+                  <td>List tags matching a pattern</td>
+                  <td><code>git tag -l "v2.*"</code></td>
+                </tr>
+                <tr>
+                  <td><code>git show &lt;tag&gt;</code></td>
+                  <td>View tag details</td>
+                  <td><code>git show v1.0.0</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push origin &lt;tag&gt;</code></td>
+                  <td>Push a specific tag to remote</td>
+                  <td><code>git push origin v1.0.0</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push origin --tags</code></td>
+                  <td>Push all tags to remote</td>
+                  <td><code>git push origin --tags</code></td>
+                </tr>
+                <tr>
+                  <td><code>git tag -d &lt;tag&gt;</code></td>
+                  <td>Delete a local tag</td>
+                  <td><code>git tag -d v1.0.0</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push origin --delete &lt;tag&gt;</code></td>
+                  <td>Delete a remote tag</td>
+                  <td><code>git push origin --delete v1.0.0</code></td>
+                </tr>
+                <tr>
+                  <td><code>git rm --cached &lt;file&gt;</code></td>
+                  <td>Stop tracking a file (keep on disk)</td>
+                  <td><code>git rm --cached .env</code></td>
+                </tr>
+                <tr>
+                  <td>
+                    <code>git log --oneline --graph --all --decorate</code>
+                  </td>
+                  <td>Visual decorated history</td>
+                  <td>
+                    <code>git log --oneline --graph --all --decorate</code>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="summary">
+          <h2>Coming Up on Day 7 — Practice Project & Review</h2>
+          <p>
+            Tomorrow you'll put everything together in a comprehensive practice
+            project that simulates real-world Git usage from start to finish.
+          </p>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          ←
+          <a href="day05_rewriting_undoing_history.html"
+            >Day 5 — Rewriting History & Undoing Things</a
+          >
+          | <a href="index.html">Index</a> |
+          <a href="day07_practice_project.html"
+            >Day 7 — Practice Project & Review</a
+          >
+          →
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

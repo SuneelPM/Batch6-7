@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git & Version Control Mastery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <style>
+      /* 1. CORE PRESENTATION ENGINE SETUP */
+      :root {
+        --primary-bg: #0f172a;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --text-main: #f8fafc;
+        --text-dim: #94a3b8;
+        --card-bg: #1e293b;
+        --border-color: #334155;
+        --min-font: 20px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #020617;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: "Inter", sans-serif;
+        color: var(--text-main);
+        padding-top: 50px;
+      }
+
+      /* 2. INTERACTIVE CONTROLS */
+      .controls {
+        position: fixed;
+        bottom: 30px;
+        right: 40px;
+        display: flex;
+        gap: 15px;
+        z-index: 2000; /* Ensure controls are above everything */
+      }
+
+      .btn {
+        background-color: var(--card-bg);
+        color: var(--accent-cyan);
+        border: 1px solid var(--border-color);
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 700;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn:hover {
+        background-color: #334155;
+        box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .btn:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .slide-num {
+        position: fixed;
+        bottom: 30px;
+        left: 40px;
+        color: var(--text-dim);
+        font-size: 20px;
+        font-family: "JetBrains Mono", monospace;
+        z-index: 2000;
+      }
+
+      /* 3. SLIDE CONTAINER ARCHITECTURE */
+      .deck-wrapper {
+        width: 90%;
+        height: 720px;
+        position: relative;
+      }
+
+      .slide-container {
+        width: 100%;
+        height: 720px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: none; /* Controlled by JS */
+        background-color: var(--primary-bg); /* Solid background */
+        border-radius: 12px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        flex-direction: column;
+        padding: 60px;
+        overflow: hidden;
+        z-index: 1;
+      }
+
+      /* Explicitly show the active slide and hide the rest */
+      .slide-container.active {
+        display: flex !important;
+        z-index: 10; /* Ensure active slide is on top */
+      }
+
+      /* DECORATIVE BACKGROUNDS */
+      .slide-container::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        right: -10%;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(34, 211, 238, 0.05) 0%,
+          transparent 70%
+        );
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      /* 4. TYPOGRAPHY & LAYOUT UTILITIES */
+      h1 {
+        font-size: 72px;
+        color: var(--accent-cyan);
+        letter-spacing: -2px;
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+      .slide-title {
+        font-size: 44px;
+        margin-bottom: 40px;
+        text-align: left;
+        width: 100%;
+        border-left: 6px solid var(--accent-green);
+        padding-left: 20px;
+        color: var(--accent-cyan);
+        z-index: 1;
+      }
+
+      p,
+      li,
+      td,
+      th {
+        font-size: var(--min-font);
+        line-height: 1.6;
+        color: #cbd5e1;
+      }
+
+      .subtitle {
+        font-size: 26px;
+        color: var(--text-dim);
+      }
+
+      .content-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        flex-grow: 1;
+        width: 100%;
+        z-index: 1;
+      }
+
+      .center {
+        align-items: center;
+        text-align: center;
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        width: 100%;
+      }
+
+      .tiled-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        width: 100%;
+      }
+
+      .tile {
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        padding: 35px;
+        border: 1px solid var(--border-color);
+        text-align: left;
+      }
+
+      .tile i {
+        font-size: 40px;
+        color: var(--accent-green);
+        margin-bottom: 20px;
+      }
+      .tile h3 {
+        font-size: 28px;
+        color: var(--accent-cyan);
+        margin-bottom: 15px;
+      }
+
+      .image-wrapper {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 2px solid var(--border-color);
+        width: 100%;
+      }
+      .image-wrapper img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .table-layout table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .table-layout th,
+      .table-layout td {
+        padding: 18px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .table-layout th {
+        color: var(--accent-cyan);
+        font-family: "JetBrains Mono";
+        font-size: 22px;
+      }
+
+      /* 5. VISUALIZATION COMPONENTS */
+      .bar-chart {
+        width: 100%;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 25px;
+      }
+      .bar-label {
+        flex: 0 0 220px;
+        text-align: right;
+        font-weight: bold;
+        font-family: "JetBrains Mono";
+      }
+      .bar-track {
+        background: #1e293b;
+        flex-grow: 1;
+        height: 40px;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+      .bar-fill {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 15px;
+        color: #020617;
+        font-weight: 700;
+      }
+
+      .highlight-number {
+        font-size: 140px;
+        color: var(--accent-green);
+        font-weight: 700;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+
+      /* BLEED LAYOUT */
+      .bleed-layout {
+        display: flex !important;
+        grid-template-columns: 1fr 1fr;
+        padding: 0 !important;
+        align-items: stretch !important;
+      }
+      .bleed-text {
+        padding: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .bleed-img {
+        height: 720px;
+        overflow: hidden;
+      }
+      .bleed-img img {
+        width: 100%;
+        height: 720px;
+        object-fit: cover;
+      }
+
+      code {
+        font-family: "JetBrains Mono";
+        background: #020617;
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: var(--accent-cyan);
+        font-size: 18px;
+      }
+
+      /* Git Stages Infographic */
+      .git-stages-infographic {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+      }
+
+      .stage-box {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 20px;
+        border: 2px solid var(--border-color);
+        min-width: 140px;
+        transition: all 0.3s ease;
+      }
+
+      .stage-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .working-dir {
+        border-color: var(--accent-cyan);
+      }
+
+      .staging-area {
+        border-color: var(--accent-green);
+      }
+
+      .repository {
+        border-color: #f05032;
+      }
+
+      .stage-icon {
+        font-size: 40px;
+        margin-bottom: 10px;
+      }
+
+      .working-dir .stage-icon {
+        color: var(--accent-cyan);
+      }
+
+      .staging-area .stage-icon {
+        color: var(--accent-green);
+      }
+
+      .repository .stage-icon {
+        color: #f05032;
+      }
+
+      .stage-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: var(--text-main);
+      }
+
+      .stage-desc {
+        font-size: 14px;
+        color: var(--text-dim);
+        margin-bottom: 8px;
+      }
+
+      .stage-status {
+        font-size: 12px;
+        color: var(--accent-cyan);
+        font-weight: 500;
+        background: rgba(34, 211, 238, 0.1);
+        padding: 4px 8px;
+        border-radius: 12px;
+      }
+
+      .arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-dim);
+        font-size: 24px;
+        margin: 0 10px;
+      }
+
+      .arrow-text {
+        font-size: 14px;
+        margin-top: 5px;
+        color: var(--accent-green);
+        font-weight: 600;
+        font-family: "JetBrains Mono";
+      }
+
+      /* Navigation styles */
+      .nav-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-color);
+        padding: 10px 20px;
+        z-index: 1000;
+        font-size: 14px;
+      }
+
+      .nav-bar a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+        margin: 0 10px;
+      }
+
+      .nav-bar a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="nav-bar">
+      ←
+      <a href="day07_practice_project.html"
+        >Day 7 — Practice Project & Review</a
+      >
+      | <a href="index.html">Index</a>
+    </div>
+
+    <div class="slide-num" id="slideNum">1 / 15</div>
+
+    <div class="controls">
+      <button class="btn" id="prevBtn" onclick="move(-1)" disabled>
+        <i class="fa-solid fa-arrow-left"></i> Previous
+      </button>
+      <button class="btn" id="nextBtn" onclick="move(1)">
+        Next <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <div class="deck-wrapper">
+      <!-- Slide 1: Title Slide -->
+      <div class="slide-container active" id="slide1">
+        <div class="content-area center">
+          <i
+            class="fa-brands fa-git-alt"
+            style="font-size: 100px; color: #f05032; margin-bottom: 30px"
+          ></i>
+          <h1>Mastering Git</h1>
+          <p class="subtitle">
+            The Comprehensive Guide to Modern Version Control
+          </p>
+          <div
+            style="
+              margin-top: 50px;
+              font-family: &quot;JetBrains Mono&quot;;
+              color: var(--accent-green);
+            "
+          >
+            v2.0.25 // Stable Release
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 2: Section 1 -->
+      <div class="slide-container" id="slide2">
+        <div class="content-area center">
+          <h2 style="font-size: 100px; opacity: 0.1; position: relative">01</h2>
+          <h1>The VCS Paradigm</h1>
+          <p class="subtitle" style="max-width: 800px">
+            Understanding why we track code and how systems evolved.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 3: What is VCS? -->
+      <div class="slide-container" id="slide3">
+        <h2 class="slide-title">What is Version Control?</h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div class="tile">
+              <i class="fa-solid fa-camera-retro"></i>
+              <h3>Snapshots</h3>
+              <p>
+                Unlike simple backups, VCS stores "Snapshots" of your entire
+                project state. You can revert back to any exact second in
+                history.
+              </p>
+            </div>
+            <div class="tile">
+              <i class="fa-solid fa-code-branch"></i>
+              <h3>Collaboration</h3>
+              <p>
+                Allows multiple developers to work on the same codebase
+                simultaneously without overwriting each other's work.
+              </p>
+            </div>
+          </div>
+          <div class="image-wrapper" style="height: 250px; margin-top: 30px">
+            <img src="images/vcs_systems..jpg" alt="VCS Visualization" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 4: CVCS vs DVCS -->
+      <div class="slide-container" id="slide4">
+        <h2 class="slide-title">Distributed vs. Centralized</h2>
+        <div class="content-area">
+          <div class="table-layout">
+            <table>
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Centralized (SVN)</th>
+                  <th>Distributed (Git)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Work Offline</td>
+                  <td style="color: #f87171">
+                    <i class="fa-solid fa-xmark"></i> Impossible
+                  </td>
+                  <td style="color: #4ade80">
+                    <i class="fa-solid fa-check"></i> Fully Supported
+                  </td>
+                </tr>
+                <tr>
+                  <td>Speed</td>
+                  <td>Network Dependent</td>
+                  <td style="color: #4ade80">Nearly Instant</td>
+                </tr>
+                <tr>
+                  <td>Safety</td>
+                  <td>Single Point of Failure</td>
+                  <td style="color: #4ade80">Full Mirror Everywhere</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 5: Market Share Chart -->
+      <div class="slide-container" id="slide5">
+        <h2 class="slide-title">Market Dominance (2025)</h2>
+        <div class="content-area">
+          <div class="bar-chart">
+            <div class="bar">
+              <div class="bar-label">Git</div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 94%; background: var(--accent-cyan)"
+                >
+                  94.2%
+                </div>
+              </div>
+            </div>
+            <div class="bar">
+              <div class="bar-label">Subversion (SVN)</div>
+              <div class="bar-track" style="color: white">
+                <div
+                  class="bar-fill"
+                  style="width: 4%; background: #475569; color: white"
+                ></div>
+              </div>
+              3.8%
+            </div>
+            <div class="bar">
+              <div class="bar-label">Mercurial</div>
+              <div class="bar-track">
+                <div
+                  class="bar-fill"
+                  style="width: 1%; background: #475569; color: white"
+                ></div>
+              </div>
+              0.9%
+            </div>
+          </div>
+          <p style="margin-top: 40px; font-style: italic">
+            Git is no longer an option—it is the industry standard for software
+            engineering.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 6: Section 2 -->
+      <div class="slide-container" id="slide6">
+        <div class="content-area center">
+          <h2 style="font-size: 100px; opacity: 0.1; position: relative">02</h2>
+          <h1>History & Origins</h1>
+          <p class="subtitle">
+            From a crisis in the Linux Kernel to global dominance.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 7: Linus Portrait Bleed -->
+      <div class="slide-container bleed-layout" id="slide7">
+        <div class="bleed-text">
+          <h2 class="slide-title">Born in 2005</h2>
+          <p>
+            After the BitKeeper license was revoked, **Linus Torvalds** famously
+            spent two weeks building the first prototype of Git.
+          </p>
+          <p style="margin-top: 20px">His requirements were uncompromising:</p>
+          <ul style="list-style: none; margin-top: 15px">
+            <li style="margin-bottom: 10px">
+              <i
+                class="fa-solid fa-circle-check"
+                style="color: var(--accent-green)"
+              ></i>
+              Non-linear development
+            </li>
+            <li style="margin-bottom: 10px">
+              <i
+                class="fa-solid fa-circle-check"
+                style="color: var(--accent-green)"
+              ></i>
+              Efficient handled huge projects
+            </li>
+            <li>
+              <i
+                class="fa-solid fa-circle-check"
+                style="color: var(--accent-green)"
+              ></i>
+              Absolute data integrity
+            </li>
+          </ul>
+        </div>
+        <div class="bleed-img">
+          <img src="images/Cohen-Linus-Torvalds.webp" alt="Linus Torvalds" />
+        </div>
+      </div>
+
+      <!-- Slide 8: Git Timeline -->
+      <div class="slide-container" id="slide8">
+        <h2 class="slide-title">Key Milestones</h2>
+        <div class="content-area">
+          <div
+            style="
+              width: 100%;
+              height: 4px;
+              background: var(--border-color);
+              position: relative;
+              margin: 100px 0;
+            "
+          >
+            <div
+              style="
+                position: absolute;
+                left: 0;
+                top: -10px;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  width: 24px;
+                  height: 24px;
+                  background: var(--accent-cyan);
+                  border-radius: 50%;
+                  margin: 0 auto;
+                "
+              ></div>
+              <p
+                style="
+                  margin-top: 15px;
+                  font-weight: bold;
+                  color: var(--accent-cyan);
+                "
+              >
+                2005
+              </p>
+              <p>Git v1.0 Released</p>
+            </div>
+            <div
+              style="
+                position: absolute;
+                left: 33%;
+                top: -10px;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  width: 24px;
+                  height: 24px;
+                  background: var(--accent-green);
+                  border-radius: 50%;
+                  margin: 0 auto;
+                "
+              ></div>
+              <p
+                style="
+                  margin-top: 15px;
+                  font-weight: bold;
+                  color: var(--accent-green);
+                "
+              >
+                2008
+              </p>
+              <p>GitHub Launches</p>
+            </div>
+            <div
+              style="
+                position: absolute;
+                left: 66%;
+                top: -10px;
+                text-align: center;
+              "
+            >
+              <div
+                style="
+                  width: 24px;
+                  height: 24px;
+                  background: #fbbf24;
+                  border-radius: 50%;
+                  margin: 0 auto;
+                "
+              ></div>
+              <p style="margin-top: 15px; font-weight: bold; color: #fbbf24">
+                2014
+              </p>
+              <p>Git v2.0 Standard</p>
+            </div>
+            <div
+              style="
+                position: absolute;
+                left: 100%;
+                top: -10px;
+                text-align: center;
+                transform: translateX(-50%);
+              "
+            >
+              <div
+                style="
+                  width: 24px;
+                  height: 24px;
+                  background: var(--text-main);
+                  border-radius: 50%;
+                  margin: 0 auto;
+                "
+              ></div>
+              <p style="margin-top: 15px; font-weight: bold">2025</p>
+              <p>Cloud Native Git</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 9: Philosophies -->
+      <div class="slide-container" id="slide9">
+        <h2 class="slide-title">Core Philosophies</h2>
+        <div class="content-area">
+          <div class="tiled-grid">
+            <div class="tile">
+              <i class="fa-solid fa-gauge-high"></i>
+              <h3>Performance</h3>
+              <p>
+                Nearly all operations happen on your local filesystem, avoiding
+                network latency for commit/diff/log.
+              </p>
+            </div>
+            <div class="tile">
+              <i class="fa-solid fa-fingerprint"></i>
+              <h3>Data Integrity</h3>
+              <p>
+                Everything is SHA-1 hashed. If data is corrupted, Git will know
+                immediately.
+              </p>
+            </div>
+            <div class="tile">
+              <i class="fa-solid fa-shuffle"></i>
+              <h3>Cheap Branches</h3>
+              <p>
+                Git branches are just pointers. Creating a new feature branch
+                takes 1 millisecond.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 10: Section 3 -->
+      <div class="slide-container" id="slide10">
+        <div class="content-area center">
+          <h2 style="font-size: 100px; opacity: 0.1; position: relative">03</h2>
+          <h1>The Git Engine</h1>
+          <p class="subtitle">
+            Architecture and the standard developer workflow.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 11: Three Stages -->
+      <div class="slide-container" id="slide11">
+        <h2 class="slide-title">The Three States</h2>
+        <div class="content-area">
+          <div class="two-column">
+            <div style="display: flex; flex-direction: column; gap: 20px">
+              <div
+                style="
+                  border-left: 4px solid var(--accent-cyan);
+                  padding-left: 15px;
+                "
+              >
+                <h3 style="color: var(--accent-cyan)">1. Working Directory</h3>
+                <p>Modifying files in your project folder.</p>
+              </div>
+              <div
+                style="
+                  border-left: 4px solid var(--accent-green);
+                  padding-left: 15px;
+                "
+              >
+                <h3 style="color: var(--accent-green)">
+                  2. Staging Area (Index)
+                </h3>
+                <p>Marking modified files for the next snapshot.</p>
+              </div>
+              <div style="border-left: 4px solid #f05032; padding-left: 15px">
+                <h3 style="color: #f05032">3. Repository (.git)</h3>
+                <p>Storing the permanent snapshot history.</p>
+              </div>
+            </div>
+            <div
+              class="image-wrapper"
+              style="
+                height: 300px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <div class="git-stages-infographic">
+                <!-- Working Directory -->
+                <div class="stage-box working-dir">
+                  <div class="stage-icon">
+                    <i class="fas fa-folder-open"></i>
+                  </div>
+                  <div class="stage-title">Working Directory</div>
+                  <div class="stage-desc">Your project files</div>
+                  <div class="stage-status">Modified files</div>
+                </div>
+
+                <!-- Arrow 1 -->
+                <div class="arrow">
+                  <i class="fas fa-arrow-right"></i>
+                  <div class="arrow-text">git add</div>
+                </div>
+
+                <!-- Staging Area -->
+                <div class="stage-box staging-area">
+                  <div class="stage-icon">
+                    <i class="fas fa-layer-group"></i>
+                  </div>
+                  <div class="stage-title">Staging Area</div>
+                  <div class="stage-desc">Index (.git/index)</div>
+                  <div class="stage-status">Staged changes</div>
+                </div>
+
+                <!-- Arrow 2 -->
+                <div class="arrow">
+                  <i class="fas fa-arrow-right"></i>
+                  <div class="arrow-text">git commit</div>
+                </div>
+
+                <!-- Repository -->
+                <div class="stage-box repository">
+                  <div class="stage-icon">
+                    <i class="fas fa-database"></i>
+                  </div>
+                  <div class="stage-title">Repository</div>
+                  <div class="stage-desc">.git directory</div>
+                  <div class="stage-status">Committed history</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 12: Daily Commands Table -->
+      <div class="slide-container" id="slide12">
+        <h2 class="slide-title">Daily Commands</h2>
+        <div class="content-area">
+          <div class="table-layout">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Context</th>
+                  <th>Result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>git init</code></td>
+                  <td>Start</td>
+                  <td>Creates local repository</td>
+                </tr>
+                <tr>
+                  <td><code>git status</code></td>
+                  <td>Inspection</td>
+                  <td>Checks which files are modified</td>
+                </tr>
+                <tr>
+                  <td><code>git add .</code></td>
+                  <td>Preparation</td>
+                  <td>Moves files to Staging</td>
+                </tr>
+                <tr>
+                  <td><code>git commit -m</code></td>
+                  <td>Execution</td>
+                  <td>Saves the snapshot</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 13: Collaboration Sync -->
+      <div class="slide-container" id="slide13">
+        <h2 class="slide-title">Syncing with Remote</h2>
+        <div class="content-area">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 40px;
+              width: 100%;
+            "
+          >
+            <div class="tile">
+              <h3 style="display: flex; align-items: center; gap: 10px">
+                <i
+                  class="fa-solid fa-cloud-arrow-up"
+                  style="margin: 0; font-size: 24px"
+                ></i>
+                Push
+              </h3>
+              <p>
+                Sends your local commits to the server repository
+                (GitHub/GitLab).
+              </p>
+            </div>
+            <div class="tile">
+              <h3 style="display: flex; align-items: center; gap: 10px">
+                <i
+                  class="fa-solid fa-cloud-arrow-down"
+                  style="margin: 0; font-size: 24px"
+                ></i>
+                Pull
+              </h3>
+              <p>
+                Fetches changes from server and merges them into your local
+                work.
+              </p>
+            </div>
+          </div>
+          <div
+            style="
+              margin-top: 30px;
+              padding: 25px;
+              background: rgba(34, 211, 238, 0.1);
+              border-radius: 12px;
+              border: 1px solid var(--accent-cyan);
+              width: 100%;
+            "
+          >
+            <p>
+              <strong>Pro-Tip:</strong> Use <code>git fetch</code> +
+              <code>git merge</code> for more control over incoming changes than
+              a raw <code>git pull</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slide 14: Scale Statistics -->
+      <div class="slide-container" id="slide14">
+        <h2 class="slide-title">Real-time Global Impact</h2>
+        <div class="content-area">
+          <div class="two-column" style="align-items: center">
+            <div class="center">
+              <div class="highlight-number">100M+</div>
+              <p style="font-size: 28px; color: var(--accent-cyan)">
+                Developers on GitHub
+              </p>
+            </div>
+            <div class="center">
+              <div class="highlight-number">4B+</div>
+              <p style="font-size: 28px; color: var(--accent-green)">
+                Pull Requests per Year
+              </p>
+            </div>
+          </div>
+          <p style="margin-top: 50px; text-align: center; width: 100%">
+            Git powers everything from tiny startups to global infrastructure at
+            Google and Microsoft.
+          </p>
+        </div>
+      </div>
+
+      <!-- Slide 15: Conclusion -->
+      <div class="slide-container" id="slide15">
+        <div class="content-area center">
+          <h1>Ready to Git Init?</h1>
+          <p class="subtitle" style="margin-bottom: 40px">
+            The journey to mastery begins with a single commit.
+          </p>
+          <div class="image-wrapper" style="width: 500px; height: 250px">
+            <img
+              src="http://googleusercontent.com/image_collection/image_retrieval/5825955365206209903"
+              alt="Collaboration Network"
+            />
+          </div>
+          <p
+            style="
+              margin-top: 40px;
+              font-family: &quot;JetBrains Mono&quot;;
+              color: var(--accent-cyan);
+            "
+          >
+            Questions & Discussion //
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mermaid JS Library -->
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+      window.mermaid = mermaid;
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: "dark",
+        securityLevel: "loose",
+        fontFamily: "Inter",
+      });
+    </script>
+
+    <script>
+      let cur = 0;
+      const slides = document.querySelectorAll(".slide-container");
+      const slideNum = document.getElementById("slideNum");
+      const prevBtn = document.getElementById("prevBtn");
+      const nextBtn = document.getElementById("nextBtn");
+
+      function update() {
+        slides.forEach((s, i) => {
+          if (i === cur) {
+            s.classList.add("active");
+            // Render mermaid diagrams in the active slide
+            const mermaidDivs = s.querySelectorAll(".mermaid");
+            mermaidDivs.forEach(async (div) => {
+              const id = "mermaid-" + Math.random().toString(36).substr(2, 9);
+              const { svg } = await window.mermaid.render(
+                id,
+                div.textContent.trim(),
+              );
+              div.innerHTML = svg;
+            });
+          } else {
+            s.classList.remove("active");
+          }
+        });
+
+        slideNum.innerText = `${cur + 1} / ${slides.length}`;
+        prevBtn.disabled = cur === 0;
+        nextBtn.disabled = cur === slides.length - 1;
+      }
+
+      function move(dir) {
+        if (cur + dir >= 0 && cur + dir < slides.length) {
+          cur += dir;
+          update();
+        }
+      }
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") move(1);
+        if (e.key === "ArrowLeft") move(-1);
+      });
+
+      // Initial state setup
+      update();
+    </script>
+  </body>
+</html>

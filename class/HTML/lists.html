@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List - Descriptive Lists</title>
+    <style>
+      pre {
+        background-color: rgb(255, 247, 236);
+        padding: 20px;
+        border: 1px solid rgb(255, 144, 9);
+        border-radius: 15px;
+        margin: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 title="This is Details Tag">Details</h2>
+    <details>
+      <summary>Question</summary>
+      1. What is HTML?
+    </details>
+
+    <p>
+      # Basic initialization greeting = "Hello, World!" # Slicing:
+      [start:stop:step] print(greeting[0:5]) # Output: Hello
+      print(greeting[::-1]) # Output: !dlroW ,olleH (Reverse string)
+    </p>
+
+    <pre><code>import math
+
+def is_prime(n):
+    # 1. Handle numbers less than 2
+    if n < 2:
+        return False
+    
+    # 2. 2 is the only even prime number
+    if n == 2:
+        return True
+    
+    # 3. Eliminate all other even numbers immediately
+    if n % 2 == 0:
+        return False
+    
+    # 4. Check odd divisors from 3 up to sqrt(n)
+    # We use step=2 to skip even numbers
+    limit = int(math.sqrt(n)) + 1
+    for i in range(3, limit, 2):
+        if n % i == 0:
+            return False
+            
+    return True
+
+# --- Testing the function ---
+numbers = [1, 2, 11, 15, 19, 25, 97]
+prime_list = [num for num in numbers if is_prime(num)]
+
+print(f"Primes found: {prime_list}")
+# Output: Primes found: [2, 11, 19, 97]</code></pre>
+
+    <dl>
+      <dt>HTML</dt>
+      <dd>
+        HyperText Markup Language with support for styling and structuring web
+        content.
+      </dd>
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets for styling and layout of web pages.</dd>
+      <dt>JavaScript</dt>
+      <dd>
+        Programming language for adding interactivity and dynamic behavior to
+        web pages.
+      </dd>
+    </dl>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta non odit
+      aliquid totam quod minima itaque excepturi. Laudantium, repudiandae
+      perspiciatis impedit quisquam iure, odio incidunt in tempora, dignissimos
+      voluptates officia?
+    </p>
+
+    <h1>Lorem ipsum dolor sit amet.</h1>
+
+    <input type="text" />
+  </body>
+</html>

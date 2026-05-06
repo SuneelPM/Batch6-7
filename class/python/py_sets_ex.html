@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Sets Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Python Sets Mastery
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Unordered Collections Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Mathematical Operations, Uniqueness, and Set Theory Logic.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Create and Add",
+          difficulty: "easy",
+          description:
+            "Create a set with values 1, 2, 3 and add the value 4 to it.",
+          solution: "s = {1, 2, 3}\ns.add(4)\nprint(s)",
+        },
+        {
+          id: 2,
+          title: "De-duplication",
+          difficulty: "easy",
+          description:
+            "Given colors = ['red', 'blue', 'red', 'green'], convert it to a set to remove duplicates.",
+          solution:
+            "colors = ['red', 'blue', 'red', 'green']\nunique_colors = set(colors)\nprint(unique_colors)",
+        },
+        {
+          id: 3,
+          title: "Removing Elements",
+          difficulty: "easy",
+          description:
+            "Use discard() to remove 10 from {5, 10, 15}. Verify that discard() doesn't raise an error if the item is missing.",
+          solution:
+            "s = {5, 10, 15}\ns.discard(10)\ns.discard(100) # No error\nprint(s)",
+        },
+        {
+          id: 4,
+          title: "Set Union",
+          difficulty: "easy",
+          description:
+            "Find the union of a = {1, 2} and b = {2, 3} using the | operator.",
+          solution: "a = {1, 2}\nb = {2, 3}\nprint(a | b) # {1, 2, 3}",
+        },
+        {
+          id: 5,
+          title: "Set Intersection",
+          difficulty: "easy",
+          description:
+            "Find common elements between {1, 2, 3} and {2, 3, 4} using intersection().",
+          solution:
+            "s1 = {1, 2, 3}\ns2 = {2, 3, 4}\nprint(s1.intersection(s2)) # {2, 3}",
+        },
+        {
+          id: 6,
+          title: "Set Difference",
+          difficulty: "easy",
+          description:
+            "Find elements in a = {1, 2, 3} that are NOT in b = {2, 3, 4}.",
+          solution: "a = {1, 2, 3}\nb = {2, 3, 4}\nprint(a - b) # {1}",
+        },
+        {
+          id: 7,
+          title: "Symmetric Difference",
+          difficulty: "easy",
+          description:
+            "Find elements that are in either set {1, 2} or {2, 3}, but not both.",
+          solution: "s1 = {1, 2}\ns2 = {2, 3}\nprint(s1 ^ s2) # {1, 3}",
+        },
+        {
+          id: 8,
+          title: "Subset Check",
+          difficulty: "medium",
+          description:
+            "Check if {1, 2} is a subset of {1, 2, 3} using issubset().",
+          solution:
+            "s1 = {1, 2}\ns2 = {1, 2, 3}\nprint(s1.issubset(s2)) # True",
+        },
+        {
+          id: 9,
+          title: "FrozenSet Creation",
+          difficulty: "medium",
+          description:
+            "Create an immutable set (frozenset) containing [1, 2, 3].",
+          solution:
+            "fs = frozenset([1, 2, 3])\nprint(fs)\n# fs.add(4) would raise an AttributeError",
+        },
+        {
+          id: 10,
+          title: "Clearing a Set",
+          difficulty: "medium",
+          description: "Empty all elements from the set {1, 2, 3} in-place.",
+          solution: "s = {1, 2, 3}\ns.clear()\nprint(s) # set()",
+        },
+        {
+          id: 11,
+          title: "Updating a Set",
+          difficulty: "medium",
+          description:
+            "Update set s1 = {1, 2} with elements from list [3, 4] using update().",
+          solution: "s1 = {1, 2}\ns1.update([3, 4])\nprint(s1) # {1, 2, 3, 4}",
+        },
+        {
+          id: 12,
+          title: "Disjoint Sets",
+          difficulty: "medium",
+          description:
+            "Check if two sets {1, 2} and {3, 4} have no elements in common.",
+          solution: "s1 = {1, 2}\ns2 = {3, 4}\nprint(s1.isdisjoint(s2)) # True",
+        },
+        {
+          id: 13,
+          title: "Popping Elements",
+          difficulty: "medium",
+          description:
+            "Remove and return an arbitrary element from {1, 2, 3} using pop().",
+          solution:
+            "s = {1, 2, 3}\nval = s.pop()\nprint(f'Popped: {val}, Remaining: {s}')",
+        },
+        {
+          id: 14,
+          title: "Set Comprehension",
+          difficulty: "medium",
+          description:
+            "Create a set of squares for even numbers between 1 and 10.",
+          solution:
+            "squares = {x**2 for x in range(1, 11) if x % 2 == 0}\nprint(squares)",
+        },
+        {
+          id: 15,
+          title: "Intersection Update",
+          difficulty: "medium",
+          description:
+            "Modify s1 = {1, 2, 3} so it only contains elements also found in s2 = {2, 3, 4} using intersection_update().",
+          solution:
+            "s1 = {1, 2, 3}\ns2 = {2, 3, 4}\ns1.intersection_update(s2)\nprint(s1) # {2, 3}",
+        },
+        {
+          id: 16,
+          title: "Unique Characters in String",
+          difficulty: "hard",
+          description:
+            "Find the count of unique alphanumeric characters in the string 'Python 3.10 is great!'.",
+          solution:
+            "text = 'Python 3.10 is great!'\nunique_chars = {c.lower() for c in text if c.isalnum()}\nprint(len(unique_chars))",
+        },
+        {
+          id: 17,
+          title: "Set of FrozenSets",
+          difficulty: "hard",
+          description:
+            "Create a set that contains other sets. (Hint: Use frozensets as inner elements).",
+          solution:
+            "sets_of_sets = {frozenset({1, 2}), frozenset({3, 4})}\nprint(sets_of_sets)",
+        },
+        {
+          id: 18,
+          title: "Symmetric Difference Update",
+          difficulty: "hard",
+          description:
+            "Modify s1 = {1, 2} in-place to contain elements in either s1 or s2 = {2, 3}, but not both.",
+          solution:
+            "s1 = {1, 2}\ns2 = {2, 3}\ns1.symmetric_difference_update(s2)\nprint(s1) # {1, 3}",
+        },
+        {
+          id: 19,
+          title: "Finding Missing Elements",
+          difficulty: "hard",
+          description:
+            "Given a full set 'alphabet' and a 'sentence_set', find which letters are missing from the sentence.",
+          solution:
+            "import string\nalphabet = set(string.ascii_lowercase)\nsentence = 'the quick brown fox'\nsentence_set = {char for char in sentence if char.isalpha()}\nmissing = alphabet - sentence_set\nprint(sorted(list(missing)))",
+        },
+        {
+          id: 20,
+          title: "Efficient Intersection of Multiple Sets",
+          difficulty: "hard",
+          description:
+            "Find the common elements across three sets: {1, 2, 3}, {2, 3, 4}, and {3, 4, 5} using a single method call.",
+          solution:
+            "s1, s2, s3 = {1, 2, 3}, {2, 3, 4}, {3, 4, 5}\nresult = s1.intersection(s2, s3)\nprint(result) # {3}",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "Uniqueness",
+          difficulty: "easy",
+          question: "What happens if you add a duplicate element to a set?",
+          options: [
+            "Raises Error",
+            "It is ignored",
+            "It replaces old one",
+            "It is stored as list",
+          ],
+          answer: "It is ignored",
+        },
+        {
+          id: 2,
+          title: "Literal Syntax",
+          difficulty: "easy",
+          question: "Which symbol defines a set literal?",
+          options: ["()", "[]", "{}", "<>"],
+          answer: "{}",
+        },
+        {
+          id: 3,
+          title: "Ordering",
+          difficulty: "easy",
+          question: "Are sets ordered in Python?",
+          options: [
+            "Yes",
+            "No",
+            "Only if sorted() is called",
+            "Only in Python 3.7+",
+          ],
+          answer: "No (Sets are unordered collections)",
+        },
+        {
+          id: 4,
+          title: "Empty Set",
+          difficulty: "easy",
+          question: "How do you create an empty set?",
+          options: ["{}", "set()", "[]", "()"],
+          answer: "set() (using {} creates an empty dictionary)",
+        },
+        {
+          id: 5,
+          title: "Membership Speed",
+          difficulty: "easy",
+          question: "Average time complexity of 'x in set'?",
+          options: ["O(1)", "O(n)", "O(log n)", "O(n² Bruckner)"],
+          answer: "O(1)",
+        },
+        {
+          id: 6,
+          title: "Mutable Elements",
+          difficulty: "easy",
+          question: "Which can NOT be an element of a set?",
+          options: ["String", "Integer", "List", "Tuple of ints"],
+          answer: "List (elements must be hashable)",
+        },
+        {
+          id: 7,
+          title: "Union Operator",
+          difficulty: "easy",
+          question: "Which operator represents Union?",
+          options: ["&", "|", "^", "-"],
+          answer: "|",
+        },
+        {
+          id: 8,
+          title: "Intersection Operator",
+          difficulty: "easy",
+          question: "Which operator represents Intersection?",
+          options: ["&", "|", "^", "-"],
+          answer: "&",
+        },
+        {
+          id: 9,
+          title: "Difference vs Discard",
+          difficulty: "medium",
+          question: "What is the difference between remove() and discard()?",
+          options: [
+            "remove returns value",
+            "discard is faster",
+            "remove raises error if missing",
+            "discard raises error if missing",
+          ],
+          answer: "remove raises error if missing (KeyError)",
+        },
+        {
+          id: 10,
+          title: "Frozenset",
+          difficulty: "medium",
+          question: "What is a frozenset?",
+          options: [
+            "A sorted set",
+            "An immutable set",
+            "A set of strings only",
+            "A fast list",
+          ],
+          answer: "An immutable set",
+        },
+        {
+          id: 11,
+          title: "Symmetric Difference",
+          difficulty: "medium",
+          question: "What does A ^ B return?",
+          options: [
+            "Common elements",
+            "All elements",
+            "Unique to each set",
+            "Elements only in A",
+          ],
+          answer: "Unique to each set (Items in A or B but not both)",
+        },
+        {
+          id: 12,
+          title: "Indexing",
+          difficulty: "medium",
+          question: "Can you access set elements by index (e.g. s[0])?",
+          options: ["Yes", "No", "Only if sorted", "Only in Python 2"],
+          answer: "No",
+        },
+        {
+          id: 13,
+          title: "pop() behavior",
+          difficulty: "medium",
+          question: "What does s.pop() return on a set?",
+          options: [
+            "Last element",
+            "First element",
+            "An arbitrary element",
+            "None",
+          ],
+          answer: "An arbitrary element",
+        },
+        {
+          id: 14,
+          title: "Length of set",
+          difficulty: "medium",
+          question: "Result of len({1, 1, 2, 2, 3})?",
+          options: ["2", "3", "5", "Error"],
+          answer: "3",
+        },
+        {
+          id: 15,
+          title: "Hashable Tuple",
+          difficulty: "medium",
+          question: "Is {(1, [2])} a valid set?",
+          options: ["Yes", "No", "Only if cast to list", "Depends on OS"],
+          answer:
+            "No (The tuple contains a mutable list, making it unhashable)",
+        },
+        {
+          id: 16,
+          title: "Set implementation",
+          difficulty: "hard",
+          question: "Internally, how are Python sets implemented?",
+          options: [
+            "Linked List",
+            "Binary Search Tree",
+            "Hash Table",
+            "Dynamic Array",
+          ],
+          answer: "Hash Table (similar to dictionaries but with keys only)",
+        },
+        {
+          id: 17,
+          title: "Subset Operator",
+          difficulty: "hard",
+          question: "Which operator checks if A is a proper subset of B?",
+          options: ["<=", "<", ">=", ">"],
+          answer: "<",
+        },
+        {
+          id: 18,
+          title: "Memory Allocation",
+          difficulty: "hard",
+          question:
+            "Compared to a list of the same size, a set usually uses...",
+          options: ["Less memory", "Same memory", "More memory", "Zero memory"],
+          answer: "More memory (due to hash table overhead)",
+        },
+        {
+          id: 19,
+          title: "Hashing Protocol",
+          difficulty: "hard",
+          question: "What makes an object 'hashable'?",
+          options: [
+            "Must be a string",
+            "Must be small",
+            "Hash value never changes",
+            "Must be unique",
+          ],
+          answer: "Hash value never changes (requires immutability)",
+        },
+        {
+          id: 20,
+          title: "Set of Sets",
+          difficulty: "hard",
+          question: "How can you store a set inside another set?",
+          options: [
+            "Nesting directly",
+            "Using frozenset",
+            "Casting to list",
+            "It is impossible",
+          ],
+          answer: "Using frozenset (standard sets are unhashable)",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "What is a Set?",
+          difficulty: "easy",
+          question: "Define a Python set and its core properties.",
+          answer:
+            "A set is an unordered collection of unique, hashable elements. Its main properties are that it doesn't allow duplicates and provides O(1) average time complexity for membership testing.",
+        },
+        {
+          id: 2,
+          title: "Set vs List",
+          difficulty: "easy",
+          question: "When should you use a set instead of a list?",
+          answer:
+            "Use a set when you need to ensure element uniqueness or when you frequently need to check if an item exists in the collection (membership testing), as sets are significantly faster for this than lists.",
+        },
+        {
+          id: 3,
+          title: "Hashability",
+          difficulty: "easy",
+          question: "Why can't we put a list inside a set?",
+          answer:
+            "Sets require their elements to be 'hashable'. A list is mutable, meaning its contents (and thus its potential hash) can change. This would break the hash table's internal lookup logic.",
+        },
+        {
+          id: 4,
+          title: "remove vs discard",
+          difficulty: "easy",
+          question: "Difference between .remove() and .discard()?",
+          answer:
+            ".remove(x) raises a KeyError if x is not in the set. .discard(x) simply does nothing if x is missing. Use discard when you don't want to handle exceptions for missing items.",
+        },
+        {
+          id: 5,
+          title: "Mathematical Operations",
+          difficulty: "easy",
+          question:
+            "What are the four primary mathematical set operations in Python?",
+          answer:
+            "Union (|), Intersection (&), Difference (-), and Symmetric Difference (^).",
+        },
+        {
+          id: 6,
+          title: "FrozenSet",
+          difficulty: "medium",
+          question: "What is a frozenset and why is it useful?",
+          answer:
+            "A frozenset is an immutable version of a set. Because it's immutable, it is hashable, meaning it can be used as a dictionary key or as an element in another set.",
+        },
+        {
+          id: 7,
+          title: "Time Complexity",
+          difficulty: "medium",
+          question:
+            "What is the time complexity of adding and searching in a set?",
+          answer:
+            "Average case is O(1) for both. Worst case is O(n) if many hash collisions occur, though this is rare with Python's hashing algorithm.",
+        },
+        {
+          id: 8,
+          title: "Set Comprehension",
+          difficulty: "medium",
+          question: "Explain set comprehension and provide a use case.",
+          answer:
+            "It is a concise way to create a set from an iterable. Syntax: `{expr for item in iterable if condition}`. Use case: Filtering a list of strings to get unique lowercase versions: `{s.lower() for s in my_list}`.",
+        },
+        {
+          id: 9,
+          title: "Unordered Nature",
+          difficulty: "medium",
+          question: "Why don't sets support indexing or slicing?",
+          answer:
+            "Sets are implemented as hash tables where elements are placed based on their hash value rather than an sequential order. Since there is no stable position, indexing has no consistent meaning.",
+        },
+        {
+          id: 10,
+          title: "De-duplication Performance",
+          difficulty: "medium",
+          question:
+            "How would you remove duplicates from a list of 1 million items efficiently?",
+          answer:
+            "Convert the list to a set using `set(my_list)`. This is highly efficient (O(n)) compared to iterating through the list and checking for existence (O(n²)).",
+        },
+        {
+          id: 11,
+          title: "Empty Set Creation Trap",
+          difficulty: "medium",
+          question: "Why is `s = {}` not an empty set?",
+          answer:
+            "Historical reasons: Dictionaries existed before sets and used curly braces. When sets were added, `{}` was already reserved for an empty dictionary, so `set()` must be used for an empty set.",
+        },
+        {
+          id: 12,
+          title: "Update vs Union",
+          difficulty: "medium",
+          question: "Difference between `s1.update(s2)` and `s1 | s2`?",
+          answer:
+            "`s1.update(s2)` modifies s1 in-place (returns None). `s1 | s2` creates and returns a brand new set containing the union of both.",
+        },
+        {
+          id: 13,
+          title: "Symmetric Difference",
+          difficulty: "medium",
+          question: "What is the symmetric difference and its operator?",
+          answer:
+            "It returns items that are in either set A or set B, but not in their intersection. The operator is `^`.",
+        },
+        {
+          id: 14,
+          title: "Bitwise Operators",
+          difficulty: "medium",
+          question: "Are `&` and `|` bitwise or logical when used with sets?",
+          answer:
+            "They are overloaded to perform set operations. While they look like bitwise operators, they perform set intersection and union respectively.",
+        },
+        {
+          id: 15,
+          title: "Disjoint Sets",
+          difficulty: "medium",
+          question: "How do you check if two sets have no common elements?",
+          answer:
+            "Using the `s1.isdisjoint(s2)` method, which returns True if their intersection is empty.",
+        },
+        {
+          id: 16,
+          title: "Internal Hashing: Collisions",
+          difficulty: "hard",
+          question: "How does Python handle set collisions?",
+          answer:
+            "Python uses open addressing with a pseudo-random probing sequence. If a bucket is full, it calculates a new index based on the original hash and a 'perturb' value.",
+        },
+        {
+          id: 17,
+          title: "Memory Management: Load Factor",
+          difficulty: "hard",
+          question: "What is the load factor of a Python set?",
+          answer:
+            "Python resizes sets (and dicts) when they reach approximately 2/3rds capacity to maintain O(1) lookup performance.",
+        },
+        {
+          id: 18,
+          title: "Proper Subsets",
+          difficulty: "hard",
+          question:
+            "Difference between `issubset` (<=) and a proper subset (<)?",
+          answer:
+            "A is a subset of B if all elements of A are in B. A is a 'proper' subset if A is a subset of B AND A is not equal to B.",
+        },
+        {
+          id: 19,
+          title: "Iteration Performance",
+          difficulty: "hard",
+          question: "Is iterating over a set slower than a list?",
+          answer:
+            "Generally, yes. Lists are contiguous arrays, whereas set iteration requires scanning the sparse hash table to find non-empty buckets, which involves more memory hops.",
+        },
+        {
+          id: 20,
+          title: "Custom Hashability in Classes",
+          difficulty: "hard",
+          question:
+            "How can you make a custom class instance work as a set element?",
+          answer:
+            "You must implement both `__hash__(self)` and `__eq__(self)`. The hash should be constant for the lifetime of the object and equal objects must have equal hashes.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Prep #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

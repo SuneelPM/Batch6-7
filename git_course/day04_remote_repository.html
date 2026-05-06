@@ -1,0 +1,1428 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 4 — Remote Repositories & GitHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #0f172a;
+        --secondary-bg: #1e293b;
+        --accent-bg: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --accent-orange: #fb923c;
+        --accent-red: #f87171;
+        --border-color: #334155;
+        --max-width: 90%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .breadcrumb {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--accent-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .breadcrumb a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .goal {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .goal p {
+        font-size: 1.125rem;
+        color: var(--accent-green);
+        font-weight: 600;
+      }
+
+      .toc {
+        background: var(--accent-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .toc h2 {
+        font-size: 1.5rem;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+      }
+
+      .toc ol {
+        padding-left: 1.5rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .toc a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-cyan);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent-orange);
+        margin: 2rem 0 1rem 0;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-green);
+        margin: 1.5rem 0 0.5rem 0;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .mermaid-diagram {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        border: 1px solid var(--border-color);
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--accent-cyan);
+      }
+
+      .ascii-diagram {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      .highlight {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-orange);
+      }
+
+      .highlight p {
+        font-style: italic;
+        color: var(--text-primary);
+      }
+
+      .use-case {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-bg) 0%,
+          var(--accent-bg) 100%
+        );
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
+      }
+
+      .use-case p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .code-block {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.875rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+      }
+
+      .code-block .comment {
+        color: var(--text-muted);
+      }
+
+      .code-block .output {
+        color: var(--accent-green);
+      }
+
+      .code-block .diff {
+        color: var(--accent-red);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--secondary-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--accent-bg);
+        font-weight: 600;
+        color: var(--accent-cyan);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: var(--text-secondary);
+      }
+
+      tbody tr:hover {
+        background: var(--accent-bg);
+      }
+
+      .command {
+        font-family: "JetBrains Mono", monospace;
+        background: #020617;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        color: var(--accent-cyan);
+        font-weight: 500;
+      }
+
+      .step {
+        background: var(--accent-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .step h4 {
+        color: var(--accent-green);
+        margin-bottom: 0.5rem;
+      }
+
+      .step p {
+        color: var(--text-secondary);
+      }
+
+      .warning {
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid var(--accent-red);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .warning p {
+        color: var(--accent-red);
+        font-weight: 500;
+      }
+
+      .summary {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .summary h2 {
+        color: var(--accent-orange);
+      }
+
+      .summary p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .toc {
+          padding: 1.5rem;
+        }
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
+        }
+
+        .code-block {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumb">
+        <p>
+          ←
+          <a href="day03_branching_merging.html">Day 3 — Branching & Merging</a>
+          | <a href="index.html">Index</a> |
+          <a href="day05_rewriting_undoing_history.html"
+            >Day 5 — Rewriting History & Undoing Things</a
+          >
+          →
+        </p>
+      </nav>
+
+      <header>
+        <h1>Git Learning Curriculum</h1>
+        <p class="subtitle">Day 4 — Remote Repositories & GitHub</p>
+      </header>
+
+      <div class="goal">
+        <p>
+          <strong>Goal:</strong> Push your code to the cloud, pull changes from
+          others, and understand the collaboration workflow that powers modern
+          software teams.
+        </p>
+      </div>
+
+      <nav class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+          <li>
+            <a href="#1-what-is-a-remote-repository"
+              >What is a Remote Repository?</a
+            >
+          </li>
+          <li><a href="#2-setting-up-github">Setting Up GitHub</a></li>
+          <li>
+            <a href="#3-cloning-a-repository"
+              >Cloning a Repository — git clone</a
+            >
+          </li>
+          <li>
+            <a href="#4-connecting-to-a-remote"
+              >Connecting to a Remote — git remote</a
+            >
+          </li>
+          <li><a href="#5-pushing-changes">Pushing Changes — git push</a></li>
+          <li>
+            <a href="#6-fetching-changes">Fetching Changes — git fetch</a>
+          </li>
+          <li><a href="#7-pulling-changes">Pulling Changes — git pull</a></li>
+          <li>
+            <a href="#8-the-fork-clone-push-pull-request-workflow"
+              >The Fork → Clone → Push → Pull Request Workflow</a
+            >
+          </li>
+          <li>
+            <a href="#9-tracking-branches-remote-refs"
+              >Tracking Branches & Remote Refs</a
+            >
+          </li>
+          <li>
+            <a href="#10-common-remote-scenarios">Common Remote Scenarios</a>
+          </li>
+          <li>
+            <a href="#11-day-4-hands-on-exercise">Day 4 Hands-On Exercise</a>
+          </li>
+          <li><a href="#12-key-commands-summary">Key Commands Summary</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <section id="1-what-is-a-remote-repository">
+          <h2>1. What is a Remote Repository?</h2>
+          <p>
+            So far everything you've done has been <strong>local</strong> — your
+            commits, branches, and history only exist on your machine. A
+            <strong>remote repository</strong> is a version of your project
+            hosted on a server (like GitHub, GitLab, or Bitbucket) that you and
+            your team can all access.
+          </p>
+
+          <div class="mermaid-diagram">
+            graph LR<br />
+            subgraph Machine ["Your Machine"]<br />
+            LR["<br /><b>💻 Local Repository</b><br /><i
+              >Commits, Branches, History</i
+            ><br />&nbsp;"]<br />
+            end<br />
+            <br />
+            subgraph GitHub ["GitHub (Remote)"]<br />
+            RR["<b>☁️ Remote Repository</b> <br /><i
+              >Same commits & branches<br />Visible to team</i
+            ><br />&nbsp;"]<br />
+            end<br />
+            <br />
+            LR -- "git push" --> RR<br />
+            RR -- "git pull" --> LR<br />
+            <br />
+            %% Global Styling<br />
+            classDef default font-family:'Segoe
+            UI',Roboto,Helvetica,Arial,sans-serif,font-size:14px;<br />
+            <br />
+            %% Styling<br />
+            style LR fill:#e8f5e9,stroke:#4caf50,stroke-width:2px,rx:10,ry:10<br />
+            style RR fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px,rx:10,ry:10<br />
+            style Machine fill:none,stroke:#ccc,stroke-dasharray: 5 5<br />
+            style GitHub fill:none,stroke:#ccc,stroke-dasharray: 5 5<br />
+            <br />
+            %% Link Styling<br />
+            linkStyle 0,1 stroke:#555,stroke-width:2px,color:#333
+          </div>
+
+          <div class="ascii-diagram">
+            Your Machine GitHub (Remote) ─────────────────
+            ───────────────────────── Local Repo Remote Repo ┌──────────┐ git
+            push ──────► ┌──────────────────┐ │ commits │ │ same commits │ │
+            branches│ ◄────── git pull │ branches │ │ history │ │ visible to
+            team │ └──────────┘ └──────────────────┘
+          </div>
+
+          <p>The remote serves three key purposes:</p>
+          <ul>
+            <li>
+              <strong>Backup</strong> — your work is safe even if your laptop
+              dies
+            </li>
+            <li>
+              <strong>Collaboration</strong> — teammates can see, pull, and
+              build on your work
+            </li>
+            <li>
+              <strong>Deployment</strong> — CI/CD pipelines watch your remote
+              and deploy automatically when you push
+            </li>
+          </ul>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A startup's entire codebase lives on GitHub. When a developer's
+              laptop is stolen, they simply clone the repository onto a new
+              machine and are back to full productivity in minutes. Nothing is
+              lost because every commit was pushed to the remote.
+            </p>
+          </div>
+        </section>
+
+        <section id="2-setting-up-github">
+          <h2>2. Setting Up GitHub</h2>
+
+          <h3>Create a GitHub Account</h3>
+          <p>
+            Go to
+            <a href="https://github.com" style="color: var(--accent-cyan)"
+              >https://github.com</a
+            >
+            and sign up for a free account if you don't have one.
+          </p>
+
+          <h3>Set Up SSH Authentication (Recommended)</h3>
+          <p>
+            SSH keys let you push and pull without typing a password every time.
+            This is the professional standard.
+          </p>
+
+          <h4>Step 1 — Generate an SSH key:</h4>
+          <div class="code-block">
+            ssh-keygen -t ed25519 -C "your@email.com"<br /><span class="comment"
+              ># Press Enter to accept the default file location</span
+            >
+          </div>
+
+          <h4>Step 2 — Copy your public key:</h4>
+          <div class="code-block">
+            <span class="comment"># On macOS</span><br />cat
+            ~/.ssh/id_ed25519.pub | pbcopy<br /><br /><span class="comment"
+              ># On Linux</span
+            ><br />cat ~/.ssh/id_ed25519.pub<br /><span class="comment"
+              ># Then manually copy the output</span
+            ><br /><br /><span class="comment"># On Windows (Git Bash)</span
+            ><br />cat ~/.ssh/id_ed25519.pub | clip
+          </div>
+
+          <h4>Step 3 — Add it to GitHub:</h4>
+          <p>
+            Go to GitHub → Settings → SSH and GPG keys → New SSH key → paste
+            your key → Save.
+          </p>
+
+          <h4>Step 4 — Test the connection:</h4>
+          <div class="code-block">
+            ssh -T git@github.com<br /><span class="comment"
+              ># Output: Hi username! You've successfully authenticated...</span
+            >
+          </div>
+
+          <h3>Alternative — HTTPS Authentication</h3>
+          <p>
+            If you prefer HTTPS over SSH, GitHub now requires a
+            <strong>Personal Access Token (PAT)</strong> instead of your
+            password:
+          </p>
+          <p>
+            Go to GitHub → Settings → Developer Settings → Personal access
+            tokens → Generate new token.
+          </p>
+          <p>Use this token as your password when Git prompts you.</p>
+        </section>
+
+        <section id="3-cloning-a-repository">
+          <h2>
+            3. Cloning a Repository — <span class="command">git clone</span>
+          </h2>
+          <p>
+            <code>git clone</code> downloads a remote repository to your local
+            machine — complete with all commits, branches, and history.
+          </p>
+
+          <h3>Basic Clone</h3>
+          <div class="code-block">
+            git clone https://github.com/username/repository-name.git
+          </div>
+
+          <p>
+            This creates a folder called <code>repository-name</code> in your
+            current directory, containing the full project.
+          </p>
+
+          <h3>Clone with SSH (Recommended if SSH is set up)</h3>
+          <div class="code-block">
+            git clone git@github.com:username/repository-name.git
+          </div>
+
+          <h3>Clone into a Custom Folder Name</h3>
+          <div class="code-block">
+            git clone git@github.com:username/repo.git my-project
+          </div>
+
+          <h3>Clone a Specific Branch</h3>
+          <div class="code-block">
+            git clone -b develop git@github.com:username/repo.git
+          </div>
+
+          <h3>What Clone Does Under the Hood</h3>
+          <p>When you clone, Git automatically:</p>
+          <ol>
+            <li>Downloads the entire repository history</li>
+            <li>Creates a local copy of all branches</li>
+            <li>
+              Sets up a remote called <code>origin</code> pointing to the URL
+              you cloned from
+            </li>
+            <li>Checks out the default branch (usually <code>main</code>)</li>
+            <li>
+              Sets up tracking so <code>git pull</code> and
+              <code>git push</code> know where to go
+            </li>
+          </ol>
+
+          <div class="code-block">
+            <span class="comment"
+              ># After cloning, verify what remote was set up</span
+            ><br />git remote -v<br /><span class="comment"># Output:</span
+            ><br /><span class="output"
+              ># origin git@github.com:username/repo.git (fetch)</span
+            ><br /><span class="output"
+              ># origin git@github.com:username/repo.git (push)</span
+            >
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A new developer joins a team on their first day. The tech lead
+              says "clone the repo and you're ready to go." One command gives
+              them the entire codebase, all its history going back years, and
+              every branch the team has ever worked on. No manual file
+              transfers, no zip files — just <code>git clone</code>.
+            </p>
+          </div>
+        </section>
+
+        <section id="4-connecting-to-a-remote">
+          <h2>
+            4. Connecting to a Remote — <span class="command">git remote</span>
+          </h2>
+          <p>
+            If you created a local repository with <code>git init</code> (rather
+            than cloning), you need to manually connect it to a remote.
+          </p>
+
+          <h3>Add a Remote</h3>
+          <div class="code-block">
+            git remote add origin git@github.com:username/repo.git
+          </div>
+
+          <p>
+            <code>origin</code> is the conventional name for your primary
+            remote. You can name it anything, but <code>origin</code> is
+            universally understood.
+          </p>
+
+          <h3>View All Remotes</h3>
+          <div class="code-block">git remote -v</div>
+
+          <div class="code-block">
+            <span class="output"
+              >origin git@github.com:username/my-project.git (fetch)<br />origin
+              git@github.com:username/my-project.git (push)</span
+            >
+          </div>
+
+          <h3>Change a Remote URL</h3>
+          <div class="code-block">
+            <span class="comment"
+              ># Useful when switching from HTTPS to SSH</span
+            ><br />git remote set-url origin git@github.com:username/repo.git
+          </div>
+
+          <h3>Remove a Remote</h3>
+          <div class="code-block">git remote remove origin</div>
+
+          <h3>Add a Second Remote</h3>
+          <p>
+            Teams sometimes use multiple remotes — for example,
+            <code>origin</code> for their fork and <code>upstream</code> for the
+            original project:
+          </p>
+          <div class="code-block">
+            git remote add upstream git@github.com:original-org/repo.git<br />git
+            remote -v<br /><span class="comment"
+              ># origin git@github.com:you/repo.git (fetch)</span
+            ><br /><span class="comment"
+              ># origin git@github.com:you/repo.git (push)</span
+            ><br /><span class="comment"
+              ># upstream git@github.com:original-org/repo.git (fetch)</span
+            ><br /><span class="comment"
+              ># upstream git@github.com:original-org/repo.git (push)</span
+            >
+          </div>
+        </section>
+
+        <section id="5-pushing-changes">
+          <h2>5. Pushing Changes — <span class="command">git push</span></h2>
+          <p>
+            <code>git push</code> uploads your local commits to the remote
+            repository. This is how your work becomes visible to teammates.
+          </p>
+
+          <h3>First Push (Set Upstream)</h3>
+          <p>
+            The first time you push a branch, use <code>-u</code> to set the
+            upstream tracking branch:
+          </p>
+          <div class="code-block">git push -u origin main</div>
+
+          <p>
+            After this, you can just run <code>git push</code> for all future
+            pushes on this branch — Git remembers where to send it.
+          </p>
+
+          <h3>Regular Push (After Upstream is Set)</h3>
+          <div class="code-block">git push</div>
+
+          <h3>Push a Feature Branch</h3>
+          <div class="code-block">git push -u origin feature-login</div>
+
+          <p>This creates the branch on the remote if it doesn't exist yet.</p>
+
+          <h3>Force Push (Use With Extreme Caution)</h3>
+          <div class="code-block">
+            git push --force<br /><span class="comment"
+              ># Safer alternative:</span
+            ><br />git push --force-with-lease
+          </div>
+
+          <p>
+            Force push overwrites the remote history. Only use it on your own
+            personal branches that no one else is working on — never on
+            <code>main</code> or shared branches.
+          </p>
+          <p>
+            <code>--force-with-lease</code> is the safer version: it refuses to
+            force push if someone else has pushed to the branch since you last
+            fetched, preventing you from accidentally overwriting a teammate's
+            work.
+          </p>
+
+          <div class="warning">
+            <p>
+              <strong>⚠️ Warning:</strong><br />
+              Force pushing to a shared branch is one of the most disruptive
+              things you can do on a team. It rewrites history that others have
+              already pulled, causing serious problems. Always communicate
+              before force pushing, and prefer safer alternatives like
+              <code>git revert</code>.
+            </p>
+          </div>
+
+          <h3>Push Tags</h3>
+          <div class="code-block">
+            <span class="comment"># Push a specific tag</span><br />git push
+            origin v1.0.0<br /><br /><span class="comment"># Push all tags</span
+            ><br />git push origin --tags
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A developer finishes a feature at 5pm on Friday. Before logging
+              off, they push their branch to GitHub. Over the weekend, their
+              laptop battery dies completely. On Monday, they clone fresh,
+              switch to their branch, and all their work is exactly where they
+              left it — safe on the remote.
+            </p>
+          </div>
+        </section>
+
+        <section id="6-fetching-changes">
+          <h2>6. Fetching Changes — <span class="command">git fetch</span></h2>
+          <p>
+            <code>git fetch</code> downloads changes from the remote but
+            <strong
+              >does not modify your working directory or current branch</strong
+            >. It simply updates your knowledge of what's on the remote.
+          </p>
+
+          <h3>Fetch from Origin</h3>
+          <div class="code-block">git fetch origin</div>
+
+          <h3>Fetch All Remotes</h3>
+          <div class="code-block">git fetch --all</div>
+
+          <h3>What Fetch Actually Does</h3>
+          <p>
+            After fetching, your remote tracking branches (like
+            <code>origin/main</code>) are updated, but your local
+            <code>main</code> stays exactly the same. You can then inspect what
+            changed before deciding to merge:
+          </p>
+          <div class="code-block">
+            <span class="comment"># Fetch the latest</span><br />git fetch
+            origin<br /><br /><span class="comment"
+              ># See what changed on the remote main vs your local main</span
+            ><br />git log main..origin/main --oneline<br /><br /><span
+              class="comment"
+              ># See the actual diff</span
+            ><br />git diff main origin/main<br /><br /><span class="comment"
+              ># Decide to merge when you're ready</span
+            ><br />git merge origin/main
+          </div>
+
+          <h3>Fetch vs Pull</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th><code>git fetch</code></th>
+                  <th><code>git pull</code></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Downloads remote changes</td>
+                  <td>✅</td>
+                  <td>✅</td>
+                </tr>
+                <tr>
+                  <td>Updates your working branch</td>
+                  <td>❌</td>
+                  <td>✅</td>
+                </tr>
+                <tr>
+                  <td>Safe to run anytime</td>
+                  <td>✅</td>
+                  <td>Use with care</td>
+                </tr>
+                <tr>
+                  <td>Lets you review before merging</td>
+                  <td>✅</td>
+                  <td>❌</td>
+                </tr>
+                <tr>
+                  <td>Best for</td>
+                  <td>Checking what changed</td>
+                  <td>Quick sync when you trust the remote</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              Before starting work each morning, a careful developer runs
+              <code>git fetch</code> first. They then check
+              <code>git log origin/main --oneline</code> to see what teammates
+              committed overnight. Only after reviewing the changes do they
+              decide whether to merge or rebase. This prevents surprise
+              conflicts mid-day.
+            </p>
+          </div>
+        </section>
+
+        <section id="7-pulling-changes">
+          <h2>7. Pulling Changes — <span class="command">git pull</span></h2>
+          <p>
+            <code>git pull</code> is essentially <code>git fetch</code> +
+            <code>git merge</code> in one command. It downloads remote changes
+            and immediately integrates them into your current branch.
+          </p>
+
+          <h3>Basic Pull</h3>
+          <div class="code-block">
+            git pull<br /><span class="comment"># Equivalent to:</span><br />git
+            fetch origin<br />git merge origin/main
+          </div>
+
+          <h3>Pull from a Specific Remote and Branch</h3>
+          <div class="code-block">git pull origin main</div>
+
+          <h3>Pull with Rebase (Cleaner History)</h3>
+          <div class="code-block">git pull --rebase</div>
+
+          <p>
+            Instead of creating a merge commit, this replays your local commits
+            on top of the fetched commits. The result is a linear history with
+            no merge bubbles. Many teams prefer this:
+          </p>
+          <div class="code-block">
+            <span class="comment"
+              ># Set rebase as the default pull strategy</span
+            ><br />git config --global pull.rebase true
+          </div>
+
+          <h3>Handling Pull Conflicts</h3>
+          <p>
+            If a pull brings in changes that conflict with your local work, Git
+            will pause and show a conflict — exactly like a merge conflict from
+            Day 3. Resolve it the same way:
+          </p>
+          <div class="code-block">
+            git pull<br /><span class="comment"
+              ># CONFLICT (content): Merge conflict in app.js</span
+            ><br /><span class="comment"
+              ># Automatic merge failed; fix conflicts and then commit the
+              result.</span
+            ><br /><br /><span class="comment"
+              ># Fix the conflicts in your editor</span
+            ><br />git add app.js<br />git commit -m "merge: resolve conflict
+            from remote pull"
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              Two developers are working on the same project. Developer A pushes
+              a config update. Developer B pulls before starting their day,
+              getting A's changes automatically. They both stay in sync without
+              ever emailing files back and forth.
+            </p>
+          </div>
+        </section>
+
+        <section id="8-the-fork-clone-push-pull-request-workflow">
+          <h2>8. The Fork → Clone → Push → Pull Request Workflow</h2>
+          <p>
+            This is the
+            <strong>standard open source and team collaboration workflow</strong
+            >. Understanding it is essential for working on any real project.
+          </p>
+
+          <h3>What is a Fork?</h3>
+          <p>
+            A <strong>fork</strong> is your own personal copy of someone else's
+            repository on GitHub. It lives in your GitHub account, not the
+            original. You have full control over it.
+          </p>
+
+          <div class="ascii-diagram">
+            Original Repo Your Fork (org/project) Fork ──────► (you/project) │ │
+            │ git clone │ │ │ Your Machine │ │ │◄──── Pull Request ────────────┘
+          </div>
+
+          <h3>The Full Workflow Step by Step</h3>
+
+          <div class="step">
+            <h4>Step 1 — Fork the repository on GitHub</h4>
+            <p>
+              Click the "Fork" button on any GitHub repository. This creates
+              <code>github.com/your-username/project</code>.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4>Step 2 — Clone your fork locally</h4>
+            <div class="code-block">
+              git clone git@github.com:your-username/project.git<br />cd project
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 3 — Add the original as "upstream"</h4>
+            <div class="code-block">
+              git remote add upstream git@github.com:original-org/project.git<br />git
+              remote -v<br /><span class="comment"
+                ># origin git@github.com:your-username/project.git</span
+              ><br /><span class="comment"
+                ># upstream git@github.com:original-org/project.git</span
+              >
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 4 — Create a feature branch</h4>
+            <div class="code-block">git switch -c feature/improve-docs</div>
+          </div>
+
+          <div class="step">
+            <h4>Step 5 — Make your changes and commit</h4>
+            <div class="code-block">
+              <span class="comment"># Edit files...</span><br />git add .<br />git
+              commit -m "docs: improve installation instructions"
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 6 — Keep your fork in sync with upstream</h4>
+            <div class="code-block">
+              git fetch upstream<br />git switch main<br />git merge
+              upstream/main<br />git push origin main
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 7 — Push your feature branch to your fork</h4>
+            <div class="code-block">
+              git push -u origin feature/improve-docs
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 8 — Open a Pull Request on GitHub</h4>
+            <p>
+              Go to GitHub → your fork → click "Compare & pull request" → write
+              a description → Submit.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4>Step 9 — Address review feedback</h4>
+            <div class="code-block">
+              <span class="comment"># Make requested changes</span><br />git add
+              .<br />git commit -m "docs: address review feedback on setup
+              section"<br />git push<br /><span class="comment"
+                ># The PR updates automatically</span
+              >
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 10 — PR is merged by a maintainer</h4>
+            <p>
+              Your code is now part of the original project. Delete your branch:
+            </p>
+            <div class="code-block">
+              git branch -d feature/improve-docs<br />git push origin --delete
+              feature/improve-docs
+            </div>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              This exact workflow is how millions of contributions are made to
+              open source projects like React, VS Code, and Linux every day.
+              Companies like Google, Meta, and Microsoft use variations of this
+              pattern for internal development too — it's the backbone of modern
+              collaborative software development.
+            </p>
+          </div>
+        </section>
+
+        <section id="9-tracking-branches-remote-refs">
+          <h2>9. Tracking Branches & Remote Refs</h2>
+
+          <h3>What are Remote Tracking Branches?</h3>
+          <p>
+            When you fetch or clone, Git creates
+            <strong>remote tracking branches</strong> — read-only local
+            references to the state of branches on the remote. They look like
+            <code>origin/main</code>, <code>origin/feature-login</code>, etc.
+          </p>
+          <div class="code-block">
+            <span class="comment"># See all remote tracking branches</span
+            ><br />git branch -r<br /><br /><span class="output"># Output:</span
+            ><br /><span class="output"># origin/HEAD -> origin/main</span
+            ><br /><span class="output"># origin/main</span><br /><span
+              class="output"
+              ># origin/feature-login</span
+            ><br /><span class="output"># origin/bugfix-header</span>
+          </div>
+
+          <p>
+            You can't commit directly to a remote tracking branch — they update
+            only when you fetch.
+          </p>
+
+          <h3>See Where Your Branch Tracks</h3>
+          <div class="code-block">git branch -vv</div>
+
+          <div class="code-block">
+            <span class="output"># Output:</span><br /><span class="output"
+              ># * main a1b2c3d [origin/main] feat: add homepage</span
+            ><br /><span class="output"
+              ># feature-login d4e5f6a [origin/feature-login: ahead 2] feat:
+              login form</span
+            ><br /><span class="output"
+              ># local-only f7g8h9i local branch with no remote</span
+            >
+          </div>
+
+          <p>
+            - <code>ahead 2</code> → you have 2 commits not yet pushed to
+            remote<br />
+            - <code>behind 3</code> → remote has 3 commits you haven't pulled
+            yet<br />
+            - <code>ahead 1, behind 2</code> → both sides have new commits (need
+            to pull then push)
+          </p>
+
+          <h3>Set Upstream Tracking for an Existing Branch</h3>
+          <div class="code-block">
+            git branch --set-upstream-to=origin/main main
+          </div>
+        </section>
+
+        <section id="10-common-remote-scenarios">
+          <h2>10. Common Remote Scenarios</h2>
+
+          <h3>Scenario 1 — Push Rejected Because Remote Has New Commits</h3>
+          <div class="code-block">
+            git push<br /><span class="comment"
+              ># error: failed to push some refs</span
+            ><br /><span class="comment"
+              ># hint: Updates were rejected because the remote contains
+              work</span
+            ><br /><span class="comment"
+              ># hint: that you do not have locally.</span
+            >
+          </div>
+
+          <p><strong>Solution:</strong> Pull first, then push:</p>
+          <div class="code-block">git pull --rebase<br />git push</div>
+
+          <h3>
+            Scenario 2 — Collaborator Deleted a Branch but it Still Shows
+            Locally
+          </h3>
+          <div class="code-block">
+            <span class="comment"
+              ># Clean up stale remote tracking branches</span
+            ><br />git fetch --prune<br /><span class="comment"># or</span
+            ><br />git remote prune origin
+          </div>
+
+          <h3>Scenario 3 — You Want to See a Remote Branch Locally</h3>
+          <div class="code-block">
+            <span class="comment"># Fetch all remote branches</span><br />git
+            fetch origin<br /><br /><span class="comment"
+              ># Create a local branch tracking the remote one</span
+            ><br />git switch -c feature-login origin/feature-login<br /><span
+              class="comment"
+              ># or shorthand:</span
+            ><br />git switch feature-login
+            <span class="comment"># Git auto-detects the remote branch</span>
+          </div>
+
+          <h3>Scenario 4 — Undo a Push (You Pushed Something Wrong)</h3>
+          <div class="code-block">
+            <span class="comment"
+              ># Create a revert commit (safe — doesn't rewrite history)</span
+            ><br />git revert HEAD<br />git push<br /><br /><span
+              class="comment"
+              ># Or if it's your own branch and no one else has it:</span
+            ><br />git reset HEAD~1<br />git push --force-with-lease
+          </div>
+
+          <h3>Scenario 5 — Check What Would Be Pushed Before Pushing</h3>
+          <div class="code-block">
+            <span class="comment"
+              ># See commits that are local but not on remote</span
+            ><br />git log origin/main..HEAD --oneline
+          </div>
+        </section>
+
+        <section id="11-day-4-hands-on-exercise">
+          <h2>11. Day 4 Hands-On Exercise</h2>
+          <p>
+            For this exercise you'll need a GitHub account. This simulates the
+            complete real-world remote workflow.
+          </p>
+
+          <div class="step">
+            <h4>Step 1 — Create a Repository on GitHub</h4>
+            <ol>
+              <li>
+                Go to
+                <a
+                  href="https://github.com/new"
+                  style="color: var(--accent-cyan)"
+                  >https://github.com/new</a
+                >
+              </li>
+              <li>Name it <code>learning-git</code></li>
+              <li>Leave it empty (no README, no .gitignore)</li>
+              <li>Click "Create repository"</li>
+            </ol>
+          </div>
+
+          <div class="step">
+            <h4>Step 2 — Connect Your Local Repo to GitHub</h4>
+            <div class="code-block">
+              cd ~/Desktop/learning-git<br /><br /><span class="comment"
+                ># Add GitHub as the remote</span
+              ><br />git remote add origin
+              git@github.com:YOUR_USERNAME/learning-git.git<br /><br /><span
+                class="comment"
+                ># Verify it's connected</span
+              ><br />git remote -v<br /><br /><span class="comment"
+                ># Push your existing commits to GitHub</span
+              ><br />git push -u origin main
+            </div>
+            <p>
+              Now visit
+              <code>https://github.com/YOUR_USERNAME/learning-git</code> — your
+              commits are live!
+            </p>
+          </div>
+
+          <div class="step">
+            <h4>Step 3 — Make a Change and Push It</h4>
+            <div class="code-block">
+              <span class="comment"># Create a new file</span><br />echo "#
+              Contributing Guide" > CONTRIBUTING.md<br />echo "Please open a
+              Pull Request for all changes." >> CONTRIBUTING.md<br /><br />git
+              add CONTRIBUTING.md<br />git commit -m "docs: add contributing
+              guide"<br /><br /><span class="comment"
+                ># Push — no need for -u this time</span
+              ><br />git push
+            </div>
+            <p>Refresh your GitHub page and watch the new file appear.</p>
+          </div>
+
+          <div class="step">
+            <h4>Step 4 — Simulate a Remote Change (Edit on GitHub)</h4>
+            <ol>
+              <li>On GitHub, click on <code>README.md</code></li>
+              <li>Click the pencil (edit) icon</li>
+              <li>Add a line: <code>## Status: Active</code></li>
+              <li>Click "Commit changes" directly on GitHub</li>
+            </ol>
+            <p>
+              Now your remote has a commit your local machine doesn't know
+              about.
+            </p>
+          </div>
+
+          <div class="step">
+            <h4>Step 5 — Fetch and Inspect Before Pulling</h4>
+            <div class="code-block">
+              <span class="comment"
+                ># Fetch to see what changed (doesn't modify your files)</span
+              ><br />git fetch origin<br /><br /><span class="comment"
+                ># See what's new on the remote</span
+              ><br />git log origin/main --oneline<br /><br /><span
+                class="comment"
+                ># Compare remote vs local</span
+              ><br />git diff HEAD origin/main<br /><br /><span class="comment"
+                ># Now pull to sync</span
+              ><br />git pull
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 6 — Create a Feature Branch and Open a Pull Request</h4>
+            <div class="code-block">
+              <span class="comment"># Create a feature branch</span><br />git
+              switch -c feature/add-license<br /><br /><span class="comment"
+                ># Add a license file</span
+              ><br />echo "MIT License - $(date +%Y) Your Name" > LICENSE<br />git
+              add LICENSE<br />git commit -m "chore: add MIT license"<br /><br /><span
+                class="comment"
+                ># Push the branch to GitHub</span
+              ><br />git push -u origin feature/add-license
+            </div>
+            <p>
+              Now go to GitHub — you'll see a yellow banner saying
+              "feature/add-license had recent pushes". Click "Compare & pull
+              request", write a description, and open the PR.
+            </p>
+            <p>Then merge it on GitHub, and clean up locally:</p>
+            <div class="code-block">
+              git switch main<br />git pull<br />git branch -d
+              feature/add-license
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 7 — Explore Your Remote State</h4>
+            <div class="code-block">
+              <span class="comment"># See all branches (local + remote)</span
+              ><br />git branch -a<br /><br /><span class="comment"
+                ># See tracking status of each branch</span
+              ><br />git branch -vv<br /><br /><span class="comment"
+                ># Clean up remote tracking refs for deleted branches</span
+              ><br />git fetch --prune
+            </div>
+          </div>
+
+          <div class="highlight">
+            <p>
+              <strong>✅ What You Should Have After This Exercise:</strong
+              ><br />
+              - A public GitHub repository with your learning-git project<br />
+              - Experience pushing, fetching, and pulling<br />
+              - A merged Pull Request in your repository's history
+            </p>
+          </div>
+        </section>
+
+        <section id="12-key-commands-summary">
+          <h2>12. Key Commands Summary</h2>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                  <th>Common Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>git clone &lt;url&gt;</code></td>
+                  <td>Download a remote repo locally</td>
+                  <td><code>git clone git@github.com:user/repo.git</code></td>
+                </tr>
+                <tr>
+                  <td><code>git remote add</code></td>
+                  <td>Connect a local repo to a remote</td>
+                  <td><code>git remote add origin &lt;url&gt;</code></td>
+                </tr>
+                <tr>
+                  <td><code>git remote -v</code></td>
+                  <td>List all remotes and their URLs</td>
+                  <td><code>git remote -v</code></td>
+                </tr>
+                <tr>
+                  <td><code>git remote set-url</code></td>
+                  <td>Change a remote's URL</td>
+                  <td>
+                    <code>git remote set-url origin &lt;new-url&gt;</code>
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>git push -u origin &lt;branch&gt;</code></td>
+                  <td>Push and set upstream tracking</td>
+                  <td><code>git push -u origin main</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push</code></td>
+                  <td>Push commits to tracked remote branch</td>
+                  <td><code>git push</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push --force-with-lease</code></td>
+                  <td>Safe force push</td>
+                  <td><code>git push --force-with-lease</code></td>
+                </tr>
+                <tr>
+                  <td><code>git fetch</code></td>
+                  <td>Download remote changes without merging</td>
+                  <td><code>git fetch origin</code></td>
+                </tr>
+                <tr>
+                  <td><code>git fetch --prune</code></td>
+                  <td>Fetch and remove stale remote refs</td>
+                  <td><code>git fetch --prune</code></td>
+                </tr>
+                <tr>
+                  <td><code>git pull</code></td>
+                  <td>Fetch and merge remote changes</td>
+                  <td><code>git pull</code></td>
+                </tr>
+                <tr>
+                  <td><code>git pull --rebase</code></td>
+                  <td>Fetch and rebase instead of merge</td>
+                  <td><code>git pull --rebase</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -r</code></td>
+                  <td>List remote tracking branches</td>
+                  <td><code>git branch -r</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -vv</code></td>
+                  <td>Show tracking info for all branches</td>
+                  <td><code>git branch -vv</code></td>
+                </tr>
+                <tr>
+                  <td><code>git log origin/main..HEAD</code></td>
+                  <td>See unpushed local commits</td>
+                  <td><code>git log origin/main..HEAD --oneline</code></td>
+                </tr>
+                <tr>
+                  <td><code>git push origin --delete &lt;b&gt;</code></td>
+                  <td>Delete a branch on the remote</td>
+                  <td><code>git push origin --delete feature-login</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="summary">
+          <h2>Coming Up on Day 5 — Rewriting History & Undoing Things</h2>
+          <p>
+            Tomorrow you'll learn to fix mistakes confidently — every tool Git
+            gives you to undo, rewrite, and recover from errors at any stage of
+            your workflow.
+          </p>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          ←
+          <a href="day03_branching_merging.html">Day 3 — Branching & Merging</a>
+          | <a href="index.html">Index</a> |
+          <a href="day05_rewriting_undoing_history.html"
+            >Day 5 — Rewriting History & Undoing Things</a
+          >
+          →
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

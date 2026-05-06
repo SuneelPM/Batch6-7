@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Lists Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Python Lists Mastery
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Data Structures Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Nesting, Stable Sorting, and Memory Management (Copy vs Deepcopy).
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Basic Append & Extend",
+          difficulty: "easy",
+          description:
+            "Given list1 = [1, 2] and list2 = [3, 4], use append() to add list2 to list1, and extend() to add elements of list2 to list1. Print both results.",
+          solution:
+            "list1 = [1, 2]\nlist2 = [3, 4]\n\n# Using append\na = [1, 2]\na.append(list2)\nprint(f'Append: {a}') # [1, 2, [3, 4]]\n\n# Using extend\nb = [1, 2]\nb.extend(list2)\nprint(f'Extend: {b}') # [1, 2, 3, 4]",
+        },
+        {
+          id: 2,
+          title: "List Popping",
+          difficulty: "easy",
+          description:
+            "Remove the second element from the list [10, 20, 30, 40] using pop() and print the removed value and the updated list.",
+          solution:
+            "nums = [10, 20, 30, 40]\nremoved = nums.pop(1)\nprint(f'Removed: {removed}, List: {nums}')",
+        },
+        {
+          id: 3,
+          title: "Finding Index",
+          difficulty: "easy",
+          description:
+            "Find the index of the first occurrence of 'orange' in ['apple', 'banana', 'orange', 'grape'].",
+          solution:
+            "fruits = ['apple', 'banana', 'orange', 'grape']\nprint(fruits.index('orange'))",
+        },
+        {
+          id: 4,
+          title: "Counting Occurrences",
+          difficulty: "easy",
+          description:
+            "Count how many times the number 5 appears in [5, 1, 5, 2, 5, 3].",
+          solution: "nums = [5, 1, 5, 2, 5, 3]\nprint(nums.count(5))",
+        },
+        {
+          id: 5,
+          title: "Reversing In-Place",
+          difficulty: "easy",
+          description:
+            "Reverse the list [1, 2, 3, 4, 5] in-place using the reverse() method.",
+          solution: "nums = [1, 2, 3, 4, 5]\nnums.reverse()\nprint(nums)",
+        },
+        {
+          id: 6,
+          title: "List Clear",
+          difficulty: "easy",
+          description:
+            "Remove all elements from the list ['a', 'b', 'c'] so it becomes [].",
+          solution: "chars = ['a', 'b', 'c']\nchars.clear()\nprint(chars)",
+        },
+        {
+          id: 7,
+          title: "Simple In-Place Sort",
+          difficulty: "easy",
+          description:
+            "Sort the list [4, 1, 7, 3] in descending order using the sort() method.",
+          solution: "nums = [4, 1, 7, 3]\nnums.sort(reverse=True)\nprint(nums)",
+        },
+        {
+          id: 8,
+          title: "Accessing Nested Lists",
+          difficulty: "medium",
+          description:
+            "Given matrix = [[1, 2], [3, 4], [5, 6]], print the number 4 using double indexing.",
+          solution: "matrix = [[1, 2], [3, 4], [5, 6]]\nprint(matrix[1][1])",
+        },
+        {
+          id: 9,
+          title: "List Comprehension: Squares",
+          difficulty: "medium",
+          description:
+            "Create a list of squares for numbers 1 to 10 using list comprehension.",
+          solution: "squares = [x**2 for x in range(1, 11)]\nprint(squares)",
+        },
+        {
+          id: 10,
+          title: "Sorted vs Sort",
+          difficulty: "medium",
+          description:
+            "Given x = [3, 1, 2], show that sorted(x) returns a new list while x.sort() modifies the original.",
+          solution:
+            "x = [3, 1, 2]\nnew_x = sorted(x)\nprint(f'Original x: {x}, New list: {new_x}')\n\nx.sort()\nprint(f'Modified x: {x}')",
+        },
+        {
+          id: 11,
+          title: "Custom Sort Key",
+          difficulty: "medium",
+          description:
+            "Sort the list ['banana', 'apple', 'kiwi'] based on the length of the strings.",
+          solution:
+            "fruits = ['banana', 'apple', 'kiwi']\nfruits.sort(key=len)\nprint(fruits) # ['kiwi', 'apple', 'banana']",
+        },
+        {
+          id: 12,
+          title: "The copy() method",
+          difficulty: "medium",
+          description:
+            "Create a shallow copy of a list [1, 2, [3, 4]]. Change an element in the original nested list and see if the copy changes.",
+          solution:
+            "original = [1, 2, [3, 4]]\nshallow = original.copy()\n\noriginal[2][0] = 99\nprint(f'Original: {original}')\nprint(f'Shallow: {shallow}') # Both will have [99, 4]",
+        },
+        {
+          id: 13,
+          title: "Deepcopy Implementation",
+          difficulty: "medium",
+          description:
+            "Use the copy module's deepcopy() function to ensure a nested list is fully independent.",
+          solution:
+            "import copy\noriginal = [1, 2, [3, 4]]\ndeep = copy.deepcopy(original)\n\noriginal[2][0] = 99\nprint(f'Original: {original}')\nprint(f'Deep: {deep}') # Deep will still have [3, 4]",
+        },
+        {
+          id: 14,
+          title: "Filtering with Comprehension",
+          difficulty: "medium",
+          description:
+            "Given [10, 21, 30, 45, 50], create a new list containing only even numbers using comprehension.",
+          solution:
+            "nums = [10, 21, 30, 45, 50]\nevens = [x for x in nums if x % 2 == 0]\nprint(evens)",
+        },
+        {
+          id: 15,
+          title: "List as a Stack",
+          difficulty: "medium",
+          description:
+            "Demonstrate using append() and pop() to treat a list as a Last-In-First-Out (LIFO) stack.",
+          solution:
+            "stack = []\nstack.append('Task 1')\nstack.append('Task 2')\nprint(stack.pop()) # 'Task 2'\nprint(stack.pop()) # 'Task 1'",
+        },
+        {
+          id: 16,
+          title: "Flattening a Nested List",
+          difficulty: "hard",
+          description:
+            "Flatten matrix = [[1, 2], [3, 4], [5, 6]] into a single list [1, 2, 3, 4, 5, 6] using nested comprehension.",
+          solution:
+            "matrix = [[1, 2], [3, 4], [5, 6]]\nflat = [item for sublist in matrix for item in sublist]\nprint(flat)",
+        },
+        {
+          id: 17,
+          title: "Stable Sort Verification",
+          difficulty: "hard",
+          description:
+            "Sort a list of tuples [('A', 2), ('B', 1), ('C', 2)] by the second element. Show that 'A' stays before 'C'.",
+          solution:
+            "data = [('A', 2), ('B', 1), ('C', 2)]\n# Python sort is stable: it preserves order for equal keys\ndata.sort(key=lambda x: x[1])\nprint(data) # [('B', 1), ('A', 2), ('C', 2)]",
+        },
+        {
+          id: 18,
+          title: "Removing Duplicates while Preserving Order",
+          difficulty: "hard",
+          description:
+            "Convert [1, 2, 2, 3, 1, 4] to [1, 2, 3, 4] without losing original order (don't just use set()).",
+          solution:
+            "nums = [1, 2, 2, 3, 1, 4]\nseen = set()\nunique = [x for x in nums if not (x in seen or seen.add(x))]\nprint(unique)",
+        },
+        {
+          id: 19,
+          title: "Nested List Comprehension: Identity Matrix",
+          difficulty: "hard",
+          description:
+            "Create a 3x3 identity matrix (1s on diagonal, 0s elsewhere) using nested list comprehension.",
+          solution:
+            "identity = [[1 if i == j else 0 for j in range(3)] for i in range(3)]\nfor row in identity: print(row)",
+        },
+        {
+          id: 20,
+          title: "Simulating deepcopy manually",
+          difficulty: "hard",
+          description:
+            "Manually create a deep copy of [[1, 2], [3, 4]] using list comprehension (no import copy).",
+          solution:
+            "matrix = [[1, 2], [3, 4]]\nmanual_deep = [row[:] for row in matrix]\nmatrix[0][0] = 9\nprint(f'Original: {matrix}, Copy: {manual_deep}')",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "List Multiplication",
+          difficulty: "easy",
+          question: "What is the result of [0] * 3?",
+          options: ["[0, 0, 0]", "[0, 3]", "[[0], [0], [0]]", "Error"],
+          answer: "[0, 0, 0]",
+        },
+        {
+          id: 2,
+          title: "List Membership",
+          difficulty: "easy",
+          question: "Which keyword checks if an item exists in a list?",
+          options: ["exists", "in", "contains", "has"],
+          answer: "in",
+        },
+        {
+          id: 3,
+          title: "Index Error",
+          difficulty: "easy",
+          question: "What happens if you access list[len(list)]?",
+          options: [
+            "Returns last item",
+            "Returns None",
+            "Raises IndexError",
+            "Returns first item",
+          ],
+          answer: "Raises IndexError (Indices are 0 to len-1)",
+        },
+        {
+          id: 4,
+          title: "Mutable check",
+          difficulty: "easy",
+          question: "Which of the following is true about Python lists?",
+          options: [
+            "Fixed size",
+            "Immutable",
+            "Ordered and Mutable",
+            "Unordered",
+          ],
+          answer: "Ordered and Mutable",
+        },
+        {
+          id: 5,
+          title: "Append Return",
+          difficulty: "easy",
+          question: "What does my_list.append(5) return?",
+          options: ["The new list", "The number 5", "None", "The index of 5"],
+          answer: "None (List methods usually modify in-place and return None)",
+        },
+        {
+          id: 6,
+          title: "List Constructor",
+          difficulty: "easy",
+          question: "Result of list('cat')?",
+          options: ["['cat']", "['c', 'a', 't']", "['c', 'at']", "Error"],
+          answer: "['c', 'a', 't'] (Converts iterable to list characters)",
+        },
+        {
+          id: 7,
+          title: "Slicing Step",
+          difficulty: "medium",
+          question: "What is [1, 2, 3, 4, 5][::-1]?",
+          options: [
+            "[5, 4, 3, 2, 1]",
+            "[1, 2, 3, 4, 5]",
+            "[5]",
+            "[4, 3, 2, 1]",
+          ],
+          answer: "[5, 4, 3, 2, 1] (Standard reverse slice)",
+        },
+        {
+          id: 8,
+          title: "List References",
+          difficulty: "medium",
+          question: "If a = [1, 2] and b = a, then b.append(3). What is a?",
+          options: ["[1, 2]", "[1, 2, 3]", "[3]", "None"],
+          answer: "[1, 2, 3] (a and b point to the same object)",
+        },
+        {
+          id: 9,
+          title: "Nested References",
+          difficulty: "medium",
+          question: "Result of x = [[0]] * 2; x[0][0] = 1; print(x)?",
+          options: [
+            "[[1], [0]]",
+            "[[1], [1]]",
+            "[[0], [0]]",
+            "[[1], [1], [1]]",
+          ],
+          answer: "[[1], [1]] (Both inner lists are the SAME object reference)",
+        },
+        {
+          id: 10,
+          title: "Sorting String Case",
+          difficulty: "medium",
+          question: "What is sorted(['b', 'A', 'c'])?",
+          options: [
+            "['A', 'b', 'c']",
+            "['b', 'A', 'c']",
+            "['a', 'b', 'c']",
+            "['c', 'b', 'A']",
+          ],
+          answer: "['A', 'b', 'c'] (ASCII values: A is 65, b is 98)",
+        },
+        {
+          id: 11,
+          title: "Remove vs Pop",
+          difficulty: "medium",
+          question: "Difference between list.remove(x) and list.pop(x)?",
+          options: [
+            "None",
+            "remove() takes index, pop() takes value",
+            "remove() takes value, pop() takes index",
+            "pop() is faster",
+          ],
+          answer: "remove() takes value, pop() takes index",
+        },
+        {
+          id: 12,
+          title: "List Equality",
+          difficulty: "medium",
+          question:
+            "If a = [1, 2] and b = [1, 2], what is (a == b) and (a is b)?",
+          options: ["True, True", "False, False", "True, False", "False, True"],
+          answer: "True, False (Values are equal, but objects are different)",
+        },
+        {
+          id: 13,
+          title: "Pop from Empty",
+          difficulty: "medium",
+          question: "Result of [].pop()?",
+          options: ["None", "[]", "IndexError", "TypeError"],
+          answer: "IndexError (pop from empty list)",
+        },
+        {
+          id: 14,
+          title: "List Max",
+          difficulty: "medium",
+          question: "Result of max(['10', '2'])?",
+          options: ["'10'", "'2'", "Error", "None"],
+          answer: "'2' (String comparison: '2' > '1')",
+        },
+        {
+          id: 15,
+          title: "Extend vs Add",
+          difficulty: "medium",
+          question: "Difference between a.extend([1]) and a + [1]?",
+          options: [
+            "None",
+            "extend is in-place, + creates new",
+            "+ is in-place, extend is new",
+            "+ is faster",
+          ],
+          answer: "extend is in-place, + creates new list",
+        },
+        {
+          id: 16,
+          title: "Timsort Complexity",
+          difficulty: "hard",
+          question:
+            "What is the worst-case time complexity of Python's sort()?",
+          options: ["O(n)", "O(n log n)", "O(n²)", "O(log n)"],
+          answer: "O(n log n)",
+        },
+        {
+          id: 17,
+          title: "Stable Sort Definition",
+          difficulty: "hard",
+          question: "What is a 'stable sort'?",
+          options: [
+            "Sorts in O(n)",
+            "Doesn't use extra memory",
+            "Maintains relative order of equal keys",
+            "Works with tuples only",
+          ],
+          answer: "Maintains relative order of equal keys",
+        },
+        {
+          id: 18,
+          title: "Copy Behavior",
+          difficulty: "hard",
+          question: "If a = [1, [2]], b = a[:]. b[1].append(3). What is a?",
+          options: ["[1, [2]]", "[1, [2, 3]]", "[1, [3]]", "Error"],
+          answer: "[1, [2, 3]] (Slice [:] is a shallow copy)",
+        },
+        {
+          id: 19,
+          title: "Memory Allocation",
+          difficulty: "hard",
+          question: "When a list grows, how does Python manage memory?",
+          options: [
+            "Allocates 1 byte at a time",
+            "Over-allocates to provide O(1) amortized append",
+            "Doesn't allocate extra",
+            "Uses linked lists internally",
+          ],
+          answer: "Over-allocates to provide O(1) amortized append",
+        },
+        {
+          id: 20,
+          title: "Bool check: Empty nested",
+          difficulty: "hard",
+          question: "What is bool([[]])?",
+          options: ["True", "False", "Error", "None"],
+          answer:
+            "True (The outer list is NOT empty; it contains one object - an empty list)",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "List vs Array",
+          difficulty: "easy",
+          question:
+            "What is the difference between a Python List and a traditional Array?",
+          answer:
+            "Lists are dynamic and can store heterogeneous datatypes (mixed types). Arrays in modules like 'array' or 'numpy' are usually fixed-type and more memory-efficient for large numeric data.",
+        },
+        {
+          id: 2,
+          title: "List vs Tuple",
+          difficulty: "easy",
+          question: "When should you use a Tuple instead of a List?",
+          answer:
+            "Use Tuples for data that shouldn't change (immutability), which makes them hashable (usable as dict keys) and slightly faster for iteration.",
+        },
+        {
+          id: 3,
+          title: "Pop Complexity",
+          difficulty: "easy",
+          question: "What is the time complexity of pop() vs pop(0)?",
+          answer:
+            "pop() is O(1) because it removes from the end. pop(0) is O(n) because all subsequent elements must be shifted left.",
+        },
+        {
+          id: 4,
+          title: "Internal Implementation",
+          difficulty: "easy",
+          question: "Is a Python list a linked list or an array?",
+          answer:
+            "It is a dynamic array (a contiguous block of memory containing pointers to objects).",
+        },
+        {
+          id: 5,
+          title: "List slicing memory",
+          difficulty: "easy",
+          question: "Does list slicing create a copy or a view?",
+          answer:
+            "In Python, slicing a list creates a NEW shallow copy of the specified portion.",
+        },
+        {
+          id: 6,
+          title: "Heterogeneous Lists",
+          difficulty: "medium",
+          question: "Can a list contain another list? What is this called?",
+          answer:
+            "Yes, this is called a nested list. It's often used to represent matrices or multi-dimensional data structures.",
+        },
+        {
+          id: 7,
+          title: "The 'is' operator with Lists",
+          difficulty: "medium",
+          question: "Why is 'L1 is L2' False even if L1 == L2?",
+          answer:
+            "== checks if the values are identical, while 'is' checks if they are the exact same object in memory. New lists created with the same values are distinct objects.",
+        },
+        {
+          id: 8,
+          title: "List Comprehension Benefit",
+          difficulty: "medium",
+          question: "Why use list comprehension over a standard for-loop?",
+          answer:
+            "List comprehensions are more concise and often faster because the construction happens at the C level within the Python interpreter.",
+        },
+        {
+          id: 9,
+          title: "Shallow vs Deep Copy",
+          difficulty: "medium",
+          question: "Explain why list.copy() might fail for nested lists.",
+          answer:
+            "Shallow copy only copies the outer list. If the list contains other lists, the copy just stores references to those original inner lists, so modifying one affects the other.",
+        },
+        {
+          id: 10,
+          title: "Append vs Insert",
+          difficulty: "medium",
+          question: "Why is append() preferred over insert(0, val)?",
+          answer:
+            "Append is O(1) amortized, while insert(0, val) is O(n) because every single element in the list must be moved one position to the right.",
+        },
+        {
+          id: 11,
+          title: "Sort Stability",
+          difficulty: "medium",
+          question: "Why is sorting stability important?",
+          answer:
+            "Stability allows you to perform multi-level sorts. You can sort by name, then by department, and the relative order of names within departments will be preserved.",
+        },
+        {
+          id: 12,
+          title: "Timsort",
+          difficulty: "medium",
+          question: "What sorting algorithm does Python use for list.sort()?",
+          answer:
+            "Python uses Timsort, a hybrid stable sorting algorithm derived from merge sort and insertion sort, designed to perform well on real-world data.",
+        },
+        {
+          id: 13,
+          title: "Deleting Items",
+          difficulty: "medium",
+          question: "Difference between 'del L[0]' and 'L.remove(value)'?",
+          answer:
+            "'del' removes by index or slice. 'remove()' searches for the first occurrence of a specific value and removes it.",
+        },
+        {
+          id: 14,
+          title: "In-place vs New",
+          difficulty: "medium",
+          question: "Difference between L.sort() and sorted(L)?",
+          answer:
+            "L.sort() is an in-place method (returns None, modifies original). sorted(L) is a built-in function that returns a brand new sorted list.",
+        },
+        {
+          id: 15,
+          title: "Clearing a List",
+          difficulty: "medium",
+          question: "L = [] vs L.clear(). Are they different?",
+          answer:
+            "L = [] assigns a new empty list to the name L. L.clear() empties the existing list object. If other variables point to the same object, L.clear() affects all of them.",
+        },
+        {
+          id: 16,
+          title: "O(1) amortized",
+          difficulty: "hard",
+          question: "Explain 'amortized O(1)' in the context of list.append().",
+          answer:
+            "Most appends are O(1) because space is pre-allocated. Occasionally, the list fills up and must be moved to a larger memory block (O(n)). Averaged out over time, the cost is O(1).",
+        },
+        {
+          id: 17,
+          title: "Circular References",
+          difficulty: "hard",
+          question: "What happens if a list contains itself? L.append(L)?",
+          answer:
+            "This creates a circular reference. Python's print will show [...] to represent recursion. The Garbage Collector's cycle detector is required to clean this up.",
+        },
+        {
+          id: 18,
+          title: "Sorting Complexity",
+          difficulty: "hard",
+          question: "What is the space complexity of Timsort?",
+          answer:
+            "It is O(n) in the worst case, as it needs temporary memory to merge blocks.",
+        },
+        {
+          id: 19,
+          title: "Deepcopy and Circularity",
+          difficulty: "hard",
+          question: "Does copy.deepcopy() handle circular references?",
+          answer:
+            "Yes, deepcopy() keeps a memo dictionary of objects it has already copied to avoid infinite recursion.",
+        },
+        {
+          id: 20,
+          title: "Slicing assignment",
+          difficulty: "hard",
+          question: "What does L[1:3] = [9, 8, 7] do if L = [1, 2, 3, 4]?",
+          answer:
+            "It replaces the slice [2, 3] with the new list [9, 8, 7]. The list length changes, and the result is [1, 9, 8, 7, 4].",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Code Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Expert Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-green-50 border-t border-slate-200">
+                            <p class="text-green-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

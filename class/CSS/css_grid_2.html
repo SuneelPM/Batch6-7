@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS GRID DAY 2</title>
+    <style>
+      .grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 1fr);
+        gap: 1rem;
+        height: 200px;
+      }
+
+      .grid-items {
+        background-color: aqua;
+        border-radius: 10px;
+        text-align: center;
+        place-content: center;
+      }
+
+      /* attr value starts with (^) */
+      .grid-container > [class^="grid-item"] {
+        color: red;
+      }
+
+      .grid-item-1 {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 2;
+      }
+      .grid-item-2 {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 3;
+      }
+      .grid-item-3 {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 3;
+      }
+      .grid-item-4 {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        grid-row-start: 3;
+        grid-row-end: 4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid-container">
+      <div class="grid-items grid-item-1">Grid Item 1</div>
+      <div class="grid-items grid-item-2">Grid Item 2</div>
+      <div class="grid-items grid-item-3">Grid Item 3</div>
+      <div class="grid-items grid-item-4">Grid Item 4</div>
+    </div>
+  </body>
+</html>

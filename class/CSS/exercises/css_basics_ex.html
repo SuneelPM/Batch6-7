@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30 CSS Basics Practice Problems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+      .challenge-card {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      details summary {
+        cursor: pointer;
+        color: #059669;
+        font-weight: 600;
+        padding: 0.5rem 0;
+        user-select: none;
+      }
+      details summary:hover {
+        color: #047857;
+      }
+      pre {
+        background: #1e293b;
+        color: #f8fafc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+      }
+      code {
+        font-family: "Fira Code", "Courier New", Courier, monospace;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        background: #ecfdf5;
+        color: #065f46;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="mb-10 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
+          CSS Basics: Box Model & Typography
+        </h1>
+        <p class="text-lg text-slate-600">
+          30 challenges covering Borders, Box Model, Color, and Text properties.
+        </p>
+      </header>
+
+      <div id="challenges-container">
+        <!-- 1. Text Color -->
+        <div class="challenge-card">
+          <span class="tag">Color</span>
+          <h3 class="text-xl font-bold mb-2">1. Text Color Change</h3>
+          <p class="mb-4">
+            Set the text color of all <code>&lt;p&gt;</code> elements to a hex
+            value of <code>#333333</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>p {
+  color: #333333;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 2. Background Color -->
+        <div class="challenge-card">
+          <span class="tag">Color</span>
+          <h3 class="text-xl font-bold mb-2">2. Section Background</h3>
+          <p class="mb-4">
+            Target the element with ID <code>main-section</code> and give it a
+            background color of <code>whitesmoke</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#main-section {
+  background-color: whitesmoke;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 3. Border Style -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">3. Solid Borders</h3>
+          <p class="mb-4">
+            Apply a 2px solid black border to all elements with the class
+            <code>box</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.box {
+  border: 2px solid black;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 4. Padding -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">4. Internal Spacing</h3>
+          <p class="mb-4">
+            Set a uniform padding of 20px for all
+            <code>&lt;div&gt;</code> elements.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>div {
+  padding: 20px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 5. Margin -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">5. External Spacing</h3>
+          <p class="mb-4">
+            Set the bottom margin of all <code>&lt;h1&gt;</code>,
+            <code>&lt;h2&gt;</code>, and <code>&lt;h3&gt;</code> tags to 15px
+            using a grouping selector.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1, h2, h3 {
+  margin-bottom: 15px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 6. Border Radius -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">6. Rounded Corners</h3>
+          <p class="mb-4">
+            Set the <code>border-radius</code> of elements with the class
+            <code>card</code> to 10px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.card {
+  border-radius: 10px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 7. Font Size -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">7. Large Headers</h3>
+          <p class="mb-4">
+            Set the font size of all <code>&lt;h1&gt;</code> elements to 32px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1 {
+  font-size: 32px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 8. Font Weight -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">8. Bold Emphasis</h3>
+          <p class="mb-4">
+            Target all elements with the class <code>important</code> and make
+            the text bold.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.important {
+  font-weight: bold;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 9. Text Align -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">9. Center Alignment</h3>
+          <p class="mb-4">
+            Select all <code>&lt;footer&gt;</code> elements and center-align the
+            text inside them.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>footer {
+  text-align: center;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 10. Box Sizing -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">10. Border Box Reset</h3>
+          <p class="mb-4">
+            Using the universal selector, set <code>box-sizing</code> to
+            <code>border-box</code> for all elements.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>* {
+  box-sizing: border-box;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 11. Width and Height -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">11. Fixed Dimensions</h3>
+          <p class="mb-4">
+            Target the element with ID <code>square-box</code> and set its width
+            and height both to 200px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#square-box {
+  width: 200px;
+  height: 200px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 12. Text Decoration -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">12. Removing Underlines</h3>
+          <p class="mb-4">
+            Select all <code>&lt;a&gt;</code> tags and remove the default text
+            underline.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a {
+  text-decoration: none;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 13. Text Transform -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">13. Uppercase Labels</h3>
+          <p class="mb-4">
+            Target all <code>&lt;label&gt;</code> elements and force the text to
+            be uppercase.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>label {
+  text-transform: uppercase;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 14. Border Color -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">14. Red Error Borders</h3>
+          <p class="mb-4">
+            Target all elements that have an attribute
+            <code>data-status="error"</code> and give them a red border color.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[data-status="error"] {
+  border-color: red;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 15. Line Height -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">15. Readable Paragraphs</h3>
+          <p class="mb-4">
+            Select all <code>&lt;p&gt;</code> elements and set the line-height
+            to 1.6.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>p {
+  line-height: 1.6;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 16. Opacity -->
+        <div class="challenge-card">
+          <span class="tag">Color</span>
+          <h3 class="text-xl font-bold mb-2">16. Ghostly Elements</h3>
+          <p class="mb-4">
+            Target elements with the class <code>ghost</code> and set their
+            opacity to 0.5.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.ghost {
+  opacity: 0.5;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 17. Letter Spacing -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">17. Wide Tracking</h3>
+          <p class="mb-4">
+            Target the <code>&lt;h1&gt;</code> tag and set the letter-spacing to
+            4px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1 {
+  letter-spacing: 4px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 18. RGB Background -->
+        <div class="challenge-card">
+          <span class="tag">Color</span>
+          <h3 class="text-xl font-bold mb-2">
+            18. Semi-Transparent Background
+          </h3>
+          <p class="mb-4">
+            Set the background color of <code>&lt;header&gt;</code> to a
+            semi-transparent black using <code>rgba</code> (0, 0, 0, 0.8).
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>header {
+  background-color: rgba(0, 0, 0, 0.8);
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 19. Border Width -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">19. Thick Bottom Border</h3>
+          <p class="mb-4">
+            Give all <code>&lt;h2&gt;</code> elements a bottom border width of
+            5px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h2 {
+  border-bottom-width: 5px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 20. Padding Specific Side -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">20. Left Indent Padding</h3>
+          <p class="mb-4">
+            Apply 40px of left padding to all
+            <code>&lt;blockquote&gt;</code> elements.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>blockquote {
+  padding-left: 40px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 21. Font Style -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">21. Italicize Captions</h3>
+          <p class="mb-4">
+            Select all <code>&lt;figcaption&gt;</code> elements and make the
+            text italic.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>figcaption {
+  font-style: italic;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 22. Max Width -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">22. Container Constraint</h3>
+          <p class="mb-4">
+            Target the class <code>container</code> and set its
+            <code>max-width</code> to 1200px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.container {
+  max-width: 1200px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 23. Auto Margin -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">23. Centering a Block</h3>
+          <p class="mb-4">
+            Target the ID <code>centered-element</code> and center it
+            horizontally by setting left and right margins to <code>auto</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#centered-element {
+  margin-left: auto;
+  margin-right: auto;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 24. Border Style Dashed -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">24. Dashed Separators</h3>
+          <p class="mb-4">
+            Select all <code>&lt;hr&gt;</code> elements and set their
+            border-style to <code>dashed</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>hr {
+  border-style: dashed;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 25. Text Indent -->
+        <div class="challenge-card">
+          <span class="tag">Text</span>
+          <h3 class="text-xl font-bold mb-2">25. First Line Indent</h3>
+          <p class="mb-4">
+            Indent the first line of every <code>&lt;article&gt;</code> by 30px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>article {
+  text-indent: 30px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 26. HSL Color -->
+        <div class="challenge-card">
+          <span class="tag">Color</span>
+          <h3 class="text-xl font-bold mb-2">26. HSL Background</h3>
+          <p class="mb-4">
+            Set the background color of the <code>body</code> to
+            <code>hsl(210, 20%, 98%)</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>body {
+  background-color: hsl(210, 20%, 98%);
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 27. Attribute Selector with Color -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">27. Warning Text</h3>
+          <p class="mb-4">
+            Select all elements with the attribute
+            <code>data-type="warning"</code> and set their text color to
+            <code>orange</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[data-type="warning"] {
+  color: orange;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 28. Grouping Font Weight -->
+        <div class="challenge-card">
+          <span class="tag">Grouping</span>
+          <h3 class="text-xl font-bold mb-2">28. Slim Headers</h3>
+          <p class="mb-4">
+            Set the font-weight of <code>h1</code>, <code>h2</code>, and
+            <code>h3</code> to 300 (light weight).
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1, h2, h3 {
+  font-weight: 300;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 29. Individual Border Corners -->
+        <div class="challenge-card">
+          <span class="tag">Border</span>
+          <h3 class="text-xl font-bold mb-2">29. Specific Corner Rounding</h3>
+          <p class="mb-4">
+            Target the class <code>bubble</code> and set only the
+            <code>border-top-left-radius</code> to 20px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.bubble {
+  border-top-left-radius: 20px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 30. Display and Margin -->
+        <div class="challenge-card">
+          <span class="tag">Box Model</span>
+          <h3 class="text-xl font-bold mb-2">30. Button Spacing</h3>
+          <p class="mb-4">
+            Target all <code>&lt;button&gt;</code> elements and set their margin
+            to 10px on all sides.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>button {
+  margin: 10px;
+}</code></pre>
+          </details>
+        </div>
+      </div>
+
+      <footer class="mt-12 text-center text-slate-500 pb-10">
+        <p>Mastering these basics is essential for any web developer!</p>
+      </footer>
+    </div>
+  </body>
+</html>

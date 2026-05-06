@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS MediaQueries</title>
+    <style>
+      body {
+        background-color: rgb(230, 255, 255);
+      }
+
+      h1 {
+        color: red;
+      }
+
+      .parent {
+        display: flex;
+        gap: 10px;
+      }
+
+      .child {
+        flex: 1;
+        background-color: blueviolet;
+        height: 100px;
+        color: white;
+        text-align: center;
+        place-content: center;
+      }
+
+      @media screen and (max-width: 600px) {
+        body {
+          background-color: white;
+        }
+        .parent {
+          display: block;
+        }
+
+        .child {
+          margin: 10px;
+          border-radius: 10px;
+          box-shadow: 5px 5px 5px 5px lightgray;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS MediaQueries</h1>
+    <div class="parent">
+      <div class="child child-1">Child 1</div>
+      <div class="child child-2">Child 2</div>
+      <div class="child child-3">Child 3</div>
+    </div>
+  </body>
+</html>

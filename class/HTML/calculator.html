@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="script.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #2d2d2d;
+      }
+
+      #calculator-container {
+        background-color: #3c3c3c;
+        border-radius: 8px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        width: 360px;
+      }
+
+      .header {
+        background-color: #2d2d2d;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .header-title {
+        color: white;
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      #display {
+        background-color: #1c1c1c;
+        color: white;
+        font-size: 48px;
+        text-align: right;
+        padding: 20px;
+        border: none;
+        outline: none;
+        width: 100%;
+        font-family: "Segoe UI", sans-serif;
+        font-weight: 300;
+        letter-spacing: 1px;
+      }
+
+      #calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        padding: 8px;
+        background-color: #2d2d2d;
+      }
+
+      button {
+        background-color: #3c3c3c;
+        color: white;
+        border: none;
+        padding: 20px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.1s;
+        border-radius: 4px;
+      }
+
+      button:hover {
+        background-color: #505050;
+      }
+
+      button:active {
+        background-color: #4a4a4a;
+      }
+
+      .memory-btn {
+        background-color: #2d2d2d;
+        color: #999;
+        font-size: 14px;
+      }
+
+      .memory-btn:hover {
+        background-color: #3c3c3c;
+      }
+
+      .function-btn {
+        background-color: #2d2d2d;
+        color: #999;
+        font-size: 14px;
+      }
+
+      .function-btn:hover {
+        background-color: #3c3c3c;
+      }
+
+      .operator-btn {
+        background-color: #0078d4;
+        color: white;
+      }
+
+      .operator-btn:hover {
+        background-color: #1084d7;
+      }
+
+      .equals-btn {
+        background-color: #00a651;
+        color: white;
+      }
+
+      .equals-btn:hover {
+        background-color: #0bb659;
+      }
+
+      .row {
+        display: contents;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="calculator-container">
+      <div class="header">
+        <span class="header-title">Standard</span>
+      </div>
+      <input type="text" id="display" disabled value="0" />
+      <div id="calculator">
+        <!-- Memory row -->
+        <button class="memory-btn" onclick="memoryStore()">MC</button>
+        <button class="memory-btn" onclick="memoryRecall()">MR</button>
+        <button class="memory-btn" onclick="memoryAdd()">M+</button>
+        <button class="memory-btn" onclick="memorySub()">M-</button>
+
+        <!-- Function row -->
+        <button class="function-btn" onclick="updateDisplay('%')">%</button>
+        <button class="function-btn" onclick="deleteLastChar()">CE</button>
+        <button class="function-btn" onclick="clearAll()">C</button>
+        <button class="function-btn" onclick="deleteLastChar()">⌫</button>
+
+        <!-- Scientific row -->
+        <button class="function-btn" onclick="reciprocal()">1/x</button>
+        <button class="function-btn" onclick="square()">x²</button>
+        <button class="function-btn" onclick="squareRoot()">²√x</button>
+        <button class="operator-btn" onclick="updateOperator('/')">÷</button>
+
+        <!-- Numbers and operators -->
+        <button onclick="updateDisplay('7')">7</button>
+        <button onclick="updateDisplay('8')">8</button>
+        <button onclick="updateDisplay('9')">9</button>
+        <button class="operator-btn" onclick="updateOperator('*')">×</button>
+
+        <button onclick="updateDisplay('4')">4</button>
+        <button onclick="updateDisplay('5')">5</button>
+        <button onclick="updateDisplay('6')">6</button>
+        <button class="operator-btn" onclick="updateOperator('-')">−</button>
+
+        <button onclick="updateDisplay('1')">1</button>
+        <button onclick="updateDisplay('2')">2</button>
+        <button onclick="updateDisplay('3')">3</button>
+        <button class="operator-btn" onclick="updateOperator('+')">+</button>
+
+        <button class="function-btn" onclick="toggleSign()">+/−</button>
+        <button onclick="updateDisplay('0')">0</button>
+        <button onclick="updateDisplay('.')">.</button>
+        <button class="equals-btn" onclick="calculate()">=</button>
+      </div>
+    </div>
+    <script>
+      let operator = "";
+      let operand1 = 0;
+      let operand2 = null;
+      let memory = 0;
+      let shouldResetDisplay = false;
+
+      const display = document.getElementById("display");
+
+      function setDisplay(value) {
+        display.value = value;
+      }
+
+      function getDisplay() {
+        return display.value;
+      }
+
+      function updateDisplay(number) {
+        if (shouldResetDisplay) {
+          setDisplay(number);
+          shouldResetDisplay = false;
+        } else {
+          if (getDisplay() === "0" && number !== ".") {
+            setDisplay(number);
+          } else if (number === "." && getDisplay().includes(".")) {
+            return;
+          } else {
+            setDisplay(getDisplay() + number);
+          }
+        }
+      }
+
+      function updateOperator(op) {
+        if (getDisplay() === "") return;
+        if (operator !== "") {
+          calculate();
+        }
+        operator = op;
+        operand1 = Number(getDisplay());
+        shouldResetDisplay = true;
+      }
+
+      function calculate() {
+        if (operator === "" || getDisplay() === "") return;
+
+        operand2 = Number(getDisplay());
+        let result = 0;
+
+        if (operator === "+") {
+          result = operand1 + operand2;
+        } else if (operator === "-") {
+          result = operand1 - operand2;
+        } else if (operator === "*") {
+          result = operand1 * operand2;
+        } else if (operator === "/") {
+          if (operand2 === 0) {
+            setDisplay("Cannot divide by zero");
+            return;
+          }
+          result = operand1 / operand2;
+        }
+
+        setDisplay(result);
+        operator = "";
+        operand1 = result;
+        shouldResetDisplay = true;
+      }
+
+      function clearAll() {
+        setDisplay("0");
+        operator = "";
+        operand1 = 0;
+        operand2 = null;
+        shouldResetDisplay = false;
+      }
+
+      function deleteLastChar() {
+        let current = getDisplay();
+        if (current.length > 1) {
+          setDisplay(current.slice(0, -1));
+        } else {
+          setDisplay("0");
+        }
+      }
+
+      function toggleSign() {
+        let current = Number(getDisplay());
+        setDisplay(String(current * -1));
+      }
+
+      function reciprocal() {
+        let current = Number(getDisplay());
+        if (current === 0) {
+          setDisplay("Cannot divide by zero");
+          return;
+        }
+        setDisplay(String(1 / current));
+        shouldResetDisplay = true;
+      }
+
+      function square() {
+        let current = Number(getDisplay());
+        setDisplay(String(current * current));
+        shouldResetDisplay = true;
+      }
+
+      function squareRoot() {
+        let current = Number(getDisplay());
+        if (current < 0) {
+          setDisplay("Invalid input");
+          return;
+        }
+        setDisplay(String(Math.sqrt(current)));
+        shouldResetDisplay = true;
+      }
+
+      function memoryStore() {
+        memory = Number(getDisplay());
+        shouldResetDisplay = true;
+      }
+
+      function memoryRecall() {
+        setDisplay(String(memory));
+        shouldResetDisplay = true;
+      }
+
+      function memoryAdd() {
+        memory += Number(getDisplay());
+        shouldResetDisplay = true;
+      }
+
+      function memorySub() {
+        memory -= Number(getDisplay());
+        shouldResetDisplay = true;
+      }
+    </script>
+  </body>
+</html>

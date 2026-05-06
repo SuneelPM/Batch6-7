@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30 CSS Basic Selector Challenges</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+      .challenge-card {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      details summary {
+        cursor: pointer;
+        color: #2563eb;
+        font-weight: 600;
+        padding: 0.5rem 0;
+        user-select: none;
+      }
+      details summary:hover {
+        color: #1d4ed8;
+      }
+      pre {
+        background: #1e293b;
+        color: #f8fafc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+      }
+      code {
+        font-family: "Fira Code", "Courier New", Courier, monospace;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        background: #dbeafe;
+        color: #1e40af;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="mb-10 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
+          CSS Selectors Masterclass
+        </h1>
+        <p class="text-lg text-slate-600">
+          30 Practical challenges using only Universal, Type, ID, Class,
+          Attribute, and Grouping selectors.
+        </p>
+      </header>
+
+      <div id="challenges-container">
+        <!-- 1. Universal Selector -->
+        <div class="challenge-card">
+          <span class="tag">Universal</span>
+          <h3 class="text-xl font-bold mb-2">1. The Global Reset</h3>
+          <p class="mb-4">
+            Write a CSS rule that sets the margin and padding of every single
+            element to 0.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>* {
+  margin: 0;
+  padding: 0;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 2. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">2. Paragraph Color</h3>
+          <p class="mb-4">
+            Select all <code>&lt;p&gt;</code> elements and change their text
+            color to "darkslategray".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>p {
+  color: darkslategray;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 3. ID Selector -->
+        <div class="challenge-card">
+          <span class="tag">ID</span>
+          <h3 class="text-xl font-bold mb-2">3. Unique Navigation</h3>
+          <p class="mb-4">
+            Target the element with the ID <code>main-navigation</code> and set
+            its background to "navy".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#main-navigation {
+  background-color: navy;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 4. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">4. Highlighted Items</h3>
+          <p class="mb-4">
+            Select all elements with the class name <code>highlight</code> and
+            give them a yellow background.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.highlight {
+  background-color: yellow;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 5. Grouping Selector -->
+        <div class="challenge-card">
+          <span class="tag">Grouping</span>
+          <h3 class="text-xl font-bold mb-2">5. Multi-Heading Font</h3>
+          <p class="mb-4">
+            In a single rule, set the font-family of <code>h1</code>,
+            <code>h2</code>, and <code>h3</code> tags to "Arial".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1, h2, h3 {
+  font-family: Arial;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 6. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">6. Footer Styling</h3>
+          <p class="mb-4">
+            Select all <code>&lt;footer&gt;</code> elements and set their
+            padding to 20px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>footer {
+  padding: 20px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 7. ID Selector -->
+        <div class="challenge-card">
+          <span class="tag">ID</span>
+          <h3 class="text-xl font-bold mb-2">7. Branding Element</h3>
+          <p class="mb-4">
+            Target the unique element with ID <code>branding-logo</code> and set
+            its width to 150px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#branding-logo {
+  width: 150px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 8. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">8. Success Messages</h3>
+          <p class="mb-4">
+            Select every element with the class <code>success</code> and make
+            the text color "green".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.success {
+  color: green;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 9. Grouping Selector -->
+        <div class="challenge-card">
+          <span class="tag">Grouping</span>
+          <h3 class="text-xl font-bold mb-2">9. Media Reset</h3>
+          <p class="mb-4">
+            Target both <code>&lt;img&gt;</code> and
+            <code>&lt;video&gt;</code> elements to set their max-width to 100%.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>img, video {
+  max-width: 100%;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 10. Attribute Presence -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">10. Elements with Titles</h3>
+          <p class="mb-4">
+            Select all elements that have a <code>title</code> attribute
+            present.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[title] {
+  cursor: help;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 11. Specific Attribute Value -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">11. Password Inputs</h3>
+          <p class="mb-4">
+            Select <code>&lt;input&gt;</code> elements where the
+            <code>type</code> attribute is exactly "password".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>input[type="password"] {
+  letter-spacing: 2px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 12. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">12. Primary Buttons</h3>
+          <p class="mb-4">
+            Target all elements using the class <code>btn-primary</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.btn-primary {
+  background-color: blue;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 13. ID Selector -->
+        <div class="challenge-card">
+          <span class="tag">ID</span>
+          <h3 class="text-xl font-bold mb-2">13. The Hero Section</h3>
+          <p class="mb-4">
+            Select the element with the ID <code>hero-banner</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#hero-banner {
+  height: 400px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 14. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">14. List Item Style</h3>
+          <p class="mb-4">
+            Select all <code>&lt;li&gt;</code> elements and remove their list
+            bullets.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>li {
+  list-style: none;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 15. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">15. The Body Tag</h3>
+          <p class="mb-4">
+            Select the <code>body</code> element and set the line-height to 1.5.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>body {
+  line-height: 1.5;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 16. Attribute Presence -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">16. Disabled Elements</h3>
+          <p class="mb-4">
+            Select all elements that have the <code>disabled</code> attribute.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[disabled] {
+  opacity: 0.5;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 17. Attribute Starts With -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">17. Secure Links</h3>
+          <p class="mb-4">
+            Select all <code>&lt;a&gt;</code> tags where
+            <code>href</code> starts with "https".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a[href^="https"] {
+  color: teal;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 18. Attribute Ends With -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">18. Image Formats</h3>
+          <p class="mb-4">
+            Select all <code>&lt;img&gt;</code> tags where the
+            <code>src</code> attribute ends with ".png".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>img[src$=".png"] {
+  border: 1px solid black;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 19. Attribute Contains -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">19. General Sections</h3>
+          <p class="mb-4">
+            Select elements whose <code>class</code> attribute contains the
+            string "container" anywhere.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[class*="container"] {
+  margin: auto;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 20. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">20. Article Spacing</h3>
+          <p class="mb-4">
+            Select all <code>&lt;article&gt;</code> tags and set their display
+            to "block".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>article {
+  display: block;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 21. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">21. Alert Boxes</h3>
+          <p class="mb-4">
+            Select every element that uses the class <code>alert</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.alert {
+  padding: 1rem;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 22. Attribute Exact Value -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">22. Form Target</h3>
+          <p class="mb-4">
+            Select <code>&lt;form&gt;</code> elements with the
+            <code>method</code> attribute set to "POST".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>form[method="POST"] {
+  border: 1px dashed gray;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 23. Grouping Selector -->
+        <div class="challenge-card">
+          <span class="tag">Grouping</span>
+          <h3 class="text-xl font-bold mb-2">23. Semantic Inline Styling</h3>
+          <p class="mb-4">
+            Select <code>&lt;em&gt;</code> and <code>&lt;strong&gt;</code> tags
+            to change their color to "darkred".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>em, strong {
+  color: darkred;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 24. Attribute Presence -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">24. Required Fields</h3>
+          <p class="mb-4">
+            Target all elements that have the <code>required</code> attribute.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[required] {
+  border-left: 5px solid red;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 25. ID Selector -->
+        <div class="challenge-card">
+          <span class="tag">ID</span>
+          <h3 class="text-xl font-bold mb-2">25. Footer Bottom</h3>
+          <p class="mb-4">
+            Select the element with the ID <code>site-footer</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#site-footer {
+  font-size: 0.8rem;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 26. Attribute Exact Value -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">26. Language Attribute</h3>
+          <p class="mb-4">
+            Select all elements with the <code>lang</code> attribute set to
+            "en".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[lang="en"] {
+  quotes: "“" "”";
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 27. Universal Selector -->
+        <div class="challenge-card">
+          <span class="tag">Universal</span>
+          <h3 class="text-xl font-bold mb-2">27. Box Sizing</h3>
+          <p class="mb-4">
+            Write a rule using the universal selector to set
+            <code>box-sizing</code> to <code>border-box</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>* {
+  box-sizing: border-box;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 28. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Type</span>
+          <h3 class="text-xl font-bold mb-2">28. Horizontal Rule</h3>
+          <p class="mb-4">
+            Select all <code>&lt;hr&gt;</code> elements and set their height to
+            2px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>hr {
+  height: 2px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 29. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">29. Hidden Elements</h3>
+          <p class="mb-4">
+            Select all elements with the class <code>is-hidden</code> and set
+            their display to "none".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.is-hidden {
+  display: none;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 30. Attribute Space-Separated -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">30. Meta Info</h3>
+          <p class="mb-4">
+            Select elements where the <code>data-tags</code> attribute contains
+            the word "featured" in a space-separated list.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[data-tags~="featured"] {
+  border: 2px solid gold;
+}</code></pre>
+          </details>
+        </div>
+      </div>
+
+      <footer class="mt-12 text-center text-slate-500 pb-10">
+        <p>Mastering basic selectors is the foundation of CSS architecture!</p>
+      </footer>
+    </div>
+  </body>
+</html>

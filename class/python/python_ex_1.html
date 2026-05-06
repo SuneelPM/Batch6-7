@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Practice Hub: Coding, MCQs & Interview Prep</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      code,
+      pre {
+        font-family: "Fira Code", monospace;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #0f172a;
+        color: white;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-4">
+          Python Beginner Bootcamp
+        </h1>
+        <p class="text-slate-600 text-lg mb-8">
+          Comprehensive prep with 20 Coding Challenges, 20 MCQs, and 20
+          Interview Questions.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Problems
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Qs
+          </button>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-4">
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-green-500"></span> Easy
+          </span>
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-yellow-500"></span> Medium
+          </span>
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span> Hard
+          </span>
+        </div>
+      </header>
+
+      <!-- Container for Coding Problems -->
+      <div id="coding-container" class="grid gap-6"></div>
+
+      <!-- Container for MCQs -->
+      <div id="mcq-container" class="grid gap-6 hidden"></div>
+
+      <!-- Container for Interview Questions -->
+      <div id="interview-container" class="grid gap-6 hidden"></div>
+    </div>
+
+    <script>
+      const problems = [
+        {
+          id: 1,
+          title: "Hello, User!",
+          difficulty: "easy",
+          description:
+            "Write a program that asks for the user's name and prints a personalized greeting like 'Hello, [Name]!'.",
+          solution:
+            "name = input('Enter your name: ')\nprint(f'Hello, {name}!')",
+        },
+        {
+          id: 2,
+          title: "Simple Addition",
+          difficulty: "easy",
+          description: "Create two variables with numbers and print their sum.",
+          solution: "a = 5\nb = 10\nprint(a + b)",
+        },
+        {
+          id: 3,
+          title: "Celsius to Fahrenheit",
+          difficulty: "easy",
+          description: "Convert Celsius to Fahrenheit using: (C * 9/5) + 32.",
+          solution:
+            "celsius = float(input('Celsius: '))\nfahrenheit = (celsius * 9/5) + 32\nprint(f'Fahrenheit: {fahrenheit}')",
+        },
+        {
+          id: 4,
+          title: "Odd or Even",
+          difficulty: "easy",
+          description:
+            "Ask the user for an integer and print whether it is 'Odd' or 'Even'.",
+          solution:
+            "num = int(input('Enter number: '))\nif num % 2 == 0:\n    print('Even')\nelse:\n    print('Odd')",
+        },
+        {
+          id: 5,
+          title: "List Length",
+          difficulty: "easy",
+          description:
+            "Given the list `my_list = [10, 20, 30, 40, 50]`, print the number of elements.",
+          solution: "my_list = [10, 20, 30, 40, 50]\nprint(len(my_list))",
+        },
+        {
+          id: 6,
+          title: "Square a Number",
+          difficulty: "easy",
+          description:
+            "Write a function called `square` that returns the square of a number.",
+          solution: "def square(n):\n    return n * n\n\nprint(square(4))",
+        },
+        {
+          id: 7,
+          title: "String Slicing",
+          difficulty: "easy",
+          description:
+            "Given the string `word = 'Python'`, print the first three characters.",
+          solution: "word = 'Python'\nprint(word[:3])",
+        },
+        {
+          id: 8,
+          title: "Sum of a List",
+          difficulty: "medium",
+          description:
+            "Create a list of 5 numbers and use a `for` loop to calculate the total sum.",
+          solution:
+            "numbers = [1, 2, 3, 4, 5]\ntotal = 0\nfor n in numbers:\n    total += n\nprint(total)",
+        },
+        {
+          id: 9,
+          title: "Find the Largest",
+          difficulty: "medium",
+          description:
+            "Find the largest value in a list without using built-in `max()`.",
+          solution:
+            "nums = [12, 45, 2, 89, 34]\nlargest = nums[0]\nfor n in nums:\n    if n > largest:\n        largest = n\nprint(largest)",
+        },
+        {
+          id: 10,
+          title: "Reverse a String",
+          difficulty: "medium",
+          description: "Ask the user for a string and print it backwards.",
+          solution: "text = input('Enter text: ')\nprint(text[::-1])",
+        },
+        {
+          id: 11,
+          title: "Count Vowels",
+          difficulty: "medium",
+          description: "Count how many vowels (aeiou) are in a user string.",
+          solution:
+            "text = input('Enter text: ').lower()\nvowels = 'aeiou'\ncount = 0\nfor char in text:\n    if char in vowels:\n        count += 1\nprint(f'Vowels: {count}')",
+        },
+        {
+          id: 12,
+          title: "Multiplication Table",
+          difficulty: "medium",
+          description:
+            "Print a multiplication table (1-10) for a given number.",
+          solution:
+            "n = int(input('Number: '))\nfor i in range(1, 11):\n    print(f'{n} x {i} = {n*i}')",
+        },
+        {
+          id: 13,
+          title: "Check Substring",
+          difficulty: "medium",
+          description:
+            "Ask for a sentence and a word. Check if the word exists in the sentence.",
+          solution:
+            "sentence = input('Sentence: ')\nword = input('Word: ')\nprint('Found it!' if word in sentence else 'Not found.')",
+        },
+        {
+          id: 14,
+          title: "Filter Positives",
+          difficulty: "medium",
+          description:
+            "Create a list containing only numbers greater than zero from an existing list.",
+          solution:
+            "nums = [-10, 5, -3, 20, 0, 15]\npositives = [n for n in nums if n > 0]\nprint(positives)",
+        },
+        {
+          id: 15,
+          title: "Unique Elements",
+          difficulty: "medium",
+          description:
+            "Convert a list with duplicates into a list of unique values.",
+          solution:
+            "my_list = [1, 2, 2, 3, 4, 4, 4, 5]\nunique = list(set(my_list))\nprint(unique)",
+        },
+        {
+          id: 16,
+          title: "Fibonacci Sequence",
+          difficulty: "hard",
+          description: "Print the first 10 numbers of the Fibonacci sequence.",
+          solution:
+            "a, b = 0, 1\nfor _ in range(10):\n    print(a, end=' ')\n    a, b = b, a + b",
+        },
+        {
+          id: 17,
+          title: "Prime Checker",
+          difficulty: "hard",
+          description:
+            "Write a function that returns True if a number is prime.",
+          solution:
+            "def is_prime(n):\n    if n < 2: return False\n    for i in range(2, int(n**0.5) + 1):\n        if n % i == 0: return False\n    return True",
+        },
+        {
+          id: 18,
+          title: "Word Frequency",
+          difficulty: "hard",
+          description: "Create a dictionary of word counts from a sentence.",
+          solution:
+            "sentence = 'apple banana apple cherry'\ncounts = {}\nfor w in sentence.split():\n    counts[w] = counts.get(w, 0) + 1\nprint(counts)",
+        },
+        {
+          id: 19,
+          title: "FizzBuzz",
+          difficulty: "hard",
+          description: "Standard FizzBuzz for numbers 1 to 50.",
+          solution:
+            "for i in range(1, 51):\n    if i % 15 == 0: print('FizzBuzz')\n    elif i % 3 == 0: print('Fizz')\n    elif i % 5 == 0: print('Buzz')\n    else: print(i)",
+        },
+        {
+          id: 20,
+          title: "Factorial Recursion",
+          difficulty: "hard",
+          description: "Recursive function to calculate factorial.",
+          solution:
+            "def fact(n):\n    return 1 if n == 1 else n * fact(n-1)\nprint(fact(5))",
+        },
+      ];
+
+      const mcqs = [
+        {
+          id: 1,
+          title: "Variables",
+          difficulty: "easy",
+          question: "Which is a valid variable name?",
+          options: ["2nd_val", "_val", "class", "my-val"],
+          answer: "_val",
+        },
+        {
+          id: 2,
+          title: "Output",
+          difficulty: "easy",
+          question: "What is print(2 * 3 + 4)?",
+          options: ["14", "10", "24", "12"],
+          answer: "10",
+        },
+        {
+          id: 3,
+          title: "Types",
+          difficulty: "easy",
+          question: "What type is '3.14'?",
+          options: ["int", "float", "string", "bool"],
+          answer: "string",
+        },
+        {
+          id: 4,
+          title: "Comments",
+          difficulty: "easy",
+          question: "Which character is used for comments?",
+          options: ["//", "/*", "#", "--"],
+          answer: "#",
+        },
+        {
+          id: 5,
+          title: "Structure",
+          difficulty: "easy",
+          question: "How are blocks defined?",
+          options: ["{}", "Indentation", ";", "()"],
+          answer: "Indentation",
+        },
+        {
+          id: 6,
+          title: "Logic",
+          difficulty: "easy",
+          question: "Result of 10 > 5 and 5 > 10?",
+          options: ["True", "False", "None", "Error"],
+          answer: "False",
+        },
+        {
+          id: 7,
+          title: "Input",
+          difficulty: "easy",
+          question: "What does input() return?",
+          options: ["int", "float", "bool", "str"],
+          answer: "str",
+        },
+        {
+          id: 8,
+          title: "Slicing",
+          difficulty: "medium",
+          question: "Given x=[1,2,3,4], what is x[1:3]?",
+          options: ["[1,2]", "[2,3]", "[2,3,4]", "[1,2,3]"],
+          answer: "[2,3]",
+        },
+        {
+          id: 9,
+          title: "String",
+          difficulty: "medium",
+          question: "Method for lowercase?",
+          options: ["lower()", "down()", "casefold()", "lower/casefold"],
+          answer: "lower/casefold",
+        },
+        {
+          id: 10,
+          title: "Range",
+          difficulty: "medium",
+          question: "What is list(range(1,5))?",
+          options: ["[1..5]", "[0..4]", "[1..4]", "[0..3]"],
+          answer: "[1..4]",
+        },
+        {
+          id: 11,
+          title: "Dict Keys",
+          difficulty: "medium",
+          question: "Which can be a key?",
+          options: ["List", "String", "Dict", "Mutable"],
+          answer: "String",
+        },
+        {
+          id: 12,
+          title: "Return",
+          difficulty: "medium",
+          question: "Empty return returns?",
+          options: ["0", "False", "None", "''"],
+          answer: "None",
+        },
+        {
+          id: 13,
+          title: "Loops",
+          difficulty: "medium",
+          question: "Keyword to skip iteration?",
+          options: ["break", "stop", "continue", "skip"],
+          answer: "continue",
+        },
+        {
+          id: 14,
+          title: "Math",
+          difficulty: "medium",
+          question: "Result of 15 % 4?",
+          options: ["3.75", "1", "3", "0"],
+          answer: "3",
+        },
+        {
+          id: 15,
+          title: "Tuples",
+          difficulty: "medium",
+          question: "Tuple vs List?",
+          options: ["Speed", "Mutability", "List Mutable", "None"],
+          answer: "List Mutable",
+        },
+        {
+          id: 16,
+          title: "Scope",
+          difficulty: "hard",
+          question: "Modify global without keyword?",
+          options: ["Works", "Local created", "Error", "Crash"],
+          answer: "Local created (Shadowing)",
+        },
+        {
+          id: 17,
+          title: "Comprehension",
+          difficulty: "hard",
+          question: "Output of [x*2 for x in range(3)]?",
+          options: ["[0,2,4]", "[2,4,6]", "[0,1,2]", "[1,2,3]"],
+          answer: "[0,2,4]",
+        },
+        {
+          id: 18,
+          title: "Error",
+          difficulty: "hard",
+          question: "Block that always runs?",
+          options: ["else", "finally", "catch", "then"],
+          answer: "finally",
+        },
+        {
+          id: 19,
+          title: "Comparison",
+          difficulty: "hard",
+          question: "== vs is?",
+          options: ["Same", "Val vs Memory", "Memory vs Val", "None"],
+          answer: "Val vs Memory",
+        },
+        {
+          id: 20,
+          title: "Defaults",
+          difficulty: "hard",
+          question: "List as default arg?",
+          options: ["Resets", "Reused", "Illegal", "Empty only"],
+          answer: "Reused across calls",
+        },
+      ];
+
+      const interviewQs = [
+        {
+          id: 1,
+          title: "What is Python?",
+          difficulty: "easy",
+          question: "What is Python and what are its key advantages?",
+          answer:
+            "Python is a high-level, interpreted, general-purpose programming language. Advantages include readability, large standard libraries, cross-platform compatibility, and an active community.",
+        },
+        {
+          id: 2,
+          title: "List vs Tuple",
+          difficulty: "easy",
+          question: "Explain the difference between a list and a tuple.",
+          answer:
+            "Lists are mutable (can be changed) and defined with []. Tuples are immutable (cannot be changed) and defined with (). Tuples are generally faster and safer for data that shouldn't change.",
+        },
+        {
+          id: 3,
+          title: "Interpreted vs Compiled",
+          difficulty: "easy",
+          question: "Is Python an interpreted or compiled language?",
+          answer:
+            "Python is primarily an interpreted language. Source code is compiled into 'bytecode', which is then executed by the Python Virtual Machine (PVM).",
+        },
+        {
+          id: 4,
+          title: "PEP 8",
+          difficulty: "easy",
+          question: "What is PEP 8?",
+          answer:
+            "PEP 8 stands for Python Enhancement Proposal 8. It is the official style guide for Python code, covering naming conventions, indentation, and code structure.",
+        },
+        {
+          id: 5,
+          title: "Dynamic Typing",
+          difficulty: "easy",
+          question: "What does it mean that Python is dynamically typed?",
+          answer:
+            "It means you don't need to declare a variable's type. The type is determined at runtime based on the value assigned to it.",
+        },
+        {
+          id: 6,
+          title: "Break vs Continue",
+          difficulty: "easy",
+          question: "Difference between 'break' and 'continue' in loops?",
+          answer:
+            "'break' exits the loop entirely. 'continue' skips the current iteration and moves to the next one.",
+        },
+        {
+          id: 7,
+          title: "Local vs Global",
+          difficulty: "easy",
+          question: "Difference between local and global variables?",
+          answer:
+            "Local variables are defined inside a function and only accessible there. Global variables are defined outside and accessible throughout the module.",
+        },
+        {
+          id: 8,
+          title: "Self Keyword",
+          difficulty: "medium",
+          question: "What is 'self' in Python classes?",
+          answer:
+            "'self' represents the instance of the class. It allows access to the attributes and methods of that specific object.",
+        },
+        {
+          id: 9,
+          title: "Docstrings",
+          difficulty: "medium",
+          question: "What are docstrings and why are they used?",
+          answer:
+            "Docstrings are triple-quoted strings at the start of functions/classes. They serve as documentation and can be accessed via the __doc__ attribute or help().",
+        },
+        {
+          id: 10,
+          title: "Modules vs Packages",
+          difficulty: "medium",
+          question: "Difference between a Module and a Package?",
+          answer:
+            "A module is a single .py file containing code. A package is a directory containing multiple modules and an __init__.py file.",
+        },
+        {
+          id: 11,
+          title: "Namespace",
+          difficulty: "medium",
+          question: "What is a namespace in Python?",
+          answer:
+            "A namespace is a system to ensure that object names are unique and can be used without conflict. Examples include built-in, global, and local namespaces.",
+        },
+        {
+          id: 12,
+          title: "Lambda Functions",
+          difficulty: "medium",
+          question: "What are lambda functions?",
+          answer:
+            "Lambda functions are small, anonymous, one-line functions defined using the 'lambda' keyword. Example: sum = lambda x, y: x + y.",
+        },
+        {
+          id: 13,
+          title: "List Comprehension",
+          difficulty: "medium",
+          question: "What is list comprehension?",
+          answer:
+            "It is a concise way to create lists. Example: [x*x for x in range(10)]. It's often faster and more readable than standard loops.",
+        },
+        {
+          id: 14,
+          title: "args and kwargs",
+          difficulty: "medium",
+          question: "What are *args and **kwargs?",
+          answer:
+            "*args allows a function to accept any number of positional arguments. **kwargs allows any number of keyword arguments (dictionaries).",
+        },
+        {
+          id: 15,
+          title: "Pickling",
+          difficulty: "medium",
+          question: "What is pickling and unpickling?",
+          answer:
+            "Pickling is the process of converting a Python object into a byte stream (serialization). Unpickling is the inverse process (deserialization).",
+        },
+        {
+          id: 16,
+          title: "Decorators",
+          difficulty: "hard",
+          question: "What are decorators in Python?",
+          answer:
+            "Decorators are functions that modify the behavior of other functions or classes without changing their source code. They use the @decorator syntax.",
+        },
+        {
+          id: 17,
+          title: "Generators",
+          difficulty: "hard",
+          question: "What are generators and the 'yield' keyword?",
+          answer:
+            "Generators are functions that return an iterator. They use 'yield' to return values one by one, saving memory by not storing the entire sequence in memory.",
+        },
+        {
+          id: 18,
+          title: "Deep vs Shallow Copy",
+          difficulty: "hard",
+          question: "Difference between shallow copy and deep copy?",
+          answer:
+            "Shallow copy creates a new object but fills it with references to original child objects. Deep copy recursively creates copies of all child objects.",
+        },
+        {
+          id: 19,
+          title: "GIL",
+          difficulty: "hard",
+          question: "What is the Global Interpreter Lock (GIL)?",
+          answer:
+            "The GIL is a mutex that allows only one thread to execute Python bytecode at a time. It prevents data corruption in multi-threaded programs but can limit CPU performance.",
+        },
+        {
+          id: 20,
+          title: "Monkey Patching",
+          difficulty: "hard",
+          question: "What is Monkey Patching?",
+          answer:
+            "Monkey patching refers to dynamically modifying a class or module at runtime. It's often used for testing or fixing bugs in third-party libraries without altering source code.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+      }
+
+      function renderCodingProblems() {
+        const container = document.getElementById("coding-container");
+        problems.forEach((prob) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${prob.id}</span>
+                        <span class="tag difficulty-${prob.difficulty}">${prob.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${prob.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${prob.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Python Solution</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-slate-900 border-t border-slate-200">
+                            <pre class="text-green-400 text-sm whitespace-pre-wrap"><code>${prob.solution}</code></pre>
+                            <div class="mt-3 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function renderMCQs() {
+        const container = document.getElementById("mcq-container");
+        mcqs.forEach((item) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const optionsHtml = item.options
+            .map(
+              (opt, index) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-slate-100 rounded-full text-xs font-bold text-slate-500">${String.fromCharCode(65 + index)}</span>
+                        <span class="text-slate-700">${opt}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${optionsHtml}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-indigo-50 border-t border-slate-200">
+                            <p class="text-indigo-900 font-medium">Correct Answer:</p>
+                            <p class="text-indigo-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function renderInterviewQs() {
+        const container = document.getElementById("interview-container");
+        interviewQs.forEach((item) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">" ${item.question} "</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function copyCode(btn) {
+        const code = btn.parentElement.previousElementSibling.innerText;
+        const tempInput = document.createElement("textarea");
+        tempInput.value = code;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCodingProblems();
+      renderMCQs();
+      renderInterviewQs();
+    </script>
+  </body>
+</html>

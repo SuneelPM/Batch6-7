@@ -1,0 +1,943 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Operators: Quiz, Interview & Code</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .active-tab {
+        background-color: white;
+        color: #4f46e5;
+        box-shadow:
+          0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+      }
+      pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 font-sans leading-relaxed">
+    <div class="max-w-4xl mx-auto px-4 py-12">
+      <!-- Header -->
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-slate-800 mb-2">
+          JavaScript Operators Master
+        </h1>
+        <p class="text-lg text-slate-600">
+          The ultimate guide: MCQs, Interview Prep, and Coding Challenges
+        </p>
+      </header>
+
+      <!-- Tab Navigation -->
+      <div class="flex justify-center mb-8">
+        <div
+          class="bg-slate-200 p-1 rounded-xl flex flex-wrap justify-center gap-1"
+        >
+          <button
+            id="tab-quiz"
+            onclick="switchTab('quiz')"
+            class="px-4 md:px-6 py-2 rounded-lg font-semibold transition-all active-tab"
+          >
+            50 MCQs
+          </button>
+          <button
+            id="tab-interview"
+            onclick="switchTab('interview')"
+            class="px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-slate-600 hover:text-slate-800"
+          >
+            20 Interview Qs
+          </button>
+          <button
+            id="tab-coding"
+            onclick="switchTab('coding')"
+            class="px-4 md:px-6 py-2 rounded-lg font-semibold transition-all text-slate-600 hover:text-slate-800"
+          >
+            50 Coding Challenges
+          </button>
+        </div>
+      </div>
+
+      <!-- Global Actions -->
+      <!-- <div class="mb-10 flex justify-center gap-4">
+        <button
+          onclick="revealAll()"
+          class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-full font-medium transition-colors shadow-lg"
+        >
+          Reveal All
+        </button>
+        <button
+          onclick="hideAll()"
+          class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 px-6 py-2 rounded-full font-medium transition-colors"
+        >
+          Hide All
+        </button>
+      </div> -->
+
+      <div id="content-container" class="space-y-8">
+        <!-- Content will be injected here -->
+      </div>
+
+      <footer
+        class="mt-16 pt-8 border-t border-slate-200 text-center text-slate-500 pb-12"
+      >
+        <p>Master JavaScript Operators &bull; &copy 2026, LogicWhile</p>
+      </footer>
+    </div>
+
+    <script>
+      let currentTab = "quiz";
+
+      const quizData = [
+        {
+          q: "What is the result of '5' + 2?",
+          a: "7",
+          b: "52",
+          c: "NaN",
+          d: "Error",
+          correct: "b",
+          explanation:
+            "The + operator performs string concatenation if one operand is a string.",
+        },
+        {
+          q: "Which operator is used for exponentiation?",
+          a: "^",
+          b: "**",
+          c: "exp()",
+          d: "^^",
+          correct: "b",
+          explanation: "ES2016 introduced ** for exponentiation.",
+        },
+        {
+          q: "What is the value of x after: let x = 10; x += 5;",
+          a: "10",
+          b: "5",
+          c: "15",
+          d: "50",
+          correct: "c",
+          explanation: "x += 5 is shorthand for x = x + 5.",
+        },
+        {
+          q: "Which operator checks for equality of value and type?",
+          a: "==",
+          b: "=",
+          c: "===",
+          d: "!=",
+          correct: "c",
+          explanation: "Strict equality (===) checks both value and type.",
+        },
+        {
+          q: "What does the % operator return?",
+          a: "Percentage",
+          b: "Quotient",
+          c: "Remainder",
+          d: "Square root",
+          correct: "c",
+          explanation:
+            "The modulo operator (%) returns the remainder of a division.",
+        },
+        {
+          q: "What is the result of 10 > 5 && 3 < 1?",
+          a: "true",
+          b: "false",
+          c: "undefined",
+          d: "null",
+          correct: "b",
+          explanation:
+            "Both conditions must be true for && (AND) to return true.",
+        },
+        {
+          q: "What is the value of x++ if x is 5?",
+          a: "5 (then becomes 6)",
+          b: "6",
+          c: "4",
+          d: "undefined",
+          correct: "a",
+          explanation:
+            "The post-increment operator returns the value before incrementing.",
+        },
+        {
+          q: "Which operator is used to reverse a boolean value?",
+          a: "!!",
+          b: "&",
+          c: "!",
+          d: "~",
+          correct: "c",
+          explanation: "The logical NOT (!) operator inverts truthiness.",
+        },
+        {
+          q: "What is the result of 5 == '5'?",
+          a: "true",
+          b: "false",
+          c: "NaN",
+          d: "Error",
+          correct: "a",
+          explanation: "Loose equality (==) performs type coercion.",
+        },
+        {
+          q: "What is 10 / 0 in JavaScript?",
+          a: "0",
+          b: "Error",
+          c: "Infinity",
+          d: "NaN",
+          correct: "c",
+          explanation: "Division by zero returns Infinity in JS.",
+        },
+        {
+          q: "Which is an assignment operator?",
+          a: "==",
+          b: "===",
+          c: "=>",
+          d: "=",
+          correct: "d",
+          explanation: "The single equals sign (=) assigns a value.",
+        },
+        {
+          q: "Result of true || false?",
+          a: "true",
+          b: "false",
+          c: "null",
+          d: "undefined",
+          correct: "a",
+          explanation: "OR (||) returns true if at least one operand is true.",
+        },
+        {
+          q: "What is typeof null?",
+          a: "null",
+          b: "undefined",
+          c: "object",
+          d: "string",
+          correct: "c",
+          explanation: "This is a well-known historical bug in JavaScript.",
+        },
+        {
+          q: "Result of 2 * 3 + 4?",
+          a: "14",
+          b: "10",
+          c: "24",
+          d: "20",
+          correct: "b",
+          explanation: "Multiplication has higher precedence than addition.",
+        },
+        {
+          q: "Result of '10' - 5?",
+          a: "5",
+          b: "105",
+          c: "NaN",
+          d: "Error",
+          correct: "a",
+          explanation: "The subtraction operator coerces strings to numbers.",
+        },
+        {
+          q: "What does the ?? operator do?",
+          a: "Checks for false values",
+          b: "Checks for null or undefined",
+          c: "Logical AND",
+          d: "Ternary shorthand",
+          correct: "b",
+          explanation:
+            "Nullish coalescing returns the right side only if the left is null or undefined.",
+        },
+        {
+          q: "What is the result of 0 ?? 42?",
+          a: "0",
+          b: "42",
+          c: "null",
+          d: "undefined",
+          correct: "a",
+          explanation: "0 is not null or undefined, so it's returned.",
+        },
+        {
+          q: "What is the result of 0 || 42?",
+          a: "0",
+          b: "42",
+          c: "true",
+          d: "false",
+          correct: "b",
+          explanation: "0 is falsy, so || returns the right side.",
+        },
+        {
+          q: "Which operator is used for optional chaining?",
+          a: "?.",
+          b: "??",
+          c: "?:",
+          d: "!!",
+          correct: "a",
+          explanation:
+            "Optional chaining (?.) allows reading properties deep within objects without erroring if a reference is nullish.",
+        },
+        {
+          q: "Result of typeof NaN?",
+          a: "NaN",
+          b: "null",
+          c: "number",
+          d: "undefined",
+          correct: "c",
+          explanation: "Not-a-Number is technically a number type.",
+        },
+        {
+          q: "What is the result of [] + []?",
+          a: "[]",
+          b: "0",
+          c: "'' (empty string)",
+          d: "undefined",
+          correct: "c",
+          explanation:
+            "Arrays are converted to empty strings and concatenated.",
+        },
+        {
+          q: "What is the delete operator used for?",
+          a: "Deleting variables",
+          b: "Deleting object properties",
+          c: "Clearing memory",
+          d: "Removing array elements (re-indexing)",
+          correct: "b",
+          explanation: "Delete removes a property from an object.",
+        },
+        {
+          q: "Result of 5 > 4 > 3?",
+          a: "true",
+          b: "false",
+          c: "Error",
+          d: "undefined",
+          correct: "b",
+          explanation:
+            "Evaluates as (5 > 4) > 3 which is (true) > 3. true is coerced to 1, and 1 > 3 is false.",
+        },
+        {
+          q: "What does '1' == true return?",
+          a: "true",
+          b: "false",
+          c: "NaN",
+          d: "TypeError",
+          correct: "a",
+          explanation: "Both are coerced to the number 1.",
+        },
+        {
+          q: "Which operator is the Ternary operator?",
+          a: "??",
+          b: "?:",
+          c: "?",
+          d: "if",
+          correct: "b",
+          explanation:
+            "The conditional (ternary) operator: condition ? expr1 : expr2.",
+        },
+        {
+          q: "Result of 1 + 2 + '3'?",
+          a: "6",
+          b: "33",
+          c: "123",
+          d: "NaN",
+          correct: "b",
+          explanation: "1+2=3 (number), then 3+'3'='33' (string).",
+        },
+        {
+          q: "What is the comma operator used for?",
+          a: "Creating arrays",
+          b: "Separating arguments",
+          c: "Evaluating multiple expressions and returning the last",
+          d: "Formatting numbers",
+          correct: "c",
+          explanation:
+            "The comma operator evaluates all operands and returns the last one.",
+        },
+        {
+          q: "What does 'void 0' return?",
+          a: "0",
+          b: "null",
+          c: "undefined",
+          d: "Error",
+          correct: "c",
+          explanation:
+            "The void operator evaluates an expression and returns undefined.",
+        },
+        {
+          q: "Result of true + true?",
+          a: "2",
+          b: "true",
+          c: "true",
+          d: "NaN",
+          correct: "a",
+          explanation: "Booleans are coerced to 1 and 0 in arithmetic.",
+        },
+        {
+          q: "What is the result of !!'hello'?",
+          a: "NaN",
+          b: "true",
+          c: "false",
+          d: "undefined",
+          correct: "b",
+          explanation: "Double NOT converts a value to its boolean equivalent.",
+        },
+        {
+          q: "The 'in' operator checks for:",
+          a: "Value in array",
+          b: "Property in object",
+          c: "Substring in string",
+          d: "Item in Map",
+          correct: "b",
+          explanation:
+            "The 'in' operator checks if a property exists in an object or its prototype chain.",
+        },
+        {
+          q: "Result of 'b' + 'a' + + 'a' + 'a' (lowercase)?",
+          a: "baaa",
+          b: "banana",
+          c: "baNaN",
+          d: "baNaNa",
+          correct: "d",
+          explanation:
+            "'b'+'a' + (+'a') which is NaN + 'a' results in 'baNaNa'.",
+        },
+        {
+          q: "What does x ||= y do?",
+          a: "Assigns y if x is falsy",
+          b: "Assigns y if x is nullish",
+          c: "Assigns y if x is truthy",
+          d: "Assigns y always",
+          correct: "a",
+          explanation:
+            "Logical OR assignment assigns the right side only when the left side is falsy.",
+        },
+        {
+          q: "What is the value of +'5'?",
+          a: "5",
+          b: "'5'",
+          c: "NaN",
+          d: "Error",
+          correct: "a",
+          explanation: "The unary plus converts a numeric string to a number.",
+        },
+        {
+          q: "What does true && 'hello' return?",
+          a: "true",
+          b: "'hello'",
+          c: "false",
+          d: "undefined",
+          correct: "b",
+          explanation:
+            "Logical AND returns the second operand when the first operand is truthy.",
+        },
+        {
+          q: "What does x &&= y do?",
+          a: "Assigns y if x is truthy",
+          b: "Assigns y if x is falsy",
+          c: "Assigns y if x is nullish",
+          d: "Assigns y always",
+          correct: "a",
+          explanation:
+            "Logical AND assignment updates the left side only when it is truthy.",
+        },
+        {
+          q: "Result of [1, 2] instanceof Array?",
+          a: "true",
+          b: "false",
+          c: "Object",
+          d: "TypeError",
+          correct: "a",
+          explanation:
+            "instanceof checks if the constructor's prototype is in the object chain.",
+        },
+        {
+          q: "What is the 'Spread' operator used for in arrays?",
+          a: "Splitting strings",
+          b: "Expanding elements",
+          c: "Removing duplicates",
+          d: "Sorting",
+          correct: "b",
+          explanation: "Spread (...) expands an iterable into elements.",
+        },
+        {
+          q: "What is the 'yield' operator used in?",
+          a: "Async functions",
+          b: "Loops",
+          c: "Generator functions",
+          d: "Classes",
+          correct: "c",
+          explanation: "Yield pauses and resumes a generator function.",
+        },
+        {
+          q: "Result of 2 ** 3 ** 2?",
+          a: "64",
+          b: "512",
+          c: "32",
+          d: "128",
+          correct: "b",
+          explanation:
+            "Exponentiation is right-associative: 2 ** (3 ** 2) = 2 ** 9 = 512.",
+        },
+        {
+          q: "Result of typeof (class {})?",
+          a: "class",
+          b: "object",
+          c: "function",
+          d: "undefined",
+          correct: "c",
+          explanation: "Classes in JS are special functions.",
+        },
+        {
+          q: "What does the 'await' operator do?",
+          a: "Pauses execution of async function",
+          b: "Delays a timer",
+          c: "Forces a loop to stop",
+          d: "Checks for truthiness",
+          correct: "a",
+          explanation:
+            "Await pauses the async function until the Promise settles.",
+        },
+        {
+          q: "Result of 0.1 + 0.2 === 0.3?",
+          a: "true",
+          b: "false",
+          c: "undefined",
+          d: "NaN",
+          correct: "b",
+          explanation:
+            "Floating point precision issues make 0.1 + 0.2 = 0.30000000000000004.",
+        },
+        {
+          q: "What is the purpose of the 'new' operator?",
+          a: "Creates a new variable",
+          b: "Creates an instance of an object",
+          c: "Clears an array",
+          d: "Starts a new script",
+          correct: "b",
+          explanation:
+            "The new operator creates an instance of a user-defined object type or built-in object.",
+        },
+        {
+          q: "Which operator has the highest precedence?",
+          a: "=",
+          b: "||",
+          c: "() (grouping)",
+          d: "+",
+          correct: "c",
+          explanation:
+            "Grouping parentheses always have the highest precedence.",
+        },
+        {
+          q: "Result of ({...[1,2]})?",
+          a: "[1, 2]",
+          b: "{0: 1, 1: 2}",
+          c: "{1, 2}",
+          d: "Error",
+          correct: "b",
+          explanation:
+            "Spreading an array into an object creates keys based on indices.",
+        },
+      ];
+
+      const interviewData = [
+        {
+          q: "What is the difference between '==' and '==='?",
+          a: "The '==' (loose equality) operator performs type coercion before comparison, while '===' (strict equality) compares both value and type without coercion. Example: 1 == '1' is true, but 1 === '1' is false.",
+        },
+        {
+          q: "Explain 'Type Coercion' in JavaScript operators.",
+          a: "Type coercion is the automatic conversion of values from one data type to another. For example, using the '+' operator with a string and a number results in the number being coerced to a string for concatenation ('5' + 2 = '52').",
+        },
+        {
+          q: "What is the Nullish Coalescing Operator (??) and how does it differ from logical OR (||)?",
+          a: "The '??' operator returns the right-hand operand only when the left-hand operand is null or undefined. In contrast, '||' returns the right-hand operand for any falsy value (like 0, empty string, or false).",
+        },
+        {
+          q: "How does the 'delete' operator work and what does it return?",
+          a: "The 'delete' operator removes a property from an object. It returns 'true' if the property was successfully deleted or if the property didn't exist. It returns 'false' only if the property is non-configurable (like those created with Object.defineProperty).",
+        },
+        {
+          q: "What is the purpose of the 'void' operator?",
+          a: "The 'void' operator evaluates the given expression and then returns undefined. It is often used to obtain the primitive value undefined using 'void 0' or to prevent a link from navigating using 'javascript:void(0)'.",
+        },
+        {
+          q: "Explain the behavior of '0.1 + 0.2 === 0.3'. Why is it false?",
+          a: "JavaScript uses the IEEE 754 standard for floating-point arithmetic. Many decimals cannot be represented exactly in binary, leading to small precision errors. 0.1 + 0.2 actually equals 0.30000000000000004.",
+        },
+        {
+          q: "What does the 'typeof' operator return for 'null' and why?",
+          a: "It returns 'object'. This is a historical bug in JavaScript from its first version where values were represented as a type tag and a value. Null's type tag was 0, which matched the tag for objects.",
+        },
+        {
+          q: "What are Logical Assignment Operators?",
+          a: "Introduced in ES2021, they combine logical operations with assignment: '&&=' (assigns if left is truthy), '||=' (assigns if left is falsy), and '??=' (assigns if left is nullish).",
+        },
+        {
+          q: "Explain short-circuit evaluation in logical operators.",
+          a: "In '&&', if the first operand is false, the second is never evaluated. In '||', if the first is true, the second is never evaluated. This is often used for conditional execution: 'user && user.save()'.",
+        },
+        {
+          q: "How does the 'instanceof' operator work?",
+          a: "The 'instanceof' operator tests whether the prototype property of a constructor appears anywhere in the prototype chain of an object. Example: '[1,2] instanceof Array' is true.",
+        },
+        {
+          q: "What is the comma operator (,) and what is its result?",
+          a: "The comma operator evaluates each of its operands from left to right and returns the value of the last operand. It is frequently used in 'for' loops to update multiple variables.",
+        },
+        {
+          q: "Explain the Spread (...) operator vs the Rest operator.",
+          a: "Spread expands an iterable (like an array) into individual elements. Rest collects multiple elements and condenses them into a single array. They use the same syntax but serve opposite purposes based on context.",
+        },
+        {
+          q: "What happens when you use '+' on two arrays, like '[] + []'?",
+          a: "The arrays are coerced into strings. An empty array becomes an empty string. So '[] + []' results in an empty string concatenated with an empty string, which is an empty string ('').",
+        },
+        {
+          q: "What is the exponentiation operator and how does its associativity work?",
+          a: "The '**' operator calculates base to the power of exponent. It is right-associative, meaning '2 ** 3 ** 2' is evaluated as '2 ** (3 ** 2)', resulting in 512, not 64.",
+        },
+        {
+          q: "Explain the 'in' operator.",
+          a: "The 'in' operator returns 'true' if the specified property is in the specified object or its prototype chain. For arrays, it checks for the index: '0 in [a, b]' is true.",
+        },
+        {
+          q: "What is the difference between prefix and postfix increment?",
+          a: "Prefix (++x) increments the value and returns the NEW value. Postfix (x++) returns the ORIGINAL value and then increments it. Example: let a=1; let b=a++; // b is 1, a is 2.",
+        },
+        {
+          q: "How does unary plus (+) differ from parseInt?",
+          a: "Unary plus attempts to convert a value to a number directly. It returns NaN for invalid numeric strings and does not parse trailing characters or consider base like parseInt does.",
+        },
+        {
+          q: "How does the Optional Chaining operator (?.) improve code?",
+          a: "It allows reading the value of a property located deep within a chain of connected objects without having to check if each reference in the chain is valid. If a reference is nullish, it short-circuits and returns undefined.",
+        },
+        {
+          q: "What is the result of 'NaN === NaN'?",
+          a: "It is 'false'. NaN is the only value in JavaScript that is not equal to itself. To check for NaN, you must use Number.isNaN() or Object.is().",
+        },
+        {
+          q: "What does the 'yield' operator do?",
+          a: "The 'yield' operator is used to pause and resume a generator function. When called, it returns the value to the generator's caller and stays in the same execution context until 'next()' is called again.",
+        },
+      ];
+
+      const codingData = [
+        {
+          q: "Use optional chaining to call save() only if form exists.",
+          a: "form?.save();",
+        },
+        {
+          q: "Use nullish coalescing to default price to 100 when it is null or undefined.",
+          a: "const total = price ?? 100;",
+        },
+        {
+          q: "Use logical AND to execute log() only when debug is true.",
+          a: "debug && log();",
+        },
+        {
+          q: "Create a shallow copy of array 'arr' using spread.",
+          a: "const copy = [...arr];",
+        },
+        {
+          q: "Use the ternary operator to return 'yes' when cond is true, otherwise 'no'.",
+          a: "const result = cond ? 'yes' : 'no';",
+        },
+        {
+          q: "Convert the string '42' to a number with a unary operator.",
+          a: "const num = +'42';",
+        },
+        {
+          q: "Append an exclamation mark to message using assignment shorthand.",
+          a: "message += '!';",
+        },
+        {
+          q: "Remove the property 'temp' from object 'data'.",
+          a: "delete data.temp;",
+        },
+        {
+          q: "Use await to get JSON from response returned by fetch(url).",
+          a: "const response = await fetch(url);\nconst json = await response.json();",
+        },
+        {
+          q: "Use &&= to update config.enabled only when it is already truthy.",
+          a: "config.enabled &&= isActive;",
+        },
+        {
+          q: "Write a function that returns the remainder of 'a' divided by 'b'.",
+          a: "const remainder = (a, b) => a % b;",
+        },
+        {
+          q: "Check if a variable 'arr' was created using the Array constructor.",
+          a: "const isArr = arr instanceof Array;",
+        },
+        {
+          q: "Concatenate strings 'hello' and 'world' using only the '+' operator.",
+          a: "const res = 'hello' + ' ' + 'world';",
+        },
+        {
+          q: "Combine two arrays 'a1' and 'a2' into one using spread.",
+          a: "const combined = [...a1, ...a2];",
+        },
+        {
+          q: "Assign 'admin' to 'role' only if 'role' is currently falsy.",
+          a: "role ||= 'admin';",
+        },
+        {
+          q: "Check if a variable 'x' is specifically an object (and not null).",
+          a: "typeof x === 'object' && x !== null;",
+        },
+        {
+          q: "Calculate 2 to the power of 10.",
+          a: "2 ** 10;",
+        },
+        {
+          q: "Write an expression that evaluates to true if 'x' is between 10 and 20 (inclusive).",
+          a: "x >= 10 && x <= 20;",
+        },
+        {
+          q: "Check if 'val' is null or undefined in one comparison.",
+          a: "val == null;",
+        },
+        {
+          q: "Toggle a boolean variable 'flag'.",
+          a: "flag = !flag;",
+        },
+        {
+          q: "Check if 'str' contains the character 'a' (return boolean).",
+          a: "str.includes('a');",
+        },
+        {
+          q: "Check if a property 'id' exists directly on object 'obj' (not on prototype).",
+          a: "obj.hasOwnProperty('id');",
+        },
+        {
+          q: "Create a copy of object 'user' using spread.",
+          a: "const copy = { ...user };",
+        },
+        { q: "Evaluate: true ? 'yes' : 'no'.", a: "'yes'" },
+        {
+          q: "Create a string from array ['j', 's'] using join.",
+          a: "['j', 's'].join('');",
+        },
+        {
+          q: "Extract properties 'name' and 'age' from 'user' into variables using destructuring.",
+          a: "const { name, age } = user;",
+        },
+        {
+          q: "Find the type of 'undefined'.",
+          a: "typeof undefined; // 'undefined'",
+        },
+        {
+          q: "Find the absolute value of 'n' without Math.abs (using ternary).",
+          a: "n < 0 ? -n : n;",
+        },
+        {
+          q: "Use nullish coalescing to provide 0 when score is null or undefined.",
+          a: "const finalScore = score ?? 0;",
+        },
+        {
+          q: "Concatenate an array [1, 2] with number 3.",
+          a: "[1, 2].concat(3);",
+        },
+        { q: "Force evaluate '2 + 2 * 2' to equal 8.", a: "(2 + 2) * 2;" },
+        {
+          q: "Check if '0' (string) is equal to 0 (number) using loose equality.",
+          a: "'0' == 0; // true",
+        },
+        {
+          q: "Use void to return undefined from a function that calculates x+y.",
+          a: "return void (x + y);",
+        },
+        {
+          q: "Get the ASCII code of the first character in 'str'.",
+          a: "str.charCodeAt(0);",
+        },
+        {
+          q: "Compare if 'apple' comes before 'banana' alphabetically.",
+          a: "'apple' < 'banana';",
+        },
+        { q: "Calculate the remainder of -7 % 3.", a: "-7 % 3; // -1" },
+        { q: "Check if 'status' is not 'active'.", a: "status !== 'active';" },
+        {
+          q: "Return 'high' if x > 10, 'mid' if x > 5, else 'low' using nested ternaries.",
+          a: "x > 10 ? 'high' : (x > 5 ? 'mid' : 'low');",
+        },
+        {
+          q: "What is the type of a Class declaration?",
+          a: "typeof class {}; // 'function'",
+        },
+        { q: "Check if 'this' is defined.", a: "typeof this !== 'undefined';" },
+      ];
+
+      function switchTab(tab) {
+        currentTab = tab;
+        document
+          .getElementById("tab-quiz")
+          .classList.toggle("active-tab", tab === "quiz");
+        document
+          .getElementById("tab-quiz")
+          .classList.toggle("text-slate-600", tab !== "quiz");
+        document
+          .getElementById("tab-interview")
+          .classList.toggle("active-tab", tab === "interview");
+        document
+          .getElementById("tab-interview")
+          .classList.toggle("text-slate-600", tab !== "interview");
+        document
+          .getElementById("tab-coding")
+          .classList.toggle("active-tab", tab === "coding");
+        document
+          .getElementById("tab-coding")
+          .classList.toggle("text-slate-600", tab !== "coding");
+        renderContent();
+      }
+
+      function renderContent() {
+        const container = document.getElementById("content-container");
+        if (currentTab === "quiz") {
+          container.innerHTML = quizData
+            .map(
+              (item, index) => `
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all hover:shadow-md">
+                        <div class="flex items-start gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-sm font-bold text-slate-500">
+                                ${index + 1}
+                            </span>
+                            <div class="flex-1">
+                                <p class="text-lg font-semibold text-slate-800 mb-4">${item.q}</p>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6">
+                                    <div class="p-3 border border-slate-100 rounded-lg bg-slate-50 text-slate-700"><strong>A)</strong> ${item.a}</div>
+                                    <div class="p-3 border border-slate-100 rounded-lg bg-slate-50 text-slate-700"><strong>B)</strong> ${item.b}</div>
+                                    <div class="p-3 border border-slate-100 rounded-lg bg-slate-50 text-slate-700"><strong>C)</strong> ${item.c}</div>
+                                    <div class="p-3 border border-slate-100 rounded-lg bg-slate-50 text-slate-700"><strong>D)</strong> ${item.d}</div>
+                                </div>
+                                <div class="mt-4">
+                                    <button onclick="toggleAnswer(${index})" class="text-indigo-600 hover:text-indigo-800 text-sm font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span id="btn-text-${index}">Show Answer</span>
+                                    </button>
+                                    <div id="answer-${index}" class="hidden mt-4 p-4 rounded-lg border border-dashed border-slate-300">
+                                        <p class="text-sm font-bold text-green-700 mb-1">Correct Answer: ${item.correct.toUpperCase()}</p>
+                                        <p class="text-sm text-slate-600">${item.explanation}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+            )
+            .join("");
+        } else if (currentTab === "interview") {
+          container.innerHTML = interviewData
+            .map(
+              (item, index) => `
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all hover:shadow-md">
+                        <div class="flex items-start gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center text-sm font-bold text-indigo-500">
+                                Q${index + 1}
+                            </span>
+                            <div class="flex-1">
+                                <p class="text-lg font-semibold text-slate-800 mb-4">${item.q}</p>
+                                <div class="mt-4">
+                                    <button onclick="toggleAnswer(${index})" class="text-indigo-600 hover:text-indigo-800 text-sm font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span id="btn-text-${index}">Show Model Answer</span>
+                                    </button>
+                                    <div id="answer-${index}" class="hidden mt-4 p-5 rounded-lg bg-slate-50 border border-slate-200">
+                                        <p class="text-sm leading-relaxed text-slate-700 font-medium">${item.a}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+            )
+            .join("");
+        } else {
+          container.innerHTML = codingData
+            .map(
+              (item, index) => `
+                    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 transition-all hover:shadow-md">
+                        <div class="flex items-start gap-4">
+                            <span class="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center text-sm font-bold text-emerald-600">
+                                ${index + 1}
+                            </span>
+                            <div class="flex-1">
+                                <p class="text-lg font-semibold text-slate-800 mb-2">${item.q}</p>
+                                <div class="mt-4">
+                                    <button onclick="toggleAnswer(${index})" class="text-emerald-600 hover:text-emerald-800 text-sm font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <span id="btn-text-${index}">Show Solution</span>
+                                    </button>
+                                    <div id="answer-${index}" class="hidden mt-4">
+                                        <div class="bg-slate-900 rounded-lg p-4 font-mono text-sm text-emerald-400">
+                                            <pre><code>${item.a.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `,
+            )
+            .join("");
+        }
+      }
+
+      function toggleAnswer(index) {
+        const el = document.getElementById(`answer-${index}`);
+        const btnText = document.getElementById(`btn-text-${index}`);
+
+        let showText = "Show Answer";
+        let hideText = "Hide Answer";
+
+        if (currentTab === "interview") {
+          showText = "Show Model Answer";
+          hideText = "Hide Model Answer";
+        } else if (currentTab === "coding") {
+          showText = "Show Solution";
+          hideText = "Hide Solution";
+        }
+
+        if (el.classList.contains("hidden")) {
+          el.classList.remove("hidden");
+          btnText.textContent = hideText;
+        } else {
+          el.classList.add("hidden");
+          btnText.textContent = showText;
+        }
+      }
+
+      function revealAll() {
+        const data =
+          currentTab === "quiz"
+            ? quizData
+            : currentTab === "interview"
+              ? interviewData
+              : codingData;
+        data.forEach((_, i) => {
+          const el = document.getElementById(`answer-${i}`);
+          const btnText = document.getElementById(`btn-text-${i}`);
+          el.classList.remove("hidden");
+          btnText.textContent =
+            currentTab === "quiz"
+              ? "Hide Answer"
+              : currentTab === "interview"
+                ? "Hide Model Answer"
+                : "Hide Solution";
+        });
+      }
+
+      function hideAll() {
+        const data =
+          currentTab === "quiz"
+            ? quizData
+            : currentTab === "interview"
+              ? interviewData
+              : codingData;
+        data.forEach((_, i) => {
+          const el = document.getElementById(`answer-${i}`);
+          const btnText = document.getElementById(`btn-text-${i}`);
+          el.classList.add("hidden");
+          btnText.textContent =
+            currentTab === "quiz"
+              ? "Show Answer"
+              : currentTab === "interview"
+                ? "Show Model Answer"
+                : "Show Solution";
+        });
+      }
+
+      window.onload = renderContent;
+    </script>
+  </body>
+</html>

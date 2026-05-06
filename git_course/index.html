@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git Learning Curriculum - Index</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #0f172a;
+        --secondary-bg: #1e293b;
+        --accent-bg: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --accent-orange: #fb923c;
+        --accent-red: #f87171;
+        --border-color: #334155;
+        --max-width: 800px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .breadcrumb {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--accent-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .breadcrumb a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .day-section {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .day-section h2 {
+        font-size: 1.5rem;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--accent-cyan);
+        padding-bottom: 0.5rem;
+      }
+
+      .day-section h2 a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .day-section h2 a:hover {
+        text-decoration: underline;
+      }
+
+      .goal {
+        background: var(--accent-bg);
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .goal strong {
+        color: var(--accent-green);
+      }
+
+      .key-commands {
+        background: #020617;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        font-family: "JetBrains Mono", monospace;
+        color: var(--accent-cyan);
+      }
+
+      .resources {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .resources h2 {
+        color: var(--accent-orange);
+        margin-bottom: 1rem;
+      }
+
+      .resources ul {
+        padding-left: 1.5rem;
+      }
+
+      .resources li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .resources a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .resources a:hover {
+        text-decoration: underline;
+      }
+
+      .conclusion {
+        background: var(--accent-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .conclusion p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      hr {
+        border: none;
+        height: 1px;
+        background: var(--border-color);
+        margin: 2rem 0;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .day-section {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumb">
+        <p>
+          <a href="day00_Intro.html"
+            >Day 0 — Introduction to Version Control Systems</a
+          >
+          → | <strong>Index</strong> |
+          <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a>
+          →
+        </p>
+      </nav>
+
+      <header>
+        <h1>Git Learning Curriculum</h1>
+        <p class="subtitle">Complete 8-Day Course Index</p>
+      </header>
+
+      <main>
+        <section class="day-section">
+          <h2>
+            <a href="day00_Intro.html"
+              >Day 0 — Introduction to Version Control Systems</a
+            >
+          </h2>
+          <div class="goal">
+            <p>
+              <strong>Goal:</strong> Understand why version control exists and
+              its fundamental purposes.
+            </p>
+          </div>
+          <p>
+            Before diving into Git specifically, learn why version control
+            systems exist in the first place. Understand the core problems they
+            solve: tracking changes over time, enabling collaboration without
+            conflicts, and providing a safety net for mistakes. Explore the
+            evolution of VCS and why Git became the dominant choice.
+          </p>
+          <div class="key-commands">
+            <strong>Key concepts:</strong> Version control history,
+            collaboration challenges, distributed vs centralized systems
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day01_what_is_git_setup.html"
+              >Day 1 — What is Git & Setup</a
+            >
+          </h2>
+          <div class="goal">
+            <p>
+              <strong>Goal:</strong> Understand version control and get Git
+              running locally.
+            </p>
+          </div>
+          <p>
+            Start by understanding <em>why</em> version control exists — the
+            problem of tracking changes, collaborating, and recovering from
+            mistakes. Install Git, configure your name and email (<code
+              >git config --global</code
+            >), and get comfortable with the terminal basics you'll need. End
+            the day by initializing your first repo with
+            <code>git init</code> and poking around the <code>.git</code> folder
+            to understand what Git actually creates.
+          </p>
+          <div class="key-commands">
+            <strong>Key commands:</strong> <code>git init</code>,
+            <code>git config</code>, <code>git status</code>
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day02_staging_commiting_history.html"
+              >Day 2 — Staging, Committing & History</a
+            >
+          </h2>
+          <div class="goal">
+            <p><strong>Goal:</strong> Master the core Git workflow.</p>
+          </div>
+          <p>
+            Learn the three states of Git: working directory, staging area, and
+            repository. Understand <em>why</em> the staging area exists — it
+            lets you craft clean, intentional commits. Practice adding files,
+            writing good commit messages, and viewing your history. Experiment
+            with <code>git diff</code> to see what's changed before committing.
+          </p>
+          <div class="key-commands">
+            <strong>Key commands:</strong> <code>git add</code>,
+            <code>git commit</code>, <code>git log</code>,
+            <code>git diff</code>, <code>git show</code>
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day03_branching_merging.html"
+              >Day 3 — Branching & Merging</a
+            >
+          </h2>
+          <div class="goal">
+            <p><strong>Goal:</strong> Think in branches.</p>
+          </div>
+          <p>
+            Branches are Git's superpower. Learn to create, switch, and delete
+            branches. Understand what a branch actually <em>is</em> (just a
+            pointer to a commit). Practice the classic workflow: create a
+            feature branch, make commits, merge it back to <code>main</code>.
+            Then intentionally create a merge conflict and resolve it manually —
+            this is the most important skill of the week.
+          </p>
+          <div class="key-commands">
+            <strong>Key commands:</strong> <code>git branch</code>,
+            <code>git switch</code>, <code>git checkout</code>,
+            <code>git merge</code>
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day04_remote_repository.html"
+              >Day 4 — Remote Repositories & GitHub</a
+            >
+          </h2>
+          <div class="goal">
+            <p>
+              <strong>Goal:</strong> Push code to the cloud and collaborate.
+            </p>
+          </div>
+          <p>
+            Create a GitHub account if you don't have one. Learn the
+            relationship between local and remote repos. Clone an existing repo,
+            push your own, and pull down changes. Understand
+            <code>origin</code> and remote tracking branches. Practice the basic
+            collaborative loop: fork → clone → change → push → pull request.
+          </p>
+          <div class="key-commands">
+            <strong>Key commands:</strong> <code>git clone</code>,
+            <code>git push</code>, <code>git pull</code>,
+            <code>git fetch</code>, <code>git remote</code>
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day05_rewriting_undoing_history.html"
+              >Day 5 — Rewriting History & Undoing Things</a
+            >
+          </h2>
+          <div class="goal">
+            <p><strong>Goal:</strong> Fix mistakes confidently.</p>
+          </div>
+          <p>
+            This is where Git gets powerful. Learn the different ways to undo
+            changes depending on where they are (unstaged, staged, committed).
+            Understand the difference between <code>git revert</code> (safe,
+            public) and <code>git reset</code> (destructive, local). Try
+            interactive rebase to clean up a messy commit history before
+            merging. Learn <code>git stash</code> for setting work aside
+            temporarily.
+          </p>
+          <div class="key-commands">
+            <strong>Key commands:</strong> <code>git revert</code>,
+            <code>git reset</code>, <code>git rebase -i</code>,
+            <code>git stash</code>, <code>git restore</code>
+          </div>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day06_workflows_best_practices.html"
+              >Day 6 — Workflows & Best Practices</a
+            >
+          </h2>
+          <div class="goal">
+            <p><strong>Goal:</strong> Learn how real teams use Git.</p>
+          </div>
+          <p>
+            Study common Git workflows:
+            <strong>Git Flow</strong> (feature/develop/main branches),
+            <strong>GitHub Flow</strong> (simple branch + PR), and
+            <strong>trunk-based development</strong>. Learn what makes a good
+            commit message (imperative tense, short subject, context in body).
+            Practice writing a <code>.gitignore</code> file. Read about branch
+            protection rules and why they exist on teams.
+          </p>
+          <p>
+            <strong>Practice:</strong> Simulate a small team workflow solo —
+            open a PR on GitHub, review your own diff, merge it.
+          </p>
+        </section>
+
+        <hr />
+
+        <section class="day-section">
+          <h2>
+            <a href="day07_practice_project.html"
+              >Day 7 — Practice Project & Review</a
+            >
+          </h2>
+          <div class="goal">
+            <p><strong>Goal:</strong> Cement everything with a real project.</p>
+          </div>
+          <p>
+            Build something small end-to-end using Git properly. Suggestions: a
+            personal portfolio page, a CLI todo app, or a markdown notes repo.
+            Requirements for the exercise: use at least 3 branches, write
+            meaningful commit messages, create and resolve one merge conflict,
+            open and merge a pull request on GitHub, and tag a release with
+            <code>git tag</code>.
+          </p>
+          <p>Review your week's learning and identify any gaps to revisit.</p>
+        </section>
+
+        <div class="resources">
+          <h2>Resources to use throughout the week:</h2>
+          <ul>
+            <li>
+              <a href="https://git-scm.com/book/en/v2" target="_blank"
+                >Pro Git Book</a
+              >
+              (free, comprehensive)
+            </li>
+            <li>
+              <a href="https://learngitbranching.js.org/" target="_blank"
+                >Learn Git Branching</a
+              >
+              (interactive visual tool — use this on Day 3)
+            </li>
+            <li>
+              <a href="https://docs.github.com" target="_blank"
+                >GitHub's own docs at docs.github.com</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div class="conclusion">
+          <p>
+            By the end of the week you'll have a solid mental model of how Git
+            works and the confidence to use it in any real project.
+          </p>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          <a href="day00_Intro.html"
+            >Day 0 — Introduction to Version Control Systems</a
+          >
+          → | <strong>Index</strong> |
+          <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a>
+          →
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

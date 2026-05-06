@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Modules, HOF & Scope Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Modules, Functions & Scope
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Logic & Architecture Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Mastering Modules, Higher-Order Functions, and Advanced Scoping.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Simple Import",
+          difficulty: "easy",
+          description:
+            "Import the 'math' module and print the square root of 16.",
+          solution: "import math\nprint(math.sqrt(16))",
+        },
+        {
+          id: 2,
+          title: "Specific Import",
+          difficulty: "easy",
+          description:
+            "From the 'datetime' module, import only the 'date' class and print today's date.",
+          solution: "from datetime import date\nprint(date.today())",
+        },
+        {
+          id: 3,
+          title: "Aliasing Imports",
+          difficulty: "easy",
+          description:
+            "Import the 'random' module as 'rd' and print a random integer between 1 and 10.",
+          solution: "import random as rd\nprint(rd.randint(1, 10))",
+        },
+        {
+          id: 4,
+          title: "The Global Keyword",
+          difficulty: "easy",
+          description:
+            "Use the 'global' keyword inside a function to modify a variable 'count' defined in the global scope.",
+          solution:
+            "count = 0\n\ndef increment():\n    global count\n    count += 1\n\nincrement()\nprint(count)",
+        },
+        {
+          id: 5,
+          title: "Passing Functions",
+          difficulty: "easy",
+          description:
+            "Write a function 'apply' that takes another function 'func' and a value 'x' as arguments, and returns func(x).",
+          solution:
+            "def apply(func, x):\n    return func(x)\n\nprint(apply(lambda n: n * 2, 5)) # Output: 10",
+        },
+        {
+          id: 6,
+          title: "Local Scope Check",
+          difficulty: "easy",
+          description:
+            "Try to access a variable defined inside a function from outside and catch the NameError.",
+          solution:
+            "def my_func():\n    local_var = 'I am hidden'\n\ntry:\n    print(local_var)\nexcept NameError as e:\n    print(f'Caught: {e}')",
+        },
+        {
+          id: 7,
+          title: "Module Entry Point",
+          difficulty: "easy",
+          description:
+            "Write a script that only prints 'Hello World' if it is run directly, not if it is imported as a module.",
+          solution: "if __name__ == '__main__':\n    print('Hello World')",
+        },
+        {
+          id: 8,
+          title: "The Nonlocal Keyword",
+          difficulty: "medium",
+          description:
+            "Use 'nonlocal' in a nested function to modify a variable defined in the outer (enclosing) function.",
+          solution:
+            "def outer():\n    x = 'outer'\n    def inner():\n        nonlocal x\n        x = 'inner modified'\n    inner()\n    return x\n\nprint(outer())",
+        },
+        {
+          id: 9,
+          title: "Creating a Closure",
+          difficulty: "medium",
+          description:
+            "Write a function 'make_multiplier' that takes 'n' and returns a function that multiplies its input by 'n'.",
+          solution:
+            "def make_multiplier(n):\n    def multiplier(x):\n        return x * n\n    return multiplier\n\ndouble = make_multiplier(2)\nprint(double(5)) # 10",
+        },
+        {
+          id: 10,
+          title: "Simple Decorator",
+          difficulty: "medium",
+          description:
+            "Write a decorator 'debug' that prints 'Executing...' before calling the original function.",
+          solution:
+            "def debug(func):\n    def wrapper(*args, **kwargs):\n        print('Executing...')\n        return func(*args, **kwargs)\n    return wrapper\n\n@debug\ndef say_hi():\n    print('Hi!')\n\nsay_hi()",
+        },
+        {
+          id: 11,
+          title: "Mapping with HOF",
+          difficulty: "medium",
+          description:
+            "Use the higher-order function 'map' and a lambda to square all numbers in [1, 2, 3].",
+          solution:
+            "nums = [1, 2, 3]\nsquared = list(map(lambda x: x**2, nums))\nprint(squared)",
+        },
+        {
+          id: 12,
+          title: "Filtering with HOF",
+          difficulty: "medium",
+          description:
+            "Use the 'filter' function to keep only strings longer than 3 characters from a list.",
+          solution:
+            "words = ['a', 'abc', 'abcd', 'e']\nlong_words = list(filter(lambda w: len(w) > 3, words))\nprint(long_words)",
+        },
+        {
+          id: 13,
+          title: "Package init Simulation",
+          difficulty: "medium",
+          description:
+            "Simulate a package structure logic where '__init__.py' exposes a version variable.",
+          solution:
+            "# In my_package/__init__.py\nVERSION = '1.0.0'\n\n# In main script\n# import my_package\n# print(my_package.VERSION)",
+        },
+        {
+          id: 14,
+          title: "Dynamic Function Selection",
+          difficulty: "medium",
+          description:
+            "Create a dictionary of functions (add, sub) and call one based on a user string key.",
+          solution:
+            "def add(a, b): return a + b\ndef sub(a, b): return a - b\n\nops = {'+': add, '-': sub}\nprint(ops['+'](10, 5))",
+        },
+        {
+          id: 15,
+          title: "Function Introspection",
+          difficulty: "medium",
+          description:
+            "Use the 'dir()' function to list all attributes of a user-defined function.",
+          solution: "def test(): pass\nprint('__name__' in dir(test))",
+        },
+        {
+          id: 16,
+          title: "Closure for State",
+          difficulty: "hard",
+          description:
+            "Use a closure to create a counter function that remembers its state between calls without using global variables.",
+          solution:
+            "def counter():\n    count = 0\n    def increment():\n        nonlocal count\n        count += 1\n        return count\n    return increment\n\nc = counter()\nprint(c(), c(), c()) # 1, 2, 3",
+        },
+        {
+          id: 17,
+          title: "Handling Import Errors",
+          difficulty: "hard",
+          description:
+            "Write code that tries to import a module 'secret' and imports 'fallback' if 'secret' is missing.",
+          solution:
+            "try:\n    import secret_module as engine\nexcept ImportError:\n    import math as engine # fallback\n\nprint(engine.__name__)",
+        },
+        {
+          id: 18,
+          title: "The __all__ Variable",
+          difficulty: "hard",
+          description:
+            "Simulate a module that defines __all__ = ['func1'] and show that 'from module import *' won't import 'func2'.",
+          solution:
+            "# In my_module.py:\n# __all__ = ['func1']\n# def func1(): pass\n# def func2(): pass\n\n# In script:\n# from my_module import *\n# func1() works, func2() raises NameError",
+        },
+        {
+          id: 19,
+          title: "Function Factory",
+          difficulty: "hard",
+          description:
+            "Write a HOF that takes a prefix string and returns a function that prepends that prefix to any input.",
+          solution:
+            "def create_logger(prefix):\n    def logger(msg):\n        print(f'[{prefix}] {msg}')\n    return logger\n\ninfo = create_logger('INFO')\ninfo('System startup') # [INFO] System startup",
+        },
+        {
+          id: 20,
+          title: "Global list mutation",
+          difficulty: "hard",
+          description:
+            "Explain and demonstrate why you can append to a global list inside a function WITHOUT the 'global' keyword, but you cannot reassign it.",
+          solution:
+            "data = []\n\ndef mutate():\n    # Works: modifying the object\n    data.append(1) \n\ndef reassign():\n    # Fails: tries to create local 'data' unless 'global data' is used\n    try:\n        data = [1]\n    except UnboundLocalError:\n        print('Cannot reassign without global')",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "LEGB Rule",
+          difficulty: "easy",
+          question: "What does the LEGB rule stand for in Python scope?",
+          options: [
+            "List, Entry, Global, Base",
+            "Local, Enclosing, Global, Built-in",
+            "Logical, Error, General, Binary",
+            "Long, Edit, Get, Block",
+          ],
+          answer: "Local, Enclosing, Global, Built-in",
+        },
+        {
+          id: 2,
+          title: "Package Marker",
+          difficulty: "easy",
+          question:
+            "Which file must be present to treat a directory as a Python package?",
+          options: ["main.py", "config.json", "__init__.py", "__pkg__.py"],
+          answer: "__init__.py",
+        },
+        {
+          id: 3,
+          title: "Namespace search",
+          difficulty: "easy",
+          question:
+            "If a variable is not found in Local scope, where does Python look next?",
+          options: ["Global", "Built-in", "Enclosing", "Parent module"],
+          answer: "Enclosing (if it exists, otherwise Global)",
+        },
+        {
+          id: 4,
+          title: "First-class citizens",
+          difficulty: "easy",
+          question:
+            "What does it mean that functions are 'first-class citizens'?",
+          options: [
+            "They run before other code",
+            "They can be passed as arguments and returned",
+            "They are faster than objects",
+            "They must be defined at the top",
+          ],
+          answer: "They can be passed as arguments and returned",
+        },
+        {
+          id: 5,
+          title: "Import all",
+          difficulty: "easy",
+          question: "What is the result of 'from math import *'?",
+          options: [
+            "Imports all public names",
+            "Imports nothing",
+            "Errors out",
+            "Imports only classes",
+          ],
+          answer: "Imports all public names into current namespace",
+        },
+        {
+          id: 6,
+          title: "sys.path",
+          difficulty: "easy",
+          question:
+            "Which module variable contains the list of directories Python searches for modules?",
+          options: ["os.path", "sys.path", "env.path", "py.path"],
+          answer: "sys.path",
+        },
+        {
+          id: 7,
+          title: "nonlocal vs global",
+          difficulty: "easy",
+          question: "When would you use 'nonlocal' instead of 'global'?",
+          options: [
+            "To access built-ins",
+            "To access variables in an enclosing function",
+            "To access class variables",
+            "There is no difference",
+          ],
+          answer: "To access variables in an enclosing (nested) function",
+        },
+        {
+          id: 8,
+          title: "Module reload",
+          difficulty: "medium",
+          question:
+            "How can you reload an already imported module in the same session?",
+          options: [
+            "reimport module",
+            "import module again",
+            "importlib.reload(module)",
+            "del module",
+          ],
+          answer: "importlib.reload(module)",
+        },
+        {
+          id: 9,
+          title: "The __name__ variable",
+          difficulty: "medium",
+          question:
+            "What is the value of __name__ when a module is imported by another script?",
+          options: [
+            "'__main__'",
+            "The module's filename",
+            "None",
+            "Empty string",
+          ],
+          answer: "The module's filename",
+        },
+        {
+          id: 10,
+          title: "Closure Requirement",
+          difficulty: "medium",
+          question: "What is required for a function to be a closure?",
+          options: [
+            "A nested function and a reference to non-local state",
+            "A global variable",
+            "A decorator",
+            "An __init__ file",
+          ],
+          answer: "A nested function and a reference to non-local state",
+        },
+        {
+          id: 11,
+          title: "import vs from-import",
+          difficulty: "medium",
+          question:
+            "Why is 'import math' preferred over 'from math import sqrt' in large projects?",
+          options: [
+            "It is faster",
+            "It prevents namespace pollution",
+            "It uses less memory",
+            "It imports classes only",
+          ],
+          answer:
+            "It prevents namespace pollution (names are prefixed with math.)",
+        },
+        {
+          id: 12,
+          title: "HOF example",
+          difficulty: "medium",
+          question: "Which of the following is a higher-order function?",
+          options: ["print()", "len()", "map()", "int()"],
+          answer: "map() (it takes a function as an argument)",
+        },
+        {
+          id: 13,
+          title: "Decorator syntax",
+          difficulty: "medium",
+          question: "The @decorator syntax is equivalent to:",
+          options: [
+            "f = decorator(f)",
+            "decorator = f(decorator)",
+            "f = f(decorator)",
+            "None of above",
+          ],
+          answer: "f = decorator(f)",
+        },
+        {
+          id: 14,
+          title: "UnboundLocalError",
+          difficulty: "medium",
+          question: "What causes an UnboundLocalError?",
+          options: [
+            "Missing import",
+            "Referencing a local variable before assignment",
+            "Using global keyword",
+            "Circular import",
+          ],
+          answer: "Referencing a local variable before assignment",
+        },
+        {
+          id: 15,
+          title: "Package sub-modules",
+          difficulty: "medium",
+          question:
+            "How do you import a sub-module 'utils' from package 'pkg'?",
+          options: [
+            "import pkg.utils",
+            "from pkg import utils",
+            "import utils from pkg",
+            "Both A and B",
+          ],
+          answer: "Both A and B",
+        },
+        {
+          id: 16,
+          title: "Global shadowing",
+          difficulty: "hard",
+          question:
+            "If a function assigns to 'x' without using global, but 'x' exists globally:",
+          options: [
+            "Global x is modified",
+            "A new local x is created",
+            "Error occurs",
+            "x becomes nonlocal",
+          ],
+          answer: "A new local x is created (shadowing the global one)",
+        },
+        {
+          id: 17,
+          title: "Circular Import",
+          difficulty: "hard",
+          question: "What usually happens during a circular import?",
+          options: [
+            "Python crashes",
+            "AttributeError on partially initialized module",
+            "Infinite loop",
+            "It is ignored",
+          ],
+          answer: "AttributeError on partially initialized module",
+        },
+        {
+          id: 18,
+          title: "sys.modules",
+          difficulty: "hard",
+          question: "What is sys.modules?",
+          options: [
+            "A list of all files",
+            "A cache of previously imported modules",
+            "The installer path",
+            "Module documentation",
+          ],
+          answer: "A cache of previously imported modules",
+        },
+        {
+          id: 19,
+          title: "Closure __closure__",
+          difficulty: "hard",
+          question:
+            "Where does Python store the 'captured' variables of a closure?",
+          options: [
+            "In the global dict",
+            "In the __closure__ attribute of the function",
+            "On the system stack",
+            "In __init__.py",
+          ],
+          answer: "In the __closure__ attribute of the function",
+        },
+        {
+          id: 20,
+          title: "__name__ in package",
+          difficulty: "hard",
+          question:
+            "What is __name__ for the __init__.py file of package 'mypkg'?",
+          options: ["'__init__'", "'mypkg'", "'__main__'", "'mypkg.__init__'"],
+          answer: "'mypkg'",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "Module vs Package",
+          difficulty: "easy",
+          question: "What is the difference between a Module and a Package?",
+          answer:
+            "A module is a single Python file (.py). A package is a directory containing multiple modules and an __init__.py file, allowing for hierarchical organization of code.",
+        },
+        {
+          id: 2,
+          title: "The 'global' keyword",
+          difficulty: "easy",
+          question: "When and why should you use the 'global' keyword?",
+          answer:
+            "Use 'global' when you need to reassign a variable defined at the top level of a module from inside a function. Without it, assignment creates a new local variable.",
+        },
+        {
+          id: 3,
+          title: "Closures",
+          difficulty: "easy",
+          question: "What is a closure in Python?",
+          answer:
+            "A closure is a function object that remembers values in enclosing scopes even if they are no longer present in memory. It 'closes over' the non-local variables.",
+        },
+        {
+          id: 4,
+          title: "__init__.py purpose",
+          difficulty: "easy",
+          question: "What is the role of __init__.py?",
+          answer:
+            "It marks a directory as a Python package. It can also be used to initialize package-level data or define which modules are exported when using 'from package import *'.",
+        },
+        {
+          id: 5,
+          title: "namespace pollution",
+          difficulty: "easy",
+          question: "Why is 'from module import *' considered bad practice?",
+          answer:
+            "It imports every name into the current namespace, which can lead to name clashes (shadowing) and makes it difficult to track where a function or variable originated.",
+        },
+        {
+          id: 6,
+          title: "Higher-Order Functions",
+          difficulty: "medium",
+          question: "Define a Higher-Order Function (HOF).",
+          answer:
+            "A HOF is a function that either takes one or more functions as arguments, returns a function as its result, or both.",
+        },
+        {
+          id: 7,
+          title: "nonlocal keyword",
+          difficulty: "medium",
+          question: "Explain the 'nonlocal' keyword.",
+          answer:
+            "It allows a nested function to modify a variable in the nearest enclosing scope that is not global. It is essential for maintaining state in closures.",
+        },
+        {
+          id: 8,
+          title: "Import Mechanism",
+          difficulty: "medium",
+          question: "What happens internally when 'import module' is called?",
+          answer:
+            "Python checks sys.modules for a cache. If not found, it searches sys.path, compiles the source to bytecode, executes the module code in its own namespace, and adds it to sys.modules.",
+        },
+        {
+          id: 9,
+          title: "Decorators",
+          difficulty: "medium",
+          question: "How do decorators work in Python?",
+          answer:
+            "Decorators are HOFs that wrap another function to extend its behavior. They take the target function as input and return a replacement 'wrapper' function.",
+        },
+        {
+          id: 10,
+          title: "Late Binding",
+          difficulty: "medium",
+          question: "What is the 'late binding' issue with closures in loops?",
+          answer:
+            "Variables in closures are looked up at call-time, not definition-time. In a loop, all created functions will see the final value of the loop variable unless you bind it immediately using a default argument.",
+        },
+        {
+          id: 11,
+          title: "__name__ == '__main__'",
+          difficulty: "medium",
+          question: "Why use the if __name__ == '__main__': block?",
+          answer:
+            "It ensures that specific code (like tests or demos) only runs when the script is executed directly, preventing it from running when the file is imported as a module.",
+        },
+        {
+          id: 12,
+          title: "First-class vs HOF",
+          difficulty: "medium",
+          question:
+            "Difference between first-class functions and higher-order functions?",
+          answer:
+            "First-class functions is a property of the language (functions are treated as objects). HOF is a specific type of function that uses that property to manipulate other functions.",
+        },
+        {
+          id: 13,
+          title: "LEGB resolution",
+          difficulty: "medium",
+          question: "How does Python resolve variable names?",
+          answer:
+            "Using the LEGB rule: It searches Local, then Enclosing (non-local), then Global (module level), and finally Built-in namespaces.",
+        },
+        {
+          id: 14,
+          title: "sys.path manipulation",
+          difficulty: "medium",
+          question:
+            "How can you import a module from a custom folder not in the search path?",
+          answer:
+            "By manually appending the directory string to the 'sys.path' list at runtime: `sys.path.append('/my/path')`.",
+        },
+        {
+          id: 15,
+          title: "Import aliasing",
+          difficulty: "medium",
+          question: "Why use 'import ... as ...'?",
+          answer:
+            "To prevent name conflicts with existing local variables or to shorten long module names (e.g., `import pandas as pd`).",
+        },
+        {
+          id: 16,
+          title: "Functional Programming in Python",
+          difficulty: "hard",
+          question: "How does Python support functional programming?",
+          answer:
+            "Through HOFs, lambda expressions, and built-in functions like map(), filter(), and reduce() (in functools), as well as the 'operator' and 'itertools' modules.",
+        },
+        {
+          id: 17,
+          title: "Circular Imports",
+          difficulty: "hard",
+          question: "How do you resolve a circular import?",
+          answer:
+            "Methods include moving imports inside functions (deferred import), refactoring common code into a third module, or using absolute imports instead of relative ones.",
+        },
+        {
+          id: 18,
+          title: "Global Interpreter Lock (GIL)",
+          difficulty: "hard",
+          question: "Does 'global' affect thread safety?",
+          answer:
+            "No. 'global' is a scope instruction. Thread safety is a concurrency issue handled by the GIL or synchronization primitives like Locks, regardless of scope.",
+        },
+        {
+          id: 19,
+          title: "functools.wraps",
+          difficulty: "hard",
+          question: "Why is @functools.wraps(func) used in decorators?",
+          answer:
+            "It copies the metadata (name, docstring, etc.) from the original function to the wrapper function, ensuring that help(func) and func.__name__ still return the expected values.",
+        },
+        {
+          id: 20,
+          title: "Relative Imports",
+          difficulty: "hard",
+          question:
+            "Explain the difference between . and .. in relative imports.",
+          answer:
+            "The dot (.) represents the current package, and two dots (..) represent the parent package. These only work within packages (directories with __init__.py).",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Expert Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

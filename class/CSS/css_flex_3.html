@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Flex - flex-basis</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      .flex-container {
+        display: flex;
+        border: 1px solid red;
+        /* flex-direction: column; */
+        /* gap: 10px; */
+        height: 100vh;
+      }
+
+      .flex-item {
+        background-color: blueviolet;
+        color: white;
+        padding: 10px;
+        width: 100px;
+        height: 100%;
+      }
+
+      .flex-item-1 {
+        flex-basis: 300px;
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
+
+      .flex-item-2 {
+        flex-basis: 300px;
+        flex-grow: 2;
+        flex-shrink: 2;
+      }
+
+      .flex-item-3 {
+        flex-basis: 300px;
+        flex-grow: 3;
+        flex-shrink: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex-container">
+      <div class="flex-item flex-item-1">Flex Item 1</div>
+      <div class="flex-item flex-item-2">Flex Item 2</div>
+      <div class="flex-item flex-item-3">Flex Item 3</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Dictionaries Deep Dive</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Python Dictionaries Mastery
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Data Mappings Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Key-Value Pairs, Comprehensions, and Hash-map Concepts.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Safe Access with .get()",
+          difficulty: "easy",
+          description:
+            "Given user = {'id': 1}, use .get() to print 'Anonymous' if 'name' is missing.",
+          solution:
+            "user = {'id': 1}\n# Safe access without KeyError\nprint(user.get('name', 'Anonymous'))",
+        },
+        {
+          id: 2,
+          title: "Updating Keys",
+          difficulty: "easy",
+          description:
+            "Update the price of 'laptop' from 1000 to 1200 in the dict inventory = {'laptop': 1000}.",
+          solution:
+            "inventory = {'laptop': 1000}\ninventory['laptop'] = 1200\nprint(inventory)",
+        },
+        {
+          id: 3,
+          title: "Dictionary Length",
+          difficulty: "easy",
+          description:
+            "Count how many key-value pairs are in {'a': 1, 'b': 2, 'c': 3}.",
+          solution: "data = {'a': 1, 'b': 2, 'c': 3}\nprint(len(data))",
+        },
+        {
+          id: 4,
+          title: "Removing with pop()",
+          difficulty: "easy",
+          description:
+            "Remove the key 'status' from {'id': 101, 'status': 'active'} and print the removed value.",
+          solution:
+            "user = {'id': 101, 'status': 'active'}\nval = user.pop('status')\nprint(f'Removed: {val}, Remaining: {user}')",
+        },
+        {
+          id: 5,
+          title: "Checking for Key",
+          difficulty: "easy",
+          description:
+            "Check if 'email' exists in {'username': 'jdoe', 'age': 25} using the 'in' keyword.",
+          solution:
+            "user = {'username': 'jdoe', 'age': 25}\nprint('email' in user)",
+        },
+        {
+          id: 6,
+          title: "Dictionary Comprehension",
+          difficulty: "easy",
+          description:
+            "Create a dictionary where keys are numbers 1-5 and values are their cubes.",
+          solution: "cubes = {x: x**3 for x in range(1, 6)}\nprint(cubes)",
+        },
+        {
+          id: 7,
+          title: "Iterating through Keys",
+          difficulty: "easy",
+          description:
+            "Print all keys in {'name': 'Alice', 'role': 'Admin'} one by one.",
+          solution:
+            "user = {'name': 'Alice', 'role': 'Admin'}\nfor key in user:\n    print(key)",
+        },
+        {
+          id: 8,
+          title: "Merging Dictionaries (Update)",
+          difficulty: "medium",
+          description:
+            "Merge dict1 = {'a': 1} and dict2 = {'b': 2} using the .update() method.",
+          solution:
+            "dict1 = {'a': 1}\ndict2 = {'b': 2}\ndict1.update(dict2)\nprint(dict1)",
+        },
+        {
+          id: 9,
+          title: "Merging Dictionaries (Union Operator)",
+          difficulty: "medium",
+          description:
+            "Merge {'x': 10} and {'y': 20} into a new dictionary using the | operator.",
+          solution: "d1 = {'x': 10}\nd2 = {'y': 20}\nd3 = d1 | d2\nprint(d3)",
+        },
+        {
+          id: 10,
+          title: "Dictionary from Lists",
+          difficulty: "medium",
+          description:
+            "Given keys = ['name', 'age'] and values = ['Bob', 30], create a dictionary using zip().",
+          solution:
+            "keys = ['name', 'age']\nvalues = ['Bob', 30]\nuser = dict(zip(keys, values))\nprint(user)",
+        },
+        {
+          id: 11,
+          title: "Inverting a Dictionary",
+          difficulty: "medium",
+          description:
+            "Swap keys and values in {'red': 1, 'blue': 2} using a comprehension.",
+          solution:
+            "colors = {'red': 1, 'blue': 2}\ninverted = {v: k for k, v in colors.items()}\nprint(inverted)",
+        },
+        {
+          id: 12,
+          title: "Nested Access",
+          difficulty: "medium",
+          description:
+            "Access the city 'London' from {'user': {'address': {'city': 'London'}}}",
+          solution:
+            "data = {'user': {'address': {'city': 'London'}}}\nprint(data['user']['address']['city'])",
+        },
+        {
+          id: 13,
+          title: "Using setdefault()",
+          difficulty: "medium",
+          description:
+            "Add 'skills': [] to a user dictionary only if it doesn't already exist.",
+          solution:
+            "user = {'name': 'Alice'}\nuser.setdefault('skills', []).append('Python')\nprint(user)",
+        },
+        {
+          id: 14,
+          title: "Filtering a Dictionary",
+          difficulty: "medium",
+          description:
+            "From {'a': 10, 'b': 5, 'c': 15}, create a new dictionary containing only items where value > 8.",
+          solution:
+            "scores = {'a': 10, 'b': 5, 'c': 15}\nfiltered = {k: v for k, v in scores.items() if v > 8}\nprint(filtered)",
+        },
+        {
+          id: 15,
+          title: "Counting Occurrences",
+          difficulty: "medium",
+          description:
+            "Count the frequency of each character in 'hello world' using a dictionary.",
+          solution:
+            "text = 'hello world'\nfreq = {}\nfor char in text:\n    freq[char] = freq.get(char, 0) + 1\nprint(freq)",
+        },
+        {
+          id: 16,
+          title: "Sorting by Key",
+          difficulty: "hard",
+          description:
+            "Given {'c': 3, 'a': 1, 'b': 2}, print a version sorted by keys.",
+          solution:
+            "d = {'c': 3, 'a': 1, 'b': 2}\nsorted_d = {k: d[k] for k in sorted(d)}\nprint(sorted_d)",
+        },
+        {
+          id: 17,
+          title: "Sorting by Value",
+          difficulty: "hard",
+          description:
+            "Sort {'apple': 10, 'orange': 5, 'banana': 8} based on the numeric values ascending.",
+          solution:
+            "fruits = {'apple': 10, 'orange': 5, 'banana': 8}\nsorted_fruits = dict(sorted(fruits.items(), key=lambda item: item[1]))\nprint(sorted_fruits)",
+        },
+        {
+          id: 18,
+          title: "Deep Nested Update",
+          difficulty: "hard",
+          description:
+            "Update 'city' to 'Paris' in a deeply nested dict safely.",
+          solution:
+            "data = {'id': 1, 'info': {'address': {'city': 'NYC', 'zip': '10001'}}}\ndata['info']['address']['city'] = 'Paris'\nprint(data)",
+        },
+        {
+          id: 19,
+          title: "Dict with Tuple Keys",
+          difficulty: "hard",
+          description:
+            "Create a dictionary that uses coordinate tuples (x, y) as keys.",
+          solution:
+            "locations = {(0, 0): 'Origin', (1, 2): 'Point A'}\nprint(locations[(1, 2)])",
+        },
+        {
+          id: 20,
+          title: "Handling Missing Keys",
+          difficulty: "hard",
+          description:
+            "Safely append 'item1' to a missing category key by initializing it if needed.",
+          solution:
+            "data = {}\nkey = 'category1'\nif key not in data:\n    data[key] = []\ndata[key].append('item1')\nprint(data)",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "Mutable Keys",
+          difficulty: "easy",
+          question: "Which can NOT be a dictionary key?",
+          options: ["String", "Integer", "List", "Tuple"],
+          answer: "List (Keys must be immutable/hashable)",
+        },
+        {
+          id: 2,
+          title: "Access Error",
+          difficulty: "easy",
+          question: "What happens if you access a missing key with d['key']?",
+          options: ["None", "False", "KeyError", "ValueError"],
+          answer: "KeyError",
+        },
+        {
+          id: 3,
+          title: "Dictionary Order",
+          difficulty: "easy",
+          question: "Since Python 3.7+, dictionaries are...",
+          options: ["Unordered", "Alphabetical", "Insertion Ordered", "Random"],
+          answer: "Insertion Ordered",
+        },
+        {
+          id: 4,
+          title: "The get() method",
+          difficulty: "easy",
+          question: "Default return for missing key in .get()?",
+          options: ["None", "False", "0", "Error"],
+          answer: "None",
+        },
+        {
+          id: 5,
+          title: "View Objects",
+          difficulty: "easy",
+          question: "What does d.keys() return?",
+          options: ["A list", "A tuple", "A view object", "A string"],
+          answer: "A view object",
+        },
+        {
+          id: 6,
+          title: "Identity",
+          difficulty: "easy",
+          question: "Are {} and dict() equivalent?",
+          options: ["Yes", "No", "Only in Python 2", "Depends on OS"],
+          answer: "Yes",
+        },
+        {
+          id: 7,
+          title: "Time Complexity",
+          difficulty: "easy",
+          question: "Time complexity for searching a key?",
+          options: ["O(1)", "O(n)", "O(log n)", "O(n² Bruckner)"],
+          answer: "O(1)",
+        },
+        {
+          id: 8,
+          title: "Uniqueness",
+          difficulty: "easy",
+          question: "What happens if you define a duplicate key?",
+          options: [
+            "Error",
+            "Stored as list",
+            "Last value wins",
+            "First value wins",
+          ],
+          answer: "Last value wins (overwrites previous)",
+        },
+        {
+          id: 9,
+          title: "Methods",
+          difficulty: "medium",
+          question: "Which method returns all values as a view?",
+          options: ["keys()", "items()", "values()", "get_all()"],
+          answer: "values()",
+        },
+        {
+          id: 10,
+          title: "Immutability",
+          difficulty: "medium",
+          question: "Why must keys be hashable?",
+          options: [
+            "Speed",
+            "For memory layout",
+            "Syntax rule",
+            "None of above",
+          ],
+          answer: "For memory layout (consistent hash address)",
+        },
+        {
+          id: 11,
+          title: "Update",
+          difficulty: "medium",
+          question: "Result of d.update(new_d)?",
+          options: ["New dict", "None", "Key count", "Boolean"],
+          answer: "None (modifies in-place)",
+        },
+        {
+          id: 12,
+          title: "Zip",
+          difficulty: "medium",
+          question: "Result of dict(zip(['a'], [1]))?",
+          options: ["{'a': 1}", "[('a', 1)]", "Error", "{1: 'a'}"],
+          answer: "{'a': 1}",
+        },
+        {
+          id: 13,
+          title: "Set vs Dict",
+          difficulty: "medium",
+          question: "Difference in literal syntax between Set and Dict?",
+          options: ["None", "Dict uses :", "Set uses []", "Set uses ()"],
+          answer: "Dict uses colon : for pairs",
+        },
+        {
+          id: 14,
+          title: "Pop Item",
+          difficulty: "medium",
+          question: "What does popitem() remove?",
+          options: ["Random", "Last item", "First item", "Nothing"],
+          answer: "Last inserted item (Python 3.7+)",
+        },
+        {
+          id: 15,
+          title: "Membership",
+          difficulty: "medium",
+          question: "Keyword for checking key existence?",
+          options: ["has", "exists", "in", "contains"],
+          answer: "in",
+        },
+        {
+          id: 16,
+          title: "Hashing",
+          difficulty: "hard",
+          question: "Internal collision handling in Python dicts?",
+          options: [
+            "Chaining",
+            "Open Addressing",
+            "Double Hashing",
+            "Re-sorting",
+          ],
+          answer: "Open Addressing",
+        },
+        {
+          id: 17,
+          title: "Memory",
+          difficulty: "hard",
+          question: "A dict uses more memory than a list because...",
+          options: [
+            "It's dynamic",
+            "Hash table overhead",
+            "Keys take extra space",
+            "It's a string",
+          ],
+          answer: "Hash table overhead (sparse indexing)",
+        },
+        {
+          id: 18,
+          title: "Views",
+          difficulty: "hard",
+          question: "Are dict views sets?",
+          options: ["No", "Only .keys()", "Only .values()", "Yes, all"],
+          answer: "Only .keys() and .items() support set operations",
+        },
+        {
+          id: 19,
+          title: "Copy",
+          difficulty: "hard",
+          question: "Is d.copy() deep or shallow?",
+          options: ["Shallow", "Deep", "Configurable", "Neither"],
+          answer: "Shallow",
+        },
+        {
+          id: 20,
+          title: "Mapping",
+          difficulty: "hard",
+          question: "Python dictionaries are a type of...",
+          options: ["Sequence", "Mapping", "Set", "Scalar"],
+          answer: "Mapping",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "Definition",
+          difficulty: "easy",
+          question: "What is a Python Dictionary?",
+          answer:
+            "A mapping of unique, hashable keys to arbitrary values, implemented as a hash table for O(1) performance.",
+        },
+        {
+          id: 2,
+          title: "Usage",
+          difficulty: "easy",
+          question: "When to use a dict over a list?",
+          answer:
+            "Use a dict for labeled data and when you need fast lookup by key rather than index.",
+        },
+        {
+          id: 3,
+          title: ".get() Benefit",
+          difficulty: "easy",
+          question: "Why use .get()?",
+          answer:
+            "It allows safe access with a fallback value, preventing KeyError crashes.",
+        },
+        {
+          id: 4,
+          title: "Key Requirements",
+          difficulty: "easy",
+          question: "What makes a valid key?",
+          answer:
+            "Keys must be hashable (immutable objects like strings, ints, or tuples containing immutable objects).",
+        },
+        {
+          id: 5,
+          title: "Ordering",
+          difficulty: "easy",
+          question: "Are dicts ordered?",
+          answer: "Yes, since 3.7, they preserve insertion order.",
+        },
+        {
+          id: 6,
+          title: "Iteration",
+          difficulty: "medium",
+          question: "How to iterate over both k, v?",
+          answer: "Using the .items() method: for k, v in d.items().",
+        },
+        {
+          id: 7,
+          title: "Comprehension",
+          difficulty: "medium",
+          question: "Syntax of dict comprehension?",
+          answer: "{key: val for item in iterable if condition}.",
+        },
+        {
+          id: 8,
+          title: "Internal Lookup",
+          difficulty: "medium",
+          question: "Complexity of add/delete/search?",
+          answer:
+            "O(1) on average; worst case O(n) during catastrophic collisions or resizing.",
+        },
+        {
+          id: 9,
+          title: "setdefault",
+          difficulty: "medium",
+          question: "setdefault vs get?",
+          answer:
+            "get returns the value; setdefault returns value AND inserts default if key was missing.",
+        },
+        {
+          id: 10,
+          title: "Merging",
+          difficulty: "medium",
+          question: "Ways to merge dicts?",
+          answer: "d.update(), {**d1, **d2}, or the | operator (3.9+).",
+        },
+        {
+          id: 11,
+          title: "Collisions",
+          difficulty: "medium",
+          question: "What is a hash collision?",
+          answer:
+            "When two different keys hash to the same bucket. Python resolves this via open addressing.",
+        },
+        {
+          id: 12,
+          title: "Views",
+          difficulty: "medium",
+          question: "What are dictionary views?",
+          answer:
+            "Dynamic, memory-efficient windows into the dict that update automatically when the dict changes.",
+        },
+        {
+          id: 13,
+          title: "Memory",
+          difficulty: "medium",
+          question: "Compact dicts (3.6+)?",
+          answer:
+            "A more memory-efficient internal layout that uses a dense array for data and a sparse table for indices.",
+        },
+        {
+          id: 14,
+          title: "Deletion",
+          difficulty: "medium",
+          question: "del vs pop?",
+          answer: "del removes the item; pop removes it and returns the value.",
+        },
+        {
+          id: 15,
+          title: "Creation",
+          difficulty: "medium",
+          question: "Initialize dict with same value?",
+          answer: "Using dict.fromkeys(keys, value).",
+        },
+        {
+          id: 16,
+          title: "Resizing",
+          difficulty: "hard",
+          question: "When does a dict resize?",
+          answer:
+            "When it reaches 2/3rds capacity to maintain O(1) performance.",
+        },
+        {
+          id: 17,
+          title: "Hashing Protocol",
+          difficulty: "hard",
+          question: "Requirements for custom key class?",
+          answer:
+            "Must implement both __hash__ and __eq__ to ensure consistent storage and lookup.",
+        },
+        {
+          id: 18,
+          title: "View Operations",
+          difficulty: "hard",
+          question: "Set operations on views?",
+          answer:
+            ".keys() and .items() support intersection and union because keys are unique/hashable.",
+        },
+        {
+          id: 19,
+          title: "Shallow Copy Issues",
+          difficulty: "hard",
+          question: "Risk of .copy()?",
+          answer:
+            "Nested mutable objects (like lists inside dicts) are shared by reference, leading to unintended side effects.",
+        },
+        {
+          id: 20,
+          title: "__missing__",
+          difficulty: "hard",
+          question: "What is __missing__?",
+          answer:
+            "A special method in dict subclasses called when a key isn't found; used to implement defaultdict logic.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy Snippet
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

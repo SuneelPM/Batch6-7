@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <style>
+      .title { fill: #22d3ee; font-size: 18px; font-weight: bold; font-family: Inter, sans-serif; }
+      .box { fill: #1e293b; stroke-width: 2; rx: 8; }
+      .text { fill: #f8fafc; font-size: 13px; font-family: Inter, sans-serif; }
+      .label { fill: #94a3b8; font-size: 11px; font-family: Inter, sans-serif; }
+      .safe { fill: #4ade80; }
+      .danger { fill: #f87171; }
+      .arrow { fill: none; stroke-width: 2; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" class="title">Git Undo Operations: Revert vs Reset vs Restore</text>
+
+  <!-- Before timeline -->
+  <text x="400" y="65" text-anchor="middle" class="label">Commit History (before operation)</text>
+
+  <circle cx="200" cy="100" r="25" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+  <text x="200" y="105" text-anchor="middle" class="text">A</text>
+
+  <circle cx="300" cy="100" r="25" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+  <text x="300" y="105" text-anchor="middle" class="text">B</text>
+
+  <circle cx="400" cy="100" r="25" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+  <text x="400" y="105" text-anchor="middle" class="text">C</text>
+
+  <circle cx="500" cy="100" r="25" fill="#f87171" stroke="#f87171" stroke-width="3"/>
+  <text x="500" y="105" text-anchor="middle" class="text" font-weight="bold">D</text>
+
+  <circle cx="600" cy="100" r="25" fill="#22d3ee" stroke="#22d3ee" stroke-width="3"/>
+  <text x="600" y="105" text-anchor="middle" class="text" font-weight="bold">HEAD</text>
+
+  <line x1="225" y1="100" x2="275" y2="100" stroke="#4ade80" stroke-width="3"/>
+  <line x1="325" y1="100" x2="375" y2="100" stroke="#4ade80" stroke-width="3"/>
+  <line x1="425" y1="100" x2="475" y2="100" stroke="#f87171" stroke-width="3"/>
+  <line x1="525" y1="100" x2="575" y2="100" stroke="#22d3ee" stroke-width="3"/>
+
+  <!-- REVERT Section -->
+  <rect x="50" y="150" width="220" height="180" class="box" stroke="#4ade80" stroke-width="3"/>
+  <rect x="50" y="150" width="220" height="30" fill="#4ade80" stroke="#4ade80" stroke-width="3" rx="8"/>
+  <rect x="50" y="175" width="220" height="5" fill="#4ade80"/>
+  <text x="160" y="170" text-anchor="middle" class="text" font-weight="bold">✓ git revert</text>
+  <text x="160" y="195" text-anchor="middle" class="label" fill="#4ade80">SAFE - Use this</text>
+
+  <text x="65" y="220" class="label">Creates a new commit that</text>
+  <text x="65" y="235" class="label">undoes the changes from</text>
+  <text x="65" y="250" class="label">a previous commit.</text>
+
+  <text x="65" y="280" class="label" fill="#4ade80">✓ Keeps history</text>
+  <text x="65" y="295" class="label" fill="#4ade80">✓ Safe for shared</text>
+  <text x="65" y="310" class="label" fill="#4ade80">✓ Recommended</text>
+
+  <rect x="65" y="320" width="190" height="25" fill="#020617" stroke="#334155" rx="4"/>
+  <text x="160" y="337" text-anchor="middle" class="text" font-size="11" font-family="monospace">git revert D</text>
+
+  <!-- RESET Section -->
+  <rect x="290" y="150" width="220" height="180" class="box" stroke="#f87171" stroke-width="3"/>
+  <rect x="290" y="150" width="220" height="30" fill="#f87171" stroke="#f87171" stroke-width="3" rx="8"/>
+  <rect x="290" y="175" width="220" height="5" fill="#f87171"/>
+  <text x="400" y="170" text-anchor="middle" class="text" font-weight="bold">⚠ git reset</text>
+  <text x="400" y="195" text-anchor="middle" class="label" fill="#f87171">DANGER - Avoid on public</text>
+
+  <text x="305" y="220" class="label">Moves HEAD and can delete</text>
+  <text x="305" y="235" class="label">commits permanently.</text>
+  <text x="305" y="255" class="label" font-size="10">--soft: keeps changes staged</text>
+  <text x="305" y="270" class="label" font-size="10">--mixed: keeps changes (default)</text>
+  <text x="305" y="285" class="label" font-size="10">--hard: DESTROYS changes</text>
+
+  <rect x="305" y="295" width="190" height="25" fill="#020617" stroke="#334155" rx="4"/>
+  <text x="400" y="312" text-anchor="middle" class="text" font-size="11" font-family="monospace">git reset --hard C</text>
+
+  <!-- RESTORE Section -->
+  <rect x="530" y="150" width="220" height="180" class="box" stroke="#fb923c" stroke-width="3"/>
+  <rect x="530" y="150" width="220" height="30" fill="#fb923c" stroke="#fb923c" stroke-width="3" rx="8"/>
+  <rect x="530" y="175" width="220" height="5" fill="#fb923c"/>
+  <text x="640" y="170" text-anchor="middle" class="text" font-weight="bold">git restore</text>
+  <text x="640" y="195" text-anchor="middle" class="label" fill="#fb923c">For uncommitted changes</text>
+
+  <text x="545" y="220" class="label">Discards changes in working</text>
+  <text x="545" y="235" class="label">directory or unstages files.</text>
+
+  <text x="545" y="265" class="label" fill="#fb923c">Working dir → Staging:</text>
+  <rect x="545" y="275" width="190" height="20" fill="#020617" stroke="#334155" rx="4"/>
+  <text x="640" y="289" text-anchor="middle" class="text" font-size="10" font-family="monospace">git restore --staged file</text>
+
+  <text x="545" y="305" class="label" fill="#fb923c">Discard working changes:</text>
+  <rect x="545" y="315" width="190" height="20" fill="#020617" stroke="#334155" rx="4"/>
+  <text x="640" y="329" text-anchor="middle" class="text" font-size="10" font-family="monospace">git restore file</text>
+
+  <!-- After examples -->
+  <text x="400" y="355" text-anchor="middle" class="label">After git revert D (safe):</text>
+  <circle cx="700" cy="370" r="20" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+  <text x="700" y="375" text-anchor="middle" class="text" font-size="10">D'</text>
+  <text x="730" y="375" class="label" font-size="9">undo commit</text>
+
+  <line x1="625" y1="100" x2="680" y2="100" stroke="#4ade80" stroke-width="2" stroke-dasharray="5,3"/>
+  <line x1="680" y1="100" x2="700" y2="350" stroke="#4ade80" stroke-width="2" stroke-dasharray="5,3"/>
+
+  <!-- Summary box -->
+  <rect x="50" y="400" width="700" height="90" fill="#0f172a" stroke="#334155" stroke-width="2" rx="8"/>
+  <text x="400" y="425" text-anchor="middle" class="text" font-weight="bold" fill="#22d3ee">Decision Tree:</text>
+  <text x="70" y="450" class="text">• Already pushed to remote? → Use <tspan fill="#4ade80" font-weight="bold">git revert</tspan></text>
+  <text x="70" y="470" class="text">• Local changes only? → Use <tspan fill="#fb923c" font-weight="bold">git restore</tspan> or <tspan fill="#f87171" font-weight="bold">git reset</tspan></text>
+  <text x="70" y="490" class="label">• Need to undo multiple commits? → Use <tspan fill="#4ade80" font-weight="bold">git revert</tspan> for each, or interactive rebase locally</text>
+</svg>

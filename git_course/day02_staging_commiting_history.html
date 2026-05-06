@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 2 — Staging, Committing & History</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-red: #f87171;
+            --border-color: #334155;
+            --max-width: 90%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--accent-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .goal {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .goal p {
+            font-size: 1.125rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .toc {
+            background: var(--accent-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .toc a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 3rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .git-states-diagram {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .state-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: var(--accent-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent-cyan);
+            min-width: 200px;
+            transition: all 0.3s ease;
+        }
+
+        .state-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .state-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .working-dir .state-icon {
+            color: var(--accent-cyan);
+        }
+
+        .staging-area .state-icon {
+            color: var(--accent-green);
+        }
+
+        .repository .state-icon {
+            color: var(--accent-orange);
+        }
+
+        .state-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .state-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .state-explanation {
+            font-size: 0.85rem;
+            color: var(--accent-cyan);
+            font-style: italic;
+        }
+
+        .ascii-diagram {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .highlight {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .highlight p {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--accent-bg) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .use-case p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: var(--text-muted);
+        }
+
+        .code-block .output {
+            color: var(--accent-green);
+        }
+
+        .code-block .diff {
+            color: var(--accent-red);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--accent-bg);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-bg);
+        }
+
+        .command {
+            font-family: 'JetBrains Mono', monospace;
+            background: #020617;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .step {
+            background: var(--accent-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .step h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        .warning {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--accent-red);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning p {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .summary {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary h2 {
+            color: var(--accent-orange);
+        }
+
+        .summary p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .toc {
+                padding: 1.5rem;
+            }
+
+            .git-states-diagram {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .state-box {
+                min-width: auto;
+                width: 100%;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <p>← <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a> | <a href="index.html">Index</a> | <a href="day03_branching_merging.html">Day 3 — Branching & Merging</a> →</p>
+        </nav>
+
+        <header>
+            <h1>Git Learning Curriculum</h1>
+            <p class="subtitle">Day 2 — Staging, Committing & History</p>
+        </header>
+
+        <div class="goal">
+            <p><strong>Goal:</strong> Master the core Git workflow — how to actually save your work.</p>
+        </div>
+
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#1-the-three-states-of-git">The Three States of Git</a></li>
+                <li><a href="#2-staging-files">Staging Files — git add</a></li>
+                <li><a href="#3-saving-snapshots">Saving Snapshots — git commit</a></li>
+                <li><a href="#4-writing-good-commit-messages">Writing Good Commit Messages</a></li>
+                <li><a href="#5-viewing-history">Viewing History — git log</a></li>
+                <li><a href="#6-seeing-what-changed">Seeing What Changed — git diff</a></li>
+                <li><a href="#7-inspecting-a-commit">Inspecting a Commit — git show</a></li>
+                <li><a href="#8-the-full-workflow-in-practice">The Full Workflow in Practice</a></li>
+                <li><a href="#9-day-2-hands-on-exercise">Day 2 Hands-On Exercise</a></li>
+                <li><a href="#10-key-commands-summary">Key Commands Summary</a></li>
+            </ol>
+        </nav>
+
+        <main>
+            <section id="1-the-three-states-of-git">
+                <h2>1. The Three States of Git</h2>
+                <p>This is the most important concept in Git. Every file in your project lives in one of <strong>three states</strong>:</p>
+
+                <div class="git-states-diagram">
+                    <div class="state-box working-dir">
+                        <div class="state-icon">📁</div>
+                        <div class="state-title">Working Directory</div>
+                        <div class="state-desc">Your project files</div>
+                        <div class="state-explanation">Files you actually see and edit</div>
+                    </div>
+
+                    <div class="state-box staging-area">
+                        <div class="state-icon">🔍</div>
+                        <div class="state-title">Staging Area</div>
+                        <div class="state-desc">Index (.git/index)</div>
+                        <div class="state-explanation">Changes ready to commit</div>
+                    </div>
+
+                    <div class="state-box repository">
+                        <div class="state-icon">💾</div>
+                        <div class="state-title">Repository</div>
+                        <div class="state-desc">.git directory</div>
+                        <div class="state-explanation">Permanent history</div>
+                    </div>
+                </div>
+
+                <h3>Working Directory</h3>
+                <p>This is your project folder — the files you actually see and edit. Any time you create, modify, or delete a file, you're working in this area. Git sees these changes but hasn't recorded them yet.</p>
+
+                <h3>Staging Area (Index)</h3>
+                <p>Think of this as a <strong>loading dock</strong> or <strong>draft board</strong>. You choose which changes go here before committing. This is what makes Git powerful — you can change 10 files but only commit 3 of them as one logical change, and save the other 7 for a different commit.</p>
+
+                <h3>Repository (.git folder)</h3>
+                <p>This is the permanent history. Once you commit, the snapshot is saved forever (unless you explicitly rewrite history). Every commit builds on the last, forming a chain going all the way back to your first commit.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer fixes a bug AND refactors some unrelated code in the same session. Using the staging area, they commit the bug fix first (so it's isolated and easy to track), then commit the refactor separately. The commit history stays clean and meaningful — each commit tells one story.</p>
+                </div>
+
+                <!-- Visual Diagram -->
+                <div style="background: var(--secondary-bg); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--border-color); text-align: center;">
+                    <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 1rem;">🔄 The Three States of Git</p>
+                    <img src="images/diagrams/git-three-states.svg" alt="Git three states diagram: Working Directory, Staging Area, and Repository" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">Files flow from <strong style="color: #f87171;">Working Directory</strong> → <strong style="color: #fb923c;">Staging Area</strong> → <strong style="color: #4ade80;">Repository</strong></p>
+                </div>
+            </section>
+
+            <section id="2-staging-files">
+                <h2>2. Staging Files — <span class="command">git add</span></h2>
+                <p><code>git add</code> moves changes from your <strong>working directory</strong> into the <strong>staging area</strong>. You're telling Git: *"I want to include this in my next commit."*</p>
+
+                <h3>Stage a Single File</h3>
+                <div class="code-block">git add README.md</div>
+
+                <h3>Stage Multiple Specific Files</h3>
+                <div class="code-block">git add index.html style.css</div>
+
+                <h3>Stage All Changes in the Current Directory</h3>
+                <div class="code-block">git add .</div>
+
+                <p>The <code>.</code> means "everything here and in all subdirectories." This is the most common form you'll use day-to-day.</p>
+
+                <h3>Stage Parts of a File (Interactive/Patch Mode)</h3>
+                <div class="code-block">git add -p README.md</div>
+
+                <p>This lets you stage individual <strong>chunks (hunks)</strong> of a file rather than the whole thing. Git will walk you through each changed section and ask <code>y</code> (yes), <code>n</code> (no), or <code>s</code> (split smaller). This is an advanced but incredibly useful technique for keeping commits clean.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer spent the morning working on a feature and also fixed a typo in a totally unrelated file. Using <code>git add -p</code>, they stage only the feature changes for one commit, then stage the typo fix separately. The result: two clean, focused commits instead of one messy mixed one.</p>
+                </div>
+
+                <h3>Check What's Staged</h3>
+                <p>After <code>git add</code>, always run <code>git status</code> to confirm what's staged:</p>
+                <div class="code-block">git status</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">On branch main
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+        new file:   README.md
+        new file:   index.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        notes.txt
+
+nothing added to commit but untracked files present (use "git add" to track)</span></div>
+
+                <p>- <strong>"Changes to be committed"</strong> → staged, ready to commit ✅<br>
+                - <strong>"Untracked files"</strong> → not staged, won't be in the next commit ❌</p>
+
+                <h3>Unstage a File (Oops, Wrong File)</h3>
+                <p>If you staged something by mistake:</p>
+                <div class="code-block">git restore --staged index.html</div>
+
+                <p>This moves the file back to the working directory without losing your changes.</p>
+            </section>
+
+            <section id="3-saving-snapshots">
+                <h2>3. Saving Snapshots — <span class="command">git commit</span></h2>
+                <p><code>git commit</code> takes everything in the staging area and saves it permanently to the repository as a <strong>snapshot</strong>. Every commit gets a unique ID (a SHA hash like <code>a3f9c12</code>), an author, a timestamp, and your message.</p>
+
+                <h3>Basic Commit</h3>
+                <div class="code-block">git commit -m "Add README and initial project structure"</div>
+
+                <p>The <code>-m</code> flag lets you write the commit message inline. Without it, Git opens your configured text editor for you to type a message.</p>
+
+                <h3>Commit All Tracked Changes (Skip Staging)</h3>
+                <div class="code-block">git commit -am "Fix typo in homepage"</div>
+
+                <p>The <code>-a</code> flag automatically stages all <strong>modified tracked files</strong> and commits them in one step. Note: this does <strong>not</strong> include brand new (untracked) files — those still need <code>git add</code> first.</p>
+
+                <h3>Amend the Last Commit</h3>
+                <p>Made a typo in your last commit message, or forgot to include a file?</p>
+                <div class="code-block"><span class="comment"># Stage the forgotten file first (if needed)</span><br>git add forgotten-file.txt<br><br><span class="comment"># Amend the previous commit</span><br>git commit --amend -m "Correct commit message here"</div>
+
+                <div class="warning">
+                    <p><strong>⚠️ Warning:</strong><br>
+                    Only amend commits that haven't been pushed to a shared remote yet. Amending rewrites history, which can cause problems for teammates.</p>
+                </div>
+
+                <h3>What Happens Under the Hood</h3>
+                <p>When you commit, Git:</p>
+                <ol>
+                    <li>Takes a snapshot of everything in the staging area</li>
+                    <li>Computes a SHA-1 hash of that snapshot (the commit ID)</li>
+                    <li>Stores the commit object with your name, email, timestamp, message, and a pointer to the previous commit</li>
+                    <li>Moves the branch pointer (e.g., <code>main</code>) forward to the new commit</li>
+                </ol>
+
+                <div class="ascii-diagram">
+Before commit:           After commit:
+                         
+main                     main
+  ↓                        ↓
+[a1b2c3]    ────────►   [a1b2c3] ← [d4e5f6]
+ initial                  initial    "Add README"
+                </div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A backend developer finishes implementing a login endpoint. They stage only the auth-related files and commit with the message <code>"feat: implement JWT login endpoint"</code>. Six months later, a teammate can look at this exact commit, understand precisely what changed, and why — without needing to ask anyone.</p>
+                </div>
+            </section>
+
+            <section id="4-writing-good-commit-messages">
+                <h2>4. Writing Good Commit Messages</h2>
+                <p>A commit message is a letter to your future self and your teammates. Bad messages make history useless. Good messages make it invaluable.</p>
+
+                <h3>The Golden Rules</h3>
+                <p><strong>1. Use the imperative mood in the subject line</strong></p>
+                <p>Write commit messages as if completing the sentence: *"If applied, this commit will..."*</p>
+
+                <div class="code-block"><span class="output">✅  Add user authentication<br>✅  Fix null pointer error in checkout<br>✅  Remove deprecated payment API<br>✅  Update README with setup instructions<br><br>❌  Added user authentication<br>❌  Fixed a bug<br>❌  Changes<br>❌  WIP</span></div>
+
+                <p><strong>2. Keep the subject line under 50 characters</strong></p>
+                <p>This ensures it displays cleanly in <code>git log</code>, GitHub, and other tools.</p>
+
+                <p><strong>3. Add a body when context is needed</strong></p>
+                <p>Leave a blank line after the subject, then explain the <em>why</em>, not the <em>what</em>:</p>
+                <div class="code-block">Fix race condition in order processing
+
+The checkout endpoint was occasionally processing duplicate
+orders when users double-clicked the submit button. Added
+an idempotency key check before order creation to prevent
+this. Fixes issue #482.</div>
+
+                <p><strong>4. Reference issue numbers when applicable</strong></p>
+                <div class="code-block">git commit -m "Fix login redirect loop (closes #231)"</div>
+
+                <h3>Common Commit Prefixes (Conventional Commits)</h3>
+                <p>Many teams follow the <strong>Conventional Commits</strong> standard:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Prefix</th>
+                                <th>When to Use</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>feat:</code></td>
+                                <td>A new feature</td>
+                            </tr>
+                            <tr>
+                                <td><code>fix:</code></td>
+                                <td>A bug fix</td>
+                            </tr>
+                            <tr>
+                                <td><code>docs:</code></td>
+                                <td>Documentation changes only</td>
+                            </tr>
+                            <tr>
+                                <td><code>style:</code></td>
+                                <td>Formatting, missing semicolons, etc.</td>
+                            </tr>
+                            <tr>
+                                <td><code>refactor:</code></td>
+                                <td>Code change that isn't a fix or feature</td>
+                            </tr>
+                            <tr>
+                                <td><code>test:</code></td>
+                                <td>Adding or updating tests</td>
+                            </tr>
+                            <tr>
+                                <td><code>chore:</code></td>
+                                <td>Build process, dependency updates</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p>Example: <code>feat: add dark mode toggle to settings page</code></p>
+            </section>
+
+            <section id="5-viewing-history">
+                <h2>5. Viewing History — <span class="command">git log</span></h2>
+                <p><code>git log</code> shows the commit history of your repository — every snapshot ever saved, who saved it, and when.</p>
+
+                <h3>Basic Log</h3>
+                <div class="code-block">git log</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">commit d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3
+Author: Jane Smith &lt;jane@example.com&gt;
+Date:   Mon Feb 17 10:22:41 2025 +0530
+
+    feat: add user login page
+
+commit a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0
+Author: Jane Smith &lt;jane@example.com&gt;
+Date:   Sun Feb 16 09:10:15 2025 +0530
+
+    initial commit: add README and project structure</span></div>
+
+                <p>Press <code>q</code> to quit the log view.</p>
+
+                <h3>One-Line Log (Compact View)</h3>
+                <div class="code-block">git log --oneline</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">d4e5f6a feat: add user login page
+a1b2c3d initial commit: add README and project structure</span></div>
+
+                <p>This is the view most developers use day-to-day. Clean and scannable.</p>
+
+                <h3>Visual Branch Graph</h3>
+                <div class="code-block">git log --oneline --graph --all</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">* d4e5f6a (HEAD -> main) feat: add user login page
+* a1b2c3d initial commit</span></div>
+
+                <p>When you have branches, this shows a visual tree — extremely useful for understanding how branches relate to each other.</p>
+
+                <h3>Filter the Log</h3>
+                <div class="code-block"><span class="comment"># Show only the last 5 commits</span><br>git log -5<br><br><span class="comment"># Show commits by a specific author</span><br>git log --author="Jane"<br><br><span class="comment"># Show commits from a date range</span><br>git log --after="2025-01-01" --before="2025-02-01"<br><br><span class="comment"># Show commits that affected a specific file</span><br>git log -- index.html<br><br><span class="comment"># Search commit messages</span><br>git log --grep="login"</div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A bug was introduced sometime last week. A developer runs <code>git log --oneline --after="2025-02-10"</code> to see all commits from that period, then reads through them to find the likely culprit — all without touching a single file.</p>
+                </div>
+            </section>
+
+            <section id="6-seeing-what-changed">
+                <h2>6. Seeing What Changed — <span class="command">git diff</span></h2>
+                <p><code>git diff</code> shows the exact line-by-line differences between versions of your files. It answers: *"What exactly changed?"*</p>
+
+                <h3>Diff Your Unstaged Changes</h3>
+                <p>Shows changes in your working directory that are <strong>not yet staged</strong>:</p>
+                <div class="code-block">git diff</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="diff">diff --git a/index.html b/index.html
+index 83db48f..f735c62 100644
+--- a/index.html
++++ b/index.html
+@@ -1,5 +1,6 @@
+ &lt;!DOCTYPE html&gt;
+ &lt;html&gt;
+-  &lt;title&gt;My Site&lt;/title&gt;
++  &lt;title&gt;My Awesome Site&lt;/title&gt;
++  &lt;meta name="description" content="A personal portfolio"&gt;
+ &lt;/html&gt;</span></div>
+
+                <p>- Lines starting with <code>-</code> (red) = what was removed<br>
+                - Lines starting with <code>+</code> (green) = what was added<br>
+                - Lines with no symbol = unchanged context</p>
+
+                <h3>Diff Your Staged Changes</h3>
+                <p>Shows changes that <strong>are staged</strong> (ready to commit) vs the last commit:</p>
+                <div class="code-block">git diff --staged</div>
+
+                <p>This is what you'll actually be committing. Always run this before committing for a final review.</p>
+
+                <h3>Diff Between Two Commits</h3>
+                <div class="code-block">git diff a1b2c3 d4e5f6</div>
+
+                <h3>Diff a Specific File</h3>
+                <div class="code-block">git diff index.html</div>
+
+                <h3>Diff Against the Last Commit</h3>
+                <div class="code-block">git diff HEAD</div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    Before pushing code to production, a senior developer always runs <code>git diff --staged</code> to do a final self-review. This catches accidental debug logs, commented-out code, or unintended changes before they go into the repository.</p>
+                </div>
+            </section>
+
+            <section id="7-inspecting-a-commit">
+                <h2>7. Inspecting a Commit — <span class="command">git show</span></h2>
+                <p><code>git show</code> lets you examine a specific commit in detail — what changed, who did it, and when.</p>
+
+                <h3>Show the Latest Commit</h3>
+                <div class="code-block">git show</div>
+
+                <h3>Show a Specific Commit</h3>
+                <div class="code-block">git show d4e5f6a</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">commit d4e5f6a7b8c9...
+Author: Jane Smith &lt;jane@example.com&gt;
+Date:   Mon Feb 17 10:22:41 2025 +0530
+
+    feat: add user login page
+
+diff --git a/login.html b/login.html
+new file mode 100644
+index 0000000..83db48f
+--- /dev/null
++++ b/login.html
+@@ -0,0 +1,12 @@
++&lt;!DOCTYPE html&gt;
++&lt;html&gt;
++  &lt;body&gt;
++    &lt;h1&gt;Login&lt;/h1&gt;
++  &lt;/body&gt;
++&lt;/html&gt;</span></div>
+
+                <h3>Show Only the Files Changed in a Commit</h3>
+                <div class="code-block">git show --stat d4e5f6a</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">commit d4e5f6a
+Author: Jane Smith &lt;jane@example.com&gt;
+
+    feat: add user login page
+
+ login.html | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)</span></div>
+            </section>
+
+            <section id="8-the-full-workflow-in-practice">
+                <h2>8. The Full Workflow in Practice</h2>
+                <p>Here's the complete, real-world Git workflow you'll use every single day:</p>
+                <div class="code-block"><span class="comment"># 1. Make changes to your files</span><br><span class="comment"># (edit code, create files, delete files)</span><br><br><span class="comment"># 2. See what changed</span><br>git status<br><br><span class="comment"># 3. Review the actual changes line by line</span><br>git diff<br><br><span class="comment"># 4. Stage the changes you want to commit</span><br>git add index.html style.css<br><br><span class="comment"># 5. Double-check what you're about to commit</span><br>git diff --staged<br><br><span class="comment"># 6. Commit with a meaningful message</span><br>git commit -m "feat: add responsive navbar"<br><br><span class="comment"># 7. Verify the commit was recorded</span><br>git log --oneline</div>
+
+                <p>Repeat this loop constantly throughout your workday. Commit often — small, focused commits are always better than one giant commit at the end of the day.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer building a new dashboard feature makes commits like:<br>
+                    - <code>feat: add dashboard layout skeleton</code><br>
+                    - <code>feat: connect dashboard to user API</code><br>
+                    - <code>fix: handle empty state when no data</code><br>
+                    - <code>style: polish card spacing on mobile</code><br><br>
+                    Each commit is a clear, atomic step. If the API change breaks something, it can be isolated and reverted without touching the layout work. This is professional-grade version control.</p>
+                </div>
+            </section>
+
+            <section id="9-day-2-hands-on-exercise">
+                <h2>9. Day 2 Hands-On Exercise</h2>
+                <p>Continue from where you left off in the <code>learning-git</code> folder from Day 1.</p>
+                <div class="steps">
+
+                    <div class="step">
+                        <h4>Step 1 — Create Some Files to Work With</h4>
+                        <div class="code-block">cd ~/Desktop/learning-git<br><br><span class="comment"># Create project files</span><br>echo "&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello Git&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;" &gt; index.html<br>echo "body { font-family: Arial; }" &gt; style.css<br>echo "console.log('Hello');" &gt; app.js<br><br><span class="comment"># Check status — all three should be untracked</span><br>git status</div>
+                    </div>
+    
+                    <div class="step">
+                        <h4>Step 2 — Stage and Commit in Two Batches</h4>
+                        <div class="code-block"><span class="comment"># Stage only the HTML and CSS (not the JS yet)</span><br>git add index.html style.css<br><br><span class="comment"># Check what's staged vs what isn't</span><br>git status<br><br><span class="comment"># Commit the first batch</span><br>git commit -m "feat: add HTML structure and base styles"<br><br><span class="comment"># Now stage and commit the JS separately</span><br>git add app.js<br>git commit -m "feat: add initial JavaScript entry point"</div>
+                    </div>
+    
+                    <div class="step">
+                        <h4>Step 3 — Modify a File and See the Diff</h4>
+                        <div class="code-block"><span class="comment"># Edit the README</span><br>echo "## Project Setup" &gt;&gt; README.md<br>echo "Open index.html in a browser to get started." &gt;&gt; README.md<br><br><span class="comment"># See what changed (unstaged diff)</span><br>git diff README.md<br><br><span class="comment"># Stage it</span><br>git add README.md<br><br><span class="comment"># See staged diff (final check before commit)</span><br>git diff --staged<br><br><span class="comment"># Commit</span><br>git commit -m "docs: add setup instructions to README"</div>
+                    </div>
+    
+                    <div class="step">
+                        <h4>Step 4 — Explore the History</h4>
+                        <div class="code-block"><span class="comment"># Full log</span><br>git log<br><br><span class="comment"># Compact one-line view</span><br>git log --oneline<br><br><span class="comment"># Inspect your first commit in detail</span><br>git show HEAD~2<br><span class="comment"># HEAD~2 means "2 commits before the current one"</span><br><br><span class="comment"># See just the file list for each commit</span><br>git log --oneline --stat</div>
+                    </div>
+    
+                    <div class="step">
+                        <h4>Step 5 — Practice the Amend Workflow</h4>
+                        <div class="code-block"><span class="comment"># Make a commit with a deliberate typo</span><br>echo "/* new styles */" &gt;&gt; style.css<br>git add style.css<br>git commit -m "stlye: update stylesheet"<br><br><span class="comment"># Fix the typo with amend</span><br>git commit --amend -m "style: update stylesheet"<br><br><span class="comment"># Verify the fix</span><br>git log --oneline</div>
+                        <div class="highlight">
+                            <p><strong>✅ What You Should Have After This Exercise:</strong><br>
+                            - At least 4-5 commits in your log<br>
+                            - Experience staging files selectively<br>
+                            - Confidence reading <code>git diff</code> output<br>
+                            - A clean, readable commit history</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="10-key-commands-summary">
+                <h2>10. Key Commands Summary</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>What It Does</th>
+                                <th>Common Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>git add &lt;file&gt;</code></td>
+                                <td>Stage a specific file</td>
+                                <td><code>git add index.html</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git add .</code></td>
+                                <td>Stage all changes in current directory</td>
+                                <td><code>git add .</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git add -p</code></td>
+                                <td>Interactively stage chunks of a file</td>
+                                <td><code>git add -p style.css</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git restore --staged &lt;file&gt;</code></td>
+                                <td>Unstage a file (keep changes)</td>
+                                <td><code>git restore --staged index.html</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git commit -m</code></td>
+                                <td>Commit with an inline message</td>
+                                <td><code>git commit -m "fix: resolve login bug"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git commit -am</code></td>
+                                <td>Stage tracked files and commit together</td>
+                                <td><code>git commit -am "fix: typo"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git commit --amend</code></td>
+                                <td>Modify the most recent commit</td>
+                                <td><code>git commit --amend -m "better message"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git log</code></td>
+                                <td>View full commit history</td>
+                                <td><code>git log</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git log --oneline</code></td>
+                                <td>View compact commit history</td>
+                                <td><code>git log --oneline</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git log --oneline --graph --all</code></td>
+                                <td>Visual branch history</td>
+                                <td><code>git log --oneline --graph --all</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git diff</code></td>
+                                <td>Show unstaged changes</td>
+                                <td><code>git diff</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git diff --staged</code></td>
+                                <td>Show staged changes (pre-commit review)</td>
+                                <td><code>git diff --staged</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git show &lt;commit&gt;</code></td>
+                                <td>Inspect a specific commit</td>
+                                <td><code>git show a1b2c3d</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="summary">
+                <h2>Coming Up on Day 3 — Branching & Merging</h2>
+                <p>Tomorrow you'll unlock Git's true superpower: <strong>branches</strong>. You'll learn:</p>
+                <ul>
+                    <li><code>git branch</code> — creating and listing branches</li>
+                    <li><code>git switch</code> — jumping between branches</li>
+                    <li><code>git merge</code> — combining branches back together</li>
+                    <li>How to <strong>create and resolve a merge conflict</strong> — the most important skill of the week</li>
+                </ul>
+                <p>Branches are what allow teams of 50 developers to work on the same codebase simultaneously without stepping on each other. Understanding them deeply will transform how you think about coding workflows.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>← <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a> | <a href="index.html">Index</a> | <a href="day03_branching_merging.html">Day 3 — Branching & Merging</a> →</p>
+        </footer>
+    </div>
+</body>
+</html>

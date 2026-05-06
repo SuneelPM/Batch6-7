@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS flex shorthand property</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .flex-container {
+        display: flex;
+        gap: 10px;
+        background-color: antiquewhite;
+        padding: 30px;
+      }
+      .flex-items {
+        background-color: coral;
+        color: rgb(4, 4, 175);
+        width: 100px; /*flex-basis*/
+        height: 100px;
+        text-align: center;
+        place-content: center;
+        flex: 1 1; /* 1 1 auto */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS flex Shorthand property</h1>
+    <div class="flex-container">
+      <div class="flex-items flex-item-1">Flex Item 1</div>
+      <div class="flex-items flex-item-2">Flex Item 2</div>
+      <div class="flex-items flex-item-3">
+        <i class="fa-solid fa-house"></i>Flex Item 3
+      </div>
+    </div>
+  </body>
+</html>

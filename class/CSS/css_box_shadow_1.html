@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Box Shadow</title>
+    <style>
+      :root {
+        --shadow-color: rgb(220, 220, 220);
+        --shadow-red: red;
+        --shadow-green: green;
+      }
+      /* body {
+        background-color: aqua;
+      } */
+
+      .common {
+        color: red;
+        border: 1px solid green;
+        padding: 10px;
+        margin: 40px;
+        border-radius: 10px;
+      }
+
+      .shadow-top-right {
+        box-shadow:
+          10px -10px 15px 5px var(--shadow-color),
+          5px 5px 15px 5px var(--shadow-green);
+      }
+
+      .shadow-top-left {
+        box-shadow: -10px -10px 5px var(--shadow-color);
+      }
+
+      .shadow-bottom-right {
+        filter: drop-shadow(3px 3px black);
+        box-shadow: 3px 3px var(--shadow-color);
+      }
+      .shadow-bottom-left {
+        box-shadow: -10px 10px 20px var(--shadow-color);
+      }
+
+      .button {
+        background-color: transparent;
+        padding: 10px;
+        border: none;
+      }
+
+      .shadow-bottom-right:active {
+        box-shadow: 3px 3px var(--shadow-color) inset;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Box Shadow</h1>
+    <hr />
+    <button class="shadow-bottom-right button">Click me</button>
+    <p class="shadow-top-right common">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae neque
+      molestiae incidunt omnis dicta voluptatem, eligendi sit obcaecati ducimus
+      nihil earum minus quisquam, minima quae ipsum fugiat esse libero
+      excepturi.
+    </p>
+    <p class="shadow-top-left common">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae neque
+      molestiae incidunt omnis dicta voluptatem, eligendi sit obcaecati ducimus
+      nihil earum minus quisquam, minima quae ipsum fugiat esse libero
+      excepturi.
+    </p>
+    <p class="shadow-bottom-right common">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae neque
+      molestiae incidunt omnis dicta voluptatem, eligendi sit obcaecati ducimus
+      nihil earum minus quisquam, minima quae ipsum fugiat esse libero
+      excepturi.
+    </p>
+    <p class="shadow-bottom-left common">
+      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Recusandae neque
+      molestiae incidunt omnis dicta voluptatem, eligendi sit obcaecati ducimus
+      nihil earum minus quisquam, minima quae ipsum fugiat esse libero
+      excepturi.
+    </p>
+  </body>
+</html>

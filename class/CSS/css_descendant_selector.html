@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Descendant Selector</title>
+    <style>
+      /* descendant selectors */
+      ol li {
+        color: blue;
+      }
+
+      /* child selector */
+      ul > li {
+        color: green;
+      }
+
+      /* adjacent sibling */
+      h2 + p {
+        background-color: antiquewhite;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>CSS Descendant Selector</h1>
+    <hr />
+    <h2>Sibling</h2>
+    <p>Adjacent Sibling</p>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione animi,
+      iste a suscipit, quidem vel accusantium quam, consequuntur quaerat velit
+      obcaecati ab! Quam deleniti deserunt quis totam cupiditate at voluptates!
+    </p>
+    <hr />
+
+    <ul>
+      <li>
+        <ol>
+          <li>Ordered Item 1</li>
+          <li>Ordered Item 2</li>
+          <li>Ordered Item 3</li>
+        </ol>
+      </li>
+      <li>Items 2</li>
+      <li>Items 3</li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to Version Control Systems</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #0f172a;
+        --secondary-bg: #1e293b;
+        --accent-bg: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --accent-orange: #fb923c;
+        --border-color: #334155;
+        --max-width: 90%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .intro-section {
+        display: flex;
+        gap: 20px;
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .intro-section p {
+        background-color: #334155;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 1.125rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-secondary);
+      }
+
+      .intro-section p:first-child {
+        font-size: 1.25rem;
+        font-weight: 500;
+        color: var(--text-primary);
+      }
+
+      .intro-section strong {
+        color: var(--accent-green);
+        font-weight: 600;
+      }
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-cyan);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent-orange);
+        margin: 2rem 0 1rem 0;
+      }
+
+      .vcs-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .vcs-item {
+        background: var(--accent-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .vcs-item h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-green);
+        margin-bottom: 0.5rem;
+      }
+
+      .vcs-item p {
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+
+      .vcs-item em {
+        color: var(--accent-cyan);
+        font-style: normal;
+        font-weight: 500;
+      }
+
+      .comparison-section {
+        margin-top: 3rem;
+      }
+
+      h3 {
+        color: var(--accent-orange);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--secondary-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--accent-bg);
+        font-weight: 600;
+        color: var(--accent-cyan);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: var(--text-secondary);
+      }
+
+      tbody tr:hover {
+        background: var(--accent-bg);
+      }
+
+      .status-icon {
+        font-size: 1.25rem;
+      }
+
+      .conclusion {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-bg) 0%,
+          var(--accent-bg) 100%
+        );
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .conclusion p {
+        font-size: 1.125rem;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .intro-section {
+          padding: 1.5rem;
+        }
+
+        .vcs-item {
+          padding: 1rem;
+        }
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
+        }
+      }
+
+      .breadcrumb {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--accent-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .breadcrumb a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumb">
+        <p>
+          <a href="index.html">Index</a> |
+          <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a>
+          →
+        </p>
+      </nav>
+
+      <header>
+        <h1>Introduction to Version Control Systems</h1>
+        <p class="subtitle">
+          Understanding the foundation of modern software development
+        </p>
+      </header>
+
+      <main>
+        <section class="intro-section">
+          <p>
+            Version control systems (VCS) exist to solve a fundamental problem
+            in software development:
+            <strong
+              >how do you track changes to files over time, collaborate with
+              others without overwriting each other's work, and recover from
+              mistakes?</strong
+            >
+          </p>
+
+          <p>
+            Without a VCS, teams resort to emailing files, naming things
+            <code>final_v2_ACTUAL_FINAL.zip</code>, and having no clear record
+            of who changed what and why. A VCS replaces all of that chaos with a
+            structured, auditable history of every change ever made.
+          </p>
+
+          <p>
+            The core purposes are tracking the complete history of a project so
+            you can see what changed and why, enabling multiple people to work
+            on the same codebase simultaneously, providing a safety net so any
+            version can be restored at any time, and supporting parallel
+            development through branching so features and fixes can be worked on
+            independently.
+          </p>
+        </section>
+
+        <!-- VCS Architecture Diagram -->
+        <section style="background: var(--secondary-bg); padding: 2rem; border-radius: 12px; margin: 2rem 0; border: 1px solid var(--border-color);">
+          <h3 style="color: var(--accent-cyan); margin-bottom: 1.5rem; text-align: center;">Centralized vs Distributed Version Control</h3>
+          <svg viewBox="0 0 800 300" style="width: 100%; max-width: 800px; margin: 0 auto; display: block;">
+            <!-- Centralized VCS (Left) -->
+            <rect x="50" y="50" width="280" height="200" fill="#1e293b" stroke="#334155" stroke-width="2" rx="8"/>
+            <text x="190" y="30" text-anchor="middle" fill="#f87171" font-size="16" font-weight="bold">Centralized VCS (SVN)</text>
+
+            <!-- Central Server -->
+            <rect x="130" y="70" width="120" height="50" fill="#334155" stroke="#f87171" stroke-width="2" rx="4"/>
+            <text x="190" y="100" text-anchor="middle" fill="#f8fafc" font-size="14">Central Server</text>
+
+            <!-- Developers -->
+            <circle cx="100" cy="180" r="25" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+            <text x="100" y="185" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 1</text>
+            <circle cx="190" cy="180" r="25" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+            <text x="190" y="185" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 2</text>
+            <circle cx="280" cy="180" r="25" fill="#334155" stroke="#94a3b8" stroke-width="2"/>
+            <text x="280" y="185" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 3</text>
+
+            <!-- Connection lines -->
+            <line x1="100" y1="155" x2="160" y2="120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5"/>
+            <line x1="190" y1="155" x2="190" y2="120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5"/>
+            <line x1="280" y1="155" x2="220" y2="120" stroke="#94a3b8" stroke-width="2" stroke-dasharray="5,5"/>
+
+            <!-- Distributed VCS (Right) -->
+            <rect x="470" y="50" width="280" height="200" fill="#1e293b" stroke="#334155" stroke-width="2" rx="8"/>
+            <text x="610" y="30" text-anchor="middle" fill="#4ade80" font-size="16" font-weight="bold">Distributed VCS (Git)</text>
+
+            <!-- Each developer has full repo -->
+            <circle cx="540" cy="120" r="30" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+            <text x="540" y="115" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 1</text>
+            <text x="540" y="128" text-anchor="middle" fill="#4ade80" font-size="8">Full Repo</text>
+
+            <circle cx="610" cy="120" r="30" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+            <text x="610" y="115" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 2</text>
+            <text x="610" y="128" text-anchor="middle" fill="#4ade80" font-size="8">Full Repo</text>
+
+            <circle cx="680" cy="120" r="30" fill="#334155" stroke="#4ade80" stroke-width="2"/>
+            <text x="680" y="115" text-anchor="middle" fill="#f8fafc" font-size="10">Dev 3</text>
+            <text x="680" y="128" text-anchor="middle" fill="#4ade80" font-size="8">Full Repo</text>
+
+            <!-- Remote server -->
+            <rect x="560" y="200" width="100" height="40" fill="#334155" stroke="#22d3ee" stroke-width="2" rx="4"/>
+            <text x="610" y="225" text-anchor="middle" fill="#f8fafc" font-size="12">Remote (GitHub)</text>
+
+            <!-- Sync lines -->
+            <line x1="540" y1="150" x2="590" y2="200" stroke="#22d3ee" stroke-width="2"/>
+            <line x1="610" y1="150" x2="610" y2="200" stroke="#22d3ee" stroke-width="2"/>
+            <line x1="680" y1="150" x2="630" y2="200" stroke="#22d3ee" stroke-width="2"/>
+
+            <!-- Arrow -->
+            <polygon points="380,150 400,140 400,145 430,145 430,155 400,155 400,160" fill="#94a3b8"/>
+          </svg>
+          <p style="text-align: center; color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">
+            <strong>Centralized:</strong> Single server holds all history | <strong>Distributed:</strong> Every developer has complete copy
+          </p>
+        </section>
+
+        <section>
+          <h2>The 5 Most Popular Version Control Systems</h2>
+
+          <div class="vcs-list">
+            <div class="vcs-item">
+              <h4>1. Git</h4>
+              <p>
+                By far the most widely used VCS in the world today, created by
+                Linus Torvalds in 2005. Git is a <em>distributed</em> system,
+                meaning every developer has a full copy of the entire repository
+                history on their local machine — not just the latest snapshot.
+                This makes it fast, offline-capable, and resilient. It powers
+                platforms like GitHub, GitLab, and Bitbucket. Virtually every
+                modern software team uses Git.
+              </p>
+            </div>
+
+            <div class="vcs-item">
+              <h4>2. Subversion (SVN)</h4>
+              <p>
+                Created in 2000 as a direct improvement over CVS, SVN is a
+                <em>centralized</em> system — there is one central server and
+                developers check out only the files they need. It was the
+                dominant VCS through most of the 2000s and is still used in many
+                legacy enterprise environments, particularly where large binary
+                files or strict access control per directory is needed. SVN's
+                history is linear and straightforward, making it easier to
+                understand than Git for simple use cases.
+              </p>
+            </div>
+
+            <div class="vcs-item">
+              <h4>3. Mercurial (Hg)</h4>
+              <p>
+                A distributed VCS like Git, released in 2005 the same year as
+                Git. Mercurial was designed with a strong emphasis on simplicity
+                and ease of use — its commands are more consistent and
+                beginner-friendly than Git's. It was used by Facebook (before
+                they switched to a heavily customized Git setup) and was once
+                the primary VCS for Mozilla and Python projects. While largely
+                overshadowed by Git today, it still has a loyal user base.
+              </p>
+            </div>
+
+            <div class="vcs-item">
+              <h4>4. Perforce (Helix Core)</h4>
+              <p>
+                A centralized, enterprise-grade VCS that has dominated game
+                development and large-scale industries like automotive and
+                semiconductor design for decades. Perforce excels where Git
+                struggles — handling massive repositories with huge binary files
+                (think gigabytes of game assets, 3D models, and textures).
+                Companies like EA, Ubisoft, NVIDIA, and Boeing rely on it. It is
+                proprietary and expensive, but its performance with large files
+                at enterprise scale is unmatched.
+              </p>
+            </div>
+
+            <div class="vcs-item">
+              <h4>5. CVS (Concurrent Versions System)</h4>
+              <p>
+                One of the earliest and most historically significant VCS tools,
+                first released in 1986. CVS introduced the idea of multiple
+                developers working concurrently on the same codebase and became
+                the standard tool through the 1990s. It is largely obsolete
+                today — replaced first by SVN and then by Git — but it is worth
+                knowing as the ancestor that shaped how all modern version
+                control systems think about branching, merging, and history.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="comparison-section">
+          <h3>Quick Comparison</h3>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>System</th>
+                  <th>Type</th>
+                  <th>Best For</th>
+                  <th>Still Relevant?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Git</td>
+                  <td>Distributed</td>
+                  <td>Everything — universal standard</td>
+                  <td class="status-icon">✅ Dominant</td>
+                </tr>
+                <tr>
+                  <td>SVN</td>
+                  <td>Centralized</td>
+                  <td>Legacy enterprise, simple linear history</td>
+                  <td class="status-icon">⚠️ Declining</td>
+                </tr>
+                <tr>
+                  <td>Mercurial</td>
+                  <td>Distributed</td>
+                  <td>Teams wanting Git-like power with simpler UX</td>
+                  <td class="status-icon">⚠️ Niche</td>
+                </tr>
+                <tr>
+                  <td>Perforce</td>
+                  <td>Centralized</td>
+                  <td>Large binary files, game dev, enterprise</td>
+                  <td class="status-icon">✅ In its domain</td>
+                </tr>
+                <tr>
+                  <td>CVS</td>
+                  <td>Centralized</td>
+                  <td>Historical significance only</td>
+                  <td class="status-icon">❌ Obsolete</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="conclusion">
+            <p>
+              If you're starting fresh today, Git is the answer in virtually
+              every situation. The others are worth knowing about for context —
+              and because you may encounter them in legacy or specialized
+              environments during your career.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>
+          <a href="index.html">Index</a> |
+          <a href="day01_what_is_git_setup.html">Day 1 — What is Git & Setup</a>
+          →
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

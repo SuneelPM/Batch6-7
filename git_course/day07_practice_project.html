@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 7 — Practice Project & Review</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-red: #f87171;
+            --border-color: #334155;
+            --max-width: 800px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--accent-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .goal {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .goal p {
+            font-size: 1.125rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .toc {
+            background: var(--accent-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .toc a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 3rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .ascii-diagram {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .highlight {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .highlight p {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--accent-bg) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .use-case p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: var(--text-muted);
+        }
+
+        .code-block .output {
+            color: var(--accent-green);
+        }
+
+        .code-block .diff {
+            color: var(--accent-red);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--accent-bg);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-bg);
+        }
+
+        .command {
+            font-family: 'JetBrains Mono', monospace;
+            background: #020617;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .step {
+            background: var(--accent-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .step h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        .warning {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--accent-red);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning p {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .summary {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary h2 {
+            color: var(--accent-orange);
+        }
+
+        .summary p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .toc {
+                padding: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <p>← <a href="day06_workflows_best_practices.html">Day 6 — Workflows & Best Practices</a> | <a href="index.html">Index</a> | <a href="git_infograph.html">Git Infograph</a> →</p>
+        </nav>
+
+        <header>
+            <h1>Git Learning Curriculum</h1>
+            <p class="subtitle">Day 7 — Practice Project & Review</p>
+        </header>
+
+        <div class="goal">
+            <p><strong>Goal:</strong> Bring everything together. Build a complete project from scratch using professional Git practices, then review the full week and map your path forward.</p>
+        </div>
+
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#1-what-youve-learned-this-week">What You've Learned This Week</a></li>
+                <li><a href="#2-the-graduation-project--personal-portfolio-cli-tool">The Graduation Project — Personal Portfolio CLI Tool</a></li>
+                <li><a href="#3-phase-1--repository-setup">Phase 1 — Repository Setup</a></li>
+                <li><a href="#4-phase-2--feature-development-with-github-flow">Phase 2 — Feature Development with GitHub Flow</a></li>
+                <li><a href="#5-phase-3--deliberate-conflict--resolution">Phase 3 — Deliberate Conflict & Resolution</a></li>
+                <li><a href="#6-phase-4--history-cleanup-with-interactive-rebase">Phase 4 — History Cleanup with Interactive Rebase</a></li>
+                <li><a href="#7-phase-5--release--tagging">Phase 5 — Release & Tagging</a></li>
+                <li><a href="#8-week-in-review--command-reference">Week in Review — Command Reference</a></li>
+                <li><a href="#9-common-mistakes--how-to-avoid-them">Common Mistakes & How to Avoid Them</a></li>
+                <li><a href="#10-git-cheat-sheet--one-page">Git Cheat Sheet — One Page</a></li>
+                <li><a href="#11-what-to-learn-next">What to Learn Next</a></li>
+            </ol>
+        </nav>
+
+        <main>
+            <section id="1-what-youve-learned-this-week">
+                <h2>1. What You've Learned This Week</h2>
+                <p>Before diving into the project, take a moment to appreciate the ground you've covered:</p>
+
+                <div class="ascii-diagram">
+Day 1 — Foundation
+  ✅ What version control is and why it exists
+  ✅ git init, git config, git status
+  ✅ The .git folder and what lives inside it
+
+Day 2 — Core Workflow
+  ✅ The three states: working directory, staging area, repository
+  ✅ git add, git commit, git log, git diff, git show
+  ✅ Writing meaningful commit messages
+
+Day 3 — Branching & Merging
+  ✅ What a branch actually is (a pointer to a commit)
+  ✅ git branch, git switch, git merge
+  ✅ Fast-forward vs three-way merges
+  ✅ Creating and resolving merge conflicts
+
+Day 4 — Remote Collaboration
+  ✅ git clone, git remote, git push, git fetch, git pull
+  ✅ SSH setup and GitHub authentication
+  ✅ The fork → clone → push → pull request workflow
+  ✅ Remote tracking branches and upstream tracking
+
+Day 5 — Undoing Things
+  ✅ git restore, git stash, git revert, git reset
+  ✅ Interactive rebase (git rebase -i)
+  ✅ git reflog as a safety net
+  ✅ The golden rule: revert for shared history, reset for local
+
+Day 6 — Workflows & Best Practices
+  ✅ Git Flow, GitHub Flow, Trunk-Based Development
+  ✅ .gitignore — what to exclude and why
+  ✅ git tag and semantic versioning
+  ✅ Branch protection rules and Git hooks
+  ✅ Team best practices for commits, PRs, and repo hygiene
+                </div>
+
+                <p>Today you apply all of it — not in isolated exercises, but in a single, cohesive, realistic project.</p>
+            </section>
+
+            <section id="2-the-graduation-project--personal-portfolio-cli-tool">
+                <h2>2. The Graduation Project — Personal Portfolio CLI Tool</h2>
+                <p>You'll build a simple <strong>markdown-based notes manager</strong> called <code>noted</code>. It's a command-line tool that lets users create, list, and delete notes — stored as plain text files.</p>
+
+                <p>The project itself is intentionally simple. The focus is entirely on <strong>how you use Git</strong>, not on the complexity of the code.</p>
+
+                <h3>Requirements Checklist</h3>
+
+                <p>By the end of today, your repository must have:</p>
+                <ul>
+                    <li>A proper <code>README.md</code> with setup instructions</li>
+                    <li>A <code>.gitignore</code> configured for the project</li>
+                    <li>At least <strong>5 meaningful commits</strong> with well-written messages</li>
+                    <li>At least <strong>3 feature branches</strong> created and merged via pull request</li>
+                    <li><strong>1 intentional merge conflict</strong> created and resolved</li>
+                    <li><strong>1 interactive rebase</strong> used to clean up history</li>
+                    <li>An annotated <strong>release tag</strong> (<code>v1.0.0</code>)</li>
+                    <li>A <code>CHANGELOG.md</code> documenting what's in the release</li>
+                    <li>A merged Pull Request visible in the repository history on GitHub</li>
+                </ul>
+
+                <p>This is your portfolio piece. Future employers and collaborators can look at this repository's history and see that you know how to use Git professionally.</p>
+            </section>
+
+            <section id="3-phase-1--repository-setup">
+                <h2>3. Phase 1 — Repository Setup</h2>
+
+                <h3>Step 1 — Create the Repository on GitHub</h3>
+
+                <ol>
+                    <li>Go to <a href="https://github.com/new" target="_blank">https://github.com/new</a></li>
+                    <li>Name it <code>noted</code></li>
+                    <li>Add a description: <code>A simple markdown-based notes manager</code></li>
+                    <li>Set it to <strong>Public</strong></li>
+                    <li>Do <strong>not</strong> initialize with a README (you'll do that locally)</li>
+                    <li>Click "Create repository"</li>
+                </ol>
+
+                <h3>Step 2 — Initialize Locally</h3>
+
+                <div class="code-block">cd ~/Desktop<br>mkdir noted<br>cd noted<br>git init<br>git remote add origin git@github.com:YOUR_USERNAME/noted.git</div>
+
+                <h3>Step 3 — Set Up Branch Protection on GitHub</h3>
+
+                <p>Before writing a single line of code:</p>
+
+                <ol>
+                    <li>GitHub → your <code>noted</code> repo → Settings → Branches</li>
+                    <li>Add rule for <code>main</code></li>
+                    <li>Enable "Require a pull request before merging"</li>
+                    <li>Save</li>
+                </ol>
+
+                <h3>Step 4 — Create the Project Foundation</h3>
+
+                <div class="code-block"><span class="comment"># Create .gitignore</span><br>cat > .gitignore << 'EOF'<br><span class="comment"># OS</span><br>.DS_Store<br>Thumbs.db<br><br><span class="comment"># Editor</span><br>.vscode/<br>.idea/<br>*.swp<br><br><span class="comment"># Logs</span><br>*.log<br><br><span class="comment"># Runtime</span><br>*.tmp<br>.cache/<br>EOF<br><br><span class="comment"># Create the README</span><br>cat > README.md << 'EOF'<br># noted<br><br>A simple command-line notes manager. Create, list, and delete<br>plain-text notes from your terminal.<br><br>## Requirements<br><br>- Bash 4.0+<br>- Any Unix-like environment (macOS, Linux, WSL)<br><br>## Installation<br><br>```bash<br>git clone git@github.com:YOUR_USERNAME/noted.git<br>cd noted<br>chmod +x noted.sh<br>```<br><br>## Usage<br><br>```bash<br>./noted.sh new "My note title"   # Create a new note<br>./noted.sh list                  # List all notes<br>./noted.sh delete "My note title" # Delete a note<br>./noted.sh help                  # Show help<br>```<br><br>## Project Structure<br><br>```<br>noted/<br>  noted.sh        Main script<br>  notes/          Directory where notes are stored<br>  CHANGELOG.md    Version history<br>```<br>EOF<br><br><span class="comment"># Create the notes directory</span><br>mkdir notes<br>touch notes/.gitkeep  <span class="comment"># Keep the empty directory tracked</span><br><br><span class="comment"># Initial commit directly to main (this is the one exception)</span><br>git add .<br>git commit -m "chore: initialize project structure"<br><br><span class="comment"># Push to GitHub — sets up main branch</span><br>git push -u origin main</div>
+            </section>
+
+            <section id="4-phase-2--feature-development-with-github-flow">
+                <h2>4. Phase 2 — Feature Development with GitHub Flow</h2>
+                <p>Now you'll build the actual features — each on its own branch, merged via Pull Request.</p>
+
+                <h3>Feature 1 — Core Script</h3>
+
+                <div class="code-block"><span class="comment"># Create feature branch</span><br>git switch -c feature/core-script<br><br><span class="comment"># Create the main script</span><br>cat > noted.sh << 'EOF'<br>#!/bin/bash<br><br>NOTES_DIR="$(dirname "$0")/notes"<br>mkdir -p "$NOTES_DIR"<br><br>case "$1" in<br>  new)<br>    if [ -z "$2" ]; then<br>      echo "Usage: noted new \"Note title\""<br>      exit 1<br>    fi<br>    filename="$NOTES_DIR/$(echo "$2" | tr ' ' '-' | tr '[:upper:]' '[:lower:]').md"<br>    echo "# $2" > "$filename"<br>    echo "" >> "$filename"<br>    echo "Created: $(date '+%Y-%m-%d %H:%M')" >> "$filename"<br>    echo "✓ Created note: $2"<br>    ;;<br><br>  list)<br>    if [ -z "$(ls -A $NOTES_DIR/*.md 2>/dev/null)" ]; then<br>      echo "No notes yet. Use: noted new \"Note title\""<br>    else<br>      echo "Your notes:"<br>      echo "───────────"<br>      for f in "$NOTES_DIR"/*.md; do<br>        title=$(head -1 "$f" | sed 's/^# //')<br>        echo "  • $title"<br>      done<br>    fi<br>    ;;<br><br>  delete)<br>    if [ -z "$2" ]; then<br>      echo "Usage: noted delete \"Note title\""<br>      exit 1<br>    fi<br>    filename="$NOTES_DIR/$(echo "$2" | tr ' ' '-' | tr '[:upper:]' '[:lower:]').md"<br>    if [ -f "$filename" ]; then<br>      rm "$filename"<br>      echo "✓ Deleted note: $2"<br>    else<br>      echo "Note not found: $2"<br>      exit 1<br>    fi<br>    ;;<br><br>  help|*)<br>    echo "noted — a simple notes manager"<br>    echo ""<br>    echo "Commands:"<br>    echo "  new \"Title\"     Create a new note"<br>    echo "  list             List all notes"<br>    echo "  delete \"Title\"  Delete a note"<br>    echo "  help             Show help"<br>    ;;<br>esac<br>EOF<br><br><span class="comment"># Make it executable</span><br>chmod +x noted.sh<br><br><span class="comment"># Commit the work</span><br>git add noted.sh<br>git commit -m "feat: add core noted.sh script with new, list, delete commands"<br><br><span class="comment"># Push and open PR</span><br>git push -u origin feature/core-script</div>
+
+                <p><strong>Now go to GitHub and open a Pull Request for <code>feature/core-script → main</code>.</strong> Write a PR description:</p>
+
+                <div class="code-block">## What this PR does<br><br>Adds the core `noted.sh` script with three commands:<br>- `new` — create a note as a markdown file<br>- `list` — list all existing notes<br>- `delete` — remove a note by title<br><br>## How to test<br><br>```bash<br>chmod +x noted.sh<br>./noted.sh new "My first note"<br>./noted.sh list<br>./noted.sh delete "My first note"<br>```</div>
+
+                <p>Merge the PR on GitHub, then sync locally:</p>
+
+                <div class="code-block">git switch main<br>git pull<br>git branch -d feature/core-script</div>
+
+                <h3>Feature 2 — Note Count and Timestamp</h3>
+
+                <div class="code-block">git switch main<br>git pull<br>git switch -c feature/note-metadata<br><br><span class="comment"># Add a 'count' subcommand and show creation date in list</span><br>cat >> noted.sh << 'EOF'<br><br><span class="comment"># This line intentionally left for feature/note-metadata branch</span><br>EOF<br><br><span class="comment"># Actually, let's properly edit the list case to show dates</span><br><span class="comment"># Simulate the edit by adding a count script wrapper</span><br>cat > count.sh << 'EOF'<br>#!/bin/bash<br>NOTES_DIR="$(dirname "$0")/notes"<br>count=$(ls "$NOTES_DIR"/*.md 2>/dev/null | wc -l | tr -d ' ')<br>echo "Total notes: $count"<br>EOF<br><br>chmod +x count.sh<br><br>git add count.sh<br>git commit -m "feat: add count.sh to display total note count"<br><br><span class="comment"># Add a note about usage to README</span><br>echo "" >> README.md<br>echo "## Tips" >> README.md<br>echo "" >> README.md<br>echo "- Run \`./count.sh\` to see how many notes you have" >> README.md<br>echo "- Notes are stored as plain \`.md\` files in the \`notes/\` directory" >> README.md<br>echo "- You can edit notes directly with any text editor" >> README.md<br><br>git add README.md<br>git commit -m "docs: add tips section to README"<br><br>git push -u origin feature/note-metadata</div>
+
+                <p>Open a PR on GitHub, merge it, and sync locally:</p>
+
+                <div class="code-block">git switch main<br>git pull<br>git branch -d feature/note-metadata</div>
+
+                <h3>Feature 3 — Search Functionality</h3>
+
+                <div class="code-block">git switch main<br>git pull<br>git switch -c feature/search<br><br><span class="comment"># Create a search script</span><br>cat > search.sh << 'EOF'<br>#!/bin/bash<br><br>NOTES_DIR="$(dirname "$0")/notes"<br>QUERY="$1"<br><br>if [ -z "$QUERY" ]; then<br>  echo "Usage: search.sh \"keyword\""<br>  exit 1<br>fi<br><br>echo "Searching for: $QUERY"<br>echo "────────────────────────"<br><br>found=0<br>for f in "$NOTES_DIR"/*.md 2>/dev/null; do<br>  [ -f "$f" ] || continue<br>  if grep -qi "$QUERY" "$f"; then<br>    title=$(head -1 "$f" | sed 's/^# //')<br>    echo "  ✓ $title"<br>    found=$((found + 1))<br>  fi<br>done<br><br>if [ $found -eq 0 ]; then<br>  echo "  No notes matching \"$QUERY\""<br>else<br>  echo ""<br>  echo "$found note(s) found."<br>fi<br>EOF<br><br>chmod +x search.sh<br><br>git add search.sh<br>git commit -m "feat: add search.sh to find notes by keyword"<br><br><span class="comment"># Update README with search usage</span><br>sed -i '' '/## Tips/i\<br>./search.sh "keyword"         # Search notes by keyword\<br>' README.md 2>/dev/null || \<br>echo '- Run `./search.sh "keyword"` to search note contents' >> README.md<br><br>git add README.md<br>git commit -m "docs: add search command to README usage section"<br><br>git push -u origin feature/search</div>
+
+                <p>Open a PR on GitHub, merge, and clean up:</p>
+
+                <div class="code-block">git switch main<br>git pull<br>git branch -d feature/search</div>
+            </section>
+
+            <section id="5-phase-3--deliberate-conflict--resolution">
+                <h2>5. Phase 3 — Deliberate Conflict & Resolution</h2>
+                <p>Now you'll simulate the most realistic scenario: two developers edit the same file at the same time.</p>
+
+                <div class="code-block">git switch main<br>git pull<br><br><span class="comment"># Developer A's branch — updates the README header</span><br>git switch -c feature/readme-update-a<br><br>cat > README.md << 'EOF'<br># noted ✨<br><br>A blazing-fast, lightweight notes manager for the terminal.<br>Keep your thoughts organized without leaving the command line.<br><br>## Requirements<br><br>- Bash 4.0+<br>- Any Unix-like environment (macOS, Linux, WSL)<br><br>## Installation<br><br>```bash<br>git clone git@github.com:YOUR_USERNAME/noted.git<br>cd noted<br>chmod +x noted.sh<br>```<br><br>## Usage<br><br>```bash<br>./noted.sh new "My note title"    # Create a new note<br>./noted.sh list                   # List all notes<br>./noted.sh delete "My note title" # Delete a note<br>./noted.sh help                   # Show help<br>./count.sh                        # Count all notes<br>./search.sh "keyword"             # Search note contents<br>```<br>EOF<br><br>git add README.md<br>git commit -m "docs: rewrite README intro with better description"<br>git push -u origin feature/readme-update-a</div>
+
+                <p>Now merge <code>feature/readme-update-a</code> to <code>main</code> via GitHub PR.</p>
+
+                <div class="code-block">git switch main<br>git pull<br>git branch -d feature/readme-update-a<br><br><span class="comment"># Developer B's branch — also edits README (different wording)</span><br>git switch -c feature/readme-update-b<br><br><span class="comment"># Edit the same file with different content</span><br>cat > README.md << 'EOF'<br># noted 📝<br><br>The minimalist terminal notes manager. Write fast, find fast, stay focused.<br><br>## Requirements<br><br>- Bash 4.0+<br>- Any Unix-like environment (macOS, Linux, WSL)<br><br>## Getting Started<br><br>```bash<br>git clone git@github.com:YOUR_USERNAME/noted.git<br>cd noted && chmod +x noted.sh<br>./noted.sh help<br>```<br><br>## All Commands<br><br>| Command | Description |<br>|---|---|<br>| `./noted.sh new "Title"` | Create a new note |<br>| `./noted.sh list` | List all notes |<br>| `./noted.sh delete "Title"` | Delete a note |<br>| `./count.sh` | Count all notes |<br>| `./search.sh "term"` | Search note contents |<br>EOF<br><br>git add README.md<br>git commit -m "docs: rewrite README with command table layout"<br>git push -u origin feature/readme-update-b<br><br><span class="comment"># Now merge into main — conflict incoming!</span><br>git switch main<br>git merge feature/readme-update-b</div>
+
+                <p>You'll see:</p>
+
+                <div class="code-block"><span class="output">Auto-merging README.md<br>CONFLICT (content): Merge conflict in README.md<br>Automatic merge failed; fix conflicts and then commit the result.</span></div>
+
+                <h3>Resolve the Conflict</h3>
+
+                <div class="code-block"><span class="comment"># Open README.md — you'll see conflict markers</span><br><span class="comment"># Choose the best of both versions — combine them</span><br><br>cat > README.md << 'EOF'<br># noted ✨<br><br>The minimalist terminal notes manager. Write fast, find fast, stay focused.<br>Keep your thoughts organized without ever leaving the command line.<br><br>## Requirements<br><br>- Bash 4.0+<br>- Any Unix-like environment (macOS, Linux, WSL)<br><br>## Installation<br><br>```bash<br>git clone git@github.com:YOUR_USERNAME/noted.git<br>cd noted<br>chmod +x noted.sh<br>```<br><br>## All Commands<br><br>| Command | Description |<br>|---|---|<br>| `./noted.sh new "Title"` | Create a new note |<br>| `./noted.sh list` | List all notes |<br>| `./noted.sh delete "Title"` | Delete a note |<br>| `./noted.sh help` | Show help |<br>| `./count.sh` | Count all notes |<br>| `./search.sh "term"` | Search note contents |<br><br>## Tips<br><br>- Notes are stored as plain `.md` files in the `notes/` directory<br>- You can edit notes directly with any text editor<br>- Run `./count.sh` to see how many notes you have<br>EOF<br><br><span class="comment"># Mark as resolved and complete the merge</span><br>git add README.md<br>git commit -m "merge: resolve README conflict — combine both improvements"<br><br>git push<br>git branch -d feature/readme-update-b</div>
+            </section>
+
+            <section id="6-phase-4--history-cleanup-with-interactive-rebase">
+                <h2>6. Phase 4 — History Cleanup with Interactive Rebase</h2>
+                <p>Before tagging a release, clean up any messy commits in your history.</p>
+
+                <div class="code-block">git switch main<br>git pull<br><br><span class="comment"># First, look at your current history</span><br>git log --oneline</div>
+
+                <p>You'll likely see a mix of clean commits and some noise. Let's add a few messy ones to practice on:</p>
+
+                <div class="code-block"><span class="comment"># Simulate a developer making messy WIP commits</span><br>git switch -c feature/add-changelog<br><br>echo "WIP" > CHANGELOG.md<br>git add CHANGELOG.md<br>git commit -m "WIP changelog"<br><br>echo "still WIP" >> CHANGELOG.md<br>git add CHANGELOG.md<br>git commit -m "more changelog work"<br><br>echo "ok done" >> CHANGELOG.md<br>git add CHANGELOG.md<br>git commit -m "asdfgh"<br><br><span class="comment"># Now write the real changelog content</span><br>cat > CHANGELOG.md << 'EOF'<br># Changelog<br><br>All notable changes to `noted` are documented here.<br>Format follows [Keep a Changelog](https://keepachangelog.com).<br><br>## [1.0.0] - 2025-02-23<br><br>### Added<br>- `noted.sh` — core script with `new`, `list`, `delete`, and `help` commands<br>- `count.sh` — displays total number of notes<br>- `search.sh` — search note contents by keyword<br>- `.gitignore` configured for shell project<br>- `README.md` with full usage documentation and command table<br>- `CHANGELOG.md` to track version history<br><br>### Notes<br>- Notes are stored as individual `.md` files in the `notes/` directory<br>- All scripts require Bash 4.0+ on a Unix-like environment<br>EOF<br><br>git add CHANGELOG.md<br>git commit -m "docs: add proper CHANGELOG content"<br><br><span class="comment"># Check what we're about to clean up</span><br>git log --oneline</div>
+
+                <p>Now squash the 4 messy commits into 1 clean one:</p>
+
+                <div class="code-block"><span class="comment"># Rebase the last 4 commits</span><br>git rebase -i HEAD~4</div>
+
+                <p>In the editor, change it to:</p>
+
+                <div class="code-block">pick <first-hash>  WIP changelog<br>f    <second-hash> more changelog work<br>f    <third-hash>  asdfgh<br>f    <fourth-hash> docs: add proper CHANGELOG content</div>
+
+                <p>Then reword the remaining commit message:</p>
+
+                <div class="code-block">r    <first-hash>  WIP changelog</div>
+
+                <p>Save, close. Git opens another editor — type the final message:</p>
+
+                <div class="code-block">docs: add CHANGELOG with v1.0.0 release notes</div>
+
+                <p>Save and close.</p>
+
+                <div class="code-block"><span class="comment"># Verify — 4 commits became 1</span><br>git log --oneline<br><br><span class="comment"># Push the branch (force needed since history was rewritten)</span><br>git push -u origin feature/add-changelog</div>
+
+                <p>Open a PR on GitHub for this branch, merge it, clean up:</p>
+
+                <div class="code-block">git switch main<br>git pull<br>git branch -d feature/add-changelog</div>
+            </section>
+
+            <section id="7-phase-5--release--tagging">
+                <h2>7. Phase 5 — Release & Tagging</h2>
+                <p>You've completed all features. Time to ship.</p>
+
+                <div class="code-block">git switch main<br>git pull<br><br><span class="comment"># Final review — see everything you've built</span><br>git log --oneline --graph --all --decorate<br><br><span class="comment"># See all files in the project</span><br>ls -la<br><br><span class="comment"># Run a final check — make sure the script works</span><br>chmod +x noted.sh count.sh search.sh 2>/dev/null<br><br>./noted.sh new "My first note"<br>./noted.sh new "Git is powerful"<br>./noted.sh list<br>./count.sh<br>./search.sh "git"<br>./noted.sh delete "My first note"<br>./noted.sh list</div>
+
+                <p>Everything working? Tag the release:</p>
+
+                <div class="code-block"><span class="comment"># Create an annotated release tag</span><br>git tag -a v1.0.0 -m "v1.0.0 — Initial release<br><br>Features:<br>- Create, list, and delete notes from the terminal<br>- Count total notes with count.sh<br>- Search note contents with search.sh<br><br>All notes stored as plain markdown files."<br><br><span class="comment"># View the tag</span><br>git show v1.0.0<br><br><span class="comment"># Push the tag to GitHub</span><br>git push origin v1.0.0</div>
+
+                <h3>Create a GitHub Release</h3>
+
+                <ol>
+                    <li>Go to your <code>noted</code> repository on GitHub</li>
+                    <li>Click "Releases" → "Draft a new release"</li>
+                    <li>Choose tag: <code>v1.0.0</code></li>
+                    <li>Release title: <code>v1.0.0 — Initial Release</code></li>
+                    <li>Copy your <code>CHANGELOG.md</code> content into the description</li>
+                    <li>Click "Publish release"</li>
+                </ol>
+
+                <p>Your project now has a professional, versioned release on GitHub. 🎉</p>
+            </section>
+
+            <section id="8-week-in-review--command-reference">
+                <h2>8. Week in Review — Command Reference</h2>
+                <p>A complete reference of every command covered this week, organized by category.</p>
+
+                <h3>Setup & Configuration</h3>
+
+                <div class="code-block">git --version                              <span class="comment"># Check Git version</span><br>git config --global user.name "Name"       <span class="comment"># Set global username</span><br>git config --global user.email "e@mail"    <span class="comment"># Set global email</span><br>git config --global init.defaultBranch main <span class="comment"># Set default branch</span><br>git config --global core.editor "code --wait" <span class="comment"># Set editor</span><br>git config --list                          <span class="comment"># View all settings</span></div>
+
+                <h3>Starting a Repository</h3>
+
+                <div class="code-block">git init                      <span class="comment"># Initialize a new local repo</span><br>git clone &lt;url&gt;               <span class="comment"># Clone a remote repo</span><br>git clone &lt;url&gt; &lt;folder&gt;      <span class="comment"># Clone into a named folder</span><br>git remote add origin &lt;url&gt;   <span class="comment"># Connect local repo to remote</span><br>git remote -v                 <span class="comment"># View all remotes</span><br>git remote set-url origin &lt;url&gt; <span class="comment"># Change remote URL</span></div>
+
+                <h3>Core Daily Workflow</h3>
+
+                <div class="code-block">git status                    <span class="comment"># See what's changed</span><br>git diff                      <span class="comment"># See unstaged changes</span><br>git diff --staged             <span class="comment"># See staged changes</span><br>git add &lt;file&gt;                <span class="comment"># Stage a file</span><br>git add .                     <span class="comment"># Stage all changes</span><br>git add -p                    <span class="comment"># Interactively stage chunks</span><br>git restore --staged &lt;file&gt;   <span class="comment"># Unstage a file</span><br>git commit -m "message"       <span class="comment"># Commit with message</span><br>git commit -am "message"      <span class="comment"># Stage tracked + commit</span><br>git commit --amend -m "msg"   <span class="comment"># Fix last commit</span></div>
+
+                <h3>Viewing History</h3>
+
+                <div class="code-block">git log                         <span class="comment"># Full commit history</span><br>git log --oneline               <span class="comment"># Compact history</span><br>git log --oneline --graph --all <span class="comment"># Visual branch history</span><br>git log --author="Name"         <span class="comment"># Filter by author</span><br>git log --grep="keyword"        <span class="comment"># Search commit messages</span><br>git log -- &lt;file&gt;               <span class="comment"># History for one file</span><br>git log -5                      <span class="comment"># Last 5 commits only</span><br>git show &lt;hash&gt;                 <span class="comment"># Inspect a commit</span><br>git show --stat &lt;hash&gt;          <span class="comment"># Files changed in a commit</span></div>
+
+                <h3>Branching</h3>
+
+                <div class="code-block">git branch                      <span class="comment"># List local branches</span><br>git branch -a                   <span class="comment"># List all branches</span><br>git branch -v                   <span class="comment"># Branches with last commit</span><br>git branch -vv                  <span class="comment"># With tracking info</span><br>git branch --merged             <span class="comment"># Branches already merged</span><br>git branch --no-merged          <span class="comment"># Branches not yet merged</span><br>git branch &lt;name&gt;               <span class="comment"># Create a branch</span><br>git switch &lt;branch&gt;             <span class="comment"># Switch to a branch</span><br>git switch -c &lt;name&gt;            <span class="comment"># Create and switch</span><br>git branch -d &lt;name&gt;            <span class="comment"># Delete merged branch</span><br>git branch -D &lt;name&gt;            <span class="comment"># Force delete branch</span><br>git branch -m &lt;new-name&gt;        <span class="comment"># Rename current branch</span></div>
+
+                <h3>Merging</h3>
+
+                <div class="code-block">git merge &lt;branch&gt;              <span class="comment"># Merge branch into current</span><br>git merge --no-ff &lt;branch&gt;      <span class="comment"># Always create merge commit</span><br>git merge --abort               <span class="comment"># Cancel in-progress merge</span><br>git mergetool                   <span class="comment"># Open visual merge tool</span></div>
+
+                <h3>Remote Operations</h3>
+
+                <div class="code-block">git push -u origin &lt;branch&gt;     <span class="comment"># Push + set upstream</span><br>git push                        <span class="comment"># Push to tracked remote</span><br>git push --force-with-lease     <span class="comment"># Safe force push</span><br>git push origin --delete &lt;b&gt;    <span class="comment"># Delete remote branch</span><br>git fetch                       <span class="comment"># Download without merging</span><br>git fetch --prune               <span class="comment"># Fetch + clean stale refs</span><br>git pull                        <span class="comment"># Download + merge</span><br>git pull --rebase               <span class="comment"># Download + rebase</span></div>
+
+                <h3>Undoing Things</h3>
+
+                <div class="code-block">git restore &lt;file&gt;              <span class="comment"># Discard working dir changes</span><br>git restore .                   <span class="comment"># Discard ALL working changes</span><br>git restore --staged &lt;file&gt;    <span class="comment"># Unstage a file</span><br>git restore --source=&lt;hash&gt; &lt;f&gt; <span class="comment"># Restore from commit</span><br>git stash                       <span class="comment"># Stash changes</span><br>git stash push -m "desc"        <span class="comment"># Stash with message</span><br>git stash push -u               <span class="comment"># Include untracked files</span><br>git stash list                  <span class="comment"># View all stashes</span><br>git stash pop                   <span class="comment"># Apply + remove latest stash</span><br>git stash apply stash@{N}       <span class="comment"># Apply without removing</span><br>git stash drop stash@{N}        <span class="comment"># Delete a stash</span><br>git stash clear                 <span class="comment"># Delete all stashes</span><br>git revert HEAD                 <span class="comment"># Undo last commit (safe)</span><br>git revert &lt;hash&gt;               <span class="comment"># Undo specific commit</span><br>git reset --soft HEAD~N         <span class="comment"># Undo N commits, keep staged</span><br>git reset --mixed HEAD~N        <span class="comment"># Undo N commits, keep unstaged</span><br>git reset --hard HEAD~N         <span class="comment"># Undo N commits, delete all</span><br>git rebase -i HEAD~N            <span class="comment"># Interactive rebase last N</span><br>git reflog                      <span class="comment"># View all HEAD movements</span></div>
+
+                <h3>Tags</h3>
+
+                <div class="code-block">git tag                         <span class="comment"># List all tags</span><br>git tag -a &lt;tag&gt; -m "msg"       <span class="comment"># Create annotated tag</span><br>git tag -a &lt;tag&gt; &lt;hash&gt; -m "m"  <span class="comment"># Tag a past commit</span><br>git show &lt;tag&gt;                  <span class="comment"># View tag details</span><br>git push origin &lt;tag&gt;           <span class="comment"># Push a tag</span><br>git push origin --tags          <span class="comment"># Push all tags</span><br>git tag -d &lt;tag&gt;                <span class="comment"># Delete local tag</span><br>git push origin --delete &lt;tag&gt; <span class="comment"># Delete remote tag</span></div>
+
+                <h3>Utility</h3>
+
+                <div class="code-block">git rm --cached &lt;file&gt;          <span class="comment"># Stop tracking a file</span><br>git diff &lt;branch1&gt;..&lt;branch2&gt;   <span class="comment"># Diff between branches</span><br>git log origin/main..HEAD       <span class="comment"># Unpushed commits</span><br>git branch -r                   <span class="comment"># Remote tracking branches</span><br>git stash branch &lt;name&gt;         <span class="comment"># New branch from stash</span></div>
+            </section>
+
+            <section id="9-common-mistakes--how-to-avoid-them">
+                <h2>9. Common Mistakes & How to Avoid Them</h2>
+
+                <h3>Mistake 1 — Committing Directly to <code>main</code></h3>
+
+                <div class="code-block"><span class="diff">❌ You pushed directly to main without a PR</span><br><span class="diff">✅ Always branch, always PR — even for small changes</span><br><span class="diff">   Set up branch protection rules to enforce this automatically</span></div>
+
+                <h3>Mistake 2 — <code>git add .</code> Without Checking First</h3>
+
+                <div class="code-block"><span class="diff">❌ Staged .env, node_modules, or build files accidentally</span><br><span class="diff">✅ Run git status and git diff --staged before every commit</span><br><span class="diff">   Keep .gitignore updated</span></div>
+
+                <h3>Mistake 3 — Vague Commit Messages</h3>
+
+                <div class="code-block"><span class="diff">❌ "fix", "update", "changes", "WIP", "asdf"</span><br><span class="diff">✅ "fix: prevent null crash in checkout on empty cart"</span><br><span class="diff">   Use imperative mood. Explain WHAT and WHY.</span></div>
+
+                <h3>Mistake 4 — One Giant Commit at End of Day</h3>
+
+                <div class="code-block"><span class="diff">❌ Committing 2 days of work in one commit</span><br><span class="diff">✅ Commit every logical unit of work as you complete it</span><br><span class="diff">   Small commits = easier reviews, easier reverts, cleaner history</span></div>
+
+                <h3>Mistake 5 — Force Pushing to Shared Branches</h3>
+
+                <div class="code-block"><span class="diff">❌ git push --force on main or a branch a teammate has</span><br><span class="diff">✅ Never force-push shared branches</span><br><span class="diff">   Use git revert for shared history, --force-with-lease for personal branches</span></div>
+
+                <h3>Mistake 6 — Forgetting to Pull Before Starting Work</h3>
+
+                <div class="code-block"><span class="diff">❌ Branching from an outdated main → big merge conflict later</span><br><span class="diff">✅ Always git switch main && git pull before creating a branch</span></div>
+
+                <h3>Mistake 7 — Long-Lived Branches</h3>
+
+                <div class="code-block"><span class="diff">❌ A feature branch that lives for 3 weeks — 500 commits behind main</span><br><span class="diff">✅ Keep branches short-lived (hours to days, not weeks)</span><br><span class="diff">   Regularly rebase or merge from main to stay in sync</span></div>
+
+                <h3>Mistake 8 — Committing Secrets</h3>
+
+                <div class="code-block"><span class="diff">❌ Pushed API keys, passwords, or tokens in a .env file</span><br><span class="diff">✅ Set up .gitignore before your first commit</span><br><span class="diff">   Rotate any secret that was ever committed, even briefly</span><br><span class="diff">   Use tools like git-secrets or trufflehog in CI</span></div>
+
+                <h3>Mistake 9 — Using git reset on Pushed Commits</h3>
+
+                <div class="code-block"><span class="diff">❌ git reset --hard on a commit already pushed to a shared branch</span><br><span class="diff">✅ Use git revert for anything that's been pushed</span><br><span class="diff">   Reserve reset for local-only commits</span></div>
+
+                <h3>Mistake 10 — Never Reading the Error Messages</h3>
+
+                <div class="code-block"><span class="diff">❌ Getting a Git error and immediately searching Google or asking AI</span><br><span class="diff">✅ Read the full error — Git error messages are remarkably helpful</span><br><span class="diff">   They often tell you exactly what to run to fix the problem</span></div>
+            </section>
+
+            <section id="10-git-cheat-sheet--one-page">
+                <h2>10. Git Cheat Sheet — One Page</h2>
+
+                <div class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────────────┐
+│                        GIT CHEAT SHEET                              │
+├────────────────────────┬────────────────────────────────────────────┤
+│ SETUP                  │ DAILY WORKFLOW                             │
+│ git config --global    │ git status          See what changed       │
+│   user.name "Name"     │ git diff            Unstaged changes       │
+│   user.email "e@mail"  │ git diff --staged   Staged changes         │
+│                        │ git add .           Stage all              │
+│ START                  │ git add -p          Stage interactively    │
+│ git init               │ git commit -m "msg" Commit                 │
+│ git clone <url>        │ git log --oneline   View history           │
+│                        │ git show <hash>     Inspect commit         │
+├────────────────────────┼────────────────────────────────────────────┤
+│ BRANCHES               │ REMOTES                                    │
+│ git branch             │ git remote -v       List remotes           │
+│ git switch -c <name>   │ git push -u origin  First push             │
+│ git switch <name>      │ git push            Push commits           │
+│ git merge <branch>     │ git fetch           Download (no merge)    │
+│ git branch -d <name>   │ git pull            Download + merge       │
+│ git log --graph --all  │ git pull --rebase   Download + rebase      │
+├────────────────────────┼────────────────────────────────────────────┤
+│ UNDO                   │ STASH                                      │
+│ git restore <file>     │ git stash           Save changes aside     │
+│ git restore --staged   │ git stash pop       Bring them back        │
+│ git revert HEAD        │ git stash list      View stash stack       │
+│ git reset --soft HEAD~1│                                            │
+│ git reset --hard HEAD~1│ TAGS                                       │
+│ git rebase -i HEAD~N   │ git tag -a v1.0 -m  Create release tag    │
+│ git reflog             │ git push origin v1  Push tag to remote     │
+└────────────────────────┴────────────────────────────────────────────┘
+
+THE GOLDEN RULES
+─────────────────────────────────────────────────────────────────────
+1. main is always deployable — never commit broken code there
+2. Branch for every change — no matter how small
+3. Commit early and often — small commits beat big ones
+4. Write meaningful messages — your future self will thank you
+5. Revert for shared history — never reset what others have pulled
+6. Pull before you branch — start from the latest main
+7. Keep .gitignore updated — never commit secrets or build output
+8. Delete merged branches — keep your repo clean
+─────────────────────────────────────────────────────────────────────
+                </div>
+            </section>
+
+            <section id="11-what-to-learn-next">
+                <h2>11. What to Learn Next</h2>
+                <p>You've completed the foundational week. Here's a roadmap for where to go from here, roughly in order of priority:</p>
+
+                <h3>Immediate Next Steps (Week 2–4)</h3>
+
+                <p><strong>Git Rebase (non-interactive)</strong><br>
+                Learn to use <code>git rebase &lt;branch&gt;</code> to keep your feature branch up to date with <code>main</code> without merge commits. Essential for keeping clean history on active teams.</p>
+
+                <div class="code-block"><span class="comment"># Instead of: git merge main (creates a merge commit)</span><br>git rebase main   <span class="comment"># Replays your commits on top of latest main</span></div>
+
+                <p><strong>Cherry-Pick</strong><br>
+                Apply a single commit from one branch to another — without merging the whole branch.</p>
+
+                <div class="code-block">git cherry-pick a1b2c3d   <span class="comment"># Apply just this one commit here</span></div>
+
+                <p><strong>Git Bisect</strong><br>
+                Binary search through commit history to find exactly which commit introduced a bug. Incredibly powerful for debugging.</p>
+
+                <div class="code-block">git bisect start<br>git bisect bad           <span class="comment"># Current commit is broken</span><br>git bisect good v1.0.0   <span class="comment"># This version was fine</span><br><span class="comment"># Git checks out the midpoint — you test and mark good/bad</span><br><span class="comment"># Repeat until Git finds the exact breaking commit</span></div>
+
+                <h3>Intermediate Skills (Month 1–2)</h3>
+
+                <p><strong>Signing Commits with GPG</strong><br>
+                Cryptographically verify that commits are really from you. Required by some organizations and open source projects.</p>
+
+                <div class="code-block">git commit -S -m "feat: add verified commit"</div>
+
+                <p><strong>Git Worktrees</strong><br>
+                Check out multiple branches simultaneously in different folders — without stashing or switching.</p>
+
+                <div class="code-block">git worktree add ../project-hotfix hotfix/critical-bug</div>
+
+                <p><strong>Submodules and Subtrees</strong><br>
+                Include one Git repository inside another. Used for shared libraries and monorepo-adjacent setups.</p>
+
+                <div class="code-block">git submodule add git@github.com:org/shared-lib.git libs/shared</div>
+
+                <p><strong>Advanced .gitconfig</strong><br>
+                Customize Git with aliases, delta for better diffs, and per-directory configurations.</p>
+
+                <div class="code-block"><span class="comment"># Useful aliases to add to ~/.gitconfig</span><br>[alias]<br>  st = status<br>  co = switch<br>  lg = log --oneline --graph --all --decorate<br>  undo = reset --soft HEAD~1<br>  aliases = config --get-regexp alias</div>
+
+                <h3>Tools to Explore</h3>
+
+                <p><strong>GitHub CLI (<code>gh</code>)</strong><br>
+                Manage PRs, issues, and releases from the terminal without opening a browser.</p>
+
+                <div class="code-block">gh pr create --title "feat: dark mode" --body "Adds dark mode toggle"<br>gh pr merge --squash<br>gh release create v2.0.0</div>
+
+                <p><strong>Delta</strong><br>
+                A syntax-highlighting pager for <code>git diff</code> output — makes diffs dramatically more readable.</p>
+
+                <p><strong>Lazygit</strong><br>
+                A terminal UI for Git — great for visual learners who want the power of the command line with a navigable interface.</p>
+
+                <p><strong>Git LFS (Large File Storage)</strong><br>
+                Store large binary files (images, videos, datasets) in Git repositories without bloating history.</p>
+
+                <p><strong>pre-commit (the tool)</strong><br>
+                A framework for managing Git hooks across a team — language-agnostic and shareable via config file.</p>
+
+                <h3>Concepts to Study</h3>
+
+                <ul>
+                    <li><strong>Rebasing strategies</strong> — when to rebase vs merge and the tradeoffs</li>
+                    <li><strong>Monorepos</strong> — managing multiple projects in one Git repository (used by Google, Meta, Airbnb)</li>
+                    <li><strong>CI/CD integration</strong> — how GitHub Actions, GitLab CI, and CircleCI react to pushes, PRs, and tags</li>
+                    <li><strong>Git internals</strong> — objects, trees, blobs, and packfiles — understand what Git actually stores</li>
+                    <li><strong>Security</strong> — signed commits, secret scanning, dependency vulnerability alerts</li>
+                </ul>
+
+                <h3>Recommended Resources</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Resource</th>
+                                <th>What It Covers</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="https://git-scm.com/book" target="_blank">Pro Git Book</a> (free)</td>
+                                <td>Comprehensive — the definitive reference</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://learngitbranching.js.org" target="_blank">Learn Git Branching</a></td>
+                                <td>Visual, interactive — best for branching concepts</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://skills.github.com" target="_blank">GitHub Skills</a></td>
+                                <td>Guided hands-on labs directly on GitHub</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.atlassian.com/git/tutorials" target="_blank">Atlassian Git Tutorials</a></td>
+                                <td>Excellent workflow explanations</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://ohshitgit.com" target="_blank">Oh Shit, Git!</a></td>
+                                <td>How to fix common mistakes — plain English</td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.conventionalcommits.org" target="_blank">Conventional Commits</a></td>
+                                <td>The commit message standard used by most teams</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="summary">
+                <h2>Congratulations 🎉</h2>
+                <p>You started this week not knowing what a repository was. You're finishing it with:</p>
+                <ul>
+                    <li>A professional Git workflow you can bring to any team</li>
+                    <li>A real project on GitHub with branches, PRs, conflicts, rebases, and a tagged release</li>
+                    <li>The muscle memory to <code>git status</code> and <code>git diff --staged</code> before every commit</li>
+                    <li>Confidence to undo mistakes without panicking</li>
+                    <li>A vocabulary to collaborate with any development team in the world</li>
+                </ul>
+                <p>Git is one of those tools that you learn in a week and keep getting better at for years. Every project, every team, every weird edge case teaches you something new. The foundation you've built this week will serve you for your entire career.</p>
+                <p>Now go build something and commit it. 🚀</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>← <a href="day06_workflows_best_practices.html">Day 6 — Workflows & Best Practices</a> | <a href="index.html">Index</a> | <a href="git_infograph.html">Git Infograph</a> →</p>
+        </footer>
+    </div>
+</body>
+</html>

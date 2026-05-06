@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 5 — Rewriting History & Undoing Things</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-red: #f87171;
+            --border-color: #334155;
+            --max-width: 90%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .breadcrumb {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--accent-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .goal {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .goal p {
+            font-size: 1.125rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .toc {
+            background: var(--accent-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .toc a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 3rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .undo-table {
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .undo-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .undo-table th, .undo-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .undo-table th {
+            background: var(--accent-bg);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .undo-table td {
+            color: var(--text-secondary);
+        }
+
+        .undo-table tbody tr:hover {
+            background: var(--accent-bg);
+        }
+
+        .ascii-diagram {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .highlight {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .highlight p {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--accent-bg) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .use-case p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: var(--text-muted);
+        }
+
+        .code-block .output {
+            color: var(--accent-green);
+        }
+
+        .code-block .diff {
+            color: var(--accent-red);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--accent-bg);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-bg);
+        }
+
+        .command {
+            font-family: 'JetBrains Mono', monospace;
+            background: #020617;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .step {
+            background: var(--accent-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .step h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        .warning {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--accent-red);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning p {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .summary {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary h2 {
+            color: var(--accent-orange);
+        }
+
+        .summary p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .toc {
+                padding: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <p>← <a href="day04_remote_repository.html">Day 4 — Remote Repositories & GitHub</a> | <a href="index.html">Index</a> | <a href="day06_workflows_best_practices.html">Day 6 — Workflows & Best Practices</a> →</p>
+        </nav>
+
+        <header>
+            <h1>Git Learning Curriculum</h1>
+            <p class="subtitle">Day 5 — Rewriting History & Undoing Things</p>
+        </header>
+
+        <div class="goal">
+            <p><strong>Goal:</strong> Fix mistakes confidently — learn every tool Git gives you to undo, rewrite, and recover from errors at any stage of your workflow.</p>
+        </div>
+
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#1-the-undo-mental-model">The Undo Mental Model</a></li>
+                <li><a href="#2-discarding-working-directory-changes">Discarding Working Directory Changes — git restore</a></li>
+                <li><a href="#3-unstaging-files">Unstaging Files — git restore --staged</a></li>
+                <li><a href="#4-stashing-work-in-progress">Stashing Work in Progress — git stash</a></li>
+                <li><a href="#5-safely-undoing-commits">Safely Undoing Commits — git revert</a></li>
+                <li><a href="#6-moving-branches-backward">Moving Branches Backward — git reset</a></li>
+                <li><a href="#7-revert-vs-reset">Revert vs Reset — When to Use Which</a></li>
+                <li><a href="#8-cleaning-up-history">Cleaning Up History — git rebase -i</a></li>
+                <li><a href="#9-finding-a-lost-commit">Finding a Lost Commit — git reflog</a></li>
+                <li><a href="#10-day-5-hands-on-exercise">Day 5 Hands-On Exercise</a></li>
+                <li><a href="#11-key-commands-summary">Key Commands Summary</a></li>
+            </ol>
+        </nav>
+
+        <main>
+            <section id="1-the-undo-mental-model">
+                <h2>1. The Undo Mental Model</h2>
+                <p>Before diving into commands, it helps to have a clear map of <em>where</em> a change can live and which tool undoes it at each stage:</p>
+
+                <div class="undo-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align: center; background-color: #f2f2f2;">WHERE IS THE CHANGE?</th>
+                            </tr>
+                            <tr>
+                                <th style="width: 33%;">Working Directory<br><small>(unsaved edits)</small></th>
+                                <th style="width: 33%;">Staging Area<br><small>(git add'd)</small></th>
+                                <th style="width: 34%;">Repository (commits)<br><small>(committed history)</small></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>git restore &lt;file&gt;</code></td>
+                                <td><code>git restore --staged &lt;file&gt;</code></td>
+                                <td><code>git revert</code> (safe/public)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><code>git reset</code> (local only)</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><code>git rebase -i</code> (reshape)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ascii-diagram">
+┌─────────────────────────────────────────────────────────────────┐
+│                        WHERE IS THE CHANGE?                     │
+├──────────────────┬──────────────────┬───────────────────────────┤
+│ Working Directory│  Staging Area    │     Repository (commits)  │
+│ (unsaved edits)  │  (git add'd)     │     (committed history)   │
+├──────────────────┼──────────────────┼───────────────────────────┤
+│ git restore      │ git restore      │ git revert  (safe/public) │
+│ <file>           │ --staged <file>  │ git reset   (local only)   │
+│                  │                  │ git rebase -i (reshape)   │
+└──────────────────┴──────────────────┴───────────────────────────┘
+                </div>
+
+                <p>The key rule to internalize:</p>
+                <ul>
+                    <li><strong>Haven't committed yet?</strong> → <code>git restore</code> is your tool. Changes are easy to discard.</li>
+                    <li><strong>Committed but not pushed?</strong> → <code>git reset</code> or <code>git rebase -i</code>. You can rewrite freely.</li>
+                    <li><strong>Committed AND pushed to a shared branch?</strong> → <code>git revert</code> only. Never rewrite shared history.</li>
+                </ul>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer accidentally commits their <code>.env</code> file containing API keys. Knowing the right tool for the situation — <code>git revert</code> if already pushed to <code>main</code>, or <code>git reset</code> if still local — is the difference between a clean recovery and a messy history that confuses the whole team.</p>
+                </div>
+            </section>
+
+            <section id="2-discarding-working-directory-changes">
+                <h2>2. Discarding Working Directory Changes — <span class="command">git restore</span></h2>
+                <p><code>git restore</code> throws away uncommitted changes in your working directory, reverting a file back to its last committed state. <strong>This is permanent — discarded changes cannot be recovered.</strong></p>
+
+                <h3>Discard Changes in a Single File</h3>
+                <div class="code-block">git restore index.html</div>
+
+                <p>This resets <code>index.html</code> to how it looked in the last commit. Any edits you made since then are gone.</p>
+
+                <h3>Discard All Unstaged Changes</h3>
+                <div class="code-block">git restore .</div>
+
+                <p>Reverts every modified file in the working directory back to its committed state. Use with care.</p>
+
+                <h3>Restore a File to a Specific Commit's Version</h3>
+                <div class="code-block">git restore --source=a1b2c3d index.html</div>
+
+                <p>This pulls the version of <code>index.html</code> from commit <code>a1b2c3d</code> into your working directory — without changing anything else. Useful for grabbing an old version of one file.</p>
+
+                <h3>Restore a File from a Specific Branch</h3>
+                <div class="code-block">git restore --source=main style.css</div>
+
+                <p>Grabs <code>style.css</code> from the <code>main</code> branch into your working directory.</p>
+
+                <div class="warning">
+                    <p><strong>⚠️ Warning:</strong><br>
+                    <code>git restore</code> on an unstaged file is irreversible. Git has no record of the change because it was never staged or committed. Always double-check with <code>git diff</code> before running it.</p>
+                </div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer spent an hour experimenting with a new CSS layout but decides it's the wrong direction. Instead of manually undoing all the edits, they run <code>git restore style.css</code> and the file snaps back to the last committed version instantly.</p>
+                </div>
+            </section>
+
+            <section id="3-unstaging-files">
+                <h2>3. Unstaging Files — <span class="command">git restore --staged</span></h2>
+                <p>If you've staged a file with <code>git add</code> but haven't committed yet, you can move it back to the working directory without losing any changes.</p>
+
+                <h3>Unstage a Specific File</h3>
+                <div class="code-block">git restore --staged index.html</div>
+
+                <p>The file's changes are still in your working directory — they just won't be included in the next commit.</p>
+
+                <h3>Unstage Everything</h3>
+                <div class="code-block">git restore --staged .</div>
+
+                <h3>The Older Syntax (Still Common)</h3>
+                <div class="code-block">git reset HEAD index.html</div>
+
+                <p>Both commands do the same thing — <code>git restore --staged</code> is the modern preferred syntax.</p>
+
+                <h3>A Common Workflow</h3>
+                <div class="code-block"><span class="comment"># You accidentally staged everything including a debug file</span><br>git add .<br><br><span class="comment"># Oops — unstage just the debug file</span><br>git restore --staged debug.log<br><br><span class="comment"># Now commit only what you intended</span><br>git commit -m "feat: add payment processing"</div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer runs <code>git add .</code> out of habit, then realizes they accidentally staged a file containing temporary test data. They <code>git restore --staged</code> that file, commit the rest cleanly, and delete the test file separately. The commit history stays professional.</p>
+                </div>
+            </section>
+
+            <section id="4-stashing-work-in-progress">
+                <h2>4. Stashing Work in Progress — <span class="command">git stash</span></h2>
+                <p><code>git stash</code> temporarily shelves your uncommitted changes so you can switch context — then brings them back later. Think of it as a clipboard for your in-progress work.</p>
+
+                <h3>Stash Your Current Changes</h3>
+                <div class="code-block">git stash</div>
+
+                <p>Your working directory and staging area are cleaned — the branch looks exactly like the last commit. Your changes are saved in a stash stack.</p>
+
+                <h3>Stash with a Descriptive Message</h3>
+                <div class="code-block">git stash push -m "WIP: half-finished login form"</div>
+
+                <p>Always add a message when you have multiple stashes — you'll thank yourself later.</p>
+
+                <h3>Also Stash Untracked Files</h3>
+                <div class="code-block">git stash push -u -m "WIP: including new untracked files"</div>
+
+                <p>By default, <code>git stash</code> ignores untracked (new) files. The <code>-u</code> flag includes them.</p>
+
+                <h3>View All Stashes</h3>
+                <div class="code-block">git stash list</div>
+
+                <div class="code-block"><span class="output">stash@{0}: On feature-login: WIP: half-finished login form<br>stash@{1}: On main: WIP: experimental navbar styles<br>stash@{2}: WIP on main: a1b2c3d initial commit</span></div>
+
+                <p>Stashes are numbered from 0 (most recent). The stack grows every time you stash.</p>
+
+                <h3>Apply the Most Recent Stash</h3>
+                <div class="code-block">git stash pop</div>
+
+                <p><code>pop</code> applies the latest stash AND removes it from the stash list. This is the most common way to bring back stashed work.</p>
+
+                <h3>Apply a Stash Without Removing It</h3>
+                <div class="code-block">git stash apply stash@{1}</div>
+
+                <p><code>apply</code> brings the changes back but keeps them in the stash list — useful if you want to apply the same stash to multiple branches.</p>
+
+                <h3>Apply a Specific Stash</h3>
+                <div class="code-block">git stash pop stash@{2}</div>
+
+                <h3>Delete a Stash You No Longer Need</h3>
+                <div class="code-block">git stash drop stash@{1}</div>
+
+                <h3>Delete ALL Stashes</h3>
+                <div class="code-block">git stash clear</div>
+
+                <h3>Create a Branch from a Stash</h3>
+                <div class="code-block">git stash branch new-feature-branch stash@{0}</div>
+
+                <p>This creates a new branch, checks it out, and applies the stash — all in one command. Perfect when your stashed work grows into something big enough to deserve its own branch.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer is mid-way through building a dashboard widget when their manager asks them to drop everything and fix a critical production bug. They <code>git stash</code> their unfinished widget, switch to <code>main</code>, create a <code>hotfix</code> branch, fix the bug, push, and merge. Then they switch back to their feature branch and <code>git stash pop</code> — picking up exactly where they left off, with zero context lost.</p>
+                </div>
+            </section>
+
+            <section id="5-safely-undoing-commits">
+                <h2>5. Safely Undoing Commits — <span class="command">git revert</span></h2>
+                <p><code>git revert</code> creates a <strong>new commit</strong> that undoes the changes from a previous commit. It does not remove or alter the original commit — it adds a new one on top. This is the <strong>safe, public-friendly</strong> way to undo work.</p>
+
+                <h3>Revert the Most Recent Commit</h3>
+                <div class="code-block">git revert HEAD</div>
+
+                <p>Git opens your editor to write a commit message for the revert. Save and close to complete it.</p>
+
+                <h3>Revert Without Opening an Editor</h3>
+                <div class="code-block">git revert HEAD --no-edit</div>
+
+                <h3>Revert a Specific Commit</h3>
+                <div class="code-block">git revert a1b2c3d</div>
+
+                <h3>Revert Multiple Commits</h3>
+                <div class="code-block"><span class="comment"># Revert a range (oldest first)</span><br>git revert HEAD~3..HEAD</div>
+
+                <h3>Revert Without Auto-Committing (Stage Only)</h3>
+                <div class="code-block">git revert HEAD --no-commit<br><span class="comment"># or</span><br>git revert HEAD -n</div>
+
+                <p>This stages the reverting changes but doesn't commit yet. Useful when you want to revert multiple commits and combine them into one revert commit:</p>
+                <div class="code-block">git revert -n HEAD~2<br>git revert -n HEAD~1<br>git revert -n HEAD<br>git commit -m "revert: undo last 3 commits"</div>
+
+                <h3>What the History Looks Like After Revert</h3>
+
+                <div class="ascii-diagram">
+Before:
+[C1] ← [C2] ← [C3: bad commit]
+                     ↑
+                    main
+
+After git revert HEAD:
+[C1] ← [C2] ← [C3: bad commit] ← [C4: revert "bad commit"]
+                                          ↑
+                                         main
+                </div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer merges a feature branch that turns out to break the checkout flow on mobile. It's already on <code>main</code> and other teammates have pulled it. The team lead runs <code>git revert</code> on the merge commit, pushes, and the site is stable again within minutes — no history rewriting, no coordination headaches.</p>
+                </div>
+            </section>
+
+            <section id="6-moving-branches-backward">
+                <h2>6. Moving Branches Backward — <span class="command">git reset</span></h2>
+                <p><code>git reset</code> moves the current branch pointer backward to a previous commit. Unlike <code>git revert</code>, it actually changes history — commits after the reset point appear to be removed.</p>
+
+                <p>There are three modes, each progressively more destructive:</p>
+
+                <h3>Mode 1 — <code>--soft</code> (Gentlest)</h3>
+                <div class="code-block">git reset --soft HEAD~1</div>
+
+                <div class="ascii-diagram">
+Before:  [C1] ← [C2] ← [C3]  ← main
+After:   [C1] ← [C2]  ← main
+         (C3's changes are still staged)
+                </div>
+
+                <p>Moves the branch pointer back one commit. Your changes are <strong>kept and staged</strong> — ready to recommit.</p>
+                <p>Use this when you committed too early and want to add more changes to that commit, or split it into multiple commits.</p>
+
+                <h3>Mode 2 — <code>--mixed</code> (Default)</h3>
+                <div class="code-block">git reset HEAD~1<br><span class="comment"># same as:</span><br>git reset --mixed HEAD~1</div>
+
+                <div class="ascii-diagram">
+Before:  [C1] ← [C2] ← [C3]  ← main
+After:   [C1] ← [C2]  ← main
+         (C3's changes are in working directory, unstaged)
+                </div>
+
+                <p>Moves the branch pointer back one commit. Your changes are <strong>kept but unstaged</strong> — back in the working directory.</p>
+                <p>This is the default mode when you don't specify a flag. Use it to uncommit and rethink what you're committing.</p>
+
+                <h3>Mode 3 — <code>--hard</code> (Most Destructive)</h3>
+                <div class="code-block">git reset --hard HEAD~1</div>
+
+                <div class="ascii-diagram">
+Before:  [C1] ← [C2] ← [C3]  ← main
+After:   [C1] ← [C2]  ← main
+         (C3's changes are PERMANENTLY DELETED)
+                </div>
+
+                <p>Moves the branch pointer back AND <strong>deletes all changes</strong> from the working directory and staging area. The changes from the removed commits are gone.</p>
+
+                <div class="warning">
+                    <p><strong>⚠️ Warning:</strong> <code>git reset --hard</code> is one of the few Git commands that can cause permanent data loss. The removed commits are not in your branch history, though they may be recoverable via <code>git reflog</code> for a short time. Never use <code>--hard</code> on commits that have been pushed to a shared branch.</p>
+                </div>
+
+                <h3>Reset to a Specific Commit</h3>
+                <div class="code-block"><span class="comment"># Go back to a commit from 3 steps ago</span><br>git reset --soft HEAD~3<br><br><span class="comment"># Go back to a specific commit hash</span><br>git reset --hard a1b2c3d</div>
+
+                <h3>Reset a Single File (Not the Whole Branch)</h3>
+                <div class="code-block"><span class="comment"># Restore a single file to its state at HEAD</span><br>git reset HEAD index.html<br><span class="comment"># This is equivalent to: git restore --staged index.html</span></div>
+
+                <h3>Comparison of Reset Modes</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mode</th>
+                                <th>Branch Pointer</th>
+                                <th>Staging Area</th>
+                                <th>Working Directory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>--soft</code></td>
+                                <td>Moves back</td>
+                                <td>Changes kept staged</td>
+                                <td>Unchanged</td>
+                            </tr>
+                            <tr>
+                                <td><code>--mixed</code> (default)</td>
+                                <td>Moves back</td>
+                                <td>Changes unstaged</td>
+                                <td>Unchanged</td>
+                            </tr>
+                            <tr>
+                                <td><code>--hard</code></td>
+                                <td>Moves back</td>
+                                <td>Cleared</td>
+                                <td>Changes deleted</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer makes three "WIP" commits in a row while figuring out a tricky algorithm. Before pushing, they run <code>git reset --soft HEAD~3</code> to undo all three commits while keeping all their code staged. Then they write one clean, well-worded commit that captures the final result. The messy WIP trail never makes it into shared history.</p>
+                </div>
+            </section>
+
+            <section id="7-revert-vs-reset">
+                <h2>7. Revert vs Reset — When to Use Which</h2>
+                <p>This is one of the most important distinctions in Git. The wrong choice can cause serious problems for your team.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Situation</th>
+                                <th>Use</th>
+                                <th>Why</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Commit is on a shared branch (pushed to remote)</td>
+                                <td><code>git revert</code></td>
+                                <td>Doesn't rewrite history — safe for teammates</td>
+                            </tr>
+                            <tr>
+                                <td>Commit is local only (not pushed)</td>
+                                <td><code>git reset</code></td>
+                                <td>Fine to rewrite local history</td>
+                            </tr>
+                            <tr>
+                                <td>You want to keep a clear record of the undo</td>
+                                <td><code>git revert</code></td>
+                                <td>Creates a visible revert commit</td>
+                            </tr>
+                            <tr>
+                                <td>You want to erase all trace of the mistake</td>
+                                <td><code>git reset</code></td>
+                                <td>Removes commits entirely (local only)</td>
+                            </tr>
+                            <tr>
+                                <td>Undoing a merge commit that's been pushed</td>
+                                <td><code>git revert -m 1 &lt;merge-commit&gt;</code></td>
+                                <td>Safest way to undo a merge on a shared branch</td>
+                            </tr>
+                            <tr>
+                                <td>Cleaning up WIP commits before a PR</td>
+                                <td><code>git reset --soft</code></td>
+                                <td>Squash messy commits into clean ones</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>The Golden Rule</h3>
+                <p><strong>If someone else might have pulled the commit — use <code>git revert</code>, never <code>git reset</code>.</strong></p>
+                <p>Resetting a shared branch forces your teammates to do complex recovery work when they next pull. Reverting is transparent and requires no coordination.</p>
+            </section>
+
+            <section id="8-cleaning-up-history">
+                <h2>8. Cleaning Up History — <span class="command">git rebase -i</span></h2>
+                <p>Interactive rebase lets you <strong>reshape your commit history</strong> before sharing it. You can reorder, combine, rename, split, or delete commits as if you're editing a to-do list.</p>
+
+                <div class="warning">
+                    <p><strong>⚠️ Important:</strong> Like <code>git reset</code>, interactive rebase rewrites history. Only use it on commits that haven't been pushed to a shared branch yet.</p>
+                </div>
+
+                <h3>Launch Interactive Rebase</h3>
+                <div class="code-block"><span class="comment"># Rebase the last 3 commits</span><br>git rebase -i HEAD~3</div>
+
+                <p>This opens your editor with a list of commits, oldest first:</p>
+                <div class="code-block"><span class="output">pick a1b2c3d feat: add login page<br>pick d4e5f6a fix: typo in login form<br>pick g7h8i9j wip: still figuring out validation<br><br># Rebase a1b2c3d..g7h8i9j onto f0e1d2c (3 commands)<br>#<br># Commands:<br># p, pick   = use commit as-is<br># r, reword = use commit, but edit the commit message<br># e, edit   = use commit, but stop for amending<br># s, squash = combine with previous commit (keeps both messages)<br># f, fixup  = combine with previous commit (discard this message)<br># d, drop   = remove this commit entirely</span></div>
+
+                <h3>Common Rebase Operations</h3>
+
+                <p><strong>Squash WIP commits into one clean commit:</strong></p>
+                <div class="code-block"><span class="output">pick a1b2c3d feat: add login page<br>f    d4e5f6a fix: typo in login form<br>f    g7h8i9j wip: still figuring out validation</span></div>
+
+                <p>Change <code>pick</code> to <code>f</code> (fixup) on the commits you want to fold in. Save and close — Git combines them into one commit with the first message.</p>
+
+                <p><strong>Rename a commit message:</strong></p>
+                <div class="code-block"><span class="output">r a1b2c3d feat: add login page</span></div>
+
+                <p>Change <code>pick</code> to <code>r</code> (reword). Git will pause and open another editor window for you to type the new message.</p>
+
+                <p><strong>Delete a commit entirely:</strong></p>
+                <div class="code-block"><span class="output">pick a1b2c3d feat: add login page<br>d    d4e5f6a add debugging code I forgot to remove<br>pick g7h8i9j feat: add form validation</span></div>
+
+                <p>Change <code>pick</code> to <code>d</code> (drop). That commit and its changes disappear.</p>
+
+                <p><strong>Reorder commits:</strong></p>
+                <p>Simply cut and paste the lines into a different order. Git replays them in the new sequence.</p>
+
+                <h3>Squash All Feature Branch Commits Before Merging</h3>
+                <p>A very common workflow before opening a Pull Request:</p>
+                <div class="code-block"><span class="comment"># You have 6 messy WIP commits on your feature branch</span><br><span class="comment"># Squash them all into one clean commit</span><br><br>git rebase -i main<br><span class="comment"># In the editor, keep the first commit as 'pick'</span><br><span class="comment"># Change all others to 'f' (fixup)</span><br><span class="comment"># Save and close</span><br><span class="comment"># Now you have one clean commit instead of 6</span></div>
+
+                <h3>If Rebase Runs Into a Conflict</h3>
+                <div class="code-block"><span class="comment"># Git pauses and shows the conflict</span><br><span class="comment"># Fix the conflict in your editor</span><br>git add conflicted-file.txt<br><br><span class="comment"># Continue the rebase</span><br>git rebase --continue<br><br><span class="comment"># Or abandon the entire rebase and go back to before</span><br>git rebase --abort</div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    Before opening a Pull Request, a developer reviews their branch and sees 11 commits: "WIP", "more WIP", "fix", "argh fix", "ok this works", etc. They use <code>git rebase -i</code> to squash everything into 2 clean commits with meaningful messages. The PR reviewer sees a clear, readable history — and the review goes faster as a result.</p>
+                </div>
+            </section>
+
+            <section id="9-finding-a-lost-commit">
+                <h2>9. Finding a Lost Commit — <span class="command">git reflog</span></h2>
+                <p><code>git reflog</code> is your safety net. It records every time <code>HEAD</code> moved — every checkout, reset, merge, commit, and rebase — even for actions that don't appear in <code>git log</code>.</p>
+
+                <h3>View the Reflog</h3>
+                <div class="code-block">git reflog</div>
+
+                <div class="code-block"><span class="output">g7h8i9j (HEAD -> main) HEAD@{0}: rebase -i (finish): returning to refs/heads/main<br>a1b2c3d HEAD@{1}: rebase -i (squash): feat: add login page<br>d4e5f6a HEAD@{2}: commit: fix: typo in login form<br>f0e1d2c HEAD@{3}: reset: moving to HEAD~2<br>b9c8d7e HEAD@{4}: commit: wip: experimenting with layout</span></div>
+
+                <p>Every entry has a short hash. You can use any of these hashes to recover lost commits.</p>
+
+                <h3>Recover a Commit Lost by git reset --hard</h3>
+                <div class="code-block"><span class="comment"># Oops — you ran git reset --hard and lost important commits</span><br><span class="comment"># Find the lost commit in reflog</span><br>git reflog<br><br><span class="comment"># The lost commit was at HEAD@{2}</span><br><span class="comment"># Create a new branch pointing to it</span><br>git branch recovery-branch HEAD@{2}<br><br><span class="comment"># Or reset your current branch back to it</span><br>git reset --hard HEAD@{2}</div>
+
+                <h3>Reflog is Local Only</h3>
+                <p><code>git reflog</code> only exists on your local machine — it is never pushed to a remote. Entries expire after 90 days by default. This means:</p>
+                <ul>
+                    <li>You have a 90-day window to recover most mistakes</li>
+                    <li>After that window (or on a fresh clone), reflog won't help</li>
+                </ul>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A panicked developer comes to a senior engineer saying "I just ran <code>git reset --hard</code> and lost two days of work." The senior engineer calmly runs <code>git reflog</code>, finds the commit hash from before the reset, and recovers all the work with <code>git reset --hard &lt;hash&gt;</code>. Crisis averted in under two minutes. This is why reflog is often called Git's "undo button for the undo button."</p>
+                </div>
+            </section>
+
+            <section id="10-day-5-hands-on-exercise">
+                <h2>10. Day 5 Hands-On Exercise</h2>
+                <p>Continue in your <code>learning-git</code> folder.</p>
+
+                <div class="step">
+                    <h4>Step 1 — Practice git restore</h4>
+                    <div class="code-block">cd ~/Desktop/learning-git<br>git switch main<br><br><span class="comment"># Make some edits to a file</span><br>echo "Some experimental changes" >> README.md<br><br><span class="comment"># See the changes</span><br>git diff README.md<br><br><span class="comment"># Discard them completely</span><br>git restore README.md<br><br><span class="comment"># Verify they're gone</span><br>git diff README.md<br><span class="comment"># (no output — file is back to committed state)</span></div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 2 — Practice git stash</h4>
+                    <div class="code-block"><span class="comment"># Start some work you're not ready to commit</span><br>echo "## New Section (WIP)" >> README.md<br>echo "body { background: red; }" >> style.css<br><br><span class="comment"># Check status — two modified files</span><br>git status<br><br><span class="comment"># Stash everything</span><br>git stash push -m "WIP: new section and style experiment"<br><br><span class="comment"># Verify working directory is clean</span><br>git status<br><br><span class="comment"># List stashes</span><br>git stash list<br><br><span class="comment"># Bring the work back</span><br>git stash pop<br><br><span class="comment"># Verify it's back</span><br>git status</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 3 — Practice git revert</h4>
+                    <div class="code-block"><span class="comment"># Make a commit we'll want to undo</span><br>echo "This line should not be here" >> README.md<br>git add README.md<br>git commit -m "mistake: accidentally added bad content"<br><br><span class="comment"># See the commit in history</span><br>git log --oneline<br><br><span class="comment"># Revert it (creates a new undo commit)</span><br>git revert HEAD --no-edit<br><br><span class="comment"># Confirm the revert commit was added</span><br>git log --oneline<br><br><span class="comment"># Confirm the bad content is gone</span><br>cat README.md</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 4 — Practice git reset Modes</h4>
+                    <div class="code-block"><span class="comment"># Make three quick commits</span><br>echo "change one" >> app.js && git add . && git commit -m "change 1"<br>echo "change two" >> app.js && git add . && git commit -m "change 2"<br>echo "change three" >> app.js && git add . && git commit -m "change 3"<br><br>git log --oneline<br><span class="comment"># You should see 3 new commits</span><br><br><span class="comment"># Soft reset — undo last 2 commits, keep changes staged</span><br>git reset --soft HEAD~2<br>git status<br><span class="comment"># Changes should be staged</span><br><br><span class="comment"># Now commit them as one clean commit</span><br>git commit -m "feat: consolidated changes into one commit"<br><br>git log --oneline</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 5 — Practice Interactive Rebase</h4>
+                    <div class="code-block"><span class="comment"># Make several messy WIP commits</span><br>echo "step 1" >> notes.txt && git add . && git commit -m "WIP step 1"<br>echo "step 2" >> notes.txt && git add . && git commit -m "WIP step 2"<br>echo "step 3" >> notes.txt && git add . && git commit -m "WIP done"<br><br>git log --oneline<br><br><span class="comment"># Squash the last 3 commits into one</span><br>git rebase -i HEAD~3<br><span class="comment"># In the editor:</span><br><span class="comment">#   pick  <first commit></span><br><span class="comment">#   f     <second commit></span><br><span class="comment">#   f     <third commit></span><br><span class="comment"># Save and close</span><br><br><span class="comment"># Verify — 3 commits became 1</span><br>git log --oneline</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 6 — Explore git reflog</h4>
+                    <div class="code-block"><span class="comment"># View the full reflog to see your session history</span><br>git reflog<br><br><span class="comment"># Notice every action is recorded — resets, rebases, commits, everything</span><br><span class="comment"># Try recovering to a previous state:</span><br><span class="comment"># git reset --hard HEAD@{N}  (replace N with a step from your reflog)</span></div>
+                </div>
+
+                <div class="highlight">
+                    <p><strong>✅ What You Should Have After This Exercise:</strong><br>
+                    - Confidence discarding and restoring working directory changes<br>
+                    - Experience stashing, listing, and popping stashes<br>
+                    - A revert commit in your history<br>
+                    - Experience with all three reset modes<br>
+                    - Successfully squashed commits with interactive rebase<br>
+                    - A mental model for using reflog as a safety net</p>
+                </div>
+            </section>
+
+            <section id="11-key-commands-summary">
+                <h2>11. Key Commands Summary</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>What It Does</th>
+                                <th>Common Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>git restore &lt;file&gt;</code></td>
+                                <td>Discard working directory changes</td>
+                                <td><code>git restore index.html</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git restore .</code></td>
+                                <td>Discard ALL working directory changes</td>
+                                <td><code>git restore .</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git restore --source=&lt;hash&gt; &lt;file&gt;</code></td>
+                                <td>Restore file from a specific commit</td>
+                                <td><code>git restore --source=a1b2c3 app.js</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git restore --staged &lt;file&gt;</code></td>
+                                <td>Unstage a file (keep changes)</td>
+                                <td><code>git restore --staged index.html</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash</code></td>
+                                <td>Shelve all uncommitted changes</td>
+                                <td><code>git stash</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash push -m</code></td>
+                                <td>Stash with a description</td>
+                                <td><code>git stash push -m "WIP: feature"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash push -u</code></td>
+                                <td>Stash including untracked files</td>
+                                <td><code>git stash push -u</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash list</code></td>
+                                <td>View all stashes</td>
+                                <td><code>git stash list</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash pop</code></td>
+                                <td>Apply and remove latest stash</td>
+                                <td><code>git stash pop</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash apply</code></td>
+                                <td>Apply a stash without removing it</td>
+                                <td><code>git stash apply stash@{1}</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash drop</code></td>
+                                <td>Delete a specific stash</td>
+                                <td><code>git stash drop stash@{0}</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git stash branch &lt;name&gt;</code></td>
+                                <td>Create a branch from a stash</td>
+                                <td><code>git stash branch new-branch</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git revert HEAD</code></td>
+                                <td>Undo last commit with a new commit</td>
+                                <td><code>git revert HEAD --no-edit</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git revert &lt;hash&gt;</code></td>
+                                <td>Undo a specific commit</td>
+                                <td><code>git revert a1b2c3d</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git reset --soft HEAD~N</code></td>
+                                <td>Undo N commits, keep changes staged</td>
+                                <td><code>git reset --soft HEAD~1</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git reset --mixed HEAD~N</code></td>
+                                <td>Undo N commits, keep changes unstaged</td>
+                                <td><code>git reset HEAD~1</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git reset --hard HEAD~N</code></td>
+                                <td>Undo N commits, delete all changes</td>
+                                <td><code>git reset --hard HEAD~2</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git rebase -i HEAD~N</code></td>
+                                <td>Interactively edit last N commits</td>
+                                <td><code>git rebase -i HEAD~3</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git reflog</code></td>
+                                <td>View full history of HEAD movements</td>
+                                <td><code>git reflog</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="summary">
+                <h2>Coming Up on Day 6 — Workflows & Best Practices</h2>
+                <p>Tomorrow you'll zoom out from individual commands and learn how real teams use Git at scale — the workflows, conventions, and guardrails that make collaboration smooth and predictable.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>← <a href="day04_remote_repository.html">Day 4 — Remote Repositories & GitHub</a> | <a href="index.html">Index</a> | <a href="day06_workflows_best_practices.html">Day 6 — Workflows & Best Practices</a> →</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Control Flow & Exceptions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Control Flow & Error Management
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Logic & Stability Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Mastering Loops, the Iterator Protocol, and Exception Handling.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Breaking the Loop",
+          difficulty: "easy",
+          description:
+            "Write a loop from 1 to 10 that stops immediately when it encounters the number 5.",
+          solution:
+            "for i in range(1, 11):\n    if i == 5:\n        break\n    print(i)",
+        },
+        {
+          id: 2,
+          title: "Skipping Odd Numbers",
+          difficulty: "easy",
+          description:
+            "Use the continue statement to print only the even numbers from 1 to 10.",
+          solution:
+            "for i in range(1, 11):\n    if i % 2 != 0:\n        continue\n    print(i)",
+        },
+        {
+          id: 3,
+          title: "Basic Try-Except",
+          difficulty: "easy",
+          description:
+            "Write a program that tries to divide 10 by 0 and catches the ZeroDivisionError, printing 'Cannot divide by zero'.",
+          solution:
+            "try:\n    result = 10 / 0\nexcept ZeroDivisionError:\n    print('Cannot divide by zero')",
+        },
+        {
+          id: 4,
+          title: "Handling Multiple Errors",
+          difficulty: "easy",
+          description:
+            "Catch either a ValueError or a TypeError when converting a variable x to an integer.",
+          solution:
+            "x = 'abc'\ntry:\n    val = int(x)\nexcept (ValueError, TypeError):\n    print('Invalid conversion')",
+        },
+        {
+          id: 5,
+          title: "The finally Block",
+          difficulty: "easy",
+          description:
+            "Demonstrate a try-except-finally block where 'Finished' always prints, even if an error occurs.",
+          solution:
+            "try:\n    x = 1 / 1\nexcept:\n    print('Error')\nfinally:\n    print('Finished')",
+        },
+        {
+          id: 6,
+          title: "Manual Iteration",
+          difficulty: "easy",
+          description:
+            "Convert the list [1, 2] into an iterator and print each item using next().",
+          solution:
+            "items = [1, 2]\nit = iter(items)\nprint(next(it))\nprint(next(it))",
+        },
+        {
+          id: 7,
+          title: "Raising Exceptions",
+          difficulty: "easy",
+          description:
+            "Ask for an age input. If age < 0, manually raise a ValueError with the message 'Age cannot be negative'.",
+          solution:
+            "age = -5\nif age < 0:\n    raise ValueError('Age cannot be negative')",
+        },
+        {
+          id: 8,
+          title: "For-Else Search",
+          difficulty: "medium",
+          description:
+            "Check if 'Python' exists in a list. If the loop finishes without finding it, print 'Not Found' using the for-else construct.",
+          solution:
+            "langs = ['Java', 'C++', 'Ruby']\nfor l in langs:\n    if l == 'Python':\n        print('Found!')\n        break\nelse:\n    print('Not Found') # Runs because break was never triggered",
+        },
+        {
+          id: 9,
+          title: "Under the Hood Loop",
+          difficulty: "medium",
+          description:
+            "Simulate a 'for loop' using a 'while loop', an iterator, and catching StopIteration.",
+          solution:
+            "items = [10, 20]\nit = iter(items)\nwhile True:\n    try:\n        item = next(it)\n        print(item)\n    except StopIteration:\n        break",
+        },
+        {
+          id: 10,
+          title: "IndexError Handling",
+          difficulty: "medium",
+          description:
+            "Access the 10th index of [1, 2, 3] safely using a try-except block.",
+          solution:
+            "nums = [1, 2, 3]\ntry:\n    print(nums[10])\nexcept IndexError:\n    print('Index out of range')",
+        },
+        {
+          id: 11,
+          title: "Nested Loop Break",
+          difficulty: "medium",
+          description:
+            "Break out of a nested loop completely when i=1 and j=1. (Use a flag or for-else).",
+          solution:
+            "found = False\nfor i in range(3):\n    for j in range(3):\n        if i == 1 and j == 1:\n            found = True\n            break\n    if found: break\nprint(f'Stopped at {i}, {j}')",
+        },
+        {
+          id: 12,
+          title: "Reraising Exceptions",
+          difficulty: "medium",
+          description:
+            "Catch a ValueError, print 'Logged', and then raise it again so the caller can see it.",
+          solution:
+            "try:\n    int('abc')\nexcept ValueError as e:\n    print('Logged')\n    raise # Reraises the current exception",
+        },
+        {
+          id: 13,
+          title: "The Else Clause in Try",
+          difficulty: "medium",
+          description:
+            "Use the 'else' block in a try-except to print 'Success' only if no exception was raised.",
+          solution:
+            "try:\n    x = int('10')\nexcept ValueError:\n    print('Error')\nelse:\n    print('Success') # Runs only if try block succeeds",
+        },
+        {
+          id: 14,
+          title: "Custom Error Class",
+          difficulty: "medium",
+          description:
+            "Create a custom exception class named 'ValueTooSmallError' inheriting from Exception.",
+          solution:
+            "class ValueTooSmallError(Exception):\n    pass\n\nraise ValueTooSmallError('Value is under 10')",
+        },
+        {
+          id: 15,
+          title: "Iterator exhaustion",
+          difficulty: "medium",
+          description:
+            "Show what happens when you call next() on an iterator that has no more items left.",
+          solution:
+            "it = iter([1])\nnext(it)\ntry:\n    next(it)\nexcept StopIteration:\n    print('Iterator is empty')",
+        },
+        {
+          id: 16,
+          title: "Exception Chaining",
+          difficulty: "hard",
+          description:
+            "Raise a RuntimeError 'Operation failed' and chain it from a caught ConnectionError.",
+          solution:
+            "try:\n    raise ConnectionError('No internet')\nexcept ConnectionError as e:\n    raise RuntimeError('Operation failed') from e",
+        },
+        {
+          id: 17,
+          title: "Infinite Iterator",
+          difficulty: "hard",
+          description:
+            "Write a simple generator function that yields an infinite sequence of numbers starting from 1.",
+          solution:
+            "def count_forever():\n    n = 1\n    while True:\n        yield n\n        n += 1\n\ngen = count_forever()\nprint(next(gen), next(gen))",
+        },
+        {
+          id: 18,
+          title: "Safe File Cleanup",
+          difficulty: "hard",
+          description:
+            "Manually handle file closing using try-finally without the 'with' keyword.",
+          solution:
+            "f = open('test.txt', 'w')\ntry:\n    f.write('hello')\nfinally:\n    f.close()\n    print('File closed safely')",
+        },
+        {
+          id: 19,
+          title: "Suppressing Exceptions",
+          difficulty: "hard",
+          description:
+            "Use a context manager (contextlib.suppress) to ignore a FileNotFoundError.",
+          solution:
+            "from contextlib import suppress\nimport os\n\nwith suppress(FileNotFoundError):\n    os.remove('non_existent.txt')\nprint('Done without crashing')",
+        },
+        {
+          id: 20,
+          title: "Generator-based Iterator Protocol",
+          difficulty: "hard",
+          description:
+            "Create a class that implements __iter__ and __next__ to act as a countdown iterator.",
+          solution:
+            "class Countdown:\n    def __init__(self, start):\n        self.n = start\n    def __iter__(self):\n        return self\n    def __next__(self):\n        if self.n <= 0: raise StopIteration\n        self.n -= 1\n        return self.n + 1\n\nfor i in Countdown(3): print(i)",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "break behavior",
+          difficulty: "easy",
+          question: "What happens when 'break' is executed in a loop?",
+          options: [
+            "Skips to next iteration",
+            "Exits the loop entirely",
+            "Restarts the loop",
+            "Exits the program",
+          ],
+          answer: "Exits the loop entirely",
+        },
+        {
+          id: 2,
+          title: "continue behavior",
+          difficulty: "easy",
+          question: "What happens when 'continue' is executed?",
+          options: [
+            "Exits the loop",
+            "Starts the next iteration immediately",
+            "Waits 1 second",
+            "Skips to the finally block",
+          ],
+          answer: "Starts the next iteration immediately",
+        },
+        {
+          id: 3,
+          title: "ValueError",
+          difficulty: "easy",
+          question: "Which error is raised by int('hello')?",
+          options: ["TypeError", "ValueError", "IndexError", "KeyError"],
+          answer: "ValueError (wrong value, right type)",
+        },
+        {
+          id: 4,
+          title: "TypeError",
+          difficulty: "easy",
+          question: "Which error is raised by len(5)?",
+          options: ["ValueError", "TypeError", "AttributeError", "NameError"],
+          answer: "TypeError (int has no len())",
+        },
+        {
+          id: 5,
+          title: "IndexError",
+          difficulty: "easy",
+          question: "Accessing my_list[100] for a 3-item list raises:",
+          options: ["KeyError", "IndexError", "OverflowError", "StopIteration"],
+          answer: "IndexError",
+        },
+        {
+          id: 6,
+          title: "finally location",
+          difficulty: "easy",
+          question: "In a try block, where should cleanup code go?",
+          options: ["except", "else", "finally", "At the top"],
+          answer: "finally",
+        },
+        {
+          id: 7,
+          title: "Iterator creation",
+          difficulty: "easy",
+          question: "Which function converts an iterable to an iterator?",
+          options: ["list()", "iter()", "next()", "gen()"],
+          answer: "iter()",
+        },
+        {
+          id: 8,
+          title: "Iterator traversal",
+          difficulty: "easy",
+          question: "Which function gets the next item from an iterator?",
+          options: ["get()", "pop()", "next()", "step()"],
+          answer: "next()",
+        },
+        {
+          id: 9,
+          title: "for-else trigger",
+          difficulty: "medium",
+          question: "When does the 'else' block in a for-loop execute?",
+          options: [
+            "When the loop is broken",
+            "When the loop finishes naturally",
+            "When the loop is empty",
+            "Every iteration",
+          ],
+          answer:
+            "When the loop finishes naturally (without encountering 'break')",
+        },
+        {
+          id: 10,
+          title: "try-else trigger",
+          difficulty: "medium",
+          question: "When does the 'else' block in a try-except execute?",
+          options: [
+            "Only if an error occurs",
+            "Only if NO error occurs",
+            "Always",
+            "Only if finally fails",
+          ],
+          answer: "Only if NO error occurs",
+        },
+        {
+          id: 11,
+          title: "StopIteration",
+          difficulty: "medium",
+          question: "Which error is raised when an iterator is empty?",
+          options: ["IndexError", "StopIteration", "EOFError", "RuntimeError"],
+          answer: "StopIteration",
+        },
+        {
+          id: 12,
+          title: "Raising errors",
+          difficulty: "medium",
+          question: "Keyword to trigger an exception manually?",
+          options: ["trigger", "throw", "raise", "error"],
+          answer: "raise",
+        },
+        {
+          id: 13,
+          title: "Hierarchy",
+          difficulty: "medium",
+          question: "Which class is the base for all built-in exceptions?",
+          options: ["BaseException", "Exception", "Error", "Object"],
+          answer: "BaseException (though most inherit from Exception)",
+        },
+        {
+          id: 14,
+          title: "Bare except",
+          difficulty: "medium",
+          question: "Why is 'except:' (bare except) generally discouraged?",
+          options: [
+            "It is slow",
+            "It catches system exit signals incorrectly",
+            "It only works once",
+            "It crashes the computer",
+          ],
+          answer:
+            "It catches system exit signals (like KeyboardInterrupt) incorrectly",
+        },
+        {
+          id: 15,
+          title: "Multiple excepts",
+          difficulty: "medium",
+          question:
+            "If a try block raises ValueError, and you have 'except Exception' before 'except ValueError', which runs?",
+          options: ["except ValueError", "except Exception", "Both", "None"],
+          answer:
+            "except Exception (it's checked in order, and it's a superclass)",
+        },
+        {
+          id: 16,
+          title: "Iterable vs Iterator",
+          difficulty: "hard",
+          question: "Which is true about a list?",
+          options: [
+            "It is an iterator",
+            "It is an iterable",
+            "It is both",
+            "It is neither",
+          ],
+          answer:
+            "It is an iterable (but not an iterator; it doesn't have __next__)",
+        },
+        {
+          id: 17,
+          title: "Generator vs Iterator",
+          difficulty: "hard",
+          question: "What is a generator?",
+          options: [
+            "A hardware component",
+            "A type of iterator created by a function",
+            "A tool to create lists",
+            "An error",
+          ],
+          answer: "A type of iterator created by a function using 'yield'",
+        },
+        {
+          id: 18,
+          title: "Custom Exception Base",
+          difficulty: "hard",
+          question: "User-defined exceptions should usually inherit from:",
+          options: [
+            "BaseException",
+            "Exception",
+            "RuntimeError",
+            "SystemError",
+          ],
+          answer: "Exception",
+        },
+        {
+          id: 19,
+          title: "finally vs return",
+          difficulty: "hard",
+          question:
+            "If a function returns inside a 'try' block, does the 'finally' still run?",
+          options: ["Yes", "No", "Only on Linux", "Only if there's an error"],
+          answer:
+            "Yes (finally is guaranteed to execute before the function actually exits)",
+        },
+        {
+          id: 20,
+          title: "Chaining from None",
+          difficulty: "hard",
+          question: "What does 'raise Error from None' do?",
+          options: [
+            "Raises None",
+            "Suppresses the display of the previous context",
+            "Deletes the error",
+            "Crashes Python",
+          ],
+          answer:
+            "Suppresses the display of the previous context/exception history",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "for-else Use Case",
+          difficulty: "easy",
+          question:
+            "Explain the 'for-else' block and give a practical use case.",
+          answer:
+            "The 'else' block executes only if the 'for' loop reaches its natural end (i.e., it was not interrupted by a 'break'). It is perfect for search operations where you want to execute code only if a specific item was NOT found.",
+        },
+        {
+          id: 2,
+          title: "LBYL vs EAFP",
+          difficulty: "easy",
+          question: "What is the difference between LBYL and EAFP?",
+          answer:
+            "LBYL (Look Before You Leap) means checking preconditions before acting (e.g., if os.path.exists...). EAFP (Easier to Ask for Forgiveness than Permission) assumes success and catches errors (e.g., try/except). Python strongly favors EAFP.",
+        },
+        {
+          id: 3,
+          title: "Iterator vs Iterable",
+          difficulty: "easy",
+          question:
+            "Explain the difference between an iterable and an iterator.",
+          answer:
+            "An **iterable** is an object that can be looped over (implements __iter__; e.g., list, string). An **iterator** is the stateful object that actually produces values one by one (implements __next__ and __iter__).",
+        },
+        {
+          id: 4,
+          title: "Exception vs SyntaxError",
+          difficulty: "easy",
+          question:
+            "What is the difference between an Exception and a SyntaxError?",
+          answer:
+            "A SyntaxError is caught by the parser before the code runs. An Exception is a runtime error that occurs while the code is executing.",
+        },
+        {
+          id: 5,
+          title: "The finally Guarantee",
+          difficulty: "easy",
+          question: "Is finally always guaranteed to run?",
+          answer:
+            "Almost always. It runs even if there is a 'return' or 'break'. The only cases it won't run are fatal system crashes, os._exit(), or power loss.",
+        },
+        {
+          id: 6,
+          title: "StopIteration Utility",
+          difficulty: "medium",
+          question: "Why do we need the StopIteration exception?",
+          answer:
+            "It signals the end of the iteration protocol. Without it, loops wouldn't know when to stop requesting the 'next' item from an iterator.",
+        },
+        {
+          id: 7,
+          title: "Specific Exceptions",
+          difficulty: "medium",
+          question:
+            "Why should you catch specific exceptions rather than using 'except Exception:'?",
+          answer:
+            "Catching everything can hide bugs you didn't expect (like NameErrors or typos) and can prevent the user from stopping the program with Ctrl+C (KeyboardInterrupt).",
+        },
+        {
+          id: 8,
+          title: "Try-Except-Else",
+          difficulty: "medium",
+          question:
+            "When would you use the 'else' clause in a try-except block?",
+          answer:
+            "Use it for code that should run only if the 'try' block was successful, but which shouldn't be inside the 'try' block itself (to avoid accidentally catching exceptions raised by the success-handling code).",
+        },
+        {
+          id: 9,
+          title: "Generator Benefits",
+          difficulty: "medium",
+          question: "Why are generators memory efficient?",
+          answer:
+            "Generators use 'lazy evaluation'. They produce items one at a time on-demand rather than storing an entire sequence in memory at once (like a list does).",
+        },
+        {
+          id: 10,
+          title: "Exception Context",
+          difficulty: "medium",
+          question: "What is exception chaining?",
+          answer:
+            "It allows you to associate a new exception with a previous one using 'raise ... from ...', preserving the stack trace of the original cause for better debugging.",
+        },
+        {
+          id: 11,
+          title: "AttributeError vs NameError",
+          difficulty: "medium",
+          question: "Difference between AttributeError and NameError?",
+          answer:
+            "NameError occurs when a local or global name is not found. AttributeError occurs when a reference to a specific attribute or method fails on an object.",
+        },
+        {
+          id: 12,
+          title: "raise without args",
+          difficulty: "medium",
+          question: "What does a bare 'raise' do inside an except block?",
+          answer:
+            "It reraises the active exception, preserving its original stack trace. This is useful for logging an error before letting it propagate up.",
+        },
+        {
+          id: 13,
+          title: "Iterable Protocol",
+          difficulty: "medium",
+          question: "What happens when you run 'for x in obj:'?",
+          answer:
+            "Python calls `iter(obj)` to get an iterator. Then it repeatedly calls `next()` on that iterator until `StopIteration` is raised.",
+        },
+        {
+          id: 14,
+          title: "Context Managers and Exceptions",
+          difficulty: "medium",
+          question: "How do 'with' statements handle exceptions?",
+          answer:
+            "The context manager's __exit__ method is called. It receives details about the exception and can choose to either suppress it (return True) or let it propagate (return False).",
+        },
+        {
+          id: 15,
+          title: "Custom Exception hierarchy",
+          difficulty: "medium",
+          question: "Why inherit from Exception and not BaseException?",
+          answer:
+            "BaseException is reserved for system-level exits. Inheriting from Exception ensures your error is caught by standard 'except Exception:' blocks while allowing system signals to pass through.",
+        },
+        {
+          id: 16,
+          title: "Recursion and RecursionError",
+          difficulty: "hard",
+          question: "What is a RecursionError?",
+          answer:
+            "Raised when the maximum recursion depth (usually 1000) is exceeded, preventing a stack overflow.",
+        },
+        {
+          id: 17,
+          title: "Generator Delegation",
+          difficulty: "hard",
+          question: "What does 'yield from' do?",
+          answer:
+            "It allows a generator to delegate part of its operations to another sub-generator or iterable, effectively flattening nested iteration logic.",
+        },
+        {
+          id: 18,
+          title: "Mutable default args in loops",
+          difficulty: "hard",
+          question: "Why can loops be tricky with closures/lambdas?",
+          answer:
+            "Variables in Python are looked up in the scope they were defined. If you create lambdas in a loop using a loop variable, all lambdas will see the final value of that variable unless you bind it locally.",
+        },
+        {
+          id: 19,
+          title: "StopIteration in 3.7+",
+          difficulty: "hard",
+          question:
+            "What changed regarding StopIteration in generators in Python 3.7 (PEP 479)?",
+          answer:
+            "StopIteration raised inside a generator is now transformed into a RuntimeError, preventing it from accidentally being caught by a surrounding loop and causing silent failures.",
+        },
+        {
+          id: 20,
+          title: "The sys.exc_info() function",
+          difficulty: "hard",
+          question: "What does sys.exc_info() provide?",
+          answer:
+            "It returns a tuple of (type, value, traceback) for the exception currently being handled in the scope, allowing advanced inspection and logging.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Expert Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

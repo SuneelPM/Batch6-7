@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 — What is Git & Setup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-bg: #0f172a;
+            --secondary-bg: #1e293b;
+            --accent-bg: #334155;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-cyan: #22d3ee;
+            --accent-green: #4ade80;
+            --accent-orange: #fb923c;
+            --accent-red: #f87171;
+            --border-color: #334155;
+            --max-width: 90%;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .goal {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .goal p {
+            font-size: 1.125rem;
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .toc {
+            background: var(--accent-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h2 {
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .toc ol {
+            padding-left: 1.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .toc a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        .toc a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            background-color:#020617;
+            padding-left: 30px;
+            padding-right: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin: 3rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            margin: 2rem 0 1rem 0;
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--accent-green);
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        
+
+        .highlight {
+            background: var(--secondary-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-orange);
+        }
+
+        .highlight p {
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .use-case {
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--accent-bg) 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .use-case p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: #020617;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: var(--text-muted);
+        }
+
+        .code-block .output {
+            color: var(--accent-green);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--secondary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--accent-bg);
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-bg);
+        }
+
+        .command {
+            font-family: 'JetBrains Mono', monospace;
+            background: #020617;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .step {
+            background: var(--accent-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        .step h4 {
+            color: var(--accent-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+        }
+
+        .warning {
+            background: rgba(248, 113, 113, 0.1);
+            border: 1px solid var(--accent-red);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning p {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+
+        .summary {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .summary h2 {
+            color: var(--accent-orange);
+        }
+
+        .summary p {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .toc {
+                padding: 1.5rem;
+            }
+
+            th, td {
+                padding: 0.75rem 0.5rem;
+            }
+
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <p>← <a href="day00_Intro.html">Day 0 — Introduction to Version Control Systems</a> | <a href="index.html">Index</a> | <a href="day02_staging_commiting_history.html">Day 2 — Staging, Committing & History</a> →</p>
+        </nav>
+
+        <header>
+            <h1>Git Learning Curriculum</h1>
+            <p class="subtitle">Day 1 — What is Git & Setup</p>
+        </header>
+
+        <div class="goal">
+            <p><strong>Goal:</strong> Understand version control and get Git running locally.</p>
+        </div>
+
+        <nav class="toc">
+            <h2>Table of Contents</h2>
+            <ol>
+                <li><a href="#1-what-is-version-control">What is Version Control?</a></li>
+                <li><a href="#2-what-is-git">What is Git?</a></li>
+                <li><a href="#3-installing-git">Installing Git</a></li>
+                <li><a href="#4-configuring-git">Configuring Git — git config</a></li>
+                <li><a href="#5-initializing-a-repository">Initializing a Repository — git init</a></li>
+                <li><a href="#6-checking-project-state">Checking Project State — git status</a></li>
+                <li><a href="#7-essential-terminal-basics">Essential Terminal Basics</a></li>
+                <li><a href="#8-day-1-hands-on-exercise">Day 1 Hands-On Exercise</a></li>
+                <li><a href="#9-key-commands-summary">Key Commands Summary</a></li>
+            </ol>
+        </nav>
+
+        <main class="main">
+            <section id="1-what-is-version-control">
+                <h2>1. What is Version Control?</h2>
+                <p>Version control is a system that records changes to a file or set of files over time so you can recall specific versions later. Think of it as a <strong>time machine for your code</strong>.</p>
+
+                <h3>The Problem Without Version Control</h3>
+                <p>Imagine you're building a website. Without version control, your project folder might look like this:</p>
+
+                <div class="code-block">
+my-website/<br>
+&nbsp;&nbsp;index.html<br>
+&nbsp;&nbsp;index_backup.html<br>
+&nbsp;&nbsp;index_final.html<br>
+&nbsp;&nbsp;index_final_v2.html<br>
+&nbsp;&nbsp;index_ACTUALLY_final.html<br>
+&nbsp;&nbsp;index_USE_THIS_ONE.html
+                </div>
+
+                <p>This is a nightmare. You can't tell what changed between versions, who changed it, or why. If something breaks, rolling back is guesswork.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A team of 5 developers is building an e-commerce app. Developer A fixes a checkout bug. Developer B simultaneously updates the product page. Without version control, one person's work overwrites the other's. With Git, both changes are tracked independently and can be merged seamlessly.</p>
+                </div>
+
+                <h3>The Three Problems Git Solves</h3>
+                <ul>
+                    <li><strong>Tracking changes:</strong> Every change is recorded with who made it, when, and why.</li>
+                    <li><strong>Collaborating:</strong> Multiple people can work on the same codebase without overwriting each other's work.</li>
+                    <li><strong>Recovering from mistakes:</strong> You can revert any file — or the entire project — to any previous state.</li>
+                </ul>
+            </section>
+
+            <section id="2-what-is-git">
+                <h2>2. What is Git?</h2>
+                <p>Git is a <strong>distributed version control system (DVCS)</strong> created by Linus Torvalds in 2005 (the same person who created Linux). "Distributed" means every developer has a full copy of the entire project history on their own machine — not just the latest snapshot.</p>
+
+                <p>This is different from older systems like SVN where there was one central server. With Git, you can work completely <strong>offline</strong> — commit changes, create branches, view history — without an internet connection. You only need a connection when sharing work with others.</p>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A developer on a long flight can continue committing code, reviewing history, and branching — all without Wi-Fi. When they land, they simply push their changes to the remote server (like GitHub). This is the power of distributed version control.</p>
+                </div>
+            </section>
+
+            <section id="3-installing-git">
+                <h2>3. Installing Git</h2>
+
+                <h3>On macOS</h3>
+                <p>The easiest way is via Homebrew:</p>
+                <div class="code-block">brew install git</div>
+
+                <p>Alternatively, installing Xcode Command Line Tools also installs Git:</p>
+                <div class="code-block">xcode-select --install</div>
+
+                <h3>On Windows</h3>
+                <p>Download <strong>Git for Windows</strong> from <a href="https://git-scm.com/download/win" style="color: var(--accent-cyan);">https://git-scm.com/download/win</a>. This also installs <strong>Git Bash</strong> — a terminal that lets you use Unix-style commands on Windows.</p>
+
+                <h3>On Linux (Ubuntu/Debian)</h3>
+                <div class="code-block">sudo apt-get update<br>sudo apt-get install git</div>
+
+                <h3>Verify Your Installation</h3>
+                <div class="code-block">git --version<br><span class="comment"># Output: git version 2.43.0</span></div>
+            </section>
+
+            <section id="4-configuring-git">
+                <h2>4. Configuring Git — <span class="command">git config</span></h2>
+                <p>Before using Git, you need to tell it who you are. Every commit you make is stamped with this identity — it's how teams know who made what change.</p>
+
+                <h3>Setting Your Identity (Global)</h3>
+                <div class="code-block">git config --global user.name "Jane Smith"<br>git config --global user.email "jane@example.com"</div>
+
+                <p>The <code>--global</code> flag means this setting applies to <strong>all repositories</strong> on your machine. You can override it per-repository by running the same command without <code>--global</code> inside a specific project folder.</p>
+
+                <h3>Setting Your Default Text Editor</h3>
+                <p>Git opens a text editor when you need to write commit messages. Set your preferred editor:</p>
+                <div class="code-block">git config --global core.editor "code --wait"&nbsp;&nbsp;&nbsp;<span class="comment"># VS Code</span><br>git config --global core.editor "nano"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Nano (beginner-friendly)</span><br>git config --global core.editor "vim"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Vim</span></div>
+
+                <h3>Setting the Default Branch Name</h3>
+                <p>Newer versions of Git use <code>main</code> instead of the older <code>master</code>. Set this explicitly:</p>
+                <div class="code-block">git config --global init.defaultBranch main</div>
+
+                <h3>Viewing All Your Settings</h3>
+                <div class="code-block">git config --list</div>
+
+                <p>You can also view a specific setting:</p>
+                <div class="code-block">git config user.name<br><span class="comment"># Output: Jane Smith</span></div>
+
+                <div class="highlight">
+                    <p><strong>💡 Where Are Config Files Stored?</strong><br>
+                    Git stores global config in <code>~/.gitconfig</code> in your home directory. You can open and edit this file directly. Local (per-project) config is stored in <code>.git/config</code> inside the project folder.</p>
+                </div>
+            </section>
+
+            <section id="5-initializing-a-repository">
+                <h2>5. Initializing a Repository — <span class="command">git init</span></h2>
+                <p>A Git <strong>repository (repo)</strong> is simply a folder that Git is tracking. You create one using <code>git init</code>.</p>
+
+                <h3>Creating Your First Repository</h3>
+                <div class="code-block">mkdir my-first-project<br>cd my-first-project<br>git init</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">Initialized empty Git repository in /home/jane/my-first-project/.git/</span></div>
+
+                <p>That's it. Your folder is now a Git repository.</p>
+
+                <h3>What Did <code>git init</code> Actually Create?</h3>
+                <p>Git created a hidden folder called <code>.git</code> inside your project. Let's look inside it:</p>
+                <div class="code-block">ls -la&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># See the hidden .git folder</span><br>ls -la .git&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"># Explore its contents</span></div>
+
+                <p>You'll see something like this:</p>
+                <div class="code-block">.git/<br>&nbsp;&nbsp;HEAD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Points to the current branch<br>&nbsp;&nbsp;config&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Local repository settings<br>&nbsp;&nbsp;description&nbsp;&nbsp;&nbsp;&nbsp;← Used by GitWeb (can ignore for now)<br>&nbsp;&nbsp;hooks/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Scripts that run on Git events (advanced)<br>&nbsp;&nbsp;info/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Exclude patterns<br>&nbsp;&nbsp;objects/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Where all your file content is stored<br>&nbsp;&nbsp;refs/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← Pointers to commits (branches & tags)</div>
+
+                <div class="warning">
+                    <p><strong>⚠️ Important:</strong><br>
+                    Never manually edit or delete files inside the <code>.git</code> folder unless you know exactly what you're doing. This folder <strong>IS</strong> your repository. Deleting it means losing your entire version history.</p>
+                </div>
+
+                <!-- Visual Diagram -->
+                <div style="background: var(--secondary-bg); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--border-color); text-align: center;">
+                    <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 1rem;">📁 .git Folder Structure</p>
+                    <img src="images/diagrams/git-folder-structure.svg" alt="Git .git folder structure diagram" style="max-width: 100%; height: auto; border-radius: 8px;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">The <code>.git</code> directory contains everything Git needs to track your project's history</p>
+                </div>
+
+                <h3>Initializing in an Existing Project</h3>
+                <p>You can run <code>git init</code> inside an existing folder — it won't touch your files, it just starts tracking them:</p>
+                <div class="code-block">cd /path/to/existing/project<br>git init</div>
+
+                <div class="use-case">
+                    <p><strong>🌍 Real-World Use Case:</strong><br>
+                    A freelancer has been building a client website for a week with no version control. They run <code>git init</code> in the project folder and Git starts tracking it immediately. From this point on, they can commit snapshots, create branches for new features, and never lose work again.</p>
+                </div>
+            </section>
+
+            <section id="6-checking-project-state">
+                <h2>6. Checking Project State — <span class="command">git status</span></h2>
+                <p><code>git status</code> is your best friend. It shows the current state of your working directory — what has changed, what Git knows about, and what still needs attention.</p>
+
+                <h3>Using <code>git status</code></h3>
+                <p>Right after <code>git init</code>, run:</p>
+                <div class="code-block">git status</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">On branch main<br><br>No commits yet<br><br>nothing to commit (create/copy files and use "git add" to track)</span></div>
+
+                <p>Now create a file and check status again:</p>
+                <div class="code-block">echo "# My First Project" > README.md<br>git status</div>
+
+                <p>Output:</p>
+                <div class="code-block"><span class="output">On branch main<br><br>No commits yet<br><br>Untracked files:<br>&nbsp;&nbsp;(use "git add <file>..." to include in what will be committed)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;README.md<br><br>nothing added to commit but untracked files present (use "git add" to track)</span></div>
+
+                <p>Git sees the file but tells you it is <strong>untracked</strong> — meaning Git isn't watching it yet. You'll learn how to fix that on Day 2 with <code>git add</code>.</p>
+
+                <h3>Understanding <code>git status</code> Output</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Status Message</th>
+                                <th>What It Means</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>Untracked files</code></td>
+                                <td>New files Git has never seen before</td>
+                            </tr>
+                            <tr>
+                                <td><code>Changes not staged for commit</code></td>
+                                <td>Files Git tracks but that have been modified since last commit</td>
+                            </tr>
+                            <tr>
+                                <td><code>Changes to be committed</code></td>
+                                <td>Files staged and ready to be committed</td>
+                            </tr>
+                            <tr>
+                                <td><code>nothing to commit, working tree clean</code></td>
+                                <td>Everything is saved — no pending changes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="7-essential-terminal-basics">
+                <h2>7. Essential Terminal Basics</h2>
+                <p>You'll use the terminal throughout this curriculum. Here's a quick reference:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>pwd</code></td>
+                                <td>Print Working Directory — shows your current location</td>
+                                <td><code>pwd</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>ls</code></td>
+                                <td>List files in current directory</td>
+                                <td><code>ls -la</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>cd</code></td>
+                                <td>Change Directory — navigate folders</td>
+                                <td><code>cd my-project</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>mkdir</code></td>
+                                <td>Make a new directory</td>
+                                <td><code>mkdir new-folder</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>touch</code></td>
+                                <td>Create a new empty file</td>
+                                <td><code>touch index.html</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>echo</code></td>
+                                <td>Print text or write to a file</td>
+                                <td><code>echo 'hi' > file.txt</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>cat</code></td>
+                                <td>Display file contents in terminal</td>
+                                <td><code>cat README.md</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>rm</code></td>
+                                <td>Remove a file (caution!)</td>
+                                <td><code>rm old-file.txt</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>clear</code></td>
+                                <td>Clear the terminal screen</td>
+                                <td><code>clear</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="8-day-1-hands-on-exercise">
+                <h2>8. Day 1 Hands-On Exercise</h2>
+                <p>Follow these steps to put everything together. By the end, you'll have your first Git repository set up.</p>
+
+                <div class="step">
+                    <h4>Step 1 — Configure Git (Do This Once)</h4>
+                    <div class="code-block">git config --global user.name "Your Name"<br>git config --global user.email "your@email.com"<br>git config --global init.defaultBranch main<br>git config --global core.editor "code --wait"<br><br><span class="comment"># Verify everything looks right</span><br>git config --list</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 2 — Create Your First Repository</h4>
+                    <div class="code-block"><span class="comment"># Navigate to your workspace (e.g., Desktop)</span><br>cd ~/Desktop<br><br><span class="comment"># Create a new project folder</span><br>mkdir learning-git<br>cd learning-git<br><br><span class="comment"># Initialize Git</span><br>git init<br><br><span class="comment"># Confirm it worked — you should see the .git folder</span><br>ls -la</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 3 — Explore the .git Folder</h4>
+                    <div class="code-block"><span class="comment"># See what Git created</span><br>ls -la .git<br><br><span class="comment"># Look at the HEAD file</span><br>cat .git/HEAD<br><span class="comment"># Output: ref: refs/heads/main</span><br><br><span class="comment"># Look at the local config file</span><br>cat .git/config</div>
+                </div>
+
+                <div class="step">
+                    <h4>Step 4 — Create Files and Check Status</h4>
+                    <div class="code-block"><span class="comment"># Create a README file</span><br>echo "# Learning Git" > README.md<br>echo "This is my first Git repository." >> README.md<br><br><span class="comment"># Check what Git sees</span><br>git status<br><br><span class="comment"># Create another file</span><br>touch index.html<br><br><span class="comment"># Check status again — notice both files appear as untracked</span><br>git status</div>
+                    <div class="highlight">
+                        <p><strong>✅ What You Should See:</strong><br>
+                        After Step 4, <code>git status</code> should show both <code>README.md</code> and <code>index.html</code> listed under "Untracked files". This means Git sees them but isn't tracking them yet. You'll learn to stage and commit files on Day 2.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="9-key-commands-summary">
+                <h2>9. Key Commands Summary</h2>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Command</th>
+                                <th>What It Does</th>
+                                <th>Common Usage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>git init</code></td>
+                                <td>Creates a new Git repository in the current folder</td>
+                                <td><code>git init</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git config --global</code></td>
+                                <td>Sets a global Git configuration option</td>
+                                <td><code>git config --global user.name "Jane"</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git config --list</code></td>
+                                <td>Displays all current Git settings</td>
+                                <td><code>git config --list</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git status</code></td>
+                                <td>Shows the current state of your working directory</td>
+                                <td><code>git status</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>git --version</code></td>
+                                <td>Displays the installed Git version</td>
+                                <td><code>git --version</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <div class="summary">
+                <h2>Coming Up on Day 2 — Staging, Committing & History</h2>
+                <p>Tomorrow you'll learn the core Git workflow — how to actually <strong>save your work</strong>. You'll master:</p>
+                <ul>
+                    <li><code>git add</code> — staging your changes</li>
+                    <li><code>git commit</code> — saving a snapshot to history</li>
+                    <li><code>git log</code> — browsing your commit history</li>
+                    <li><code>git diff</code> — seeing exactly what changed</li>
+                </ul>
+                <p>The <strong>staging area</strong> (or "index") is one of Git's most powerful and unique concepts — understanding it deeply will make you a much stronger Git user.</p>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>← <a href="day00_Intro.html">Day 0 — Introduction to Version Control Systems</a> | <a href="index.html">Index</a> | <a href="day02_staging_commiting_history.html">Day 2 — Staging, Committing & History</a> →</p>
+        </footer>
+    </div>
+</body>
+</html>

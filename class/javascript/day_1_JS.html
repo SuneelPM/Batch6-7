@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style></style>
+  </head>
+  <body>
+    <script>
+      // this is the print statement in javascript
+      console.log("Hello World");
+      /* This is the pop up alert box
+      that only works in the browser
+      */
+
+      // three ways of declaring a variable
+      // declaration statement
+      var age;
+      let name;
+      const PI = 3.142;
+
+      console.log(age, name, PI);
+
+      var age = "Suneel";
+
+      console.log(age);
+
+      // value assignment to already declared statement
+      name = "Mahesh";
+
+      // Number
+      let id = 73;
+      console.log(typeof id, id);
+
+      // String
+      let first_Name = "Arjun";
+      console.log(typeof first_Name, first_Name);
+
+      // Boolean
+      let ch = true;
+      console.log(typeof ch, ch);
+
+      // undefined
+      let aadharNumber;
+      console.log(typeof aadharNumber, aadharNumber);
+
+      // Null
+      let nullVariable = null;
+      console.log(typeof nullVariable, nullVariable);
+
+      // Symbol
+      let firstSymbol = Symbol();
+      let secondSymbol = Symbol();
+      console.log(typeof firstSymbol, firstSymbol);
+      console.log(firstSymbol == secondSymbol);
+
+      // BigInt
+      let bigNumber = 10n;
+      console.log(typeof bigNumber, bigNumber);
+
+      // number of ways to create a string
+      // three ways,
+      // single quote
+
+      let firstName = "Mahesh";
+      let middleName = "Babu";
+      let lastName = `Gattamaneni`;
+      // string concatenation (adding two or more strings)
+      //  let fullName = firstName + " " + middleName + " " + lastName;
+      // template literal
+      let fullName = `${firstName} ${middleName} ${lastName}`;
+      console.log(fullName);
+
+      //   let myAge = Number(prompt("Please enter your age: ", 10));
+      //   console.log(typeof myAge, myAge);
+
+      let isConfirm = confirm("Are you sure?");
+      console.log(isConfirm);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Datatypes & Variables Practice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f0f4f8;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #2563eb;
+        color: white;
+      }
+
+      /* Adjusting Prism container within details */
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Datatypes & Variables
+        </h1>
+        <p
+          class="text-blue-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Python Mastery Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Master variable assignment, type casting, and core Python datatypes.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Problems
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Qs
+          </button>
+        </div>
+
+        <!-- <div class="flex flex-wrap justify-center gap-4">
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-green-500"></span> Easy
+          </span>
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-yellow-500"></span> Medium
+          </span>
+          <span class="flex items-center gap-2 text-sm text-slate-500">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span> Hard
+          </span>
+        </div> -->
+      </header>
+
+      <!-- Containers -->
+      <div id="coding-container" class="grid gap-6"></div>
+      <div id="mcq-container" class="grid gap-6 hidden"></div>
+      <div id="interview-container" class="grid gap-6 hidden"></div>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const problems = [
+        {
+          id: 1,
+          title: "Variable Swap",
+          difficulty: "easy",
+          description:
+            "Given x=5 and y=10, swap their values using a third variable.",
+          solution: "x = 5\ny = 10\ntemp = x\nx = y\ny = temp\nprint(x, y)",
+        },
+        {
+          id: 2,
+          title: "Type Checker",
+          difficulty: "easy",
+          description:
+            "Write a program that takes an input and prints its datatype using type().",
+          solution: "val = 10.5\nprint(type(val))",
+        },
+        {
+          id: 3,
+          title: "String Math",
+          difficulty: "easy",
+          description:
+            "Create a variable 'msg' with value 'Go' and print it repeated 5 times using string multiplication.",
+          solution: "msg = 'Go'\nprint(msg * 5)",
+        },
+        {
+          id: 4,
+          title: "Integer to String",
+          difficulty: "easy",
+          description:
+            "Convert the integer 100 into a string and concatenate it with ' dollars'.",
+          solution: "amount = 100\nprint(str(amount) + ' dollars')",
+        },
+        {
+          id: 5,
+          title: "Float Precision",
+          difficulty: "easy",
+          description:
+            "Given pi=3.14159, print only the first two decimal places using f-strings.",
+          solution: "pi = 3.14159\nprint(f'{pi:.2f}')",
+        },
+        {
+          id: 6,
+          title: "Boolean Logic",
+          difficulty: "easy",
+          description:
+            "Assign True to 'is_logged_in' and False to 'is_admin'. Print the result of both being True.",
+          solution:
+            "is_logged_in = True\nis_admin = False\nprint(is_logged_in and is_admin)",
+        },
+        {
+          id: 7,
+          title: "Multi-Assignment",
+          difficulty: "easy",
+          description:
+            "Assign values 1, 2, 3 to variables a, b, c in a single line.",
+          solution: "a, b, c = 1, 2, 3\nprint(a, b, c)",
+        },
+        {
+          id: 8,
+          title: "Sentence Builder",
+          difficulty: "medium",
+          description:
+            "Ask user for their age (int) and name (str). Print 'In 5 years, [Name] will be [Age+5]'.",
+          solution:
+            "name = input('Name: ')\nage = int(input('Age: '))\nprint(f'In 5 years, {name} will be {age + 5}')",
+        },
+        {
+          id: 9,
+          title: "String Splicing",
+          difficulty: "medium",
+          description:
+            "Extract the word 'Python' from 'Learning Python is fun' using index slicing.",
+          solution: "s = 'Learning Python is fun'\nprint(s[9:15])",
+        },
+        {
+          id: 10,
+          title: "List to String",
+          difficulty: "medium",
+          description:
+            "Convert the list ['P', 'y', 't', 'h', 'o', 'n'] into a single string.",
+          solution:
+            "chars = ['P', 'y', 't', 'h', 'o', 'n']\nresult = ''.join(chars)\nprint(result)",
+        },
+        {
+          id: 11,
+          title: "Binary Conversion",
+          difficulty: "medium",
+          description:
+            "Convert the decimal number 25 into its binary representation string.",
+          solution: "num = 25\nprint(bin(num))",
+        },
+        {
+          id: 12,
+          title: "Complex Numbers",
+          difficulty: "medium",
+          description:
+            "Create a complex number variable 3 + 4j and print its real and imaginary parts.",
+          solution: "c = 3 + 4j\nprint(c.real, c.imag)",
+        },
+        {
+          id: 13,
+          title: "Set Conversion",
+          difficulty: "medium",
+          description:
+            "Convert the string 'Mississippi' into a set to find unique characters.",
+          solution: "word = 'Mississippi'\nunique = set(word)\nprint(unique)",
+        },
+        {
+          id: 14,
+          title: "Tuple Immutability Test",
+          difficulty: "medium",
+          description:
+            "Try to change the first element of a tuple and catch the error using try-except.",
+          solution:
+            "t = (1, 2, 3)\ntry:\n    t[0] = 10\nexcept TypeError as e:\n    print(f'Caught error: {e}')",
+        },
+        {
+          id: 15,
+          title: "Dynamic Type Change",
+          difficulty: "medium",
+          description:
+            "Create variable 'x' as an integer, then reassign it a list value. Print type before and after.",
+          solution: "x = 10\nprint(type(x))\nx = [1, 2]\nprint(type(x))",
+        },
+        {
+          id: 16,
+          title: "Memory Identity",
+          difficulty: "hard",
+          description:
+            "Check if two small integers (e.g., 5 and 5) share the same memory ID, vs two large integers (e.g., 500 and 500).",
+          solution:
+            "a, b = 5, 5\nprint(a is b)\nx, y = 500, 500\nprint(x is y)",
+        },
+        {
+          id: 17,
+          title: "Hex to Dec",
+          difficulty: "hard",
+          description:
+            "Take a hexadecimal string input (like '1A') and convert it to a decimal integer.",
+          solution:
+            "hex_val = '1A'\ndecimal = int(hex_val, 16)\nprint(decimal)",
+        },
+        {
+          id: 18,
+          title: "Safe Float Comparison",
+          difficulty: "hard",
+          description: "Compare if 0.1 + 0.2 is equal to 0.3 with tolerance.",
+          solution: "a = 0.1 + 0.2\nb = 0.3\nprint(abs(a - b) < 1e-9)",
+        },
+        {
+          id: 19,
+          title: "Constant Simulation",
+          difficulty: "hard",
+          description: "Define a constant-like variable for MAX_USERS.",
+          solution:
+            "MAX_USERS = 100\n# Python uses uppercase as a convention\n# for values that shouldn't change.",
+        },
+        {
+          id: 20,
+          title: "Nested Datatypes",
+          difficulty: "hard",
+          description:
+            "Extract the second item of the first tuple in a list within a dictionary.",
+          solution:
+            "data = {'records': [(1, 'A'), (2, 'B')]}\nprint(data['records'][0][1])",
+        },
+      ];
+
+      const mcqs = [
+        {
+          id: 1,
+          title: "Integer Division",
+          difficulty: "easy",
+          question: "What is the result of 10 // 3?",
+          options: ["3.33", "3", "4", "Error"],
+          answer: "3 (Floor division discards remainder)",
+        },
+        {
+          id: 2,
+          title: "Type Identification",
+          difficulty: "easy",
+          question: "What is the type of result for: type(5.0)?",
+          options: ["int", "double", "float", "number"],
+          answer: "float",
+        },
+        {
+          id: 3,
+          title: "String Length",
+          difficulty: "easy",
+          question: "What does len('Python 3') return?",
+          options: ["6", "7", "8", "9"],
+          answer: "8 (Includes the space)",
+        },
+        {
+          id: 4,
+          title: "Boolean Casting",
+          difficulty: "easy",
+          question: "What is bool(0)?",
+          options: ["True", "False", "None", "Error"],
+          answer: "False",
+        },
+        {
+          id: 5,
+          title: "Variable Names",
+          difficulty: "easy",
+          question: "Which is an invalid variable name?",
+          options: ["_my_var", "myVar2", "2myVar", "my_var_2"],
+          answer: "2myVar",
+        },
+        {
+          id: 6,
+          title: "Assignment",
+          difficulty: "easy",
+          question: "What is the value of x after x = 5; x += 2?",
+          options: ["5", "2", "7", "Error"],
+          answer: "7",
+        },
+        {
+          id: 7,
+          title: "Quotes",
+          difficulty: "easy",
+          question: "Which can define a string in Python?",
+          options: [
+            "'Hello'",
+            '\"Hello\"',
+            '\"\"\"Hello\"\"\"',
+            "All of these",
+          ],
+          answer: "All of these",
+        },
+        {
+          id: 8,
+          title: "Power Operator",
+          difficulty: "medium",
+          question: "Which operator is used for exponentiation?",
+          options: ["^", "**", "//", "exp"],
+          answer: "**",
+        },
+        {
+          id: 9,
+          title: "Type Conversion",
+          difficulty: "medium",
+          question: "What is int(15.9)?",
+          options: ["15", "16", "15.0", "Error"],
+          answer: "15",
+        },
+        {
+          id: 10,
+          title: "List Mutability",
+          difficulty: "medium",
+          question: "Are lists mutable or immutable?",
+          options: [
+            "Mutable",
+            "Immutable",
+            "Depends on elements",
+            "None of above",
+          ],
+          answer: "Mutable",
+        },
+        {
+          id: 11,
+          title: "String Concatenation",
+          difficulty: "medium",
+          question: "What is '5' + '5'?",
+          options: ["10", "55", "'55'", "Error"],
+          answer: "'55'",
+        },
+        {
+          id: 12,
+          title: "None Type",
+          difficulty: "medium",
+          question: "What is the type of 'None' in Python?",
+          options: ["null", "void", "NoneType", "bool"],
+          answer: "NoneType",
+        },
+        {
+          id: 13,
+          title: "Collection Type",
+          difficulty: "medium",
+          question: "Which uses curly braces {} but no key-value pairs?",
+          options: ["List", "Dictionary", "Set", "Tuple"],
+          answer: "Set",
+        },
+        {
+          id: 14,
+          title: "Sequence Types",
+          difficulty: "medium",
+          question: "Which of these is NOT a sequence type?",
+          options: ["String", "List", "Tuple", "Set"],
+          answer: "Set",
+        },
+        {
+          id: 15,
+          title: "Logical NOT",
+          difficulty: "medium",
+          question: "What is not(True or False)?",
+          options: ["True", "False", "None", "Error"],
+          answer: "False",
+        },
+        {
+          id: 16,
+          title: "Internal Pooling",
+          difficulty: "hard",
+          question:
+            "Small integers (-5 to 256) are interned. This relates to which keyword?",
+          options: ["==", "is", "in", "not"],
+          answer: "is",
+        },
+        {
+          id: 17,
+          title: "Immutability",
+          difficulty: "hard",
+          question: "Which of the following is immutable?",
+          options: ["List", "Set", "Dictionary", "String"],
+          answer: "String",
+        },
+        {
+          id: 18,
+          title: "Memory Allocation",
+          difficulty: "hard",
+          question: "What happens when you reassign x = 10 to x = 20?",
+          options: [
+            "The value 10 changes",
+            "A new object 20 is created",
+            "Error",
+            "x remains 10",
+          ],
+          answer: "A new object 20 is created, x points to it",
+        },
+        {
+          id: 19,
+          title: "Tuple Singleton",
+          difficulty: "hard",
+          question: "How do you define a tuple with exactly one element 'a'?",
+          options: ["('a')", "tuple('a')", "('a',)", "['a']"],
+          answer: "('a',)",
+        },
+        {
+          id: 20,
+          title: "Complex Type",
+          difficulty: "hard",
+          question: "What is type(1 + 2j)?",
+          options: ["int", "float", "complex", "Error"],
+          answer: "complex",
+        },
+      ];
+
+      const interviewQs = [
+        {
+          id: 1,
+          title: "Static vs Dynamic",
+          difficulty: "easy",
+          question: "Why is Python called a 'dynamically typed' language?",
+          answer:
+            "Because variables are not bound to a specific type. Type checking is performed at runtime.",
+        },
+        {
+          id: 2,
+          title: "Strong Typing",
+          difficulty: "easy",
+          question: "Is Python strongly or weakly typed?",
+          answer:
+            "Strongly typed. It doesn't allow silent type conversions that could lose data.",
+        },
+        {
+          id: 3,
+          title: "Garbage Collection",
+          difficulty: "easy",
+          question: "How does Python handle memory for variables?",
+          answer:
+            "Python uses automatic memory management with a Garbage Collector using Reference Counting.",
+        },
+        {
+          id: 4,
+          title: "Mutability",
+          difficulty: "easy",
+          question: "Define Mutability.",
+          answer:
+            "The ability to change an object's state after it is created.",
+        },
+        {
+          id: 5,
+          title: "id() Function",
+          difficulty: "easy",
+          question: "What does the id() function return?",
+          answer:
+            "It returns a unique integer identifying the object in memory.",
+        },
+        {
+          id: 6,
+          title: "Reserved Keywords",
+          difficulty: "easy",
+          question: "Can we use 'True' as a variable name?",
+          answer: "No, it is a reserved keyword.",
+        },
+        {
+          id: 7,
+          title: "Constants",
+          difficulty: "easy",
+          question: "Does Python have constant types?",
+          answer:
+            "No. All variables can be modified; uppercase is a naming convention only.",
+        },
+        {
+          id: 8,
+          title: "Integers Range",
+          difficulty: "medium",
+          question: "Maximum value of an integer in Python 3?",
+          answer:
+            "Integers have arbitrary precision, limited only by available memory.",
+        },
+        {
+          id: 9,
+          title: "Mutable Defaults",
+          difficulty: "medium",
+          question: "Why avoid empty lists as default arguments?",
+          answer:
+            "The list is created once and shared across all calls, causing persistent side effects.",
+        },
+        {
+          id: 10,
+          title: "Slicing Syntax",
+          difficulty: "medium",
+          question: "Explain [start:stop:step].",
+          answer:
+            "start (inclusive), stop (exclusive), and the increment step.",
+        },
+        {
+          id: 11,
+          title: "None vs Empty",
+          difficulty: "medium",
+          question: "Difference between 'None' and ''?",
+          answer:
+            "'None' is a type (NoneType); '' is a string object with zero length.",
+        },
+        {
+          id: 12,
+          title: "Type Hinting",
+          difficulty: "medium",
+          question: "What is type hinting?",
+          answer:
+            "Syntax like x: int = 5 for IDE support and static analysis, not enforced at runtime.",
+        },
+        {
+          id: 13,
+          title: "f-strings",
+          difficulty: "medium",
+          question: "Why are f-strings preferred?",
+          answer:
+            "They are faster, more readable, and allow expressions inside curly braces.",
+        },
+        {
+          id: 14,
+          title: "Float Issues",
+          difficulty: "medium",
+          question: "Why is 0.1 + 0.2 != 0.3?",
+          answer:
+            "Floating point numbers are represented in binary, which can't precisely map some decimal fractions.",
+        },
+        {
+          id: 15,
+          title: "Interning",
+          difficulty: "medium",
+          question: "What is string interning?",
+          answer:
+            "Caching common string objects to save memory and speed up comparisons.",
+        },
+        {
+          id: 16,
+          title: "Hashability",
+          difficulty: "hard",
+          question: "What does 'hashable' mean?",
+          answer:
+            "An object with a hash value that never changes; required for dictionary keys.",
+        },
+        {
+          id: 17,
+          title: "LEGB Rule",
+          difficulty: "hard",
+          question: "Explain the LEGB rule.",
+          answer: "Scope search order: Local, Enclosing, Global, Built-in.",
+        },
+        {
+          id: 18,
+          title: "is vs ==",
+          difficulty: "hard",
+          question: "Identity vs Equality?",
+          answer:
+            "== checks values; 'is' checks object identity (memory location).",
+        },
+        {
+          id: 19,
+          title: "dunder methods",
+          difficulty: "hard",
+          question: "How to make a custom class work with len()?",
+          answer: "Implement the __len__ method.",
+        },
+        {
+          id: 20,
+          title: "Slots",
+          difficulty: "hard",
+          question: "What is __slots__?",
+          answer:
+            "A class attribute that limits attribute creation to save memory.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+
+        // Trigger Prism to highlight the newly visible code
+        Prism.highlightAll();
+      }
+
+      function renderCodingProblems() {
+        const container = document.getElementById("coding-container");
+        problems.forEach((prob) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Code #${prob.id}</span>
+                        <span class="tag difficulty-${prob.difficulty}">${prob.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${prob.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${prob.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>View Snippet</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <!-- PrismJS Markup -->
+                            <pre class="line-numbers language-python"><code class="language-python">${prob.solution}</code></pre>
+                            <div class="p-3 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function renderMCQs() {
+        const container = document.getElementById("mcq-container");
+        mcqs.forEach((item) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const optionsHtml = item.options
+            .map(
+              (opt, index) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-blue-100 rounded-full text-xs font-bold text-blue-600">${String.fromCharCode(65 + index)}</span>
+                        <span class="text-slate-700">${opt}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${optionsHtml}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-blue-50 border-t border-slate-200">
+                            <p class="text-blue-900 font-medium">Correct Choice:</p>
+                            <p class="text-blue-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function renderInterviewQs() {
+        const container = document.getElementById("interview-container");
+        interviewQs.forEach((item) => {
+          const card = document.createElement("div");
+          card.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          card.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Q #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-green-50 border-t border-slate-200">
+                            <p class="text-green-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(card);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const tempInput = document.createElement("textarea");
+        tempInput.value = code;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+        }, 2000);
+      }
+
+      // Initial Rendering
+      renderCodingProblems();
+      renderMCQs();
+      renderInterviewQs();
+
+      // Initial highlight
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>

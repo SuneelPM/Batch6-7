@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Box Model Practice Problems</title>
+
+    <!-- MathJax Configuration for Inline Delimiters -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
+        },
+      };
+    </script>
+    <!-- MathJax for Equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+
+    <!-- Prism.js Okaidia Theme & Line Numbers CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2563eb;
+        --bg-color: #f8fafc;
+        --text-color: #1e293b;
+        --card-bg: #ffffff;
+        --border-color: #e2e8f0;
+        --accent-color: #7c3aed;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--bg-color);
+        margin: 0;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      h2 {
+        color: var(--accent-color);
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+        margin-top: 3rem;
+      }
+
+      .intro {
+        color: #64748b;
+      }
+
+      .problem-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      .problem-header {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        color: var(--primary-color);
+      }
+
+      .problem-number {
+        background: var(--primary-color);
+        color: white;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin-right: 12px;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .problem-number.writing {
+        background: var(--accent-color);
+      }
+
+      /* Prism.js Overrides for Layout */
+      pre[class*="language-"] {
+        margin: 1.5rem 0;
+        border-radius: 8px;
+      }
+
+      details {
+        margin-top: 1rem;
+        border-top: 1px dashed var(--border-color);
+        padding-top: 1rem;
+        cursor: pointer;
+      }
+
+      details summary {
+        font-weight: 600;
+        color: #475569;
+        outline: none;
+      }
+
+      details[open] summary {
+        margin-bottom: 1rem;
+      }
+
+      .solution-content {
+        background: #f0fdf4;
+        padding: 1.5rem;
+        border-radius: 6px;
+        border-left: 4px solid #22c55e;
+      }
+
+      /* MathJax Spacing */
+      .mjx-chtml {
+        margin: 0.5rem 0;
+      }
+    </style>
+  </head>
+  <body class="line-numbers">
+    <div class="container">
+      <header>
+        <h1>CSS Box Model Quiz</h1>
+        <p class="intro">
+          Master padding, borders, and margins using
+          <code>content-box</code> calculations and coding techniques.
+        </p>
+      </header>
+
+      <h2>Part 1: Calculations & Concepts</h2>
+
+      <!-- Problem 1 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">1</span> Total Width Calculation
+        </div>
+        <p>
+          Calculate the <strong>total horizontal space</strong> occupied by this
+          element:
+        </p>
+        <pre class="language-css"><code>.box {
+  width: 300px;
+  padding: 20px;
+  border: 5px solid black;
+  margin: 15px;
+}</code></pre>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              $$\text{Total Width} = 300\text{px} + (20\text{px} \times 2) +
+              (5\text{px} \times 2) + (15\text{px} \times 2)$$
+            </p>
+            <p>$$300 + 40 + 10 + 30 = 380\text{px}$$</p>
+            <p><strong>Result:</strong> $380\text{px}$</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 2 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">2</span> Padding Shorthand
+        </div>
+        <p>
+          If an element is styled with <code>padding: 10px 25px;</code>, what
+          are the specific values for each side?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <ul>
+              <li><strong>Top & Bottom:</strong> $10\text{px}$</li>
+              <li><strong>Left & Right:</strong> $25\text{px}$</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 3 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">3</span> Vertical Margin Collapse
+        </div>
+        <p>
+          <strong>Box A</strong> has <code>margin-bottom: 40px;</code>.
+          <strong>Box B</strong> (immediately below) has
+          <code>margin-top: 25px;</code>. What is the actual vertical gap
+          between them?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              Due to margin collapse, the gap is equal to the maximum of the two
+              adjacent margins:
+            </p>
+            <p>$$\text{Gap} = \max(40\text{px}, 25\text{px}) = 40\text{px}$$</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 4 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">4</span> Total Height Calculation
+        </div>
+        <p>
+          Calculate the <strong>total vertical space</strong> occupied by this
+          element:
+        </p>
+        <pre class="language-css"><code>.box {
+  height: 150px;
+  padding-top: 10px;
+  padding-bottom: 30px;
+  border-top: 2px solid red;
+  border-bottom: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}</code></pre>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              $$\text{Total Height} = 150\text{px} + 10\text{px} + 30\text{px} +
+              2\text{px} + 0\text{px} + 20\text{px} + 20\text{px}$$
+            </p>
+            <p><strong>Result:</strong> $232\text{px}$</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 5 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">5</span> Border Shorthand Identification
+        </div>
+        <p>
+          Which side has a border width of $20\text{px}$ in:
+          <code>border-width: 5px 10px 15px 20px;</code>?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              Order: Top ($5\text{px}$), Right ($10\text{px}$), Bottom
+              ($15\text{px}$), <strong>Left ($20\text{px}$)</strong>.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 6 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">6</span> Negative Margins
+        </div>
+        <p>
+          If an element has <code>margin-left: -30px;</code>, in which direction
+          does the element move?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              The element is pulled $30\text{px}$ to the
+              <strong>left</strong> (potentially overlapping the container or
+              previous siblings).
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 7 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">7</span> Padding vs Margin
+        </div>
+        <p>
+          Which layer is located <strong>inside</strong> the border and shows
+          the background color?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p><strong>Padding</strong>.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 8 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">8</span> Centering
+        </div>
+        <p>
+          What property value pair is used for centering a block element
+          horizontally?
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p><code>margin: 0 auto;</code></p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 9 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">9</span> Percentage Padding
+        </div>
+        <p>Padding percentages are relative to what property of the parent?</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>The <strong>Width</strong> of the parent container.</p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 10 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number">10</span> Layer Order
+        </div>
+        <p>List the box model parts from innermost to outermost.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <p>
+              Content $\rightarrow$ Padding $\rightarrow$ Border $\rightarrow$
+              Margin.
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <h2>Part 2: Writing CSS</h2>
+
+      <!-- Problem 11 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">11</span> Shorthand Border
+        </div>
+        <p>
+          Write a single line of CSS for a $3\text{px}$ dashed blue border on
+          all sides.
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre
+              class="language-css"
+            ><code>border: 3px dashed blue;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 12 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">12</span> Specific Padding
+        </div>
+        <p>
+          Write padding for: Top $20\text{px}$, Right $10\text{px}$, Bottom
+          $5\text{px}$, Left $0$.
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre
+              class="language-css"
+            ><code>padding: 20px 10px 5px 0;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 13 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">13</span> Top Border Only
+        </div>
+        <p>Set a solid red $4\text{px}$ border only on the top side.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre
+              class="language-css"
+            ><code>border-top: 4px solid red;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 14 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">14</span> Mirror Margins
+        </div>
+        <p>
+          Set top/bottom margins to $50\text{px}$ and left/right to $0$ using 2
+          values.
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre class="language-css"><code>margin: 50px 0;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 15 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">15</span> Global Reset
+        </div>
+        <p>Remove margins and padding from the <code>body</code>.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre class="language-css"><code>body {
+  margin: 0;
+  padding: 0;
+}</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 16 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">16</span> 3-Value Margin
+          Shorthand
+        </div>
+        <p>
+          Write the <code>margin</code> shorthand for the following
+          specifications:
+        </p>
+        <ul>
+          <li>Top: $10\text{px}$</li>
+          <li>Left & Right: $20\text{px}$</li>
+          <li>Bottom: $30\text{px}$</li>
+        </ul>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre class="language-css"><code>margin: 10px 20px 30px;</code></pre>
+            <p>
+              <em
+                >Note: The 3-value shorthand follows the order:
+                <strong>Top | Right & Left | Bottom</strong>.</em
+              >
+            </p>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 17 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">17</span> Bottom Border Style
+        </div>
+        <p>Make the bottom border a double line, $5\text{px}$ thick.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre
+              class="language-css"
+            ><code>border-bottom: 5px double;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 18 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">18</span> External Spacing
+        </div>
+        <p>
+          Add $15\text{px}$ of space <strong>between</strong> adjacent elements.
+        </p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre class="language-css"><code>margin: 15px;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 19 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">19</span> Inner Gutter
+        </div>
+        <p>Create $10\text{px}$ of space inside a container's border.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre class="language-css"><code>padding: 10px;</code></pre>
+          </div>
+        </details>
+      </div>
+
+      <!-- Problem 20 -->
+      <div class="problem-card">
+        <div class="problem-header">
+          <span class="problem-number writing">20</span> Invisible Border
+        </div>
+        <p>Create a $10\text{px}$ solid border that is transparent.</p>
+        <details>
+          <summary>View Solution</summary>
+          <div class="solution-content">
+            <pre
+              class="language-css"
+            ><code>border: 10px solid transparent;</code></pre>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- Prism.js Core & Plugins -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  </body>
+</html>

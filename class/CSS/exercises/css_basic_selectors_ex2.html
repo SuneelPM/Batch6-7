@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30 CSS Basic Selector Challenges</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        background-color: #f8fafc;
+        color: #1e293b;
+      }
+      .challenge-card {
+        background: white;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+      details summary {
+        cursor: pointer;
+        color: #2563eb;
+        font-weight: 600;
+        padding: 0.5rem 0;
+        user-select: none;
+      }
+      details summary:hover {
+        color: #1d4ed8;
+      }
+      pre {
+        background: #1e293b;
+        color: #f8fafc;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin-top: 0.5rem;
+        font-size: 0.875rem;
+      }
+      code {
+        font-family: "Fira Code", "Courier New", Courier, monospace;
+      }
+      .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        background: #dbeafe;
+        color: #1e40af;
+        border-radius: 0.375rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="mb-10 text-center">
+        <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-2">
+          CSS Selectors Masterclass
+        </h1>
+        <p class="text-lg text-slate-600">
+          30 Practical coding problems to master basic CSS selectors.
+        </p>
+      </header>
+
+      <div id="challenges-container">
+        <!-- Challenges will be injected here or written directly -->
+
+        <!-- 1. Universal Selector -->
+        <div class="challenge-card">
+          <span class="tag">Basic</span>
+          <h3 class="text-xl font-bold mb-2">1. The Universal Selector</h3>
+          <p class="mb-4">
+            Write a CSS rule that sets the margin and padding of every single
+            element on the page to 0.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>* {
+  margin: 0;
+  padding: 0;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 2. Type Selector -->
+        <div class="challenge-card">
+          <span class="tag">Basic</span>
+          <h3 class="text-xl font-bold mb-2">2. Paragraph Styling</h3>
+          <p class="mb-4">
+            Select all <code>&lt;p&gt;</code> elements and change their text
+            color to "darkslategray".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>p {
+  color: darkslategray;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 3. ID Selector -->
+        <div class="challenge-card">
+          <span class="tag">ID</span>
+          <h3 class="text-xl font-bold mb-2">3. The Unique Header</h3>
+          <p class="mb-4">
+            Target an element with the ID of <code>main-navigation</code> and
+            set its background color to "navy".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#main-navigation {
+  background-color: navy;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 4. Class Selector -->
+        <div class="challenge-card">
+          <span class="tag">Class</span>
+          <h3 class="text-xl font-bold mb-2">4. Highlighting Text</h3>
+          <p class="mb-4">
+            Select all elements with the class name <code>highlight</code> and
+            give them a yellow background.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.highlight {
+  background-color: yellow;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 5. Grouping Selector -->
+        <div class="challenge-card">
+          <span class="tag">Grouping</span>
+          <h3 class="text-xl font-bold mb-2">5. Multi-Heading Reset</h3>
+          <p class="mb-4">
+            In a single rule, set the font-family of <code>h1</code>,
+            <code>h2</code>, and <code>h3</code> tags to "Arial".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1, h2, h3 {
+  font-family: Arial, sans-serif;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 6. Descendant Selector -->
+        <div class="challenge-card">
+          <span class="tag">Combinator</span>
+          <h3 class="text-xl font-bold mb-2">6. List Items in Footer</h3>
+          <p class="mb-4">
+            Select all <code>&lt;li&gt;</code> elements that are inside a
+            <code>&lt;footer&gt;</code> tag.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>footer li {
+  /* styles here */
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 7. Child Selector -->
+        <div class="challenge-card">
+          <span class="tag">Combinator</span>
+          <h3 class="text-xl font-bold mb-2">7. Direct Children</h3>
+          <p class="mb-4">
+            Select only the <code>&lt;span&gt;</code> elements that are
+            <strong>direct</strong> children of a <code>&lt;div&gt;</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>div > span {
+  /* styles here */
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 8. Adjacent Sibling Selector -->
+        <div class="challenge-card">
+          <span class="tag">Combinator</span>
+          <h3 class="text-xl font-bold mb-2">8. Spacing After Headings</h3>
+          <p class="mb-4">
+            Target a <code>&lt;p&gt;</code> element only if it immediately
+            follows an <code>&lt;h2&gt;</code> element.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h2 + p {
+  margin-top: 0;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 9. General Sibling Selector -->
+        <div class="challenge-card">
+          <span class="tag">Combinator</span>
+          <h3 class="text-xl font-bold mb-2">9. Siblings Down the Line</h3>
+          <p class="mb-4">
+            Select all <code>&lt;img&gt;</code> tags that are siblings of an
+            <code>&lt;h1&gt;</code> and come after it.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>h1 ~ img {
+  border: 1px solid #ccc;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 10. Attribute Presence -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">10. All Links with Titles</h3>
+          <p class="mb-4">
+            Select every <code>&lt;a&gt;</code> tag that has a
+            <code>title</code> attribute, regardless of its value.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a[title] {
+  text-decoration: underline;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 11. Specific Attribute Value -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">11. Targeting specific inputs</h3>
+          <p class="mb-4">
+            Target all <code>&lt;input&gt;</code> elements with the
+            <code>type</code> attribute exactly equal to "text".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>input[type="text"] {
+  border-color: blue;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 12. Class and Type Combination -->
+        <div class="challenge-card">
+          <span class="tag">Compound</span>
+          <h3 class="text-xl font-bold mb-2">12. Specific Buttons</h3>
+          <p class="mb-4">
+            Select <code>&lt;button&gt;</code> elements that also have the class
+            <code>primary</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>button.primary {
+  font-weight: bold;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 13. Multiple Classes -->
+        <div class="challenge-card">
+          <span class="tag">Compound</span>
+          <h3 class="text-xl font-bold mb-2">13. The Overlap</h3>
+          <p class="mb-4">
+            Select elements that have both the <code>btn</code> class AND the
+            <code>active</code> class.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.btn.active {
+  opacity: 1;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 14. Descendant ID -->
+        <div class="challenge-card">
+          <span class="tag">Combinator</span>
+          <h3 class="text-xl font-bold mb-2">14. Sidebar Links</h3>
+          <p class="mb-4">
+            Select all links (<code>a</code>) inside an element with the ID
+            <code>sidebar</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>#sidebar a {
+  color: inherit;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 15. Body Selector -->
+        <div class="challenge-card">
+          <span class="tag">Basic</span>
+          <h3 class="text-xl font-bold mb-2">15. Global Font</h3>
+          <p class="mb-4">
+            Select the <code>body</code> and set the base font size to 16px.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>body {
+  font-size: 16px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 16. Pseudo-class :hover -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">16. Interactive Links</h3>
+          <p class="mb-4">
+            Change the color of an <code>&lt;a&gt;</code> tag to "red" when the
+            user hovers over it.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a:hover {
+  color: red;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 17. Attribute Starts With -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">17. External Links</h3>
+          <p class="mb-4">
+            Select all <code>&lt;a&gt;</code> tags where the
+            <code>href</code> attribute starts with "https".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a[href^="https"] {
+  /* styles for secure links */
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 18. Attribute Ends With -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">18. PDF Links</h3>
+          <p class="mb-4">
+            Select all <code>&lt;a&gt;</code> tags where the
+            <code>href</code> attribute ends with ".pdf".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>a[href$=".pdf"] {
+  /* add a PDF icon or style */
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 19. Attribute Contains -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">19. Internal Mentions</h3>
+          <p class="mb-4">
+            Select all <code>&lt;div&gt;</code> tags whose
+            <code>class</code> contains the word "section" anywhere.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>div[class*="section"] {
+  padding: 20px;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 20. First-Child Pseudo-class -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">20. The First List Item</h3>
+          <p class="mb-4">
+            Select the very first <code>&lt;li&gt;</code> inside any
+            <code>&lt;ul&gt;</code> and make it bold.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>ul li:first-child {
+  font-weight: bold;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 21. Last-Child Pseudo-class -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">21. The Final Paragraph</h3>
+          <p class="mb-4">
+            Select the last <code>&lt;p&gt;</code> inside a
+            <code>&lt;section&gt;</code> and remove its bottom margin.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>section p:last-child {
+  margin-bottom: 0;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 22. Not Pseudo-class -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">22. Exceptions</h3>
+          <p class="mb-4">
+            Select all <code>&lt;input&gt;</code> tags that are NOT of type
+            "submit".
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>input:not([type="submit"]) {
+  border: 1px solid gray;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 23. Pseudo-element ::before -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo-Element</span>
+          <h3 class="text-xl font-bold mb-2">23. Text Addition</h3>
+          <p class="mb-4">
+            Add the text "Note: " before the content of every element with the
+            class <code>disclaimer</code> using CSS.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>.disclaimer::before {
+  content: "Note: ";
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 24. Required Attribute -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">24. Form Validation</h3>
+          <p class="mb-4">
+            Target all <code>&lt;input&gt;</code> elements that have the
+            <code>required</code> attribute.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>input:required {
+  box-shadow: 0 0 5px red;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 25. Checked State -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">25. Checkbox Styling</h3>
+          <p class="mb-4">
+            Select checkboxes that are currently checked and change their
+            labels' color (assuming label is a sibling after the input).
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>input[type="checkbox"]:checked + label {
+  color: green;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 26. Lang Attribute Selector -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">26. Language Specifics</h3>
+          <p class="mb-4">
+            Select all elements that are specifically marked with the language
+            "fr" (French).
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[lang="fr"] {
+  font-style: italic;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 27. Universal within a Div -->
+        <div class="challenge-card">
+          <span class="tag">Compound</span>
+          <h3 class="text-xl font-bold mb-2">27. Container Reset</h3>
+          <p class="mb-4">
+            Reset the padding of all elements that are inside a
+            <code>&lt;div&gt;</code> with the class <code>card</code>.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>div.card * {
+  padding: 0;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 28. Pseudo-class :empty -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">28. Empty Containers</h3>
+          <p class="mb-4">
+            Select all <code>&lt;div&gt;</code> elements that have no content at
+            all (no text, no children) and hide them.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>div:empty {
+  display: none;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 29. Nth-Child Even -->
+        <div class="challenge-card">
+          <span class="tag">Pseudo</span>
+          <h3 class="text-xl font-bold mb-2">29. Zebra Stripes</h3>
+          <p class="mb-4">
+            Select every even <code>&lt;tr&gt;</code> (table row) to apply a
+            background color for zebra-striping.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>tr:nth-child(even) {
+  background-color: #f2f2f2;
+}</code></pre>
+          </details>
+        </div>
+
+        <!-- 30. Attribute value in a space-separated list -->
+        <div class="challenge-card">
+          <span class="tag">Attribute</span>
+          <h3 class="text-xl font-bold mb-2">30. Specific Data Attribute</h3>
+          <p class="mb-4">
+            Select elements where the <code>data-info</code> attribute contains
+            the word "urgent" in a space-separated list.
+          </p>
+          <details>
+            <summary>View Solution</summary>
+            <pre><code>[data-info~="urgent"] {
+  border: 2px solid red;
+}</code></pre>
+          </details>
+        </div>
+      </div>
+
+      <footer class="mt-12 text-center text-slate-500 pb-10">
+        <p>Practice these selectors to build better layouts and components!</p>
+      </footer>
+    </div>
+  </body>
+</html>

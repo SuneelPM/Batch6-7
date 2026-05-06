@@ -1,0 +1,1306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 3 — Branching & Merging</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-bg: #0f172a;
+        --secondary-bg: #1e293b;
+        --accent-bg: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --accent-cyan: #22d3ee;
+        --accent-green: #4ade80;
+        --accent-orange: #fb923c;
+        --accent-red: #f87171;
+        --border-color: #334155;
+        --max-width: 90%;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--primary-bg);
+        color: var(--text-primary);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      .breadcrumb {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background: var(--accent-bg);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .breadcrumb a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+        letter-spacing: -0.025em;
+      }
+
+      .subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        font-weight: 400;
+      }
+
+      .goal {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .goal p {
+        font-size: 1.125rem;
+        color: var(--accent-green);
+        font-weight: 600;
+      }
+
+      .toc {
+        background: var(--accent-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .toc h2 {
+        font-size: 1.5rem;
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+      }
+
+      .toc ol {
+        padding-left: 1.5rem;
+      }
+
+      .toc li {
+        margin-bottom: 0.5rem;
+        color: var(--text-secondary);
+      }
+
+      .toc a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .toc a:hover {
+        text-decoration: underline;
+      }
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        margin: 3rem 0 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid var(--accent-cyan);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent-orange);
+        margin: 2rem 0 1rem 0;
+      }
+
+      h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--accent-green);
+        margin: 1.5rem 0 0.5rem 0;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+        line-height: 1.7;
+      }
+
+      .ascii-diagram {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.9rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+        white-space: pre;
+      }
+
+      .highlight {
+        background: var(--secondary-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-orange);
+      }
+
+      .highlight p {
+        font-style: italic;
+        color: var(--text-primary);
+      }
+
+      .use-case {
+        background: linear-gradient(
+          135deg,
+          var(--secondary-bg) 0%,
+          var(--accent-bg) 100%
+        );
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
+      }
+
+      .use-case p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .code-block {
+        background: #020617;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.875rem;
+        color: var(--accent-cyan);
+        overflow-x: auto;
+      }
+
+      .code-block .comment {
+        color: var(--text-muted);
+      }
+
+      .code-block .output {
+        color: var(--accent-green);
+      }
+
+      .table-container {
+        overflow-x: auto;
+        margin: 2rem 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--secondary-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--accent-bg);
+        font-weight: 600;
+        color: var(--accent-cyan);
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      td {
+        color: var(--text-secondary);
+      }
+
+      tbody tr:hover {
+        background: var(--accent-bg);
+      }
+
+      .command {
+        font-family: "JetBrains Mono", monospace;
+        background: #020617;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        color: var(--accent-cyan);
+        font-weight: 500;
+      }
+
+      .step {
+        background: var(--accent-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .step h4 {
+        color: var(--accent-green);
+        margin-bottom: 0.5rem;
+      }
+
+      .step p {
+        color: var(--text-secondary);
+      }
+
+      .conflict-markers {
+        background: #020617;
+        border: 1px solid var(--accent-red);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.875rem;
+        color: var(--accent-red);
+        overflow-x: auto;
+      }
+
+      .warning {
+        background: rgba(248, 113, 113, 0.1);
+        border: 1px solid var(--accent-red);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+      }
+
+      .warning p {
+        color: var(--accent-red);
+        font-weight: 500;
+      }
+
+      .summary {
+        background: var(--secondary-bg);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 3rem;
+        border: 1px solid var(--border-color);
+      }
+
+      .summary h2 {
+        color: var(--accent-orange);
+      }
+
+      .summary p {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+
+      .footer {
+        text-align: center;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--border-color);
+        color: var(--text-muted);
+      }
+
+      .footer a {
+        color: var(--accent-cyan);
+        text-decoration: none;
+      }
+
+      .footer a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .toc {
+          padding: 1.5rem;
+        }
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
+        }
+
+        .code-block {
+          font-size: 0.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="breadcrumb">
+        <p>
+          ←
+          <a href="day02_staging_commiting_history.html"
+            >Day 2 — Staging, Committing & History</a
+          >
+          | <a href="index.html">Index</a> |
+          <a href="day04_remote_repository.html"
+            >Day 4 — Remote Repositories & GitHub</a
+          >
+          →
+        </p>
+      </nav>
+
+      <header>
+        <h1>Git Learning Curriculum</h1>
+        <p class="subtitle">Day 3 — Branching & Merging</p>
+      </header>
+
+      <div class="goal">
+        <p>
+          <strong>Goal:</strong> Understand branches deeply and learn to combine
+          work safely — including handling merge conflicts.
+        </p>
+      </div>
+
+      <nav class="toc">
+        <h2>Table of Contents</h2>
+        <ol>
+          <li><a href="#1-what-is-a-branch">What is a Branch?</a></li>
+          <li>
+            <a href="#2-creating--listing-branches"
+              >Creating & Listing Branches — git branch</a
+            >
+          </li>
+          <li>
+            <a href="#3-switching-branches">Switching Branches — git switch</a>
+          </li>
+          <li>
+            <a href="#4-the-classic-branch-workflow"
+              >The Classic Branch Workflow</a
+            >
+          </li>
+          <li>
+            <a href="#5-merging-branches">Merging Branches — git merge</a>
+          </li>
+          <li>
+            <a href="#6-fast-forward-vs-three-way-merge"
+              >Fast-Forward vs Three-Way Merge</a
+            >
+          </li>
+          <li>
+            <a href="#7-merge-conflicts"
+              >Merge Conflicts — Creating & Resolving</a
+            >
+          </li>
+          <li><a href="#8-deleting-branches">Deleting Branches</a></li>
+          <li><a href="#9-useful-branch-tips">Useful Branch Tips</a></li>
+          <li>
+            <a href="#10-day-3-hands-on-exercise">Day 3 Hands-On Exercise</a>
+          </li>
+          <li><a href="#11-key-commands-summary">Key Commands Summary</a></li>
+        </ol>
+      </nav>
+
+      <main>
+        <section id="1-what-is-a-branch">
+          <h2>1. What is a Branch?</h2>
+          <p>
+            A branch is simply a
+            <strong>lightweight movable pointer to a commit</strong>. That's it.
+            There's no copying of files, no duplication of the project — just a
+            pointer.
+          </p>
+
+          <p>
+            When you create a branch, Git creates a new pointer to the current
+            commit. As you make new commits on that branch, the pointer moves
+            forward automatically. Meanwhile, your <code>main</code> branch
+            pointer stays exactly where it was.
+          </p>
+
+          <div class="ascii-diagram">
+            Before branching: main ↓ [C1] ← [C2] ← [C3] After creating "feature"
+            branch: main feature ↓ ↓ [C1] ← [C2] ← [C3] After making commits on
+            "feature": main feature ↓ ↓ [C1] ← [C2] ← [C3] ← [C4] ← [C5]
+          </div>
+
+          <p>
+            This means branching in Git is
+            <strong>nearly instant and extremely cheap</strong>. Unlike older
+            version control systems that physically copied your entire project,
+            Git just writes a 41-byte file.
+          </p>
+
+          <h3>HEAD — Where Are You Right Now?</h3>
+          <p>
+            Git uses a special pointer called <code>HEAD</code> to track which
+            branch you're currently on. When you switch branches,
+            <code>HEAD</code> moves with you.
+          </p>
+
+          <div class="code-block">
+            cat .git/HEAD<br /><span class="comment"
+              ># Output: ref: refs/heads/main</span
+            >
+          </div>
+
+          <p>Switch to a feature branch and HEAD updates:</p>
+          <div class="code-block">
+            cat .git/HEAD<br /><span class="comment"
+              ># Output: ref: refs/heads/feature-login</span
+            >
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              A team of 8 developers is working on a banking app. Each developer
+              has their own branch: <code>feature/payments</code>,
+              <code>feature/notifications</code>,
+              <code>bugfix/session-timeout</code>, etc. They all work
+              independently without interfering with each other or with the
+              stable <code>main</code> branch. Branches make parallel
+              development possible.
+            </p>
+          </div>
+
+          <!-- Visual Diagram -->
+          <div style="background: var(--secondary-bg); padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0; border: 1px solid var(--border-color); text-align: center;">
+            <p style="color: var(--accent-cyan); font-weight: 600; margin-bottom: 1rem;">🌿 Branching &amp; Merging Workflow</p>
+            <img src="images/diagrams/git-branching.svg" alt="Git branching and merging diagram showing main branch, feature branch, and merge commit" style="max-width: 100%; height: auto; border-radius: 8px;">
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1rem;">Create branches for features → Work independently → Merge back to main</p>
+          </div>
+        </section>
+
+        <section id="2-creating--listing-branches">
+          <h2>
+            2. Creating & Listing Branches —
+            <span class="command">git branch</span>
+          </h2>
+
+          <h3>List All Branches</h3>
+          <div class="code-block">git branch</div>
+
+          <p>Output:</p>
+          <div class="code-block">
+            <span class="output"
+              >* main<br />&nbsp;&nbsp;feature-login<br />&nbsp;&nbsp;bugfix-header</span
+            >
+          </div>
+
+          <p>The <code>*</code> indicates which branch you're currently on.</p>
+
+          <p>List all branches including remote ones:</p>
+          <div class="code-block">git branch -a</div>
+
+          <h3>Create a New Branch</h3>
+          <div class="code-block">git branch feature-login</div>
+
+          <p>
+            This creates the branch but <strong>does not switch to it</strong>.
+            You're still on your current branch.
+          </p>
+
+          <h3>Create and Switch in One Step (Recommended)</h3>
+          <div class="code-block">
+            git switch -c feature-login<br /><span class="comment"
+              ># or the older syntax:</span
+            ><br />git checkout -b feature-login
+          </div>
+
+          <p>
+            The <code>-c</code> flag means "create". This is the command you'll
+            use most often — create and immediately jump to the new branch.
+          </p>
+
+          <h3>Rename a Branch</h3>
+          <div class="code-block">
+            <span class="comment"># Rename the current branch</span><br />git
+            branch -m new-name<br /><br /><span class="comment"
+              ># Rename a specific branch</span
+            ><br />git branch -m old-name new-name
+          </div>
+
+          <h3>See the Last Commit on Each Branch</h3>
+          <div class="code-block">git branch -v</div>
+
+          <p>Output:</p>
+          <div class="code-block">
+            <span class="output"
+              >*
+              main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a1b2c3d
+              initial commit<br />&nbsp;&nbsp;feature-login&nbsp;&nbsp;d4e5f6a
+              feat: add login form<br />&nbsp;&nbsp;bugfix-header&nbsp;&nbsp;f7g8h9i
+              fix: align header on mobile</span
+            >
+          </div>
+        </section>
+
+        <section id="3-switching-branches">
+          <h2>
+            3. Switching Branches — <span class="command">git switch</span>
+          </h2>
+
+          <h3>Switch to an Existing Branch</h3>
+          <div class="code-block">
+            git switch main<br />git switch feature-login
+          </div>
+
+          <h3>The Older Syntax (Still Common)</h3>
+          <p>
+            You'll see both <code>git switch</code> and
+            <code>git checkout</code> used for switching. They do the same thing
+            — <code>switch</code> is newer and cleaner:
+          </p>
+          <div class="code-block">
+            git checkout
+            main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              class="comment"
+              ># older</span
+            ><br />git switch
+            main&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              class="comment"
+              ># newer (preferred)</span
+            >
+          </div>
+
+          <h3>What Happens When You Switch?</h3>
+          <p>When you switch branches, Git:</p>
+          <ol>
+            <li>Moves the <code>HEAD</code> pointer to the new branch</li>
+            <li>
+              Updates your working directory to match the state of that branch
+            </li>
+          </ol>
+
+          <p>
+            Your files will literally change on disk to reflect the branch
+            you're on. This can seem like magic at first.
+          </p>
+          <div class="code-block">
+            <span class="comment"
+              ># You're on main — index.html has a blue navbar</span
+            ><br />git switch feature-redesign<br /><span class="comment"
+              ># Now index.html has a red navbar (the feature branch
+              version)</span
+            ><br /><br />git switch main<br /><span class="comment"
+              ># Back to blue navbar instantly</span
+            >
+          </div>
+
+          <h3>Switching with Uncommitted Changes</h3>
+          <p>
+            If you have uncommitted changes, Git will warn you before switching
+            if the changes conflict with the target branch. You have two
+            options:
+          </p>
+
+          <p>
+            <strong>Option 1 — Commit your changes first (recommended):</strong>
+          </p>
+          <div class="code-block">
+            git add .<br />git commit -m "wip: save progress"<br />git switch
+            main
+          </div>
+
+          <p><strong>Option 2 — Stash your changes temporarily:</strong></p>
+          <div class="code-block">
+            git
+            stash&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              class="comment"
+              ># Save changes aside</span
+            ><br />git switch main&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment"
+              ># Switch freely</span
+            ><br />git switch feature-login<br />git stash
+            pop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+              class="comment"
+              ># Bring changes back</span
+            >
+          </div>
+
+          <p>You'll learn more about <code>git stash</code> on Day 5.</p>
+        </section>
+
+        <section id="4-the-classic-branch-workflow">
+          <h2>4. The Classic Branch Workflow</h2>
+          <p>
+            This is the pattern you'll follow for virtually every feature or fix
+            you ever build:
+          </p>
+
+          <div class="ascii-diagram">
+            1. Start from main (stable, clean) ↓ 2. Create a feature branch ↓ 3.
+            Make commits on the feature branch ↓ 4. Switch back to main ↓ 5.
+            Merge the feature branch into main ↓ 6. Delete the feature branch
+            (cleanup)
+          </div>
+
+          <p>In practice:</p>
+          <div class="code-block">
+            <span class="comment"
+              ># Step 1 — Make sure you're on main and it's clean</span
+            ><br />git switch main<br />git status<br /><br /><span
+              class="comment"
+              ># Step 2 — Create and switch to a feature branch</span
+            ><br />git switch -c feature-contact-form<br /><br /><span
+              class="comment"
+              ># Step 3 — Do your work and commit</span
+            ><br />echo "&lt;form&gt;Contact Us&lt;/form&gt;" &gt;
+            contact.html<br />git add contact.html<br />git commit -m "feat: add
+            contact form page"<br /><br />echo "form { padding: 20px; }"
+            &gt;&gt; style.css<br />git add style.css<br />git commit -m "style:
+            add contact form styling"<br /><br /><span class="comment"
+              ># Step 4 — Switch back to main</span
+            ><br />git switch main<br /><br /><span class="comment"
+              ># Step 5 — Merge the feature in</span
+            ><br />git merge feature-contact-form<br /><br /><span
+              class="comment"
+              ># Step 6 — Clean up</span
+            ><br />git branch -d feature-contact-form
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              At most companies, <code>main</code> (or <code>master</code>) is a
+              <strong>protected branch</strong> — you can never commit directly
+              to it. Every change must go through a feature branch and a Pull
+              Request. This ensures that code is reviewed before it ever reaches
+              production. The branch workflow you're learning here is the
+              foundation of that process.
+            </p>
+          </div>
+        </section>
+
+        <section id="5-merging-branches">
+          <h2>5. Merging Branches — <span class="command">git merge</span></h2>
+          <p>
+            <code>git merge</code> takes the work from one branch and integrates
+            it into another. You always merge <strong>into</strong> your current
+            branch.
+          </p>
+
+          <h3>Basic Merge</h3>
+          <div class="code-block">
+            <span class="comment"
+              ># Be on the branch you want to merge INTO</span
+            ><br />git switch main<br /><br /><span class="comment"
+              ># Merge the feature branch into main</span
+            ><br />git merge feature-contact-form
+          </div>
+
+          <h3>Merge with a Commit Message</h3>
+          <div class="code-block">
+            git merge feature-contact-form -m "Merge contact form feature into
+            main"
+          </div>
+
+          <h3>No-Fast-Forward Merge (Preserve Branch History)</h3>
+          <div class="code-block">git merge --no-ff feature-contact-form</div>
+
+          <p>
+            The <code>--no-ff</code> flag forces Git to create a merge commit
+            even when a fast-forward is possible. This preserves the history of
+            the branch, making it clear in the log that a feature branch
+            existed.
+          </p>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              GitHub and GitLab's "Merge Pull Request" button uses
+              <code>--no-ff</code> by default. This is why you see merge commits
+              like
+              <code>"Merge pull request #42 from user/feature-login"</code> in
+              repository histories — it clearly marks when a feature was
+              integrated.
+            </p>
+          </div>
+        </section>
+
+        <section id="6-fast-forward-vs-three-way-merge">
+          <h2>6. Fast-Forward vs Three-Way Merge</h2>
+          <p>
+            Git uses two different merge strategies depending on the situation.
+            Understanding the difference matters.
+          </p>
+
+          <h3>Fast-Forward Merge</h3>
+          <p>
+            Happens when the target branch (e.g., <code>main</code>) has not
+            moved since the feature branch was created. Git simply moves the
+            <code>main</code> pointer forward to the feature branch tip — no
+            merge commit needed.
+          </p>
+
+          <div class="ascii-diagram">
+            Before: main ↓ [C1] ← [C2] ← [C3] ← [C4] ↑ feature After
+            fast-forward merge: main feature ↓ [C1] ← [C2] ← [C3] ← [C4]
+          </div>
+
+          <div class="code-block">
+            git merge feature-login<br /><span class="comment"
+              ># Output: Fast-forward</span
+            >
+          </div>
+
+          <p>Clean and linear history. No extra commit.</p>
+
+          <h3>Three-Way Merge</h3>
+          <p>
+            Happens when <code>main</code> has new commits since the feature
+            branch was created. Both branches have diverged. Git creates a new
+            <strong>merge commit</strong> that has two parents — one from each
+            branch.
+          </p>
+
+          <div class="ascii-diagram">
+            Before: main ↓ [C1] ← [C2] ← [C5] \ ← [C3] ← [C4] ↑ feature After
+            three-way merge: main ↓ [C1] ← [C2] ← [C5] ← [C6 (merge commit)] \ /
+            ← [C3] ← [C4]
+          </div>
+
+          <div class="code-block">
+            git merge feature-login<br /><span class="comment"
+              ># Output: Merge made by the 'ort' strategy.</span
+            >
+          </div>
+
+          <p>
+            The merge commit (<code>C6</code>) has two parent commits — it's the
+            point where the two histories come together.
+          </p>
+        </section>
+
+        <section id="7-merge-conflicts">
+          <h2>7. Merge Conflicts — Creating & Resolving</h2>
+          <p>
+            A <strong>merge conflict</strong> happens when two branches both
+            changed the same part of the same file. Git doesn't know which
+            version to keep, so it stops and asks you to decide.
+          </p>
+
+          <p>
+            Conflicts sound scary but they're a normal, everyday part of
+            development. Once you resolve a few, they become completely routine.
+          </p>
+
+          <h3>When Do Conflicts Happen?</h3>
+          <ul>
+            <li>Two branches edited the same line(s) of the same file</li>
+            <li>One branch deleted a file the other branch modified</li>
+            <li>Two branches added different content at the same location</li>
+          </ul>
+
+          <h3>Step 1 — Create a Conflict (So You Can See It)</h3>
+          <div class="code-block">
+            <span class="comment"># Start fresh on main</span><br />git switch
+            main<br />echo "Welcome to my site" &gt; home.txt<br />git add
+            home.txt<br />git commit -m "feat: add home page text"<br /><br /><span
+              class="comment"
+              ># Create branch A and change the file</span
+            ><br />git switch -c branch-a<br />echo "Welcome to my AMAZING site"
+            &gt; home.txt<br />git add home.txt<br />git commit -m "style: make
+            welcome more enthusiastic"<br /><br /><span class="comment"
+              ># Go back to main and create branch B with a different
+              change</span
+            ><br />git switch main<br />git switch -c branch-b<br />echo
+            "Welcome to my AWESOME site" &gt; home.txt<br />git add home.txt<br />git
+            commit -m "style: improve welcome message"<br /><br /><span
+              class="comment"
+              ># Merge branch-a into main first (this works fine)</span
+            ><br />git switch main<br />git merge branch-a<br /><br /><span
+              class="comment"
+              ># Now try to merge branch-b — CONFLICT!</span
+            ><br />git merge branch-b
+          </div>
+
+          <h3>Step 2 — Read the Conflict Message</h3>
+          <div class="code-block">
+            <span class="output"
+              >Auto-merging home.txt<br />CONFLICT (content): Merge conflict in
+              home.txt<br />Automatic merge failed; fix conflicts and then
+              commit the result.</span
+            >
+          </div>
+
+          <h3>Step 3 — Open the Conflicted File</h3>
+          <div class="code-block">cat home.txt</div>
+
+          <p>You'll see <strong>conflict markers</strong> that Git inserted:</p>
+          <div class="conflict-markers">
+            &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br />Welcome to my AMAZING site<br />=======<br />Welcome
+            to my AWESOME site<br />&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-b
+          </div>
+
+          <p>Breaking it down:</p>
+          <ul>
+            <li>
+              <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code> — start of your
+              current branch's version
+            </li>
+            <li><code>=======</code> — the dividing line</li>
+            <li>
+              <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-b</code> — the incoming
+              branch's version
+            </li>
+          </ul>
+
+          <h3>Step 4 — Resolve the Conflict</h3>
+          <p>
+            Edit the file to keep what you want. Remove ALL conflict markers.
+            The result should be clean, working content:
+          </p>
+
+          <div class="code-block">
+            <span class="comment"># Option 1 — Keep current branch version</span
+            ><br />echo "Welcome to my AMAZING site" &gt; home.txt<br /><br /><span
+              class="comment"
+              ># Option 2 — Keep incoming version</span
+            ><br />echo "Welcome to my AWESOME site" &gt; home.txt<br /><br /><span
+              class="comment"
+              ># Option 3 — Combine both (most common in real life)</span
+            ><br />echo "Welcome to my AMAZING and AWESOME site" &gt; home.txt
+          </div>
+
+          <h3>Step 5 — Mark as Resolved and Complete the Merge</h3>
+          <div class="code-block">
+            <span class="comment"># Stage the resolved file</span><br />git add
+            home.txt<br /><br /><span class="comment"
+              ># Check status — should show "All conflicts fixed but you are
+              still merging"</span
+            ><br />git status<br /><br /><span class="comment"
+              ># Complete the merge with a commit</span
+            ><br />git commit -m "merge: resolve welcome message conflict"
+          </div>
+
+          <h3>Step 6 — Verify the Merge</h3>
+          <div class="code-block">git log --oneline --graph --all</div>
+
+          <p>You should see the two branch lines joining at a merge commit.</p>
+
+          <h3>Aborting a Merge</h3>
+          <p>If you get into a conflict and want to bail out entirely:</p>
+          <div class="code-block">git merge --abort</div>
+
+          <p>
+            This returns everything to exactly the state it was before you ran
+            <code>git merge</code>.
+          </p>
+
+          <h3>Using a Visual Merge Tool</h3>
+          <p>
+            For complex conflicts, a visual tool is much easier than editing raw
+            conflict markers:
+          </p>
+          <div class="code-block">git mergetool</div>
+
+          <p>
+            Popular options: VS Code (built-in), IntelliJ IDEA, Sourcetree,
+            vimdiff.
+          </p>
+
+          <p>To set VS Code as your merge tool:</p>
+          <div class="code-block">
+            git config --global merge.tool vscode<br />git config --global
+            mergetool.vscode.cmd 'code --wait $MERGED'
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              Two developers both update the app's config file on the same day.
+              When their branches are merged, Git flags a conflict. The
+              developer resolving it reads both changes, keeps both database
+              settings (one added a timeout, the other changed the pool size),
+              and commits the resolved file. The result is better than either
+              branch alone — both changes are preserved.
+            </p>
+          </div>
+        </section>
+
+        <section id="8-deleting-branches">
+          <h2>8. Deleting Branches</h2>
+          <p>
+            Once a branch is merged, it's good practice to delete it. This keeps
+            your branch list clean.
+          </p>
+
+          <h3>Delete a Merged Branch (Safe)</h3>
+          <div class="code-block">git branch -d feature-login</div>
+
+          <p>
+            The <code>-d</code> flag is safe — it refuses to delete a branch
+            that hasn't been merged yet.
+          </p>
+
+          <h3>Force Delete an Unmerged Branch</h3>
+          <div class="code-block">git branch -D feature-experiment</div>
+
+          <p>
+            Use this when you've decided to abandon a branch entirely. The
+            capital <code>-D</code> is a force delete — Git won't warn you even
+            if commits will be lost.
+          </p>
+
+          <h3>Delete a Remote Branch</h3>
+          <div class="code-block">git push origin --delete feature-login</div>
+
+          <p>
+            You'll use this after merging a Pull Request on GitHub. More on this
+            on Day 4.
+          </p>
+        </section>
+
+        <section id="9-useful-branch-tips">
+          <h2>9. Useful Branch Tips</h2>
+
+          <h3>See Which Branches Are Already Merged</h3>
+          <div class="code-block">git branch --merged</div>
+
+          <p>
+            These are safe to delete. Any branch in this list (other than
+            <code>main</code>) can be cleaned up.
+          </p>
+
+          <h3>See Which Branches Are NOT Merged Yet</h3>
+          <div class="code-block">git branch --no-merged</div>
+
+          <p>
+            Be careful deleting anything from this list — you'll lose unmerged
+            commits.
+          </p>
+
+          <h3>View the Full Branch + Commit Graph</h3>
+          <div class="code-block">
+            git log --oneline --graph --all --decorate
+          </div>
+
+          <p>
+            This is one of the most useful commands in Git. It shows every
+            branch, every commit, and how they relate — all in one ASCII
+            diagram.
+          </p>
+
+          <h3>Branch Naming Conventions</h3>
+          <p>Teams typically follow naming patterns like:</p>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pattern</th>
+                  <th>Example</th>
+                  <th>When to Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>feature/</code></td>
+                  <td><code>feature/user-auth</code></td>
+                  <td>New features</td>
+                </tr>
+                <tr>
+                  <td><code>fix/</code> or <code>bugfix/</code></td>
+                  <td><code>fix/login-redirect</code></td>
+                  <td>Bug fixes</td>
+                </tr>
+                <tr>
+                  <td><code>hotfix/</code></td>
+                  <td><code>hotfix/payment-crash</code></td>
+                  <td>Urgent production fixes</td>
+                </tr>
+                <tr>
+                  <td><code>release/</code></td>
+                  <td><code>release/v2.1.0</code></td>
+                  <td>Release preparation</td>
+                </tr>
+                <tr>
+                  <td><code>chore/</code></td>
+                  <td><code>chore/update-deps</code></td>
+                  <td>Non-code tasks</td>
+                </tr>
+                <tr>
+                  <td><code>docs/</code></td>
+                  <td><code>docs/api-reference</code></td>
+                  <td>Documentation</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="use-case">
+            <p>
+              <strong>🌍 Real-World Use Case:</strong><br />
+              Most teams enforce branch naming via CI/CD pipeline rules. A
+              branch named <code>feature/JIRA-482-dark-mode</code> automatically
+              links to the Jira ticket, shows up in the deployment pipeline
+              correctly, and gets cleaned up automatically after merging. Naming
+              conventions aren't just aesthetics — they power automation.
+            </p>
+          </div>
+        </section>
+
+        <section id="10-day-3-hands-on-exercise">
+          <h2>10. Day 3 Hands-On Exercise</h2>
+          <p>Continue in your <code>learning-git</code> folder.</p>
+
+          <div class="step">
+            <h4>Step 1 — Set Up a Base</h4>
+            <div class="code-block">
+              cd ~/Desktop/learning-git<br />git switch main<br /><br /><span
+                class="comment"
+                ># Make sure main is clean</span
+              ><br />git status<br /><br /><span class="comment"
+                ># Add a base file to work with</span
+              ><br />echo "# My Project" &gt; home.txt<br />echo "Version 1.0"
+              &gt;&gt; home.txt<br />git add home.txt<br />git commit -m "feat:
+              add home page content"
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 2 — Create a Feature Branch and Build on It</h4>
+            <div class="code-block">
+              <span class="comment"># Create and switch to a new branch</span
+              ><br />git switch -c feature-about-page<br /><br /><span
+                class="comment"
+                ># Do some work</span
+              ><br />echo "&lt;h1&gt;About Us&lt;/h1&gt;" &gt; about.html<br />echo
+              "Learn more about our team." &gt;&gt; about.html<br />git add
+              about.html<br />git commit -m "feat: add about page"<br /><br />echo
+              "h1 { color: navy; }" &gt;&gt; style.css<br />git add style.css<br />git
+              commit -m "style: set heading color for about page"<br /><br /><span
+                class="comment"
+                ># Check your branch log</span
+              ><br />git log --oneline
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 3 — Inspect Branch Differences</h4>
+            <div class="code-block">
+              <span class="comment"
+                ># See how your branch diverges from main</span
+              ><br />git log --oneline --graph --all<br /><br /><span
+                class="comment"
+                ># See what files differ between branches</span
+              ><br />git diff main..feature-about-page
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 4 — Merge the Feature Branch</h4>
+            <div class="code-block">
+              <span class="comment"># Switch back to main</span><br />git switch
+              main<br /><br /><span class="comment"># Merge the feature</span
+              ><br />git merge feature-about-page<br /><br /><span
+                class="comment"
+                ># See the result</span
+              ><br />git log --oneline --graph --all<br /><br /><span
+                class="comment"
+                ># Clean up</span
+              ><br />git branch -d feature-about-page
+            </div>
+          </div>
+
+          <div class="step">
+            <h4>Step 5 — Create and Resolve a Merge Conflict</h4>
+            <div class="code-block">
+              <span class="comment"># Modify home.txt on main</span><br />echo
+              "Version 2.0 - Now with more features!" &gt; home.txt<br />git add
+              home.txt<br />git commit -m "chore: bump version to 2.0 on
+              main"<br /><br /><span class="comment"
+                ># Create a new branch from the PREVIOUS commit (before the
+                version bump)</span
+              ><br />git switch -c feature-version-update HEAD~1<br />echo
+              "Version 2.0 - Redesigned from scratch!" &gt; home.txt<br />git
+              add home.txt<br />git commit -m "chore: update version message on
+              feature branch"<br /><br /><span class="comment"
+                ># Switch back to main and merge — this will conflict!</span
+              ><br />git switch main<br />git merge feature-version-update<br /><br /><span
+                class="comment"
+                ># Open home.txt and resolve the conflict markers</span
+              ><br /><span class="comment"
+                ># Keep whichever message you prefer (or combine them)</span
+              ><br /><span class="comment"># Then:</span><br />git add
+              home.txt<br />git commit -m "merge: resolve version message
+              conflict"<br /><br /><span class="comment"
+                ># View the final history graph</span
+              ><br />git log --oneline --graph --all
+            </div>
+            <div class="highlight">
+              <p>
+                <strong>✅ What You Should Have After This Exercise:</strong
+                ><br />
+                - Experience creating, switching, and deleting branches<br />
+                - A merge commit in your history from the feature-about-page
+                merge<br />
+                - A resolved merge conflict with a clear merge commit<br />
+                - A visual graph showing how branches diverged and came back
+                together
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="11-key-commands-summary">
+          <h2>11. Key Commands Summary</h2>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>What It Does</th>
+                  <th>Common Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>git branch</code></td>
+                  <td>List all local branches</td>
+                  <td><code>git branch</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -a</code></td>
+                  <td>List all branches including remote</td>
+                  <td><code>git branch -a</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -v</code></td>
+                  <td>List branches with last commit</td>
+                  <td><code>git branch -v</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch &lt;name&gt;</code></td>
+                  <td>Create a new branch</td>
+                  <td><code>git branch feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git switch &lt;branch&gt;</code></td>
+                  <td>Switch to an existing branch</td>
+                  <td><code>git switch main</code></td>
+                </tr>
+                <tr>
+                  <td><code>git switch -c &lt;name&gt;</code></td>
+                  <td>Create and switch to a new branch</td>
+                  <td><code>git switch -c feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git checkout -b &lt;name&gt;</code></td>
+                  <td>Older syntax for create + switch</td>
+                  <td><code>git checkout -b feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git merge &lt;branch&gt;</code></td>
+                  <td>Merge a branch into the current one</td>
+                  <td><code>git merge feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git merge --no-ff</code></td>
+                  <td>Merge and always create a merge commit</td>
+                  <td><code>git merge --no-ff feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git merge --abort</code></td>
+                  <td>Cancel an in-progress merge</td>
+                  <td><code>git merge --abort</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -d &lt;name&gt;</code></td>
+                  <td>Delete a merged branch (safe)</td>
+                  <td><code>git branch -d feature-login</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch -D &lt;name&gt;</code></td>
+                  <td>Force delete a branch</td>
+                  <td><code>git branch -D experiment</code></td>
+                </tr>
+                <tr>
+                  <td><code>git branch --merged</code></td>
+                  <td>List branches already merged</td>
+                  <td><code>git branch --merged</code></td>
+                </tr>
+                <tr>
+                  <td><code>git log --oneline --graph --all</code></td>
+                  <td>Visual history of all branches</td>
+                  <td><code>git log --oneline --graph --all</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <div class="summary">
+          <h2>Coming Up on Day 4 — Remote Repositories & GitHub</h2>
+          <p>
+            Tomorrow you'll learn how to share your work with others using
+            remote repositories. You'll master:
+          </p>
+          <ul>
+            <li><code>git remote</code> — connecting to remote repositories</li>
+            <li><code>git push</code> — sharing your commits with the world</li>
+            <li><code>git pull</code> — getting updates from others</li>
+            <li><code>git clone</code> — downloading existing projects</li>
+            <li>Pull Requests and code review workflows</li>
+          </ul>
+          <p>
+            Remote repositories are what make Git truly powerful — they enable
+            collaboration at scale.
+          </p>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          ←
+          <a href="day02_staging_commiting_history.html"
+            >Day 2 — Staging, Committing & History</a
+          >
+          | <a href="index.html">Index</a> |
+          <a href="day04_remote_repository.html"
+            >Day 4 — Remote Repositories & GitHub</a
+          >
+          →
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

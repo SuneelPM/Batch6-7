@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Collections Mastery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- PrismJS Core and Theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- PrismJS Line Numbers Plugin CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap");
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+        scroll-behavior: smooth;
+      }
+
+      .problem-card {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .problem-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      }
+
+      details summary {
+        cursor: pointer;
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      details summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .difficulty-easy {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .difficulty-medium {
+        background-color: #fef9c3;
+        color: #854d0e;
+      }
+      .difficulty-hard {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      .tag {
+        padding: 2px 8px;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .nav-btn.active {
+        background-color: #10b981;
+        color: white;
+      }
+
+      pre[class*="language-"] {
+        margin: 0 !important;
+        border-radius: 0 !important;
+        font-size: 0.875rem !important;
+      }
+    </style>
+  </head>
+  <body class="p-4 md:p-8">
+    <div class="max-w-4xl mx-auto min-h-screen flex flex-col">
+      <!-- Header -->
+      <header class="mb-12 text-center">
+        <h1 class="text-4xl font-bold text-slate-900 mb-2">
+          Python Collections Module
+        </h1>
+        <p
+          class="text-emerald-600 font-semibold mb-4 text-sm uppercase tracking-widest"
+        >
+          Advanced Data Structures Series
+        </p>
+        <p class="text-slate-600 text-lg mb-8">
+          Mastering Counter, namedtuple, deque, and defaultdict.
+        </p>
+
+        <!-- Navigation Tabs -->
+        <div
+          class="flex flex-wrap justify-center gap-2 mb-8 bg-slate-200 p-1 rounded-lg w-fit mx-auto"
+        >
+          <button
+            onclick="switchTab('coding')"
+            id="tab-coding"
+            class="nav-btn active px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Coding Challenges
+          </button>
+          <button
+            onclick="switchTab('mcq')"
+            id="tab-mcq"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            MCQs
+          </button>
+          <button
+            onclick="switchTab('interview')"
+            id="tab-interview"
+            class="nav-btn px-4 py-2 rounded-md font-semibold transition-all text-sm md:text-base"
+          >
+            Interview Prep
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="flex-grow">
+        <div id="coding-container" class="grid gap-6"></div>
+        <div id="mcq-container" class="grid gap-6 hidden"></div>
+        <div id="interview-container" class="grid gap-6 hidden"></div>
+      </main>
+
+      <!-- Footer -->
+      <footer
+        class="mt-16 py-8 border-t border-slate-200 text-center text-slate-500 text-sm"
+      >
+        <p>&copy; 2026, LogicWhile.</p>
+      </footer>
+    </div>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <script>
+      const codingData = [
+        {
+          id: 1,
+          title: "Basic Counter",
+          difficulty: "easy",
+          description:
+            "Given the string 'abracadabra', use Counter to find the frequency of each character.",
+          solution:
+            "from collections import Counter\ntext = 'abracadabra'\ncounts = Counter(text)\nprint(counts)",
+        },
+        {
+          id: 2,
+          title: "Namedtuple Creation",
+          difficulty: "easy",
+          description:
+            "Create a namedtuple 'Car' with fields 'make', 'model', and 'year'. Instantiate one and access the 'make' field.",
+          solution:
+            "from collections import namedtuple\nCar = namedtuple('Car', ['make', 'model', 'year'])\nmy_car = Car('Toyota', 'Corolla', 2022)\nprint(my_car.make)",
+        },
+        {
+          id: 3,
+          title: "Defaultdict Counting",
+          difficulty: "easy",
+          description:
+            "Use a defaultdict with a default type of int to count frequencies of words in a list.",
+          solution:
+            "from collections import defaultdict\nwords = ['apple', 'banana', 'apple', 'cherry']\ncounts = defaultdict(int)\nfor word in words:\n    counts[word] += 1\nprint(dict(counts))",
+        },
+        {
+          id: 4,
+          title: "Deque Rotation",
+          difficulty: "easy",
+          description:
+            "Create a deque with [1, 2, 3, 4, 5] and rotate it 2 positions to the right.",
+          solution:
+            "from collections import deque\nd = deque([1, 2, 3, 4, 5])\nd.rotate(2)\nprint(list(d)) # [4, 5, 1, 2, 3]",
+        },
+        {
+          id: 5,
+          title: "Most Common Items",
+          difficulty: "easy",
+          description:
+            "Use Counter to find the top 2 most frequent numbers in [1, 1, 2, 3, 3, 3, 4, 4].",
+          solution:
+            "from collections import Counter\nnums = [1, 1, 2, 3, 3, 3, 4, 4]\ncounts = Counter(nums)\nprint(counts.most_common(2))",
+        },
+        {
+          id: 6,
+          title: "Defaultdict Grouping",
+          difficulty: "medium",
+          description:
+            "Group a list of words by their first letter using a defaultdict of lists.",
+          solution:
+            "from collections import defaultdict\nwords = ['apple', 'apricot', 'banana', 'cherry', 'blueberry']\ngroups = defaultdict(list)\nfor w in words:\n    groups[w[0]].append(w)\nprint(dict(groups))",
+        },
+        {
+          id: 7,
+          title: "Namedtuple to Dict",
+          difficulty: "medium",
+          description:
+            "Convert a namedtuple instance into a dictionary using the ._asdict() method.",
+          solution:
+            "from collections import namedtuple\nPoint = namedtuple('Point', ['x', 'y'])\np = Point(10, 20)\nprint(p._asdict())",
+        },
+        {
+          id: 8,
+          title: "Deque LIFO Operations",
+          difficulty: "medium",
+          description:
+            "Use a deque to simulate a stack. Add elements to the left and pop from the left.",
+          solution:
+            "from collections import deque\nstack = deque()\nstack.appendleft('first')\nstack.appendleft('second')\nprint(stack.popleft()) # 'second'",
+        },
+        {
+          id: 9,
+          title: "ChainMap for Defaults",
+          difficulty: "medium",
+          description:
+            "Use ChainMap to look up a key across a user-defined dict and a system-defaults dict.",
+          solution:
+            "from collections import ChainMap\ndefaults = {'theme': 'light', 'font': 'Arial'}\nuser_settings = {'theme': 'dark'}\nconfig = ChainMap(user_settings, defaults)\nprint(config['theme']) # dark\nprint(config['font'])  # Arial",
+        },
+        {
+          id: 10,
+          title: "Counter Math",
+          difficulty: "medium",
+          description:
+            "Subtract one Counter from another to see the difference in inventory.",
+          solution:
+            "from collections import Counter\nstock = Counter(apples=10, bananas=5)\nsold = Counter(apples=2)\nstock.subtract(sold)\nprint(stock) # Counter({'apples': 8, 'bananas': 5})",
+        },
+        {
+          id: 11,
+          title: "OrderedDict Manipulation",
+          difficulty: "medium",
+          description: "Move an existing key 'a' to the end of an OrderedDict.",
+          solution:
+            "from collections import OrderedDict\nd = OrderedDict([('a', 1), ('b', 2), ('c', 3)])\nd.move_to_end('a')\nprint(list(d.keys())) # ['b', 'c', 'a']",
+        },
+        {
+          id: 12,
+          title: "Counter Elements",
+          difficulty: "medium",
+          description:
+            "Use the elements() method of Counter to recreate a flat list from counts.",
+          solution:
+            "from collections import Counter\nc = Counter(a=3, b=1)\nprint(list(c.elements())) # ['a', 'a', 'a', 'b']",
+        },
+        {
+          id: 13,
+          title: "Namedtuple Immutability Replace",
+          difficulty: "medium",
+          description:
+            "Change one field 'age' in a namedtuple instance using the ._replace() method.",
+          solution:
+            "from collections import namedtuple\nUser = namedtuple('User', 'name age')\nu1 = User('Bob', 25)\nu2 = u1._replace(age=26)\nprint(u1.age, u2.age) # 25, 26",
+        },
+        {
+          id: 14,
+          title: "Deque with Max Length",
+          difficulty: "medium",
+          description:
+            "Create a deque with maxlen=3. Add [1, 2, 3, 4] and see what remains.",
+          solution:
+            "from collections import deque\nd = deque(maxlen=3)\nfor i in range(1, 5):\n    d.append(i)\nprint(list(d)) # [2, 3, 4]",
+        },
+        {
+          id: 15,
+          title: "Defaultdict Custom Factory",
+          difficulty: "medium",
+          description:
+            "Create a defaultdict that defaults to the string 'Missing' for any new key.",
+          solution:
+            "from collections import defaultdict\nd = defaultdict(lambda: 'Missing')\nd['name'] = 'Alice'\nprint(d['name'], d['age']) # Alice, Missing",
+        },
+        {
+          id: 16,
+          title: "Counter Intersection/Union",
+          difficulty: "hard",
+          description:
+            "Find the intersection (&) and union (|) of two Counters.",
+          solution:
+            "from collections import Counter\nc1 = Counter(a=3, b=1)\nc2 = Counter(a=1, b=2)\nprint(c1 & c2) # Counter({'a': 1, 'b': 1})\nprint(c1 | c2) # Counter({'a': 3, 'b': 2})",
+        },
+        {
+          id: 17,
+          title: "ChainMap Child Scoping",
+          difficulty: "hard",
+          description:
+            "Use .new_child() to add a temporary scope to a ChainMap and then remove it.",
+          solution:
+            "from collections import ChainMap\nbase = ChainMap({'x': 1})\nlocal = base.new_child({'x': 2})\nprint(local['x']) # 2\nprint(local.parents['x']) # 1",
+        },
+        {
+          id: 18,
+          title: "Deque ExtendLeft behavior",
+          difficulty: "hard",
+          description:
+            "Explain and demonstrate why extendleft([1, 2, 3]) results in [3, 2, 1] at the start of a deque.",
+          solution:
+            "from collections import deque\nd = deque(['base'])\nd.extendleft([1, 2, 3])\n# It adds one by one to the left: [1, 'base'] -> [2, 1, 'base'] -> [3, 2, 1, 'base']\nprint(list(d))",
+        },
+        {
+          id: 19,
+          title: "Namedtuple Field Inspection",
+          difficulty: "hard",
+          description:
+            "Access the field names of a namedtuple class dynamically.",
+          solution:
+            "from collections import namedtuple\nTask = namedtuple('Task', 'id desc status')\nprint(Task._fields) # ('id', 'desc', 'status')",
+        },
+        {
+          id: 20,
+          title: "Complex Defaultdict: Nested Dicts",
+          difficulty: "hard",
+          description:
+            "Create a defaultdict of defaultdicts to represent a sparse 2D grid.",
+          solution:
+            "from collections import defaultdict\ngrid = defaultdict(lambda: defaultdict(int))\ngrid[0][5] = 10\nprint(grid[0][5]) # 10\nprint(grid[1][1]) # 0 (default int)",
+        },
+      ];
+
+      const mcqData = [
+        {
+          id: 1,
+          title: "Deque Performance",
+          difficulty: "easy",
+          question:
+            "Which operation is faster in a deque compared to a standard list?",
+          options: [
+            "Accessing middle element",
+            "popleft()",
+            "Slicing",
+            "Sorting",
+          ],
+          answer: "popleft() (O(1) in deque, O(n) in list)",
+        },
+        {
+          id: 2,
+          title: "Counter Missing Key",
+          difficulty: "easy",
+          question: "What does Counter return when you access a missing key?",
+          options: ["KeyError", "None", "0", "False"],
+          answer: "0",
+        },
+        {
+          id: 3,
+          title: "Namedtuple Memory",
+          difficulty: "easy",
+          question:
+            "How does namedtuple memory usage compare to a regular tuple?",
+          options: [
+            "It is twice as large",
+            "It is exactly the same",
+            "It is smaller",
+            "It is same as a dict",
+          ],
+          answer: "It is exactly the same (uses slots internally)",
+        },
+        {
+          id: 4,
+          title: "Defaultdict KeyError",
+          difficulty: "easy",
+          question: "Does defaultdict ever raise a KeyError?",
+          options: [
+            "Yes, if the key is None",
+            "No, it initializes the key",
+            "Only if it is empty",
+            "Yes, in Python 2",
+          ],
+          answer: "No (it uses the factory to initialize missing keys)",
+        },
+        {
+          id: 5,
+          title: "OrderedDict Necessity",
+          difficulty: "easy",
+          question:
+            "Why use OrderedDict in Python 3.7+ if regular dicts are ordered?",
+          options: [
+            "Better performance",
+            "move_to_end() method",
+            "Memory efficiency",
+            "It isn't useful",
+          ],
+          answer: "move_to_end() method (and order-aware equality)",
+        },
+        {
+          id: 6,
+          title: "ChainMap Priority",
+          difficulty: "easy",
+          question: "In a ChainMap(d1, d2), which dict is checked first?",
+          options: ["d1", "d2", "Random", "Simultaneously"],
+          answer: "d1",
+        },
+        {
+          id: 7,
+          title: "Deque Maxlen",
+          difficulty: "medium",
+          question:
+            "What happens when you append to a full deque with a maxlen?",
+          options: [
+            "IndexError",
+            "It resizes",
+            "Opposite end is popped",
+            "It stops accepting",
+          ],
+          answer: "Opposite end is popped (circular buffer behavior)",
+        },
+        {
+          id: 8,
+          title: "Counter Addition",
+          difficulty: "medium",
+          question: "What is Counter(a=1) + Counter(a=1)?",
+          options: ["Counter(a=1)", "Counter(a=2)", "{'a': 2}", "Error"],
+          answer: "Counter(a=2)",
+        },
+        {
+          id: 9,
+          title: "Namedtuple Mutation",
+          difficulty: "medium",
+          question: "Is a namedtuple mutable?",
+          options: ["Yes", "No", "Only the values", "If defined as class"],
+          answer: "No (it inherits from tuple)",
+        },
+        {
+          id: 10,
+          title: "Defaultdict Factory",
+          difficulty: "medium",
+          question: "What must the factory argument in defaultdict be?",
+          options: ["A constant", "A callable", "A list", "A string"],
+          answer: "A callable (function or class)",
+        },
+        {
+          id: 11,
+          title: "Deque Rotate",
+          difficulty: "medium",
+          question: "Result of deque([1, 2]).rotate(-1)?",
+          options: ["[2, 1]", "[1, 2]", "[]", "Error"],
+          answer: "[2, 1] (left rotation)",
+        },
+        {
+          id: 12,
+          title: "Counter.elements()",
+          difficulty: "medium",
+          question: "What does Counter.elements() return?",
+          options: ["A list", "A generator/iterator", "A set", "A tuple"],
+          answer: "A generator/iterator",
+        },
+        {
+          id: 13,
+          title: "Namedtuple _make",
+          difficulty: "medium",
+          question: "What does Point._make([1, 2]) do?",
+          options: [
+            "Creates a list",
+            "Creates a new Point instance",
+            "Errors",
+            "Updates existing",
+          ],
+          answer: "Creates a new Point instance from an iterable",
+        },
+        {
+          id: 14,
+          title: "ChainMap parents",
+          difficulty: "medium",
+          question: "What does my_chain.parents return?",
+          options: [
+            "The first dict",
+            "The last dict",
+            "A new ChainMap excluding first dict",
+            "The keys",
+          ],
+          answer: "A new ChainMap excluding the first dictionary",
+        },
+        {
+          id: 15,
+          title: "Counter.total()",
+          difficulty: "medium",
+          question: "Which Python version introduced Counter.total()?",
+          options: ["3.6", "3.8", "3.10", "3.12"],
+          answer: "3.10",
+        },
+        {
+          id: 16,
+          title: "Deque Thread Safety",
+          difficulty: "hard",
+          question: "Are deque append/pop operations thread-safe?",
+          options: ["Yes, atomic", "No", "Only on Linux", "Only with locks"],
+          answer: "Yes, atomic (in CPython)",
+        },
+        {
+          id: 17,
+          title: "Defaultdict __missing__",
+          difficulty: "hard",
+          question:
+            "Which method does defaultdict override to handle missing keys?",
+          options: ["__get__", "__missing__", "__getitem__", "__init__"],
+          answer: "__missing__",
+        },
+        {
+          id: 18,
+          title: "Namedtuple _replace",
+          difficulty: "hard",
+          question: "Does ._replace() modify the object in place?",
+          options: [
+            "Yes",
+            "No, returns new object",
+            "Depends on field",
+            "Only if mutable",
+          ],
+          answer: "No, it returns a brand new object",
+        },
+        {
+          id: 19,
+          title: "Counter Negatives",
+          difficulty: "hard",
+          question: "Can a Counter store negative counts?",
+          options: [
+            "Yes",
+            "No",
+            "Only via subtract()",
+            "Only if initialized with them",
+          ],
+          answer:
+            "Yes (though some methods like addition ignore non-positive results)",
+        },
+        {
+          id: 20,
+          title: "Deque Indexing Complexity",
+          difficulty: "hard",
+          question: "Time complexity to access d[n] in a deque?",
+          options: ["O(1)", "O(n)", "O(log n)", "O(1) amortized"],
+          answer: "O(n) (it must traverse from the nearest end)",
+        },
+      ];
+
+      const interviewData = [
+        {
+          id: 1,
+          title: "Collections vs Built-ins",
+          difficulty: "easy",
+          question:
+            "Why use the collections module instead of standard dicts and lists?",
+          answer:
+            "The collections module provides specialized data structures that are optimized for specific tasks, improving code readability, performance (e.g., deque), and reducing boilerplate (e.g., defaultdict).",
+        },
+        {
+          id: 2,
+          title: "Deque vs List",
+          difficulty: "easy",
+          question: "When should you prefer a deque over a list?",
+          answer:
+            "Use a deque when you need to frequently add or remove items from the beginning of the collection, as these operations are O(1) in a deque but O(n) in a list.",
+        },
+        {
+          id: 3,
+          title: "Internal: Defaultdict",
+          difficulty: "easy",
+          question: "How does defaultdict work internally?",
+          answer:
+            "It overrides the __missing__(key) method. When a key is not found, it calls the factory function provided during initialization, assigns the result to the key, and returns it.",
+        },
+        {
+          id: 4,
+          title: "Namedtuple vs Class",
+          difficulty: "easy",
+          question: "Why use a namedtuple instead of a custom class?",
+          answer:
+            "Namedtuples are lightweight, memory-efficient (same as tuples), and offer a quick way to define simple 'data-only' classes without writing a full __init__ or __repr__.",
+        },
+        {
+          id: 5,
+          title: "Counter Inheritance",
+          difficulty: "easy",
+          question: "What is Counter a subclass of?",
+          answer:
+            "Counter is a subclass of the built-in 'dict' class, meaning it supports all standard dictionary methods.",
+        },
+        {
+          id: 6,
+          title: "OrderedDict vs Dict",
+          difficulty: "medium",
+          question: "Is OrderedDict obsolete since Python 3.7?",
+          answer:
+            "Not entirely. OrderedDict is still useful for specific methods like move_to_end(), popitem(last=False), and when equality testing must consider the order of items.",
+        },
+        {
+          id: 7,
+          title: "Thread Safety: Deque",
+          difficulty: "medium",
+          question: "Is the deque thread-safe for producer-consumer patterns?",
+          answer:
+            "Yes, the append and pop operations on both ends are atomic in CPython, making it safe to use as a queue between threads without explicit locking.",
+        },
+        {
+          id: 8,
+          title: "ChainMap Use Case",
+          difficulty: "medium",
+          question: "Give a practical example of when to use ChainMap.",
+          answer:
+            "ChainMap is ideal for managing configuration scopes—searching for a setting first in command-line arguments, then environment variables, and finally in a default configuration file.",
+        },
+        {
+          id: 9,
+          title: "Namedtuple underscore methods",
+          difficulty: "medium",
+          question:
+            "Why do namedtuple methods like _asdict start with an underscore?",
+          answer:
+            "To prevent naming conflicts with user-defined field names. While underscores usually imply private methods, in namedtuple, they are part of the public API.",
+        },
+        {
+          id: 10,
+          title: "defaultdict factory",
+          difficulty: "medium",
+          question: "Can a defaultdict take a lambda as a factory?",
+          answer:
+            "Yes, any callable works. Lambda is useful for providing a default constant value: `defaultdict(lambda: 'N/A')`.",
+        },
+        {
+          id: 11,
+          title: "Counter.most_common complexity",
+          difficulty: "medium",
+          question: "What is the time complexity of Counter.most_common(k)?",
+          answer:
+            "It is O(n log k), as it uses a heap (heapq) internally to maintain the top k elements efficiently.",
+        },
+        {
+          id: 12,
+          title: "Memory: Tuple vs Object",
+          difficulty: "medium",
+          question:
+            "Why are namedtuples more memory efficient than class instances?",
+          answer:
+            "Classes use a __dict__ for attributes by default, which has significant overhead. Tuples store pointers in a contiguous block without the dict overhead.",
+        },
+        {
+          id: 13,
+          title: "Deque: Rotation vs Slicing",
+          difficulty: "medium",
+          question:
+            "Why is deque.rotate() better than list slicing for shifting?",
+          answer:
+            "Rotating a deque is O(k) (k=steps), whereas list slicing `L[k:] + L[:k]` creates two new lists and joins them, which is O(n) and uses more memory.",
+        },
+        {
+          id: 14,
+          title: "MultiSet with Counter",
+          difficulty: "medium",
+          question: "Explain how Counter can act as a 'MultiSet' (Bag).",
+          answer:
+            "It stores elements as keys and counts as values. It supports set-like operations like intersection (&) and union (|) while keeping track of counts.",
+        },
+        {
+          id: 15,
+          title: "Defaultdict Factory Scope",
+          difficulty: "medium",
+          question: "Can a defaultdict factory function take arguments?",
+          answer:
+            "No, the factory function called by __missing__ must be zero-argument. If you need arguments, you can use a closure or `functools.partial`.",
+        },
+        {
+          id: 16,
+          title: "Deque Maxlen Advantage",
+          difficulty: "hard",
+          question: "What is the benefit of deque(maxlen=N) for logging?",
+          answer:
+            "It automatically discards the oldest entries once the limit is reached, acting as a fixed-size moving window or circular buffer without manual list management.",
+        },
+        {
+          id: 17,
+          title: "Namedtuple vs TypedDict",
+          difficulty: "hard",
+          question: "When would you prefer TypedDict over namedtuple?",
+          answer:
+            "Use TypedDict (from typing) when you need to represent JSON-like structures that are truly dictionaries but need static type checking, whereas namedtuple is for immutable record-like objects.",
+        },
+        {
+          id: 18,
+          title: "ChainMap .parents",
+          difficulty: "hard",
+          question:
+            "What is the difference between .parents and .maps[1:] in ChainMap?",
+          answer:
+            ".parents returns a new ChainMap instance containing all maps except the first, while .maps[1:] returns a simple list of the underlying dictionaries.",
+        },
+        {
+          id: 19,
+          title: "Counter Math nuances",
+          difficulty: "hard",
+          question: "Does Counter(+) preserve zero or negative counts?",
+          answer:
+            "No. The mathematical operators (+, -, &, |) for Counters only keep keys with positive values in the result.",
+        },
+        {
+          id: 20,
+          title: "OrderedDict Equality",
+          difficulty: "hard",
+          question:
+            "How does OrderedDict equality differ from standard dict equality?",
+          answer:
+            "OrderedDict(a=1, b=2) == OrderedDict(b=2, a=1) is FALSE. Regular dicts compare only values; OrderedDicts compare both values and their insertion order.",
+        },
+      ];
+
+      function switchTab(tab) {
+        const containers = {
+          coding: document.getElementById("coding-container"),
+          mcq: document.getElementById("mcq-container"),
+          interview: document.getElementById("interview-container"),
+        };
+        const buttons = {
+          coding: document.getElementById("tab-coding"),
+          mcq: document.getElementById("tab-mcq"),
+          interview: document.getElementById("tab-interview"),
+        };
+
+        Object.keys(containers).forEach((key) => {
+          containers[key].classList.add("hidden");
+          buttons[key].classList.remove("active");
+        });
+
+        containers[tab].classList.remove("hidden");
+        buttons[tab].classList.add("active");
+        Prism.highlightAll();
+      }
+
+      function renderCoding() {
+        const container = document.getElementById("coding-container");
+        codingData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Challenge #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-600 mb-6 leading-relaxed">${item.description}</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Reveal Python Code</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="border-t border-slate-200">
+                            <pre class="line-numbers language-python"><code class="language-python">${item.solution}</code></pre>
+                            <div class="p-2 bg-slate-900 flex justify-end">
+                                <button onclick="copyCode(this)" class="text-slate-400 hover:text-white text-xs flex items-center gap-1">
+                                    <i class="fa-regular fa-copy"></i> Copy
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderMCQ() {
+        const container = document.getElementById("mcq-container");
+        mcqData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          const opts = item.options
+            .map(
+              (o, i) => `
+                    <div class="flex items-center gap-3 p-2 rounded-md hover:bg-slate-50 border border-transparent">
+                        <span class="w-6 h-6 flex items-center justify-center bg-emerald-100 rounded-full text-xs font-bold text-emerald-600">${String.fromCharCode(65 + i)}</span>
+                        <span class="text-slate-700">${o}</span>
+                    </div>
+                `,
+            )
+            .join("");
+
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">MCQ #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-4">${item.question}</h3>
+                    <div class="space-y-2 mb-6">${opts}</div>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Check Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 font-medium">Correct Answer:</p>
+                            <p class="text-emerald-700 mt-1">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function renderInterview() {
+        const container = document.getElementById("interview-container");
+        interviewData.forEach((item) => {
+          const div = document.createElement("div");
+          div.className =
+            "problem-card bg-white rounded-xl border border-slate-200 p-6";
+          div.innerHTML = `
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-slate-400 text-sm font-semibold">Interview Prep #${item.id}</span>
+                        <span class="tag difficulty-${item.difficulty}">${item.difficulty}</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-2">${item.title}</h3>
+                    <p class="text-slate-700 font-semibold mb-4 italic">"${item.question}"</p>
+                    <details class="group bg-slate-50 rounded-lg border border-slate-200 overflow-hidden">
+                        <summary class="p-3 text-slate-700 font-semibold hover:bg-slate-100 transition-colors">
+                            <span>Show Detailed Answer</span>
+                            <i class="fa-solid fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                        </summary>
+                        <div class="p-4 bg-emerald-50 border-t border-slate-200">
+                            <p class="text-emerald-900 leading-relaxed">${item.answer}</p>
+                        </div>
+                    </details>
+                `;
+          container.appendChild(div);
+        });
+      }
+
+      function copyCode(btn) {
+        const code =
+          btn.parentElement.previousElementSibling.querySelector(
+            "code",
+          ).innerText;
+        const temp = document.createElement("textarea");
+        temp.value = code;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand("copy");
+        document.body.removeChild(temp);
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+          btn.innerHTML = original;
+        }, 2000);
+      }
+
+      // Initialize
+      renderCoding();
+      renderMCQ();
+      renderInterview();
+      Prism.highlightAll();
+    </script>
+  </body>
+</html>
