@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Ternary operator</h1>
+    <script>
+        // let name = prompt("enter your name");
+        // let marks = Number(prompt("enter your marks"));
+        // //ternary
+        // // let result = marks > 40 ? "Pass" : "Fail";
+        // // let results = `hi ${name}, you have ${result}ed the exam`;
+        // // OR
+        // let results = `hi ${name}, you have ${marks > 40 ? "Pass" : "Fail"}ed the exam`;
+        // console.log(results);
+
+        //if else
+        // if (marks>40){
+        //     result="pass";
+        // }
+        // else{
+        //     result="fail"
+        // }
+
+        // short- circuit pattrens
+        let savedname = prompt("enter your name");
+        const display = `Hi ${savedname || "Guest"}!`;
+        // console.log(display);
+
+        let marks = Number(prompt("enter your marks"));
+        console.log( `${display} your marks are ${marks > 40 ? marks : "40"}`);
+
+    </script>
+</body>
+</html>
