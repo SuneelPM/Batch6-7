@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ternary Operator</title>
+</head>
+<body>
+    <h1>Ternary Operator</h1>
+    <script>
+        let name =  prompt("Enter your name:");
+        
+        let marks=Number(prompt("Enter ur marks"));
+
+           //ternary operator
+        // let result=marks>40?"pass":"Fail";
+        // hi name ,you have passed the exam 
+        // hi name, you have failed the exam
+        // template literal to form this string and assign it to result variable 
+
+        // let str=`Hi ${name}, you have ${marks > 40 ? "pass" : "Fail"} the exam`;
+        
+
+        
+        
+
+
+
+        
+        //if else
+        // if(marks>40){
+        //     result="pass";
+        // }else{
+        //     result="fail";
+        // }
+//    const savedNamed = "";
+//    const display = savedNamed || "Guest";
+//    console.log(display);
+
+// let savedName = prompt("Enter your name :");
+// const display = `Hi ${savedNamed || "Guest marks"}`;
+// console.log(display);
+
+// let name = prompt("Enter your name:");
+// let marks = Number(promot("Enter marks"));
+// if makrs are below 40 give ,else give marks
+let resultStr = `${name} your marks are ${marks > 40 ? marks : 40}` ;
+console.log(resultStr);
+
+    </script>
+    
+</body>
+</html>
