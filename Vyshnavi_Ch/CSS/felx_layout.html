@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grid Layout</title>
+    <style>
+        body {
+            margin: 20px;
+            font-family: Arial;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            grid-template-rows: 80px 300px 80px;
+            gap: 20px;
+            padding: 20px;
+            background-color: aqua;
+        }
+
+        .header {
+            grid-column: 1 / 3;
+            background-color:white;
+            text-align: center;
+            line-height: 80px;
+            font-size: 24px;
+        }
+
+        .aside {
+            background-color: #5aa6a6;
+            text-align: center;
+            line-height: 300px;
+            font-size: 24px;
+        }
+
+        .article {
+            background-color: #ef6f6c;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .img {
+            background-color: lightgray;
+            height: 100px;
+            line-height: 100px;
+        }
+
+        .footer {
+            grid-column: 1 / 3;
+            background-color: #7fb3ad;
+            text-align: center;
+            line-height: 80px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">Header</header>
+    
+    <aside class="aside">Aside</aside>
+    
+    <article class="article">
+        <h2>Article</h2>
+        <div class="images">
+            <div class="img">Image</div>
+            <div class="img">Image</div>
+            <div class="img">Image</div>
+        </div>
+    </article>
+    
+    <footer class="footer">Footer</footer>
+</div>
+
+</body>
+</html>
