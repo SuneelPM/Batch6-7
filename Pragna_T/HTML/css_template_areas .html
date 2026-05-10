@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS TEMPLATE AREAS</title>
+    <style>
+        .grid-container{
+            display: grid;
+            grid-template-columns:1fr 5fr 1fr ;
+            grid-template-rows:1fr 10fr 1fr ;
+            height:100vh;
+            gap:10px;
+            grid-template-areas: "header header header"
+                                 "aside1 body aside2"
+                                 "footer footer footer";
+        }
+        .grid-items {
+            background-color:cadetblue ;
+        }
+        .grid-item-1 {
+            grid-area:header;
+        }
+        .grid-item-2 {
+            grid-area:aside1;
+        }.grid-item-3 {
+            grid-area:body;
+        }.grid-item-4 {
+            grid-area:aside2;
+        }
+        .grid-item-5 {
+            grid-area:footer;
+        }
+    </style>
+
+</head>
+<body>
+        <div class="grid-container">
+        <div class="grid-items grid-item-1">Header</div>
+        <div class="grid-items grid-item-2">Aside 1   </div>
+        <div class="grid-items grid-item-3">Content</div>
+        <div class="grid-items grid-item-4">Aside 2</div>
+        <div class="grid-items grid-item-5">Footer</div>
+    </div>
+
+    
+</body>
+</html>
