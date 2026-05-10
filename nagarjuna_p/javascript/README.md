@@ -1,1 +1,0 @@
-# LW_Batch_7_GIT
