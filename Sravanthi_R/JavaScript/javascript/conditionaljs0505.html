@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JS conditinal statements</h1>
+    <script>
+        let age=Number(prompt("enter age"))
+        //if
+        if(age>0) {
+            console.log("you are alive")
+        }
+        //if else
+        if(age>18){
+            console.log("yor are eligible for vote")
+        }else{
+            console.log("yor are not eligible for vote")
+        }
+        //if else if else
+        //18+ you can buy cigarattes
+        //21+ you can buy alcohol
+        if(age>=21){
+            console.log("You are eligible to buy both tobaco and alcohol")
+        }else if(age<21 && age>=18){
+            console.log("You are eligible to buy only tobaco but not alcohol")
+        }else{
+             console.log("You are not eligible to buy neither tobacco nor alcohol")
+        }
+
+        //grade a-90-100
+        //grade b-80-90
+        //grade c-70-80  
+        //grade d-40-70
+        //grade f-0-40
+        let marks = Number(prompt("Enter marks:"));
+
+        if (marks >= 90 && marks <= 100) {
+            console.log("Grade A");
+        } else if (marks >= 80 && marks < 90) {
+            console.log("Grade B");
+        } else if (marks >= 70 && marks < 80) {
+            console.log("Grade C");
+        } else if (marks >= 40 && marks < 70) {
+            console.log("Grade D");
+        } else if (marks >= 0 && marks < 40) {
+            console.log("Grade Fail");
+        } else {
+            console.log("Invalid marks");
+        }  
+
+        // a student preparing for UPSC exam,we need to find the eligibility of the student based on category and age -> out put no.of attempts
+        // Minimum Age: 21 years.
+        // General/EWS: 32 years (6 attempts).
+        // OBC (Non-Creamy Layer): 35 years (9 attempts).
+        // SC/ST: 37 years (Unlimited attempts).
+        // Persons with Benchmark Disabilities (PwBD): 42 years.
+        let ages= Number(prompt("Enter age:"));
+        let category = prompt("Enter category:");
+        
+        if (ages< 21) {
+            console.log("Not Eligible");
+        }
+        else if (category == "General" || category == "EWS") {
+            if (ages <= 32) {
+                console.log("Eligible - 6 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "OBC") {
+            if (ages <= 35) {
+                console.log("Eligible - 9 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "SC/ST") {
+            if (ages <= 37) {
+                console.log("Eligible - Unlimited attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "PwBD") {
+            if (ages <= 42) {
+                console.log("Eligible");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else {
+            console.log("Invalid Category");
+        }
+    </script>
+</body>
+</html>

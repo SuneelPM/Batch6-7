@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>List - descriptive Lists </title>
+        <style>
+            pre{
+                background-color: bisque;
+                padding: 20px;
+                border: 1px solid greenyellow
+                margin: 20px   
+            }
+        </style>
+    </head>
+    <body>
+        <pre><code>def is_prime(n):
+    # Prime numbers are greater than 1
+    if n <= 1:
+        return False
+    
+    # Check factors from 2 to square root of n
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+# Example usage
+num = int(input("Enter a number: "))
+
+if is_prime(num):
+    print(num, "is a Prime Number")
+else:
+    print(num, "is Not a Prime Number")</code></pre>
+        <h2 title="this is details tag"></h2>
+        <details>
+            <summary>QUESTIONS</summary>
+            1.WHAT is HTML?
+        </details>
+        <dl>
+            <dt>HTML</dt>
+            <dd>hyper text markup language with support for styling and structuring web content.</dd>
+            <dt>CSS</dt>
+            <dd>cascading style sheets fir styling anf layout of web pages</dd>
+            <dt>JAVA SCRIPT</dt>
+            <dd>programming language for adding interactivity and dynamic behaviour to web pages.</dd>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam exercitationem impedit, placeat omnis sapiente provident tenetur blanditiis assumenda veritatis dignissimos aspernatur quaerat voluptas rem voluptate odit voluptates, saepe quibusdam inventore!</p>
+            <h1>loerm 5</h1>
+        </dl>
+    </body>
+</html>

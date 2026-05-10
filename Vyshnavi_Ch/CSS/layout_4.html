@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css Grid Layout 7</title>
+    <style>
+        .gc{
+            display: grid;
+            grid-template-columns: 100px 400px 100px;
+            grid-template-rows: 3fr 200px 2fr;
+            gap: 10px;
+            height: 400px;
+            
+        }
+        .gi{
+            background-color: cadetblue;
+            border-radius: 10px;
+            /*place-content: center;
+            text-align: center;*/
+            
+        }
+        .gi1{
+            grid-column: 1/4;
+            grid-row: 1;
+            background-color:orangered;
+        }
+        .gi2{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            background-color: yellow;
+        }
+        .gi3{
+            grid-column: 2/3;
+            grid-row: 2/3;
+            background-color: skyblue;
+        }
+        .gi4{
+            grid-column: 3/4;
+            grid-row: 2/3;
+            background-color: palevioletred;
+        }
+        .gi5{
+            grid-column: 1/4;
+            grid-row: 3/4;
+            background-color: green;
+        }
+        .table{
+            display: grid;
+            grid-template-columns: 6fr 6fr;
+            grid-template-rows: 200px 80px 60px;
+            gap: 10px;
+            height: 400px;
+            margin: 50px ;
+
+        }
+        .box{
+            background-color: cadetblue;
+            border-radius: 10px;
+            text-align: center;
+            place-content: center;
+        }
+        .box1{
+            grid-column: 1/3;
+            grid-row: 1/2;
+            background-color: skyblue;
+        }
+        .box2{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            background-color: yellow;
+        }
+        .box3{
+            grid-column: 2/3;
+            grid-row: 2/3;
+            background-color: pink;
+
+        }
+        .box4{
+            grid-column: 1/4;
+            grid-row: 3/4;
+            background-color: green;
+        }
+        .mobile{
+            display: grid;
+            grid-template-columns: 400px;
+            grid-template-rows: 80px 300px;
+            gap: 10px;
+            height: 500vh;
+            justify-content: center;
+            
+        }
+        .cards{
+            background-color: cadetblue;
+            border-radius: 10px;
+        }
+        .card1{
+            grid-column: 1/2;
+            grid-row: 1/2;
+            background-color: red;
+        }
+        .card2{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            background-color: skyblue;
+        }
+
+
+        
+    </style>
+</head>
+<body>
+    <h1>Responsive Layout with Flexbox</h1>
+    
+    <div class="gc">
+        <div class="gi gi1">Header</div>
+        <div class="gi gi2">Aside 1</div>
+        <div class="gi gi3"><p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quisquam ducimus qui totam. Earum, assumenda! Vero velit amet ea, animi earum veniam quaerat voluptatem deserunt eos!</p></div>
+        <div class="gi gi4">Aside 2</div>
+        <div class="gi gi5">Footer</div>
+    </div>
+    
+
+    <div class="table">
+        <div class="box box1"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio officiis reprehenderit vero voluptatem autem quo quaerat minus ad rem dolor rerum voluptas iste earum, quisquam quod nisi omnis facilis.</p></div>
+        <div class="box box2">Aside 1</div>
+        <div class="box box3">Aside 2</div>
+        <div class="box box4">Footer</div>
+    </div>
+    <div class="mobile">
+        <div class="cards card1">Header</div>
+        <div class="cards card2"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis odit eius dolorum non alias, eaque repellendus debitis adipisci deserunt magni quas ducimus quibusdam ipsam sunt delectus tempore ab qui explicabo.</p></div>
+    </div>
+    
+    
+</body>
+</html>

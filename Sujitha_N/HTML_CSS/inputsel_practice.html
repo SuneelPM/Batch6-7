@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   <style>
+
+/* Universal selector */
+* {
+  font-family: Arial;
+}
+
+/* Type selector */
+input {
+  padding: 8px;
+  margin: 5px;
+  background-color: blue;
+}
+
+/* Class selector */
+.input-style {
+  background-color:chartreuse;
+  color: purple;
+  border-radius: 5px;
+}
+
+/* ID selector */
+#special {
+  background-color: yellow;
+
+}
+
+/* Attribute selector */
+input[type="password"] {
+  background-color:brown;
+  color:aqua;
+}
+
+input[type="number"]{
+    background-color: aqua;
+    color: brown;
+}
+
+/* Grouping selector */
+input, button {
+  border: 1px solid gray;
+  background-color: palevioletred;
+  color: blue;
+}
+
+</style>
+</head>
+<body>
+
+<h2>Input Styling</h2>
+
+<input type="text" class="input-style" placeholder="Enter name" required>
+<input type="email" id="special" placeholder="Enter email">
+<input type="password" placeholder="Enter password">
+<input type="number" placeholder="Enter number">
+<input type="date">
+<button>Submit</button>
+
+</body>
+</html>
