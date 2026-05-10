@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Navbar Design</title>
+  <style>
+    body {
+  background-color: rgb(242, 238, 238);
+  font-family: Arial;
+}
+
+/* navbar */
+.navbar {
+  width: 90%;
+  margin: 30px auto;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* logo */
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* links */
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links li {
+  cursor: pointer;
+  position: relative;
+}
+
+/* underline active */
+.nav-links li.active::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: white;
+  bottom: -5px;
+  left: 0;
+}
+
+/* button filled */
+.btn-fill {
+  background: yellow;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* button outline */
+.btn-outline {
+  background: transparent;
+  border: 2px solid yellow;
+  color: rgb(205, 232, 29);
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar 1 -->
+  <nav class="navbar">
+    <div class="logo">LOGO</div>
+    <ul class="nav-links">
+      <li>About us</li>
+      <li>Portfolio</li>
+      <li>Services</li>
+      <li><button class="btn-fill">Contact us</button></li>
+    </ul>
+  </nav>
+
+  <!-- Navbar 2 -->
+  <nav class="navbar">
+    <div class="logo">LOGO</div>
+    <ul class="nav-links">
+      <li class="active">About us</li>
+      <li>Portfolio</li>
+      <li>Services</li>
+      <li><button class="btn-fill">Contact us</button></li>
+    </ul>
+  </nav>
+
+  <!-- Navbar 3 -->
+  <nav class="navbar">
+    <div class="logo">LOGO</div>
+    <ul class="nav-links">
+      <li>About us</li>
+      <li>Portfolio</li>
+      <li>Services</li>
+      <li><button class="btn-outline">Contact us</button></li>
+    </ul>
+  </nav>
+
+</body>
+</html>
