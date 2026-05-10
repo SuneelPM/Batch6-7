@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout 6</title>
+    <style>
+        button{
+        
+            background-color: darkorange;
+            border: 1px solid red;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 1opx;
+        }
+        button:hover{
+            background-color: blueviolet;
+            box-shadow: 5px 5px 5px 5px lightgrey;
+        }
+        button:active{
+            /* box-shadow: -5px -5px 5px 5px lightgrey inset;*/
+          transform: scale(0.10);
+        }
+        h1:hover{
+            color: blue;
+        }
+        input{
+            border: 2px solid blue;
+              padding: 10px;
+            border-radius: 10px;
+        }
+        input:focus {
+            outline: none;
+            border: 2px solid red;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        a:link{
+            text-decoration: none;
+            color: red;
+            background-color: rgb(250,235,235);
+            padding: 10px;
+            border: 1px solid red;
+            border-radius: 5px;
+        }
+        a:visited{
+            color: green;
+        }
+        input+checked+label{
+            font-weight: bold;
+            color: green;
+        }
+       
+    </style>
+    </head>
+    <body>
+    <h1>css pseudo classes</h1>
+    <form action="/submit">
+        <label for="fn">first name</label>
+        <input type="text" id="fn"/>
+         <label for="fn">middle namme</label>
+        <input type="text" id="fn"/>
+          <label for="fn">last name</label>
+        <input type="text" id="fn" disabled/>
+
+        <div>
+            <a href="https://www.goggle.com">google</a>
+        </div>
+    </form>
+        <div>
+            <h3>qualification</h3>
+            <input type="checkbox" name="a" id="x"/>
+            <lable for="x">10th</lable>
+              <input type="checkbox" name="a" id="x"/>
+            <lable for="x">intermidiate</lable>
+              <input type="checkbox" name="a" id="x"/>
+            <lable for="x">10th</lable>
+              <input type="checkbox" name="a" id="x"/>
+            <lable for="x">btech</lable>
+              <input type="checkbox" name="a" id="x"/>
+            <lable for="x">post graduation</lable>
+
+        </div>
+    </form>
+    <button>click me</button>
+    </body>
+    <style>
