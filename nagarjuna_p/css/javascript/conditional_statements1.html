@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>js conditional statements</h1>
+    <script>
+      //if
+      if (age > 0) {
+        console.log("your are alive");
+      }
+      //if else
+      let age = Number(prompt("enter your age"));
+      if (age >= 18) {
+        console.log("your are eleigible to vote");
+      } else {
+        console.log("your not eligible to vote");
+      }
+      //if else if else
+      //18+ you can buy cigarettes
+      //21+ you can buy alcohol
+      if (age >= 21) {
+        console.log("your are eligible to both cigerrete and alchol");
+      } else if (age < 21 && age >= 18) {
+        console.log("your are eligible to buy only tobacco not alchol");
+      } else {
+        console.log("ypur are eleigible to buy neither tobacco nor alchol");
+      }
+      //grade marks
+      //grade a--90-100
+      //grade b--80-90
+      //grade c--70-80
+      //graded d--40-70
+      //grade f--0-40
+      let marks = Number(prompt("enter your marks"));
+
+      if (marks <= 100 && marks >= 90) {
+        console.log("grade A");
+      } else if (marks < 90 && marks >= 80) {
+        console.log("grade B");
+      } else if (marks < 80 && marks >= 70) {
+        print("grade c");
+      } else if (marks < 70 && marks >= 40) {
+        console.log("grade D");
+      } else if (marks < 40 && marks >= 0) {
+        console.log("grade F");
+      } else {
+        console.log("please enter a valid marks in 0 to 100");
+      }
+      //a student preparing for upsc exam,we need to find the eligible of the student based on
+      //category and age->no of attempts
+      //minimum age:21
+      //
+      let dob = prompt("Enter your date of birth");
+      let category = prompt("Enter category (general/obc/sc/st/pwd):");
+      console.log("Your age is: " + age);
+
+      if (age < 21) {
+        console.log("Not Eligible for UPSC");
+      } else if ((category === "general" || category === "ews") && age <= 32) {
+        console.log("Eligible for UPSC");
+        console.log("Maximum Attempts: 6");
+      } else if (category === "obc" && age <= 35) {
+        console.log("Eligible for UPSC");
+        console.log("Maximum Attempts: 9");
+      } else if ((category === "sc" || category === "st") && age <= 37) {
+        console.log("Eligible for UPSC");
+        console.log("Unlimited Attempts");
+      } else if (category === "pwd" && age <= 42) {
+        console.log("Eligible for UPSC");
+        console.log("Age limit: 42");
+      } else {
+        console.log("Not Eligible for UPSC");
+      }
+      //nested if
+      // UPSC category wise attempts and age eligibility using nested if
+
+      // UPSC eligibility using Nested IF
+
+      let age1 = 30;
+
+      if (category == "GEN") {
+        if (age >= 21 && age <= 32) {
+          console.log("GEN Eligible");
+          console.log("Attempts 6");
+        } else {
+          console.log("GEN Not Eligible");
+        }
+      }
+
+      if (category == "OBC") {
+        if (age >= 21 && age <= 35) {
+          console.log("OBC Eligible");
+          console.log("Attempts 9");
+        } else {
+          console.log("OBC Not Eligible");
+        }
+      }
+
+      if (category == "SC") {
+        if (age >= 21 && age <= 37) {
+          console.log("SC Eligible");
+          console.log("Unlimited Attempts");
+        } else {
+          console.log("SC Not Eligible");
+        }
+      }
+
+      if (category == "ST") {
+        if (age >= 21 && age <= 37) {
+          console.log("ST Eligible");
+          console.log("Unlimited Attempts");
+        } else {
+          console.log("ST Not Eligible");
+        }
+      }
+    </script>
+  </body>
+</html>

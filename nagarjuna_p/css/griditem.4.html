@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Layout 6</title>
+    <style>
+        .grid-container{
+            display: grid;
+            grid-template-columns: 200px 2fr 1fr;
+            grid-template-rows: auto  auto;
+            gap: 10px;
+            height: 200px;
+            
+        }
+        .grid-items{
+            background-color: aqua;
+            text-align: center;
+            place-content: center;
+
+        }
+        /* attr value starts with(^)*/
+        [class^="grid-item"]{
+            color:blue;
+
+        }
+        .grid-item1{
+            grid-column: 1/2;
+            grid-row: 1/4;
+            background-color: red;
+        }
+        .grid-item2{
+            grid-column: 2/4;
+            grid-row: 1/2;
+            background-color: greenyellow;
+        }
+        .grid-item3{
+            grid-column: 2/3;
+            grid-row: 2/4;
+            background-color: palevioletred;
+        }
+        .grid-item4{
+            grid-column: 3/4;
+            grid-row: 2/3;
+            background-color: blueviolet;
+        }
+        .grid-item5{
+            grid-column: 3/4;
+            grid-row: 3/4;
+            background-color: blueviolet;
+        }
+    </style>
+</head>
+<body>
+    <h1>Grid Layout 6</h1>
+    <div class="grid-container">
+        <div class="grid-items grid-item1">grid-item1</div>
+        <div class="grid-items grid-item2">grid-item2</div>
+        <div class="grid-items grid-item3">grid-item3</div>
+        <div class="grid-items grid-item4">grid-item4</div>
+        <div class="grid-items grid-item5">grid-item5</div>
+    </div>
+    
+</body>
+</html>

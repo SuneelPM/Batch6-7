@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pseudo element</title>
+    <style>
+         .amount-container{
+            display: flex;
+            width: 30%;
+            background-color: aqua;
+
+         }
+        p{
+            padding: 10px;
+            background-color: green;
+            border-radius: 10px;
+            margin: 10px;
+            border: 1px solid rgb(red, green, blue);
+        }
+        p::before{
+            content: close quota;
+            font-size: 50px;
+        }
+        p::after{
+            content: "(read more...)"\1F81E";
+
+        }
+        p::first-line{
+            font-size: 30px;
+            font-style: italic;
+        }
+        p::selection{
+            background-color: yellow;
+        }
+        li::marker{
+            content: "\2bc1";
+            color: red;
+            content-visibility: auto;
+        }
+
+        pricce::before{
+            content: "";
+        }
+      input::placeholder{
+        color: coral;
+        font-style: italic;
+        background-color: aqua;
+      }
+      input::file-selector-button{
+        background-color: blue;
+
+      }
+    </style>
+</head>
+<body>
+    <h1>css pseudo element::before,::after</h1>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis adipisci nesciunt quas iure rem accusantium dolorum laborum accusamus laudantium hic quod, fugit quidem, nobis pariatur soluta. Molestiae expedita dignissimos maiores.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae, numquam nihil quidem illo omnis consequuntur fugit, a, blanditiis excepturi minus beatae amet pariatur mollitia eius autem laboriosam officiis ipsum commodi?</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, temporibus sed dolorum laboriosam, vel possimus rerum ex numquam velit dolore at, aliquid nisi quae veritatis quasi minus ipsum distinctio cupiditate.</p>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio adipisci eligendi quae impedit tempora? Laboriosam illo fuga reiciendis magni quos, facere sapiente libero nemo ipsam laborum doloribus possimus incidunt eveniet?</p>
+
+        <div class="amount container">
+            <div class="amount">amount:</div>
+        <div class="price">50000</div>
+    </div>
+    <ul>
+        <li>item 1</li>
+        <li>item 2</li>
+        <li>item 3</li>
+        <li>item 4</li>
+        <li>item 5</li>
+    </ul>
+    <hr>
+    <div><label for="">first name:</label><input type="text" placeholder="enter first name here"/>
+    </div>
+    <label for="msg">Message:</label><br>
+<textarea id="msg" name="message" rows="5" cols="40">
+Type your message here...
+</textarea>
+<input type="file">
+</body>
+</html>
