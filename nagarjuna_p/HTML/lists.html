@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>descriptive lists</title>
+
+    </head>
+    <h1 title="this is title tag">details</h1>
+    <details>
+        <summary>question</summary>
+        what is html
+    </details>
+    <pre><code>Here's a Python function to identify prime numbers:
+
+```
+def is_prime(n):
+    """
+    Check if a number is prime.
+
+    Args:
+        n (int): The number to check.
+
+    Returns:
+        bool: True if the number is prime, False otherwise.
+    """
+    if n <= 1:
+        return False
+    if n == 2:
+        return True
+    if n % 2 == 0:
+        return False
+    max_divisor = int(n**0.5) + 1
+    for d in range(3, max_divisor, 2):
+        if n % d == 0:
+            return False
+    return True
+
+# Example usage:
+print(is_prime(25))  # False
+print(is_prime(23))  # True
+print(is_prime(37))  # True
+print(is_prime(48))  # False
+```
+
+This function works by checking divisibility up to the square root of the number, which is a common optimization for prime checks.
+
+If you want to identify prime numbers within a range, you can use the following function:
+
+```
+def prime_numbers_in_range(start, end):
+    """
+    Get prime numbers within a range.
+
+    Args:
+        start (int): The start of the range (inclusive).
+        end (int): The end of the range (inclusive).
+
+    Returns:
+        list: A list of prime numbers in the range.
+    """
+    return [n for n in range(start, end + 1) if is_prime(n)]
+
+# Example usage:
+print(prime_numbers_in_range(1, 50))
+```
+
+This function uses a list comprehension to generate a list of prime numbers within the specified range.
+
+*Optimized version for large ranges:*
+
+If you need to check prime numbers in a large range, you can use the Sieve of Eratosthenes algorithm, which is more efficient:
+
+```
+def sieve_of_eratosthenes(n):
+    """
+    Get prime numbers up to n using the Sieve of Eratosthenes algorithm.
+
+    Args:
+        n (int): The upper limit.
+
+    Returns:
+        list: A list of prime numbers up to n.
+    """
+    sieve = [True] * (n + 1)
+    sieve[0:2] = [False, False]  # 0 and 1 are not prime
+    for current_prime in range(2, int(n**0.5) + 1):
+        if sieve[current_prime]:
+            for multiple in range(current_prime**2, n + 1, current_prime):
+                sieve[multiple] = False
+    return [n for n, is_prime in enumerate(sieve) if is_prime]
+
+# Example usage:
+print(sieve_of_eratosthenes(50))
+```
+
+This algorithm works by iteratively marking multiples of each prime number as non-prime, leaving only prime numbers in the sieve.</code></pre>
+
+    <body>
+        <dl>
+            <dt>HTML</dt>
+            <DD>hypertext markup language with support for styling and strctuing web support content. </DD>
+            <dt>CSS</dt>
+            <dd>cascading style sheets for styling and layout webpages.</dd>
+            <dt>javascript</dt>
+            <dd>it is a very important language</dd>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt, fuga nemo possimus distinctio omnis autem dolore quo nisi! Exercitationem assumenda animi itaque aspernatur iusto possimus neque error eum expedita! Labore?</p>
+    
+        
+        </dl>
+
+    </body>
+
+</html>
