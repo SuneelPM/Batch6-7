@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ternary Operator</title>
+  </head>
+  <body>
+    <h1>Ternary Operator</h1>
+    <script>
+      //   let fname = prompt("Enter you name: ");
+      //   let marks = prompt("Enter your marks");
+
+      //   console.log("user has entered: ", marks);
+
+      // ternary operator
+      // hi name, you have passed the exam
+      // hi name, you have failed the exam
+
+      // template literal to form this string and assign it to result variable
+      //   let result = marks > 40 ? "Pass" : "Fail";
+
+      //   let str = `Hi ${fname}, you have ${marks > 40 ? "Pass" : "Fail"} the exam`;
+
+      //   console.log(str);
+
+      let savedName = prompt("Enter your name: ");
+      const display = `Hi ${savedName || "Guest"}`;
+      //   console.log(display); // "Guest"
+
+      let marks = Number(prompt("enter marks"));
+      //if marks are below 40 give 40, else give marks
+
+      let resultStr = `${display}, your marks are ${marks > 40 ? marks : 40}`;
+
+      console.log(resultStr);
+    </script>
+  </body>
+</html>

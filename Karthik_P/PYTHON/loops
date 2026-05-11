@@ -1,0 +1,410 @@
+# for i in range(5):
+#     print(i)
+
+# for i in range(10,16):
+#     print(i)
+
+# for i in nrange(20,30,2):
+#     print(i,end=" ")
+
+# for i in range(22,11,-4):
+#     print(i,end=" ")
+
+# n=15
+# for i in range(1,n,2):
+#     print(i,end=" ")
+
+# n=int(input())
+# s=int(input())
+# count=0
+# for i in range(n,s):
+#     if i%2==0:
+#         print(i,end=" ")
+#         count=count+1
+# print()
+# print(count)
+
+
+# n=int(input())
+# s=int(input())
+# count=0
+# for i in range(n,s+1):
+#     if i%2==0:
+#         print(i,end=" ")
+#         count=count+1
+# print()
+# print(count)
+
+
+# n=int(input())
+# s=int(input())
+# count=0
+# if n>s:
+#     n,s=s,n
+# for i in range(n,s+1):
+#     if i%2==0:
+#         print(i,end=" ")
+#         count=count+1
+# print()
+# print(count)
+
+# n=int(input())
+# sum=0
+# for i in range(1,n+1):
+#     sum=sum+i
+# print(sum)
+
+# n=int(input())
+# sum=0
+# for i in range(n):
+#     num=int(input())
+#     sum=sum+num
+# print(sum)
+# avg=sum/n
+# print(avg)
+
+# n="karthik"
+# for i in (n):
+#     print(i,end=" ")
+
+# n=input()
+# for i in n:
+#     print(i,end=" ")
+
+# n1=int(input())
+# n2=int(input())
+# x=int(input())
+# y=int(input())
+# for i in range(n1,n2+1):
+#     if i%x==0 and i%y==0:
+#         print(i,end=" ")
+
+    
+# for j in range(1,5):
+#     for i in range(0,j):
+#         print("$",end=" ")
+#     print(" ")
+
+# blnc=5000
+# for i in range(1):
+#     amnt=int(input())
+#     if amnt%100!=0:
+#         print("invalid amnt")
+#     elif amnt>blnc:
+#         print("insufficient blnc")
+# else:
+#     blnc=blnc-amnt
+#     print("transaction successfull:")
+#     print("remaining balance:",blnc)
+
+# n=int(input())
+# sum=0
+# evn_cnt=0
+# odd_cnt=0
+# for i in range(1,n+1):
+#     sum=sum+i
+#     if i%2==0:
+#         print(i,end=" ")
+#         evn_cnt=evn_cnt+1
+#     else:
+#         odd_cnt=odd_cnt+1
+# print()
+# print("sum of numbers:",sum)
+# print("count of even numbers:",evn_cnt)
+# print("count of odd numbers:",odd_cnt)
+
+#count number of digits in a number
+
+# n=int(input())
+# count=0
+# for i in str(n):
+#     count=count+1
+# print("count number of digits:",count)
+
+
+# char=input()
+# count=0
+# for i in char:
+#     count+=1
+# print("count number of charactures:",count)
+
+# n=int(input())          #234
+# sum=0                   #0
+# for i in str(n):        #"2"        #"3"        #4
+#     sum=sum+int(i)      #2=0+int(2) #5=2+int(3) #9=5+int(4)
+# print(sum)              # result=9
+
+#while loop
+
+# i=0
+# while i<5:
+#     print("this is while loop")
+#     i=i+1
+
+# i=100
+# while i>0:
+#     print(" batterypersentage",i)
+#     i=i-10
+# print("phone switch OFF")
+
+
+# n=int(input())          #123
+# rev=0                   #0
+# while n!=0:             #
+#     dgt=n%10
+#     rev=rev*10+dgt
+#     n=n//10
+# print(rev)
+
+# n=123
+# n=n//10
+# print(n)
+
+# n=int(input())  
+# temp=n        
+# rev=0                   
+# while n>0:            
+#     dgt=n%10
+#     rev=rev*10+dgt
+#     n=n//10
+# if temp==rev:
+#     print("palindrome")
+# else:
+#     print("not a palindrome")
+
+# n=int(input())
+# i=1
+# sum=0
+# while n>i:
+#     if n%i==0:
+#         sum=sum+i
+#     i=i+1
+# if sum==n:
+#     print("perfect number")
+# else:
+#     print("not a perfect number")
+
+# n=int(input())
+# check=0
+# for i in range(2,n):
+#     if n%i==0:
+#         check=1
+# if check==0:
+#     print("prime number")
+# else:
+#     print("not a prime number")
+
+# n=int(input())
+# fact=1
+# for i in range(1,n+1):
+#     fact=fact*i
+# print(fact)
+
+# n=int(input())
+# a=0
+# b=1
+# print(a,b,end=" ")
+# for i in range(n):
+#     c=a+b
+#     a=b
+#     b=c
+#     print(c,end=" ")
+
+# n = int(input())
+# s = int(input())
+# count = 0
+# i = n
+# while i < s:
+#     if i % 2 == 0:
+#         print(i, end=" ")
+#         count += 1
+#     i += 1
+# print()
+# print(count)
+
+
+
+
+# n = int(input())
+# s = int(input())
+# count = 0
+# if n > s:
+#     n, s = s, n
+# i = n
+# while i <= s:
+#     if i % 2 == 0:
+#         print(i, end=" ")
+#         count += 1
+#     i += 1
+# print()
+# print(count)
+
+
+
+# n = int(input())
+# sum = 0
+# i = 0
+# while i < n:
+#     num = int(input())
+#     sum += num
+#     i += 1
+# print(sum)
+# avg = sum / n
+# print(avg)
+
+
+
+# n = int(input())
+# sum = 0
+# evn_cnt = 0
+# odd_cnt = 0
+# i = 1
+# while i <= n:
+#     sum += i
+#     if i % 2 == 0:
+#         print(i, end=" ")
+#         evn_cnt += 1
+#     else:
+#         odd_cnt += 1
+#     i += 1
+# print()
+# print("sum of numbers:", sum)
+# print("count of even numbers:", evn_cnt)
+# print("count of odd numbers:", odd_cnt)
+
+
+
+# n = int(input())
+# count = 0
+# while n > 0:
+#     count += 1
+#     n //= 10
+# print("count number of digits:", count)
+
+
+
+# n = int(input())   
+# sum = 0
+# while n > 0:
+#     digit = n % 10
+#     sum += digit
+#     n //= 10
+# print(sum)
+
+
+# for j in range(1,4+1):
+#     for i in range(0,j):
+#         print("*",end=" ")
+#     print(" ")
+
+# for j in range(1,5):
+#     for i in range(1,5):
+#         print("*",end=" ")
+#     print(" ")
+
+
+# for j in range(5,0,-1):
+#     for i in range(0,j+1):
+#         print("*",end=" ")
+#     print(" ")
+
+# n=int(input())
+# for i in range(1,5):
+#     print("*"*i,end=" ")
+#     print()
+
+# n=int(input())
+# for j in range(1,5):
+#     for s in range(n-j):
+#         print(" ",end=" ")
+#     for i in range(j):
+#         print("*",end=" ")
+#     print()
+
+# n=int(input())
+# for i in range(1,n+1):
+#     print(" "*(n-i),"*"*i,end=" ")
+#     print()
+
+# n=int(input())
+# for j in range(1,n+1):
+#     for s in range(n-j):
+#         print(" ",end=" ")
+#     for i in range(2*j-1):
+#         print("*",end=" ")
+#     print()
+
+# n=int(input())
+# for i in range(1,n+1):
+#     print(" "*(n-i),"*"*(2*i-1),end=" ")
+#     print()
+
+# n=int(input())
+# for j in range(1,n+1):
+#     for s in range(n-j):
+#         print(" ",end=" ")
+#     for i in range(2*j-1):
+#         print("*",end=" ")
+#     print()
+# for j in range(n,0,-1):
+#     for s in range(n-j):
+#         print(" ",end=" ")
+#     for i in range(2*j-1):
+#         print("*",end=" ")
+#     print()
+
+# n=input
+# while n!=0:
+#     pss="karthik"
+#     n=input()
+#     if n==pss:
+#         break
+#     print("Try again")
+# print("login succesfully")
+
+# a=10
+# print(f"this is first:{a}")
+
+# for n in range(5):
+#     print(f"current number:{n}")
+# else:
+#     print("loop completed normally")
+        
+# for n in range(5):
+#     print(f"current number:{n}")
+#     if n==3:
+#         break
+# else:
+#     print("loop completed normally")
+
+# count=0
+# while count<5: 
+#         print(f"current number:{count}")
+#         count+=1
+# else:
+#     print(f"loop completed normally")
+
+# count=0
+# while count<10:
+#         print(f"current number:{count}")
+#         if count==5:
+#               break
+#         count+=1
+# else:
+#     print(f"loop completed normally")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

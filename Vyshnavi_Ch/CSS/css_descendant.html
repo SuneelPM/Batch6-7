@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css descendant</title>
+    <style>
+        /*descendant selector*/
+        ol li{
+            color: blue;
+        }
+        /*child selector*/
+        ul > li {
+            color: green;
+        }
+        /*adjacent slibling*/
+         h2 +p{
+            background-color: antiquewhite;
+         }
+    </style>
+    <head>
+        <body>
+            <h1>css descendant selector</h1>
+            <hr/>
+            <h2>sibling</h2>
+            <p>adjacent sibling</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quis optio similique incidunt sapiente quas ea magnam molestiae ullam reprehenderit!</p>
+            <hr/>
+            <ul>
+                <li>
+                    <ol>
+                        <li>order item 1</li>
+                         <li>order item 2</li>
+                          <li>order item 3</li>
+                    </ol>
+                </li>
+                <li>item 1</li>
+                <li>item 2</li>
+                <li>item 3</li>
+            </ul>
+        </body>
+    </head>
+    

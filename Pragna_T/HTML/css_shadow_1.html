@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>css box shadow</title>
+        <style>
+            :root {
+                --color:rgb (220,220,220);
+                --shadow-green:green;
+                --shadow-red:red;
+
+                
+            }
+            .common{
+                color:red;
+                border:1px solid green;
+                padding:10px;
+                margin:40px;
+                border-radius: 10px;
+            }
+            .shadow-top-right {
+
+            
+                box-shadow:
+                10px -10px 15px 5px var(--color),
+                 5px,5px var(--shadow-green);
+
+         }
+         .shadow-top-left {
+             box-shadow:-10px -10px 5px var(--color);
+
+         }
+         .shadow-bottom-right :active {
+             box-shadow:10px 10px 6px var(--color) inset;
+
+         }
+          
+         
+
+         .shadow-bottom-left {
+             box-shadow:3px 3px 5px  5px var(--color);
+         }
+         .button{
+            background-color:aqua;
+             padding:10px;
+             border:none;
+
+         }
+         
+         
+         
+
+
+
+
+         
+
+        </style>
+
+    </head>
+    <body>
+        <h1>css box shadow</h1>
+        <hr/>
+        <button class="shadoe-bottom-right button">click me</button>
+
+        <p class="shadow-top-right common" common>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error atque,
+             voluptatum iure deserunt amet eum facilis,
+             ipsa quod quis eaque totam corporis ipsam aperiam, minima impedit? 
+             Consectetur facere repellat aspernatur?</p>
+             <p class="shadow-top-left common">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis 
+                laudantium omnis at libero quam, 
+                nemo accusamus culpa minima asperiores dolores velit corporis,
+                 autem deserunt quo veniam laboriosam ipsum fugit in?</p>
+             <p class="shadow-bottom-right common">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis, 
+                consequatur at atque laudantium dolor amet ad ratione quos,
+                 rem modi suscipit aut. Impedit eligendi veniam minima reiciendis 
+                 labore non perspiciatis.</p>  
+            <p class="shadow-bottom-left common">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                 Autem, dolore reprehenderit. Laborum harum error velit
+                  voluptatibus culpa officia asperiores deserunt 
+                ducimus accusamus quod autem repudiandae, numquam praesentium
+                 eveniet perferendis quibusdam.</p>  
+    </body>
+</html>

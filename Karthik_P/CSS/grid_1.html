@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid day 1</title>
+    <style>
+        .grid-container{
+            display: grid;
+            grid-template-columns: auto repeat(3, 1fr) 200px;
+            grid-template-rows:auto 100px;
+            gap: 10px;
+            height: 500px;
+        }
+        .grid-items{
+            background-color: rgb(171, 246, 221);
+        }
+    </style>
+</head>
+<body>
+    <h1>Heading</h1>
+    <div class="grid-container">
+        <div class="grid-items grid-items1">Grid item 1</div>
+        <div class="grid-items grid-items2">Grid item 2</div>
+        <div class="grid-items grid-items3">Grid item 3</div>
+        <div class="grid-items grid-items4">Grid item 4</div>
+        <div class="grid-items grid-items5">Grid item 5</div>
+        <div class="grid-items grid-items6">Grid item 6</div>
+    </div>
+</body>
+</html>

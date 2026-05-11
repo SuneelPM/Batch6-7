@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard UI</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+  body {
+  font-family: Arial;
+  background: white;
+  margin: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* Cards */
+.top-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  flex: 1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.bar {
+  height: 8px;
+  background: white;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 10px;
+}
+
+.green { width: 92%; background: green; }
+.blue { width: 75%; background: blue; }
+
+/* Circle */
+.circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 6px solid lightblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+/* Stats */
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.stat {
+  flex: 1;
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+}
+
+.red { background: red; }
+.blue { background: skyblue; }
+.lightblue { background: blue; }
+.yellow { background: gold; }
+
+/* KPI */
+.kpi {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.kpi-card {
+  flex: 1;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Top Cards -->
+  <div class="top-cards">
+    <div class="card">
+      <h4>Task completion rate</h4>
+      <h2>92%</h2>
+      <div class="bar">
+        <div class="fill green"></div>
+      </div>
+      <p>Almost all tasks completed on time.</p>
+    </div>
+
+    <div class="card">
+      <h4>Sales target</h4>
+      <h2>1970/5000</h2>
+      <div class="circle">40%</div>
+      <p>Less than 40% achieved</p>
+    </div>
+
+    <div class="card">
+      <h4>Conversion rate</h4>
+      <div class="bar">
+        <div class="fill blue"></div>
+      </div>
+      <p>75.3% visitors</p>
+      <p>24.7% sales</p>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div class="stat red">Orders<br><b>23,849</b></div>
+    <div class="stat blue">Revenue<br><b>$887,654</b></div>
+    <div class="stat lightblue">Impression<br><b>2,523,849</b></div>
+    <div class="stat yellow">Returns<br><b>23,321</b></div>
+  </div>
+
+  <!-- KPI -->
+  <h3>KPI summary</h3>
+  <div class="kpi">
+    <div class="kpi-card">Total spend<br><b>394,858</b></div>
+    <div class="kpi-card">ROI<br><b>67%</b></div>
+    <div class="kpi-card">Conversion<br><b>6.5%</b></div>
+    <div class="kpi-card">Total leads<br><b>3829</b></div>
+  </div>
+
+</div>
+
+</body>
+</html>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .gc{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows:1fr 3fr 1fr;
+            gap: 10px;
+            height: 500px;
+        }
+        .gi{
+            /* background-color: rgb(228, 76, 182); */
+            text-align: center;
+            place-content: center;
+        }
+        .gi1{
+            background-color: rgb(228, 117, 154);
+            grid-column: 1/5;
+            grid-row: 1/2;
+        }
+        .gi2{
+            background-color: rgb(212, 28, 89);
+            grid-column: 1/2;
+            grid-row: 2/3;
+        }
+        .gi3{
+            background-color: rgb(212, 28, 89);
+            grid-column: 2/5;
+            grid-row: 2/3;
+        }
+        .gi4{
+            background-color: rgb(138, 36, 70);
+            grid-column: 1/4;
+            grid-row: 3/4;
+        }
+        .imgc{
+            display: grid;
+            grid-template-columns:repeat(3,1fr);
+            gap: 30px;
+        }
+        .img{
+            background-color: white;
+            margin: 15px;
+            padding: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="gc">
+        <div class="gi gi1">gi1</div>
+        <div class="gi gi2">gi2</div>
+        <div class="gi gi3">
+            <div class="imgc">
+                <div class="img img1">img1</div>
+                <div class="img img2">img2</div>
+                <div class="img img3">img3</div>
+            </div>
+        </div>
+        <div class="gi gi4">gi4</div>
+    </div>
+</body>
+</html>

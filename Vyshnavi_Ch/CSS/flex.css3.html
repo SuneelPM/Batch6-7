@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Layout 1</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+header, footer {
+  background: teal;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  gap: 10px;
+}
+
+aside {
+  background: rgb(77, 188, 188);
+  flex: 1;
+  padding: 20px;
+  color: white;
+}
+
+article {
+  background-color: rgb(179, 96, 96);
+  flex: 2;
+  padding: 20px;
+  color: white;
+}
+
+.images {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  
+  
+
+}
+
+.image1{
+  background-color: rgb(167, 157, 157);
+  text-align: center;
+  text-align: center;
+  flex: 1;
+  height: 100px;
+  padding: 10px;
+  justify-content: center;
+}
+.image2{
+  background-color: rgb(167, 157, 157);
+  text-align: center;
+  text-align: center;
+  flex: 1;
+  height: 100px;
+  padding: 10px;
+  justify-content: center;
+}
+.image3{
+  background-color: rgb(167, 157, 157);
+  text-align: center;
+  text-align: center;
+  flex: 1;
+  height: 100px;
+  padding: 10px;
+  justify-content: center;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <header>Header</header>
+
+  <div class="main">
+    <aside>Aside</aside>
+
+    <article>
+      Article
+      <div class="images">
+        <div class="image1">Image</div>
+        <div class="image2">Image</div>
+        <div class="image3">Image</div>
+      </div>
+    </article>
+  </div>
+
+  <footer>Footer</footer>
+</div>
+</body>
+</html>
