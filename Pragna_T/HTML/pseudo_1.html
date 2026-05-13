@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            background-color: darkorange;
+            border: 1px solid red;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 10px;
+        }
+        button:hover{
+            background-color: aqua;
+           
+        }
+        button:active{
+             /* box-shadow: 5px 5px 5px 5px lightgrey inset; */
+             transform: scale(2);
+        }
+        h1:hover{
+            color: blueviolet;
+        }
+        input{
+            border: 2px solid blue;
+        }
+        input:focus{
+            outline: none;
+            border: 2px solid red;
+           padding: 10px;
+            border-radius: 10px;
+        }
+        a:link{
+            text-decoration: none;
+            display: inline-block;
+            color: red;
+            background-color: aqua;
+            padding: 10px;
+            border: 1px solid red;
+            border-radius: 5px;
+
+        }
+        a:visited{
+            color: rgb(20, 218, 20);
+        }
+        input:disabled {
+            border: 2px solid gray;
+        }
+        input:checked + label {
+            font-weight:bold ;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>CSS Pseudo classes</h1>
+    <form action="/submit">
+        <label for="fn">First Name</label>
+        <input type="text" is="fn"/>
+        <div>
+            <div>
+                <label for="fn">Middle Name</label>
+                <input type="text" is="fn"/>
+
+            </div>
+            <div>
+                <label for="fn">Last Name</label>
+                <input type="text" is="fn"/>
+
+            </div>
+            <a href="https://www.google.com">Google</a>
+        </div>
+    </form>
+    <hr>
+    <div>
+        <h3>Qualification</h3>
+        <input type ="checkbox">
+    </div>
+    <button>click me</button>
+</body>
+</html>
+
+           
+           

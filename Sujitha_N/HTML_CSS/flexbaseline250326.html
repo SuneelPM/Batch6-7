@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .flex-container{
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+            background-color: rgb(190,223,253);
+        }
+        .flex-items{
+            text-align: center;
+            place-content: end;
+            width: 200px;
+        }
+        .flex-items1{
+            height: 100px;
+            background-color: aqua;
+
+        }
+        .flex-items2{
+            height: 200px;
+            background-color: purple;
+
+        }
+        .flex-items3{
+            height: 300px;
+            background-color: chartreuse;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>css flex-align-items baseline</h1>
+    <div class="flex-container">
+        <div class="flex-items flex-items1">flex-items 1</div>
+        <div class="flex-items flex-items2">flex-items 2</div>
+        <div class="flex-items flex-items3">flex-items 3</div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Js Strings</title>
+  </head>
+  <body>
+    <h1>Js Strings</h1>l
+    <script>
+      let firstName = "Mahesh";
+      let lastName = "Gattamaneni";
+      let fullName = firstName + lastName;
+      let age = 50;
+      //   regular string concatination
+
+      let description1 ="my name is \"" + firstName +" " +lastName +"\". my age is\"" +age +" \".";
+      
+        
+       
+      
+
+      //   template literal - string construction or concatination
+      let description2 = `my name is "${firstName}" ${lastName}.\n My age is ${age}.`;
+      
+
+      console.log(firstName, lastName);
+      console.log(fullName);
+      console.log(description1);
+      console.log(description2);
+
+      console.log(firstName + age);
+      console.log(typeof (firstName + age));
+
+      // javascript's power is "unlimited"!
+
+      let js = "javascript's power is\" unlimited \"!";
+      let js2 = 'javascript\'s power is umlimited\"!';
+      // console.log(ja1 + "\n" +js2);
+     
+      
+      // let username = "guest";
+      // let weekday = "wednesday";
+      // let greeting = 'welcome'
+
+
+      let protocol = "http";
+      let domain = "google.com";
+
+    let url = `${protocol}://${domain}`;
+
+  console.log(url); // http://google.com
+
+    </script>
+  </body>
+</html>

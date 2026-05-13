@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // let dob = prompt("Enter your date of birth (YYYY-MM-DD):");
+      // let category = prompt(
+      //   "Enter category (general/ews/obc/sc/st/pwd):",
+      // ).toLowerCase();
+
+      // let birthDate = new Date(dob);
+      // let today = new Date();
+
+      // let age = today.getFullYear() - birthDate.getFullYear();
+
+      // if (
+      //   today.getMonth() < birthDate.getMonth() ||
+      //   (today.getMonth() === birthDate.getMonth() &&
+      //     today.getDate() < birthDate.getDate())
+      // ) {
+      //   age--;
+      // }
+
+      // console.log("Your age is: " + age);
+
+      // if (age < 21) {
+      //   console.log("Not Eligible for UPSC");
+      // } else if ((category === "general" || category === "ews") && age <= 32) {
+      //   console.log("Eligible for UPSC");
+      //   console.log("Maximum Attempts: 6");
+      // } else if (category === "obc" && age <= 35) {
+      //   console.log("Eligible for UPSC");
+      //   console.log("Maximum Attempts: 9");
+      // } else if ((category === "sc" || category === "st") && age <= 37) {
+      //   console.log("Eligible for UPSC");
+      //   console.log("Unlimited Attempts");
+      // } else if (category === "pwd" && age <= 42) {
+      //   console.log("Eligible for UPSC");
+      //   console.log("Age limit: 42");
+      // } else {
+      //   console.log("Not Eligible for UPSC");
+      // }
+
+      // IF only
+// let age = 20;
+
+// if (age >= 18) {
+//     console.log("Eligible");
+// }
+
+
+
+// SWITCH CASE
+// let day = 2;
+
+// switch(day) {
+//     case 1:
+//         console.log("Monday");
+//         break;
+
+//     case 2:
+//         console.log("Tuesday");
+//         break;
+
+//     case 3:
+//         console.log("Wednesday");
+//         break;
+
+//     default:
+//         console.log("Invalid Day");
+// }
+
+// TERNARY OPERATOR
+// let age = 19;
+
+// let result = (age >= 18) ? "Eligible" : "Not Eligible";
+
+// console.log(result);
+
+// SWITCH CASE
+// let category = "OBC";
+
+// switch(category) {
+//     case "OC":
+//         console.log("6 Attempts");
+//         break;
+
+//     case "OBC":
+//         console.log("9 Attempts");
+//         break;
+
+//     case "SC":
+//         console.log("Unlimited Attempts");
+//         break;
+
+//     default:
+//         console.log("Invalid Category");
+// }
+
+
+// TERNARY OPERATOR WITH CATEGORY
+
+let category = "OBC";
+
+let result = (category == "SC") 
+    ? "Unlimited Attempts" 
+    : "Limited Attempts";
+
+console.log(result);
+    </script>
+  </body>
+</html>
