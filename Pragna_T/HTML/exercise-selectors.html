@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>30 CSS Selectors Practice</title>
+
+<style>
+
+/* 1 Universal Reset */
+* {
+     margin: 0; padding: 0; 
+  }
+
+/* 2 Paragraph */
+p { 
+    color: darkslategray;
+ }
+
+/* 3 ID */
+#main-navigation {
+     background: navy; 
+     color: white; 
+     padding: 10px; 
+    }
+
+/* 4 Class */
+.highlight { 
+    background: yellow;
+ }
+
+/* 5 Grouping */
+h1, 
+h2,
+ h3 {
+     font-family: Arial;
+     }
+
+/* 6 Footer */
+footer { 
+    padding: 20px;
+     background: lightgray; 
+    }
+
+/* 7 ID */
+#branding-logo {
+     width: 100px; 
+    }
+
+/* 8 Class */
+.success {
+     color: green; 
+    }
+
+/* 9 Group */
+img, video { 
+    max-width: 100%;
+     }
+
+/* 10 Attribute present */
+[title] { 
+    cursor: help;
+ }
+
+/* 11 Attribute exact */
+input[type="password"] {
+     letter-spacing: 2px;
+     }
+
+/* 12 Class */
+.btn-primary { 
+    background: blue; 
+    color: white;
+     padding: 5px;
+     }
+
+/* 13 ID */
+#hero-banner {
+     height: 80px; 
+     background: lightblue; 
+    }
+
+/* 14 Type */
+li {
+     list-style: none; 
+    }
+
+/* 15 Body */
+body { 
+    line-height: 1.5;
+     padding: 20px;
+     }
+
+/* 16 Disabled */
+[disabled] {
+     opacity: 0.5; 
+    }
+
+/* 17 Starts with */
+a[href^="https"] {
+     color: teal; 
+    }
+
+/* 18 Ends with */
+img[src$=".png"] {
+     border: 2px solid black; }
+
+/* 19 Contains */
+[class*="container"] {
+     margin: 10px;
+ }
+
+/* 20 Article */
+article { 
+    display: block;
+     background: #eee;
+      padding: 10px; }
+
+/* 21 Alert */
+.alert {
+     padding: 10px;
+      background: pink; }
+
+/* 22 Form POST */
+form[method="POST"] { border: 2px dashed gray;
+     padding: 10px; }
+
+/* 23 Grouping */
+em, strong { 
+    color: darkred;
+ }
+
+/* 24 Required */
+[required] {
+     border-left: 4px solid red; 
+    }
+
+/* 25 Footer ID */
+#site-footer {
+     font-size: 12px; 
+    }
+
+/* 26 Lang */
+[lang="en"] {
+     background: #f0f0f0;
+     }
+
+/* 27 Universal box sizing */
+* { 
+    box-sizing: border-box; 
+}
+
+/* 28 HR */
+hr {
+     height: 3px; 
+     background: black;
+     }
+
+/* 29 Hidden */
+.is-hidden {
+    
+    display: none; }
+
+/* 30 Data attribute */
+[data-tags~="featured"] {
+     border: 3px solid gold; 
+    }
+
+</style>
+</head>
+
+<body>
+
+<nav id="main-navigation">Navigation Bar</nav>
+
+<h1>Heading One</h1>
+<h2>Heading Two</h2>
+<h3>Heading Three</h3>
+
+<p>This is a paragraph</p>
+<p class="success">Success paragraph</p>
+
+<div class="highlight">Highlighted Box</div>
+
+<img id="branding-logo" src="logo.png" alt="Logo">
+
+<p title="info">Hover Me</p>
+
+<input type="password" placeholder="Password">
+
+<button class="btn-primary">Primary Button</button>
+
+<section id="hero-banner">Hero Section</section>
+
+<ul>
+<li>Item 1</li>
+<li>Item 2</li>
+</ul>
+
+<input disabled placeholder="Disabled Input">
+
+<a href="https://google.com">Secure Link</a>
+
+<img src="sample.png" alt="PNG Image">
+
+<div class="my-container">Container Box</div>
+
+<article>Article Content</article>
+
+<div class="alert">Alert Message</div>
+
+<form method="POST">
+<input required placeholder="Required Field">
+</form>
+
+<em>Important</em>
+<strong>Very Important</strong>
+
+<hr>
+
+<footer id="site-footer">Footer Bottom</footer>
+
+<div class="is-hidden">Hidden Text</div>
+
+<div data-tags="featured special">Featured Item</div>
+
+</body>
+</html>

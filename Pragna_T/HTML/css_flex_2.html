@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Layout</title>
+  <style>
+    body {
+      margin: 0;
+    
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    h1 {
+      background: rgb(9, 134, 146);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px;
+    }
+
+    .main {
+      display: flex;
+      background-color: rgba(26, 157, 166, 0.882);
+      padding: 10px;
+      gap: 10px;
+      height: 800px;
+    }
+
+    .box {
+      background-color: rgb(20, 201, 195);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 3px solid rgb(239, 225, 225);
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .left {
+      width: 20%;
+    }
+
+    .middle {
+      width: 25%;
+    }
+
+    .right {
+    
+      width: 1000px;
+    }
+    footer{
+      background: rgb(28, 136, 139);
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 20px; 
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Header</h1>
+  <div class="container">
+    <div class="main">
+      <div class="box left">Inbox etc.</div>
+      <div class="box middle">Message list</div>
+      <div class="box right">Message</div>
+    </div>
+  </div>
+  <footer>Footer</footer>
+
+</div>
+
+</body>
+</html>

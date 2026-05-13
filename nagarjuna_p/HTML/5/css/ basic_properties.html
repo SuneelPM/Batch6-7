@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic CSS Selector</title>
+    <style>
+        /* Universal selector */
+        /* default values */
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        *{
+            color: blue;
+        }
+        h2{
+            color: aqua;
+        }
+
+        /* type /name selector */
+        /* we use element name to identify the html element  */
+        footer{
+            padding: 20px;
+        }
+        main-navigation{
+            background-color: red;
+
+        }
+        
+        
+        p{
+            color: aqua;
+            background-color: blue;
+        }
+        
+
+        li{
+            background-color: yellow;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid green;
+
+        }
+             
+        #para1{
+            color: blue;
+            border: 2px solid;
+        }
+
+        #para2{
+             color:aqua;
+        } 
+
+      /*  grouping selector  
+        if we want to apply the same styling to multiple html elements */
+        h1,h2,h3{
+            font-family: Arial;
+        }
+
+        table,
+        td,
+        th {
+              border: 1px solid blue;
+        }
+
+        th{
+            background-color: greenyellow;
+        }
+        .last-row{
+            border-top: 3px dashed;
+        }
+
+        .bg-color{
+            background-color: blueviolet;
+        }
+
+        .dia-bg-color{
+            background-color: aqua;
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <h1>Basic CSS Selector</h1>
+    <h2>css properties</h2>
+    <h3>csss selector</h3>
+
+
+    <input type="datetime" name="date" id="date1">
+    <ul>
+        <li class="dotted-border">ITEM 1</li>
+        <li> item2</li>
+        <li>ITEM 3</li>
+        <li>ITEM 4</li>
+        <li>ITEM 5</li>
+    </ul>
+
+    <p id="para 1" class="para">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid maiores voluptatibus veritatis obcaecati odit, illum modi natus saepe ducimus soluta distinctio sequi placeat quidem amet ad. Incidunt sunt voluptates odio.
+
+    </p>
+    <p id="para 2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure laborum dolores soluta possimus! Assumenda, aperiam, impedit earum eaque veritatis ullam magnam praesentium neque libero quam saepe, aut nisi est vel.
+    </p>
+
+    <p id="para3">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati nihil harum iste, natus, ea unde animi nobis error laborum, nam aliquid. Quam debitis ex sequi animi inventore, nam delectus recusandae.
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="dotted-border">header1</th>
+                <th>header2</th>
+                <th>header3</th>
+                <th>header4</th>
+                <th>header5</th>
+            </tr>
+        </thead>
+        <tr>
+            <td class="dotted-border dia-bg-color"> cell 1</td>
+            <td> cell 2</td>
+            <td> cell 3</td>
+            <td> cell 4</td>
+            <td> cell 5</td>
+        </tr>
+         <tr>
+            <td> cell 1</td>
+            <td class="dotted-border dia-bg-color"> cell 2</td>
+            <td> cell 3</td>
+            <td> cell 4</td>
+            <td> cell 5</td>
+        </tr>
+         <tr>
+            <td> cell 1</td>
+            <td> cell 2</td>
+            <td class="dotted-border dia-bg-color"> cell 3</td>
+            <td> cell 4</td>
+            <td> cell 5</td>
+        </tr>
+         <tr>
+            <td> cell 1</td>
+            <td> cell 2</td>
+            <td> cell 3</td>
+            <td class="dotted-border dia-bg-color"> cell 4</td>
+            <td> cell 5</td>
+        </tr>
+         <tr>
+            <td> cell 1</td>
+            <td> cell 2</td>
+            <td> cell 3</td>
+            <td > cell 4</td>
+            <td class="dotted-border dia-bg-color"> cell 5</td>
+        </tr>
+    </table>
+</body>
+</html>

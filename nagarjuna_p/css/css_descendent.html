@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css descendent selector</title>
+    <style>
+        /* descendent selector */
+        ul li{
+            color: aqua;
+        }
+        /*child selector*/
+        ul>li{
+            color: blue;
+        }
+        /*adjcent sibiling*/
+        h2+p{
+            background-color: blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>css descendent selector</h1>
+    <h2>sibiling</h2>
+    <p>adjcent sibiling</p>
+    <ul>
+        <li>
+            <ol>
+            <li>ordered 1</li>
+            <li>ordered 2</li>
+            <li>ordered 3</li>
+        </ol>
+    </li>
+        <li>item2</li>
+        <li>item3</li>
+    </ul>
+</body>
+</html>

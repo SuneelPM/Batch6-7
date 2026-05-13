@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    let ages= Number(prompt("Enter age:"));
+        let category = prompt("Enter category:");
+        
+        if (ages< 21) {
+            console.log("Not Eligible");
+        }
+        else if (category == "General" || category == "EWS") {
+            if (ages <= 32) {
+                console.log("Eligible - 6 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "OBC") {
+            if (ages <= 35) {
+                console.log("Eligible - 9 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "SC/ST") {
+            if (ages <= 37) {
+                console.log("Eligible - Unlimited attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "PwBD") {
+            if (ages <= 42) {
+                console.log("Eligible");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else {
+            console.log("Invalid Category");
+        }
+ 
+
+    //switch case:--
+
+let category = "OBC";
+   switch(category) {
+    case "OC":
+        console.log("6 Attempts");
+        break;
+
+    case "OBC":
+        console.log("9 Attempts");
+        break;
+
+    case "SC":
+        console.log("Unlimited Attempts");
+        break;
+
+    default:
+        console.log("Invalid Category");
+
+
+// TERNARY OPERATOR WITH CATEGORY
+
+let category = "OBC";
+
+let result = (category == "SC") 
+    ? "Unlimited Attempts" 
+    : "Limited Attempts";
+
+console.log(result);
+
+
+    </script>
+</body>
+</html>

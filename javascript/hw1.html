@@ -1,0 +1,15 @@
+let dob = prompt("Enter your date of birth (YYYY-MM-DD):");
+
+let birthDate = new Date(dob);
+let today = new Date();
+
+let age = today.getFullYear() - birthDate.getFullYear();
+
+if (
+    today.getMonth() < birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())
+) {
+    age--;
+}
+
+console.log("Your age is: " + age + " years");

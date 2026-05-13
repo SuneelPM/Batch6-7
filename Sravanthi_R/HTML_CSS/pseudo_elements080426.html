@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* *::selection{
+            background-color: darkmagenta;
+            color: white;
+        } */
+        p{
+            padding: 10px;
+            background-color: rgb(211, 208, 208);
+            margin: 10px;
+            border-radius: 10px;
+            border: 1px solid rgb(78, 78, 240);
+        }
+        /* p::before{
+            content: open-quote;
+            font-size: 50px;
+            font-weight: bold;
+        }
+        p::after{
+            content: close-quote;
+            font-size: 50px;
+        } */
+        .amount-container{
+            display: flex;
+            background-color: rgb(188, 233, 218);
+            padding: 20px;
+            justify-content: space-between;
+            border-radius: 10px;
+            width: 30%;
+        }
+        .price::before{
+            content: "\20b9";
+            font-weight: bold;
+            
+        }
+        /* p::first-letter{
+            font-size: 50px;
+        } */
+         /* p::first-line{           
+            font-size: 30px;
+            font-style: italic;
+         } */
+          p::selection{
+            background-color:yellow;
+          }
+          li::marker{
+            content: "\2bc8    ";
+            color: red;
+          }
+          input::placeholder{
+            color: palevioletred;
+            font-style: italic;
+          }
+        
+          
+    </style>
+</head>
+<body>
+    <h1>CSS Pseudo Elements ::before,::after</h1>
+     <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam exercitationem ex voluptatibus animi accusamus laboriosam eligendi pariatur aperiam nemo ad magni qui, ab vitae alias iure sapiente temporibus. Fugiat, enim.</p>
+     
+    
+     <div class="amount-container">
+        <div class="amount">Amount:</div>
+        <div class="price">50,000 </div>
+     </div>
+     <ul>
+        <li>item 1</li>
+        <li>item 2</li>
+        <li>item 3</li>
+        <li>item 4</li>
+        <li>item 5</li>
+     </ul>
+     <hr>
+     <div><label for="">Firsh name:</label>
+        <input type="text" placeholder="entey first name here"></div>
+        <dialog>Hello</dialog>
+</body>
+</html>
