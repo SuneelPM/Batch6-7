@@ -15,6 +15,7 @@ let student = {
     District: "RR",
     State: "Telangana",
     pincode: 500087,
+    phoneNO: [89399389292, 897397237298],
   },
   addresses: [
     {
