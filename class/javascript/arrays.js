@@ -49,14 +49,25 @@ while (z < arr.length) {
 console.log(product);
 console.log(product ** (1 / arr.length));
 
-let heightsOfStudents = [157, 166, 152, 153, 155, 152];
+let arr = [
+  157,
+  166,
+  152,
+  153,
+  155,
+  152,
+  [134, 156],
+  { name: "suneel", age: 25 },
+];
 
-let sumOfHeights = 0;
-let count = 0;
-for (let i = 0; i < heightsOfStudents.length; i++) {
-  sumOfHeights += heightsOfStudents[i];
-  count++;
-}
+arr[6][1];
+
+// let sumOfHeights = 0;
+// let count = 0;
+// for (let i = 0; i < heightsOfStudents.length; i++) {
+//   sumOfHeights += heightsOfStudents[i];
+//   count++;
+// }
 
 console.log(sumOfHeights / heightsOfStudents.length);
 console.log(count);
