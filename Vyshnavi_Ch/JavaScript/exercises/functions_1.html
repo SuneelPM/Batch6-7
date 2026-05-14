@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Functions</title>
+</head>
+<body>
+    <h1>JS Functions</h1>
+    <script>
+        //normal statements
+        console.log("hello");
+        //function definition
+        //name convention for function name is lower camelcase
+        function greet(greeting) {
+            console.log("greeting");
+        }
+        //function call
+        greet("hello");
+        greet("hii")
+
+        //write a function to print name
+        function greet(name) {
+            console.log("Hi " + name + ",  how are you?");
+            console.log(`hi ${name},how are you?`)
+       }
+
+        greet("vyshu");
+        greet("vyshnavi")
+        
+        //wrt a sum of num
+        function sum(num1,num2) {
+            console.log(num1 + num2);
+    
+
+        }
+        sum(10, 8)
+         //sub
+        function sub(num1,num2) {
+            console.log(num1 - num2);
+        }
+        sub(20,5)
+
+        //mul
+        function mul(num1,num2) {
+            console.log(num1 * num2);
+        }
+        mul(5,5)
+ 
+        //div
+        function div(num1,num2) {
+            console.log(num1 / num2);
+        }
+        div(20,5)
+
+        //modulas
+        function mod(num1,num2) {
+            console.log(num1 % num2);
+        }
+        mod(20,5)
+
+        //power
+        function power(num1,num2) {
+            console.log(num1 ** num2);
+        }
+        power(20,5)
+
+
+        //all in one
+        function calculator(num1, num2, operation) {
+
+           if (operation === "+") {
+               console.log(num1 + num2);
+           }
+       
+           else if (operation === "-") {
+               console.log(num1 - num2);
+           }
+       
+           else if (operation === "*") {
+               console.log(num1 * num2);
+           }
+       
+           else if (operation === "/") {
+               console.log(num1 / num2);
+           }
+
+           else if (operation === "%") {
+               console.log(num1 / num2);
+           }
+
+           else if (operation === "**") {
+               console.log(num1 / num2);
+           }
+       
+           else {
+               console.log("Invalid operation");
+           }
+        }
+        calculator(10,2, "+")
+        
+        calculator(10,2, "-")
+        calculator(10,2, "*")
+        calculator(10,2, "/")
+        calculator(10,2, "%")
+        calculator(10,2, "**")
+
+
+        //switch case
+
+        function calculator(num1, num2, operation) {
+
+        switch (operation) {
+
+        case "+":
+            console.log(num1 + num2);
+            break;
+
+        case "-":
+            console.log(num1 - num2);
+            break;
+
+        case "*":
+            console.log(num1 * num2);
+            break;
+
+        case "/":
+            console.log(num1 / num2);
+            break;
+
+        case "%":
+            console.log(num1 % num2);
+            break;
+
+        case "**":
+            console.log(num1 ** num2);
+            break;
+
+        default:
+            console.log("Invalid operation");
+    }
+}
+     calculator(10, 2, "+");
+     calculator(10, 2, "-");
+     calculator(10, 2, "*");
+     calculator(10, 2, "/");
+     calculator(10, 2, "%");
+     calculator(10, 2, "**");
+        
+
+     //ternary operator
+
+     function calculator(num1, num2, operation) {
+    operation === "+" ? console.log(num1 + num2)
+    : operation === "-" ? console.log(num1 - num2)
+    : operation === "*" ? console.log(num1 * num2)
+    : operation === "/" ? console.log(num1 / num2)
+    : operation === "%" ? console.log(num1 % num2)
+    : operation === "**" ? console.log(num1 ** num2)
+    : console.log("Invalid operation");
+
+}
+     calculator(10, 2, "+");
+     calculator(10, 2, "-");
+     calculator(10, 2, "*");
+     calculator(10, 2, "/");
+     calculator(10, 2, "%");
+     calculator(10, 2, "**");
+         
+    </script>
+    
+</body>
+</html>

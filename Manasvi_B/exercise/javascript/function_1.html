@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Functions</title>
+</head>
+<body>
+    <h1>General Functions</h1>
+    <script>
+
+        // normal function
+        // console.log('hello');
+
+        // function definition
+        // naming coonvention for fn name is  lower camelcase
+        // function greet() {
+        //     console.log('Hello');
+        // }
+
+    //    function greet(greeting) {
+    //         console.log(greeting);
+    //     }
+
+    // function greet(name) {
+    //     console.log(`hi ${name}, how are you?`)
+        
+    // }
+        // greet("Manasvi");
+        // greet('Bezawada');
+        //  function sumoftwonum(num1,num2) {
+        //     console.log(num1+num2)
+        //  }
+        //  sumoftwonum(1,2);
+
+        //  function suboftwonum(num1,num2) {
+        //     console.log(num1-num2)
+        //  }
+        //  suboftwonum(1,2);
+
+        //  function muloftwonum(num1,num2) {
+        //     console.log(num1*num2)
+        //  }
+        //  muloftwonum(1,2);
+
+        //  function modoftwonum(num1,num2) {
+        //     console.log(num1%num2)
+        //  }
+        //  modoftwonum(1,2);
+
+        //  function expoftwonum(num1,num2) {
+        //     console.log(num1**num2)
+        //  }
+        //  expoftwonum(1,2);
+
+
+        // function calculator1(num1, num2, operation){
+        //     if(operation == '+'){
+        //         console.log(num1 + num2)
+        //     }else if(operation == '-'){
+        //         console.log(num1 - num2)
+        //     }else if(operation == '*'){
+        //         console.log(num1 * num2)
+        //     }else if(operation == '%'){
+        //         console.log(num1 % num2)
+        //     }else if(operation == '**'){
+        //         console.log(num1 ** num2)
+        //     }
+        // }
+        // calculator1(1,2,'+')
+
+        // function calculator2(num1, num2, operation) {
+        //     switch(operation) {
+        //         case '+':
+        //         console.log(num1 + num2);
+        //         break;
+        //         case '-':
+        //         console.log(num1 - num2);
+        //         break;
+        //         case '*':
+        //         console.log(num1 * num2);
+        //         break;
+        //         case '%':
+        //         console.log(num1 % num2);
+        //         break;
+        //         case '**':
+        //         console.log(num1 ** num2);
+        //         break;
+        //         default:
+        //             console.log("Invalid operation");
+        //         }
+        //     }
+        //     calculator2(1, 2, '**');
+
+        function calculator3(num1, num2, operation){
+            operation == '+'? console.log(num1 + num2):operation == '-'? console.log(num1 - num2):operation == '*'? console.log(num1 * num2):operation == '%'? console.log(num1 % num2):operation == '**'? console.log(num1 ** num2):console.log("Invalid operation");
+        }
+        calculator3(1,2,'*')
+    </script>
+</body>
+</html>

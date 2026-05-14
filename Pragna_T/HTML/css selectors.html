@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Basic CSS Selectors</title>
+    <style>
+      /* Universal selector */
+      /* default values */
+
+      * {
+        color: red;
+      }
+
+      /* Type / Name selector */
+      /* we use element name to identify the html element */
+
+      li {
+        background-color: bisque;
+        margin: 10px;
+        padding: 10px;
+        border: 1px solid gray;
+        border-radius: 5px;
+      }
+
+      /* class selector
+      value of class attribute
+      we use .notation for the selector */
+
+      .para {
+        color: green;
+      }
+
+      .dotted-border {
+        border: 2px dotted green;
+      }
+
+      /* id selector 
+      value of id attribute
+      we use #notation for the selector */
+
+      /* #para1 {
+        color: green;
+        border: 2px solid;
+      }
+
+      #para2 {
+        color: blue;
+        border: 3px dashed;  
+      }
+
+      #para3 {
+        color: chocolate;
+        border: 4px dotted;
+      }
+      #para4 {
+        color: brown;
+        border: 5px groove;
+      }
+
+      #para5 {
+        color: blueviolet;
+        border: 6px double;
+      } */
+
+      /* grouping selector
+      if we want to apply the same styling 
+      to multiple html elements */
+
+      table,
+      td,
+      th {
+        border: 1px solid blue;
+      }
+
+      table {
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        padding: 10px;
+      }
+
+      .last-row {
+        border-top: 3px dashed;
+      }
+
+      .bg-color {
+        background-color: aqua;
+      }
+
+      .diag-bg-color {
+        background-color: pink;
+      }
+
+      
+
+      [name]{
+        border: 2px solid pink;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        color: yellowgreen;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Basic CSS Selectors</h1>
+
+    <input type="date" name=date" id="date1" />
+    <hr />
+
+    <table>
+      <thead>
+        <tr>
+          <th class="bg-color">Header 1</th>
+          <th class="bg-color">Header 2</th>
+          <th class="bg-color">Header 3</th>
+          <th class="bg-color">Header 4</th>
+          <th class="bg-color">Header 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="cell diag-bg-color">Cell 1</td>
+          <td class="cell">Cell 2</td>
+          <td class="cell">Cell 3</td>
+          <td class="cell dotted-border">Cell 4</td>
+          <td class="cell">Cell 5</td>
+        </tr>
+        <tr>
+          <td>Cell 1</td>
+          <td class="diag-bg-color">Cell 2</td>
+          <td>Cell 3</td>
+          <td class="dotted-border">Cell 4</td>
+          <td>Cell 5</td>
+        </tr>
+        <tr>
+          <td>Cell 1</td>
+          <td>Cell 2</td>
+          <td class="diag-bg-color">Cell 3</td>
+          <td class="dotted-border">Cell 4</td>
+          <td>Cell 5</td>
+        </tr>
+        <tr>
+          <td>Cell 1</td>
+          <td>Cell 2</td>
+          <td>Cell 3</td>
+          <td class="dotted-border diag-bg-color">Cell 4</td>
+          <td>Cell 5</td>
+        </tr>
+        <tr>
+          <td class="last-row">Cell 1</td>
+          <td class="last-row">Cell 2</td>
+          <td class="last-row">Cell 3</td>
+          <td class="last-row dotted-border">Cell 4</td>
+          <td class="last-row diag-bg-color">Cell 5</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li class="dotted-border">ITem 1</li>
+      <li>ITem 2</li>
+      <li>ITem 3</li>
+      <li>ITem 4</li>
+      <li>ITem 5</li>
+    </ul>
+    <p id="para1" class="para dotted-border">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+      placeat amet odit nulla temporibus, similique odio ex obcaecati vitae
+      quidem voluptatibus officia. Esse quae iure eligendi! Consequatur sint
+      vitae officiis atque! Accusamus, saepe! Hic fugit quibusdam reprehenderit
+      repudiandae accusamus ducimus fugiat eveniet laudantium tempora odio
+      distinctio, dicta, dolor natus rerum.
+    </p>
+    <p id="para2" class="para">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+      placeat amet odit nulla temporibus, similique odio ex obcaecati vitae
+      quidem voluptatibus officia. Esse quae iure eligendi! Consequatur sint
+      vitae officiis atque! Accusamus, saepe! Hic fugit quibusdam reprehenderit
+      repudiandae accusamus ducimus fugiat eveniet laudantium tempora odio
+      distinctio, dicta, dolor natus rerum.
+    </p>
+    <p id="para3" class="para">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+      placeat amet odit nulla temporibus, similique odio ex obcaecati vitae
+      quidem voluptatibus officia. Esse quae iure eligendi! Consequatur sint
+      vitae officiis atque! Accusamus, saepe! Hic fugit quibusdam reprehenderit
+      repudiandae accusamus ducimus fugiat eveniet laudantium tempora odio
+      distinctio, dicta, dolor natus rerum.
+    </p>
+    <p id="para4" class="para">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+      placeat amet odit nulla temporibus, similique odio ex obcaecati vitae
+      quidem voluptatibus officia. Esse quae iure eligendi! Consequatur sint
+      vitae officiis atque! Accusamus, saepe! Hic fugit quibusdam reprehenderit
+      repudiandae accusamus ducimus fugiat eveniet laudantium tempora odio
+      distinctio, dicta, dolor natus rerum.
+    </p>
+    <p id="para5">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veritatis
+      placeat amet odit nulla temporibus, similique odio ex obcaecati vitae
+      quidem voluptatibus officia. Esse quae iure eligendi! Consequatur sint
+      vitae officiis atque! Accusamus, saepe! Hic fugit quibusdam reprehenderit
+      repudiandae accusamus ducimus fugiat eveniet laudantium tempora odio
+      distinctio, dicta, dolor natus rerum.
+    </p>
+  </body>
+</html>
+

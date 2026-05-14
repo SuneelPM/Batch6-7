@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>css grid example</title>
+    <style>
+        .grid-container {
+            display:grid;
+            grid-template-columns: 100px 1px 1fr;
+            grid-template-rows:100% ;
+            gap:10px;
+            height:100vh;
+            
+
+
+        }
+        .grid-items {
+            background-color:aqua ;
+        }
+    </style>
+</head>
+<body>
+        <div class="grid-container">
+        <div class="grid-items grid-item-1">Inbox</div>
+        <div class="grid-items grid-item-2">Message List</div>
+        <div class="grid-items grid-item-3">Message</div>
+        </div>
+
+    
+</body>
+</html>

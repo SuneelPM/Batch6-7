@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>js conditional statements</h1>
+    <script>
+
+        let age = Number(prompt("Enter your age"));
+        //if
+        if(age >0) {
+            console.log("you are alive")
+
+        }
+
+        //if else
+        
+        if (age >=18){
+            console.log("you are eligible to vote");
+        } else {
+            console.log("you are not eligible to vote");
+        }
+
+        //if else if else
+        //18+ you can buy cigrette
+        //21+ you can but alcohol
+        if (age >= 21) {
+            console.log("you are eligible to but both tobacco and alcohol")
+
+        } else if (age < 21 && age >= 18) {
+            console.log("you are eligible to buy only tobacco but not alcohol")
+
+        } else {
+            console.log("you are not eligible to buy either tobacco or alcohol")
+        }
+
+        // grade A - 90-100
+        // grade B - 80-90
+        // grade c - 70-80
+        // grade D - 40-70
+        // grade E - 0-40
+
+
+        let marks = Number(propmt("Enter your %"));
+
+          if (marks >= 90 && marks <= 100) {
+            console.log("Grade A");
+          } else if (marks >= 80 && marks < 90) {
+            console.log("grade B");
+          } else if (marks >= 70 && marks < 80) {
+            console.log("grade C");
+          } else if (marks >= 40 && marks < 70) {
+            console.log("Grade D");
+          } else if (marks >= 0 && marks < 40) {
+            console.log("grade F");
+          } 
+          else {
+            console.log("please enter a valid % of marks between  0 to 100");
+          }
+
+          //a student preparing for UPSC exam,we need to find the eligiblility of the student based on 
+          //category and age ->output no. of attempts
+          //Minimum Age: 21 years.General/
+          //EWS: 32 years (6 attempts).
+          //OBC (Non-Creamy Layer): 35 years (9 attempts).
+          //SC/ST: 37 years (Unlimited attempts).
+          //Persons with Benchmark Disabilities (PwBD): 42 years.
+
+          
+        let ages= Number(prompt("Enter age:"));
+        let category = prompt("Enter category:");
+        
+        if (ages< 21) {
+            console.log("Not Eligible");
+        }
+        else if (category == "General" || category == "EWS") {
+            if (ages <= 32) {
+                console.log("Eligible - 6 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "OBC") {
+            if (ages <= 35) {
+                console.log("Eligible - 9 attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "SC/ST") {
+            if (ages <= 37) {
+                console.log("Eligible - Unlimited attempts");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else if (category == "PwBD") {
+            if (ages <= 42) {
+                console.log("Eligible");
+            } else {
+                console.log("Not Eligible");
+            }
+        }
+        else {
+            console.log("Invalid Category");
+        }
+
+    </script>
+    
+</body>
+</html>
