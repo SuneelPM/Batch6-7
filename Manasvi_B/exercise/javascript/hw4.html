@@ -1,0 +1,68 @@
+let dob = prompt("Enter your DOB (YYYY-MM-DD):");
+let category = prompt("Enter category:").toLowerCase();
+
+let birthDate = new Date(dob);
+let today = new Date();
+
+let age = today.getFullYear() - birthDate.getFullYear();
+
+if (
+    today.getMonth() < birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() &&
+     today.getDate() < birthDate.getDate())
+) {
+    age--;
+}
+
+console.log("Your age is: " + age);
+
+if (age < 21) {
+    console.log("Not Eligible for UPSC");
+}
+
+else {
+
+    switch (category) {
+
+        case "general":
+        case "ews":
+
+            if (age <= 32) {
+                console.log("Eligible for UPSC");
+                console.log("Maximum Attempts: 6");
+            }
+
+            break;
+
+        case "obc":
+
+            if (age <= 35) {
+                console.log("Eligible for UPSC");
+                console.log("Maximum Attempts: 9");
+            }
+
+            break;
+
+        case "sc":
+        case "st":
+
+            if (age <= 37) {
+                console.log("Eligible for UPSC");
+                console.log("Unlimited Attempts");
+            }
+
+            break;
+
+        case "pwd":
+
+            if (age <= 42) {
+                console.log("Eligible for UPSC");
+                console.log("Age Limit: 42");
+            }
+
+            break;
+
+        default:
+            console.log("Invalid Category");
+    }
+}

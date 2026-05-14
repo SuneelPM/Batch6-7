@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Functions</title>
+  </head>
+  <body>
+    <h1>General functions</h1>
+    <script>
+      // normal statement
+      console.log("hello");
+
+      // function definition
+      // naming convention for function name is Lower Camelcase
+      function greet(name) {
+        console.log(`Hi Mahesh, How are you?`);
+        console.log("Hi " + name + ", How are you?");
+      }
+
+      // function call
+      greet("Mahesh Babu");
+      greet("Allu Arjun");
+
+      function sum(num1, num2) {
+        console.log(num1 + num2);
+      }
+
+      sum(10, 5);
+
+      function calculator(num1, num2, operation) {
+        if (operation == "+") {
+          console.log(num1 + num2);
+        }
+
+        if (operation == "-") {
+          console.log(num1 - num2);
+        }
+      }
+    </script>
+  </body>
+</html>
