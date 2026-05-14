@@ -61,6 +61,7 @@ let arr = [
 ];
 
 arr[6][1];
+arr[7].age;
 
 // let sumOfHeights = 0;
 // let count = 0;

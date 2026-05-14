@@ -50,9 +50,9 @@ let fruits = ["apple","banana","orange"];
 //         console.log(product ** (1/arr.length));
 
 
-let arr=[157,153,166,152,155,152];
-let sumofheights=0;
-for(i=0;i<arr.length;i++){
-    sumofheights+=arr[i];
-}
-console.log(sumofheights/arr.length);
+// let arr=[157,153,166,152,155,152];
+// let sumofheights=0;
+// for(i=0;i<arr.length;i++){
+//     sumofheights+=arr[i];
+// }
+// console.log(sumofheights/arr.length);
