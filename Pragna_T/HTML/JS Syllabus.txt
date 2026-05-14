@@ -1,0 +1,17 @@
+1) Intro
+2) Syntax
+3) Variables, Datatypes
+4) Operators
+5) Controls Statements
+6) Loops
+7) Functions
+8) Strings Advanced (methods)
+9) Arrays, Objects (complex datatypes)
+10) Array methods, Object methods
+11) JS DOM (Document Object Model)
+12) Async Programming
+13) Callbacks functions
+14) Promises
+15) async await (keywords)
+16) Local Storage
+

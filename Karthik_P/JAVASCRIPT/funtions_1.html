@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Functions</title>
+  </head>
+  <body>
+    <h1>General Function</h1>
+    <script>
+      //normal statements
+      console.log("hello");
+      //funtion definition
+      //naming covention for function name is lower camelcase
+      //   function greet(name) {
+      //     console.log(`Hi ${name},How are you?`);
+      //     console.log("Hi " + name + "," + "How are you?");
+      //   }
+      //   greet("karthik");
+      //   greet("Nagarjuna");
+
+      function getSum(a, b) {
+        sum = a + b;
+        console.log(sum);
+      }
+      // getSum(10, 20);
+      // function getSub(a, b) {
+      //   sum = a - b;
+      //   console.log(sum);
+      // }
+      // getSub(10, 20);
+      // function mul(a, b) {
+      //   sum = a * b;
+      //   console.log(sum);
+      // }
+      // mul(10, 20);
+      // function div(a, b) {
+      //   sum = a / b;
+      //   console.log(sum);
+      // }
+      // div(10, 20);
+      // function madules(a, b) {
+      //   sum = a % b;
+      //   console.log(sum);
+      // }
+      // madules(10, 20);
+      // function power(a, b) {
+      //   sum = a ** b;
+      //   console.log(sum);
+      // }
+      // power(10, 20);
+
+      function caluclator(a, b, operation) {
+        if (operation == "+") {
+          console.log(a + b);
+        } else if (operation == "-") {
+          console.log(a - b);
+        } else if (operation == "*") {
+          console.log(a * b);
+        } else if (operation == "/") {
+          console.log(a / b);
+        } else if (operation == "%") {
+          console.log(a % b);
+        } else if (operation == "**") {
+          console.log(a ** b);
+        } else {
+          console.log("invalid");
+        }
+      }
+      caluclator(10, 5, "+");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+inline:
+  inline written in css in html tag.
+  it uses the style attribute.
+internal:
+  internal written in head section .
+it is written in the style tag.
+external:
+ external written in .css file.
+ file is connected to html with <link> tag
+
+
+
+padding:
+t
+r
+b
+l
+margin:
+t
+r
+b
+l
+border:width style color
+border-style:border-top
