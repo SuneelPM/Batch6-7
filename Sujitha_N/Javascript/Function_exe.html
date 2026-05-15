@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    //basic sum
+    function add(a, b) {
+    return a + b;
+     }
+     
+     let result = add(5, 3);
+     console.log(result);
+     
+     //square num
+    function square(n) {
+         return n * n;
+     }
+     
+     console.log(square(5));
+     
+     
+     //greetings
+    function sayHello(name) {
+         return "hello, " + name;
+     }
+     
+     console.log(sayHello("Sujitha"));
+
+
+     //triangle area
+    function triArea(b, h) {
+    return (b * h) / 2;
+     }
+     
+     console.log(triArea(10, 2));
+
+     //get last item
+    function getLast(arr) {
+    return arr[arr.length - 1];
+     }
+     
+     console.log(getLast([10, 50, 60, 90]));
+
+     //get last item(function expression)
+    const getLast = function(arr) {
+    return arr[arr.length - 1];
+    };
+    
+    console.log(getLast([10, 20, 30, 40]));
+         
+    </script>
+    
+</body>
+</html>
