@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hoisting</title>
+  </head>
+  <body>
+    <h1>Hoisting</h1>
+    <script>
+      // variables or functions will be lifted up
+      // so that they will be available through out the file
+      // var variables,
+
+      console.log(a); // a is undefined
+      a = 20;
+      console.log(a);
+      var a = 10;
+      console.log(a); // a is 10
+
+      //   console.log(b);
+      let b = 20;
+      console.log(b);
+
+      //   console.log(c);
+      const c = 30;
+      console.log(c);
+
+      console.log("Value before function definition:", greet());
+
+      function greet() {
+        return "Hello";
+      }
+
+      console.log("Value after function definition:", greet());
+
+      //   console.log(sum(12, 13));
+
+      let sum = function (num1, num2) {
+        return num1 + num2;
+      };
+
+      console.log(sum(12, 13));
+
+      const nFactorial = function fact(n) {
+        // guard clause
+        if (n < 0) {
+          return "Invalid, Enter only positive integers";
+        }
+
+        if (n == 1 || n == 0) {
+          return 1;
+        }
+
+        return n * fact(n - 1);
+      };
+
+      console.log(nFactorial("S"));
+    </script>
+  </body>
+</html>
