@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Functins Default</h1>
+    <script>
+        //write a funtion that defaults age to 18
+        //anythin below 18 or above 26
+        //output - not eligible to write the exam
+        // 18-27=eligible to write the exam
+       function examEligibilityCheck(age = 18){
+            if(age <=26 && age >=18){
+                return"Eligible to write exam"
+            }
+            else{
+                return"Not Eligible to write exam"
+            }        
+        }
+        console.log(examEligibilityCheck());       
+        console.log(examEligibilityCheck(19));
+        console.log(examEligibilityCheck(10));
+        console.log(examEligibilityCheck(30));
+        
+
+        //write a funtion to read a person name defailt value "guest"
+        function readPersonName(name = "Guest"){
+            return `Hi ${name},how are you?`;
+        }
+      console.log(readPersonName());
+      console.log(readPersonName("Sravanthi"));
+    </script>
+</body>
+</html>
