@@ -44,8 +44,79 @@
 # else:
 #     print("Invalid marks")
 
-nums = []
-for i in range(5):
-    value = int(input("Enter value: "))
-    nums.append(value)
-print(nums)
+# nums = []
+# for i in range(5):
+#     value = int(input("Enter value: "))
+#     nums.append(value)
+# print(nums)
+
+# s=[20,20,40,50,10,2]
+# print(max(s))
+# print(min(s))
+
+# lst=[10,20,30,40,50]
+# s=lst.copy()
+# print(s)
+# s[1]="S"
+# print(s)
+# print(lst)
+
+# k=[10,20,30,40,50]
+# s=k
+# s[1]="A"
+# print(s)
+# print(k)
+
+# s=[10,20,30,40,50]
+# for i in range(len(s)):
+#     print(s[i],end=",")
+
+
+# s = [10,20,30,40,50]
+# i = 0
+# while i < len(s):
+#     print(s[i], end=",")
+#     i += 1
+
+# for i in range(128):
+#     print(i, "=", chr(i))
+
+
+# s = [10,20,60,70,90,40,50]
+# big =s[0]
+# small = s[0]
+# for i in s:
+#     if i > big:
+#         big = n
+#     elif i < small:
+#         small = n
+# print("Max =", big)
+# print("Min =", small)
+
+# s = [10,20,60,70,90,40,50]
+# for i,j in enumerate(s):
+#     print(i,"->",j)
+
+
+# s=[10,20,10,20,30,30,40,50]
+# result = []
+# for i in s:
+#     if i not in result:
+#         result.append(i)
+# print(result)
+
+# s=[10,-2,40,-5,20,-10,-20]
+# positive = []
+# negative = []
+# for i in s:
+#     if i >= 0:
+#         positive.append(i)
+#     else:
+#         negative.append(i)
+# print("Positive:", positive)
+# print("Negative:", negative)
+
+s=[10,20,40,50,60]
+
+
+
