@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>For Loop</h1>
+    <script>
+             //Print 10 numbers using for loop
+        // for(let i = 0; i<10; i++){
+        //     console.log(i);
+        // }
+
+        //negative numbers
+        // for(let i = -1; i >= -10; i--){
+        //     console.log(i);
+        // }
+
+             //print odd numbers from 1 to 11
+        //Type 1
+        // for(let i = 1; i <= 11; i+=2){
+                // console.log(i);//(smart work )it checks 0nly 6 times and it shows output
+        //    }
+        //Type 2
+        // for(let i = 1; i <= 11; i++){
+        //    if(i % 2 !== 0){
+            //    console.log(i);//(hard work )it checks 11 times but its to long process
+        //    }
+        // }
+        
+             //print 1,3,6,9
+        //Type one
+        // console.log(1);
+        // for(let i = 3; i <= 9; i += 3){
+        //     console.log(i);
+        // }
+        //Type two
+        // for (let i=0;i<=3;i++){
+        //     if(i==0){
+        //         console.log(1);
+        //     }else{
+        //         console.log(i*3);
+        //     }
+        // }
+        //Type three
+        // for(let i = 0; i <= 3; i++){
+        //     console.log(i === 0 ? 1 : i * 3);
+        // }
+
+        //fibanocci series 1,1,2,3,5,8,13
+        for(let a = 1, b = 1; a <= 13; ){
+            console.log(a);        
+            let c = a + b;
+            a = b;
+            b = c;
+        }
+
+             //print square numbers1,4,9,16,25,36,49,64,81,100,121,144,169,196,225,256    
+        for(let i = 1; i <= 16; i++){
+            console.log(i * i);
+        }
+       
+        //prime numbers
+        for(let num = 1; num <= 100; num++){
+        let count = 0;
+        for(let i = 1; i <= num; i++){
+            if(num % i === 0){
+                count++;
+            }
+        }
+        
+        if(count === 2){
+            console.log("Prime Number");
+        }
+        else{
+            console.log("Not Prime Number");
+        }
+    }
+    </script>
+</body>
+</html>

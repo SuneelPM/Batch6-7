@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>funcions</h1>
+    <script>
+        // normal statements
+        console.log("hello");
+
+        // function defintion
+        // parameters stores the varaibles
+        // naming convention for function is  lower camelcase
+        function greet(greeting) {
+            console.log(greeting);
+
+        }
+
+        // function call
+        greet("hello");
+        greet("hii");
+
+
+        function greet(name) {
+            console.log(`hii ${name},how are you?`);
+            console.log("hii"  + name +","+"how are you ?");
+
+        }
+        // function call
+        // arguments stores tha values
+        greet("PRAGNA");
+        greet("Mahesh");
+
+        function sum(num1, num2) {
+            console.log(num1+num2);
+            console.log(num1 - num2);
+            console.log(num1 * num2);
+            console.log(num1/num2);
+            // console.log(num1% num2);
+        }
+        function sub(num1, num2) {
+            console.log(num1 - num2);
+        }
+        function mult(num1, num2) {
+        console.log(num1 * num2);
+        }
+                function div(num1, num2) {
+
+
+                console.log(num1/num2);
+                }
+
+
+
+
+        // function call
+        sum();
+
+        function calculator1(num1,num2,operation){
+
+        
+            if(operation == '-')
+        {
+            sub(num1,num2);
+        }
+        else if(operation == '*')
+        {
+            mult(num1,num2);
+        }
+        else if(operation =='/')
+        {
+            div(num1,num2);
+        }
+
+        }
+        calculator(10,5,'-');
+
+        // switch case
+        function calculator2(num1,num2,operation){
+            switch(operation)
+            {
+                case '-':
+                    sub(num1,num2);
+                    break;
+                case '*':
+                        mult(num1, num2);
+                        break;
+                case'/':
+                        div(num1,num2);
+                        break;
+            }
+        }
+        
+        
+         
+ 
+
+    </script>
+
+</body>
+</html>

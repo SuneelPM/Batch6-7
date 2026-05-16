@@ -359,3 +359,4 @@ let BTechCse = {
     },
   },
 };
+console.log(BTechCse.semester5.subject5.chapter3[3]);
