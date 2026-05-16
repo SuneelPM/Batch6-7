@@ -12,6 +12,32 @@
         console.log("GoodBye!");
       };
       sayGoodBye();
+
+      const caluclator = function (a, b, operation) {
+        if (operation == "+") {
+          console.log(a + b);
+        } else if (operation == "-") {
+          console.log(a - b);
+        } else if (operation == "*") {
+          console.log(a * b);
+        } else if (operation == "/") {
+          console.log(a / b);
+        } else if (operation == "%") {
+          console.log(a % b);
+        } else if (operation == "**") {
+          console.log(a ** b);
+        } else {
+          console.log("invalid");
+        }
+      };
+      caluclator(10, 5, "+");
+
+      const greet = function (name) {
+        console.log(`Hi ${name},How are you?`);
+        console.log("Hi " + name + "," + "How are you?");
+      };
+      greet("karthik");
+      greet("Nagarjuna");
     </script>
   </body>
 </html>
