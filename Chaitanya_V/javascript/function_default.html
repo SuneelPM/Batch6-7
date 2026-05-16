@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>functions-parameters default values</h1>
+    <script>
+        // function eligiblity(age=18) {
+        //     if (age>=18 && age<=26){
+        //         return 'eligible to write exam'
+        //     }else{
+        //         return ' not eligible to write exam'
+        //     }
+        // }
+        // console.log(eligiblity(34));
+        // console.log(eligiblity());//default
+
+        function greet(name='guest') {
+            return `hi ${name},how are you`
+        }
+        console.log(greet());
+        console.log(greet('sai'));
+
+    </script>
+</body>
+</html>
