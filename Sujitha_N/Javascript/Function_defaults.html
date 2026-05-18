@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Functions - parameter default values</title>
+</head>
+<body>
+    <script>
+        //wrt a function that defaults age to 18
+        //anything below 19 pr above 26
+        //o/p - not eligible to write exam
+        //18-26=eligible to write exam
+
+
+        function checkExam(age = 18) {
+        if (age >= 18 && age <= 26) {
+            return "Eligible to write exam"
+        } else {
+            return "Not eligible to write exam"
+        }
+}
+     console.log(checkExam());     // default age = 18
+     console.log(checkExam(17));
+     console.log(checkExam(20));
+     console.log(checkExam(27));
+     console.log(checkExam(30));
+
+     //wrt to greet a person withe their name,default value"guest"
+
+    function greet(name = "guest") {
+     return `hello ${name},how are you?`;
+}
+    
+      console.log(greet());     
+      console.log(greet("Suji"));    
+      console.log(greet("Minny"));    
+    </script>
+    
+</body>
+</html>

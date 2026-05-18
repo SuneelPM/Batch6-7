@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hoisting</title>
+</head>
+<body>
+    <h1>hoisting</h1>
+    <script>
+        //variables or functons will be lifted up
+        //so that they will be available through out the file
+        //var variables
+
+        console.log(a);//a is undefined
+        a=20;
+        console.log(a);
+        var a =10;
+        console.log(a); //a is 10
+
+         //console.log(b);
+        var b =20;
+        console.log(b);
+
+
+         //console.log(c);
+        var c =30;
+        console.log(c);
+
+        console.log("value before function defination:",greet());
+        function greet(){
+            return "Hello";
+        }
+        console.log("value after function defination:",greet());
+
+       // console.log(sum(12,13));
+       // let sum = function (num1,num2){
+           // return num1+num2
+        //};
+        //console.log(sum(12,13));
+
+
+        //guard clause
+       const nFactorial = function fact(n) {
+    if (isNaN(n)) {
+        return "Please enter a valid number";
+    }
+    if (n < 0) {
+        return "Factorial is not defined for negative numbers";
+    }
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+    return n * fact(n - 1);
+};
+console.log(nFactorial(5));
+console.log(nFactorial("a"));
+    </script>
+</body>
+</html>
