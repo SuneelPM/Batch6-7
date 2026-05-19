@@ -15,6 +15,7 @@
 //}
 //console.log(sumofElements);
 
+
 //sum of elements using while loop
 let arr =[10,13,31,42,54,68,73,84]
 let e= 0;

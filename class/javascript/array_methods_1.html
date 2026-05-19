@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Array Methods</title>
+  </head>
+  <body>
+    <h1>Array Methods 1</h1>
+    <script>
+      let arr = ["a", "b", "c", "d", "e", "f"];
+      // slice(startIndex, endIndex) -- endIndex not included
+      let arr1 = arr.slice(1, 5);
+      console.log(arr);
+      console.log(arr1);
+
+      let fruits = [
+        "apple",
+        "banana",
+        "mango",
+        "papaya",
+        "watermelon",
+        "iceapple",
+      ];
+      // fruits.indexof(item)
+      let i = fruits.indexOf("iceapple");
+      console.log(i, fruits);
+
+      // fruits.includes(item)
+      let fruitExists = fruits.includes("grapes");
+      console.log(fruitExists);
+
+      // write a function that adds given item to the list
+      // if the item does not exist in the list.
+      // if the item exists in the list
+      // return "Item already in the list"
+
+      //   function addItems(list, item) {
+      //     // check if list is an array datatype
+      //     // if (list instanceof Array) {
+      //     if (Array.isArray(list)) {
+      //       if (list.includes(item)) {
+      //         return "Item already in the list";
+      //       } else {
+      //         list.push(item);
+      //         return list;
+      //       }
+      //     } else {
+      //       return "the given list is not an array";
+      //     }
+      //   }
+
+      // write a function using guard clause
+
+      function addItems(list, item) {
+        // guard clause
+        if (!Array.isArray(list)) {
+          return "the given list is not an array";
+        }
+
+        // condition
+        if (list.includes(item)) {
+          return "Item already in the list";
+        } else {
+          list.push(item);
+          return list;
+        }
+      }
+
+      let list;
+
+      console.log(addItems(list, "grapes"));
+      console.log(addItems(fruits, "grapes"));
+
+      // reverse
+      //   console.log(fruits.reverse());
+
+      // join() - converts array to string
+      console.log(fruits.join("1"));
+
+      // toString()
+      console.log(fruits.toString());
+    </script>
+  </body>
+</html>
