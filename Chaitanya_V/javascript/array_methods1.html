@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>array methods 1</h1>
+    <script>
+        let arr=['a','b','c','d','e','f'];
+        // let arr1=arr.slice(1,2);
+        // console.log(arr);
+        // console.log(arr1);
+        let arr1=arr.slice(1,5);
+        console.log(arr1);
+
+        let fruits=['apple','banana','mango','papaya','watermelon','iceapple'];
+        let i=fruits.indexOf('iceapple');
+        console.log(i, fruits);
+        let fruitexists=fruits.includes('grapes');
+        console.log(fruitexists);
+
+ // let addfruit=(a)=>fruits.includes(a) ? 'item already in list':fruits.push(a);
+        // console.log(fruits,addfruit('peach'));
+        function additems(list,items) {
+            //check if list is an array datatype
+            // if(list instanceof Array){
+            if(Array.isArray(list)){
+                if(list.includes(item)){
+                    return 'item already in list';
+            }else{
+                list.push(item);
+                return list;
+             }
+            }else{
+                return 'the given list is not an array';
+            
+        }
+            
+        }
+        console.log(additems(1,'apple'));
+
+
+        // function additems(list,items) {
+        //      // guard clause
+        //     if(Array.isArray(list)){
+        //         if(list.includes(item)){
+        //             return 'item already in list';
+        //     }
+           
+        
+
+        // }
+
+
+//         // reverse
+//         console.log(fruits.reverse());
+
+//         // join-converts array into a string
+//   console.log(fruits.join(';'));
+
+
+    // // to String
+    //     console.log(fruits.toString());
+
+    </script>
+</body>
+</html>
