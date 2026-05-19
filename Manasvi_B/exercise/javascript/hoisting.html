@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoisting</title>
+</head>
+<body>
+    <h1>Hoisting</h1>
+    <script>
+        // console.log(a);//a is undefined
+        // var a = 10;
+        // console.log(a);//a = 10
+
+        // // console.log(b);
+        // let b = 20;
+        // console.log(b);
+
+        // // console.log(c);
+        // const c = 30;
+        // console.log(c);
+
+
+
+
+        // console.log(greet());
+        // function greet(){
+        //     return "hello";
+        // }
+        // console.log(greet());
+
+
+        // console.log(sum(10,20));
+        // let sum = function(num1, num2){
+        //     return num1 + num2;
+        // }
+        // console.log(sum(10,20)); 
+
+        const nfactorial = function fact(n) {
+            if (n < 0 || isNan(n)) { 
+                return "Invalid! Enter only positive numbers";//guard clause
+            }
+            if (n === 0 || n === 1) {
+                return 1;
+            }
+            return n * fact(n - 1); 
+        };
+        console.log(nfactorial(S));
+    </script>
+</body>
+</html>

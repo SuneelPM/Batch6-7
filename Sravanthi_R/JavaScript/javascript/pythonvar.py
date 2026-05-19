@@ -82,14 +82,14 @@
 #     print(i, "=", chr(i))
 
 
-# s = [10,20,60,70,90,40,50]
+# s = [7,8,3,5,4,9]
 # big =s[0]
 # small = s[0]
 # for i in s:
 #     if i > big:
-#         big = n
+#         big = i
 #     elif i < small:
-#         small = n
+#         small = i
 # print("Max =", big)
 # print("Min =", small)
 
@@ -116,7 +116,39 @@
 # print("Positive:", positive)
 # print("Negative:", negative)
 
-s=[10,20,40,50,60]
+# s=[10,20,30,40,50,60]
+# # Left Shift by 2 positions
+# left_shift = s[2:] + s[:2]
+# print(left_shift)
+# # Right Shift by 2 positions
+# right_shift = s[-2:] + s[:-2]
+# print(right_shift)
+
+# num = 783549
+# dgt = [int(i) for i in str(num)]
+# max_v = max(dgt)
+# min_v = min(dgt)
+# print(max_v)
+# print(min_v)
 
 
+# num = 783549
+# min_d = 9
+# max_d = 0
+# for digit in str(num):
+#     if int(digit) > max_d:
+#         max_d = int(digit)
+#     if int(digit) < min_d:
+#         min_d = int(digit)
+# print(max_d)
+# print(min_d)
 
+
+# Tuple unpacking using user input
+
+a, b, c = input("Enter 3 values: ").split()
+print(a)
+print(b)
+print(c)
+
+name,detailes="logic","develoer","logicwhile",50000
