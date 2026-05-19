@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splice</title>
+</head>
+<body>
+    <h1>Array Splice</h1>
+    <p>Structure: <span>arr.splice(start,deletcount,add new items...)</span>
+    </p>
+    <script>
+        const arr=[1,2,3,4,5,6,7,8,9,10];
+        console.log(arr)
+        //delete items
+        arr.splice(2,3)//(index value,no.count)
+        console.log(arr)
+        //add items
+        arr.splice(2,0,'3','4','5')
+        console.log(arr)
+        //modify items
+        arr.splice(5,5,'6','7','8','9','10');
+        console.log(arr);
+        arr.splice(0,2,"1","2")
+        arr.splice(5,0,'5a','5b','5c');
+        console.log(arr);
+        arr.splice(5,3,15,16,17,18);
+        console.log(arr);
+    </script>
+</body>
+</html>

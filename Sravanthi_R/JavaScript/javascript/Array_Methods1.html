@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array methods</title>
+</head>
+<body>
+    <h1>Array Methods</h1>
+    <script>
+               //slice method
+        let arr=["a","b","c","d","e","f"];
+        //slice(startIndex,endIndex)--endIndex not included
+        let arr1=arr.slice(1,5);
+        console.log(arr)
+        console.log(arr1)
+
+               //indexof & include
+        let fruits=["apple","banana","mango","papaya","watermelon","iceapple"]
+        console.log(fruits.indexOf("mango"));
+        console.log(fruits.includes("banana"));
+        //write a function that adds given item to the list 
+        // if the item does exit in the list 
+        // if the item exisits in the list 
+        // return "item alredy in the list
+
+        function addItem(list, item){
+            if(list.includes(item)){
+                return "Item already in the list";
+            }
+            else{
+                list.push(item);
+                return list;
+            }
+        }
+        console.log(addItem(fruits,"apple"));
+        console.log(addItem(fruits,"grapes"));
+
+        //write a funtion using guargclause
+
+        function addItems(list,item){
+            //guard clause
+            if(!Array.isArray(list)){
+                return "Item already in the list"
+            }
+            //condition
+             if(list.includes(item)){
+                return "Item already in the list";
+            }
+            else{
+                list.push(item);
+                return list;
+            }
+        }
+        console.log(addItems(fruits,"apple"));
+        console.log(addItems(fruits,"grapes"));
+
+            //reverse
+        console.log(fruits.reverse("apple"))
+
+            //join
+        console.log(fruits.join("_"));
+            //toString
+        console.log(fruits.toString("-"))
+    </script>
+</body>
+</html>
