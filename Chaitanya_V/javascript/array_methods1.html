@@ -42,16 +42,20 @@
         console.log(additems(1,'apple'));
 
 
-        // function additems(list,items) {
-        //      // guard clause
-        //     if(Array.isArray(list)){
-        //         if(list.includes(item)){
-        //             return 'item already in list';
-        //     }
-           
-        
-
-        // }
+        //write a function using guard clause
+        function addItems(list,item){
+            //guard clause
+            if(!Array.isArray(list)){
+                return "the given list is not an array";
+            }
+            //condition
+            if (list.includes(item)){
+                return "item already in the list"
+            }else{  
+            list.push(item);
+            return list;
+            }
+        }
 
 
 //         // reverse
