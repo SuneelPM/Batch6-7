@@ -7,7 +7,6 @@
 </head>
 <body>
     <script>
-        //variable declaration
         let x;
         console.log(x);
         //array literal
@@ -20,16 +19,17 @@
         console.log(arr1,typeof arr1)     //object
 
         
-        //array for loop
+
         for (let i = 0; i < arr1.length; i++) {
             arr1[i] = (i + 1) ** 2;
         }
 
-        //array for...of loop
+
         let a = 0;
         for (let element of arr1) {
             arr1[a ] = (a + 1) ** 2;
             a++;
+
         }
         console.log(arr1);
 
@@ -37,15 +37,24 @@
         //array constructor with elements
         let arr2 = Array(1,2,3);
         console.log(arr2);
-         //methods in arrays.....(Mutator methods)
+
+
+        //methods in arrays.....(Mutator methods)
+        //1.push(item).......add at last
         arr2.push(4)
-        console.log(arr2)//1.push(item).......add at last
+        console.log(arr2)
+
+        //2.pop().............remove at last
         arr2.pop()
-        console.log(arr2)//2.pop(item)......remove at last
+        console.log(arr2)
+
+        //3.unshift(item).......add at first
         arr2.unshift(0)
-        console.log(arr2) //3.unshift(item).......add at first
+        console.log(arr2)
+
+        //4.shift().....remove at first
         arr2.shift()
-        console.log(arr2)//4.shift().....remove at first
+        console.log(arr2)
 
 
         //const cart = ["bread","milk","egg"]...
@@ -53,14 +62,39 @@
         // and remove the last item,log the final cart
         
         const cart = ["bread", "milk", "egg"];
+
         // add butter to end
-        cart.push("butter");       
+        cart.push("butter");
+        
         // add coffee to beginning
-        cart.unshift("coffee");        
+        cart.unshift("coffee");
+        
         // remove last item
-        cart.pop();       
+        cart.pop();
+        
         console.log(cart);
+
+
+        
+
+        //arr[0] = 1;
+        //arr[1] = 2;
+        //arr[2] = 3;
+        //arr[3] = 4;
+        //arr[4] = 5;
+        //arr[5] = 6;
+
+
+
+
+
+
+
+        
+
+
+
     </script>
-   
+    
 </body>
 </html>

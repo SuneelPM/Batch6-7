@@ -11,8 +11,6 @@
         //anything below 19 pr above 26
         //o/p - not eligible to write exam
         //18-26=eligible to write exam
-
-
         function checkExam(age = 18) {
         if (age >= 18 && age <= 26) {
             return "Eligible to write exam"
@@ -27,9 +25,8 @@
      console.log(checkExam(30));
 
      //wrt to greet a person withe their name,default value"guest"
-
     function greet(name = "guest") {
-     return `hello ${name},how are you?`;
+    return `hello ${name},how are you?`;
 }
     
       console.log(greet());     

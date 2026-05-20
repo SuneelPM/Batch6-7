@@ -1,0 +1,18 @@
+
+            h1{
+                color: blue;
+                background-color: aqua;
+                padding: 5px;
+                border-radius: 9px;
+                border: 1px dashed black;
+                box-shadow: 5px 5px grey;
+                width: 400px;
+                height: 100px;
+            }
+            p {
+                color: palevioletred;
+                background-color: powderblue;
+                padding: 10px;
+                border-radius: 10px;
+                border: 1px solid black;
+            }
