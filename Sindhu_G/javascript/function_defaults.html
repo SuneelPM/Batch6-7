@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Functions - parameters defult</title>
+  </head>
+  <body>
+    <h1>Functions - parameters defult</h1>
+    <script>
+      function examEligibilityCheck(age = 18) {
+        if (age >= 18 && age <= 26) {
+          return "eligible to write exam";
+        } else if (age < 18 && age > 27) {
+          return "not eligible for exam";
+        }
+      }
+      console.log(examEligibilityCheck(10));
+      console.log(examEligibilityCheck(19));
+      console.log(examEligibilityCheck(30));
+      console.log(examEligibilityCheck());
+
+      function greet(name = "Guest") {
+        return `Hi ${name}, How are you?`;
+      }
+      console.log(greet());
+      console.log(greet("karthik"));
+    </script>
+  </body>
+</html>

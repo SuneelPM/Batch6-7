@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arrow functions</title>
+</head>
+<body>
+    <h1>Arrow functions</h1>
+    <script>
+    // write an arrow function tht return fatorial of n
+//         const nFactorial = n =>
+//   n == 0 || n == 1 ? 1 : n * nFactorial(n - 1);  
+// console.log(nFactorial(1));
+
+
+const facorial = n => 
+n < 0 ? "enter a positive integer"
+ : n == 0 || n == 1
+    ? 1
+    : n * factorial(n-1);
+console.log(factorial(4));
+
+    </script>
+</body>
+</html>
