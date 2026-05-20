@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS QUERYMEDIA</title>
+    <style>
+        body {
+            background-color: aqua;
+
+        }
+        h1{
+            color: red;
+        }
+        .parent {
+            display: flex;
+            gap: 10px;
+        }
+        .child {
+            flex: 1;
+            background-color: blueviolet;
+            height: 100px;
+            color: white;
+            text-align: center;
+            place-content: center;
+            
+        }
+        @media screen and (max-width: 600px) {
+            body {
+                background-color: white;
+            }
+            .parent {
+                display: block;
+            }  
+        }
+        .child {
+            margin: 10px;
+            border-radius: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <h1>CSS QUERYMEDIA</h1>
+    <div class="child child-1">child-1</div>
+    <div class="child child-2">child-2</div>
+    <div class="child child-3">child-3</div>
+        
+</body>
+</html>
