@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array methods js</title>
+</head>
+<body>
+    <script>
+        let arr = ["a","b","c","d","e","f"];
+        //slice(startindex,endindex)...endindex not included
+        console.log(arr);
+        let arr1= arr.slice(1,5);
+        console.log(arr);
+        console.log(arr1)
+
+        //indexOf method
+        let fruits = ['apple','banana','mango','papaya','watermelon','iceapple',];
+        //fruits.indexOf(item)
+        console.log(fruits);
+        let i = fruits.indexOf("iceapple");
+        console.log(i,fruits);
+
+        //fruits.includes(item)
+        let fruitexists = fruits.includes('grapes');
+        console.log(fruitexists);
+
+        //write a function thet adds give item to the list
+        //if the item does not exists in the list..if
+        //the item exist in the list return item already
+        //in the list
+        function addItem(list, item) {
+         if (list.includes(item)) {
+           return "Item already in the list";
+         } else {
+           list.push(item);
+           return list;
+         }
+        }
+       
+       console.log(addItem(fruits, "grapes")); // adds
+       //console.log(addItem(fruits, "banana")); // already exists
+       //console.log(fruits); // final list
+
+       
+       //write a function by using guard clause
+       function addItems(list, item) {
+        //guard clause
+        if (!Array.isArray(list)) {
+          return "The given list is not an array";
+        }
+
+        //condition
+        if (list.includes(item)) {
+          return "Item already in the list";
+        } else {
+          list.push(item);
+          return list;
+        }
+     }     
+     
+     //reverse
+     console.log(fruits.reverse());
+
+     //join...convert array into string
+     console.log(fruits.join(" "));
+
+     //tostring
+     console.log(fruits.toString());
+
+        
+        
+
+        </script>
+    
+</body>
+</html>

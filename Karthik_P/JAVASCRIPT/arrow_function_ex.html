@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //write a arrow function that return factorial of n
+      //   const factorial = (n) => (n == 0 || n == 1 ? 1 : n * factorial(n - 1));
+      //   console.log(factorial(5));
+
+      const factorial = (n) =>
+        n < 0
+          ? "Enter a possitive integer"
+          : n == 0 || n == 1
+            ? 1
+            : n * factorial(n - 1);
+      console.log(factorial(4));
+
+      //   function nFactorial(n) {
+      //     let fact = 1;
+      //     for (let i = 1; i <= n; i++) {
+      //       fact = fact * i;
+      //     }
+      //     return fact;
+      //   }
+      //   console.log(nFactorial(5));
+    </script>
+  </body>
+</html>
