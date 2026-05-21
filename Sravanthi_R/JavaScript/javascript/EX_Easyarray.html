@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>EX array esay quetions</h1>
+    <script>
+        //Easy
+        const favoriteFruits = ["Apple", "Mango", "Banana"];
+        console.log(favoriteFruits);
+
+        const emptySlots = new Array(5);
+        console.log(emptySlots.length); // 5
+
+        const numbers = new Array(10, 20, 30);
+        console.log(numbers); // [10, 20, 30]
+        
+        const roles = ['admin', 'editor', 'user'];
+        console.log(roles.includes('editor')); // true
+
+        const colors = ['red', 'green', 'blue', 'yellow'];
+        console.log(colors.indexOf('blue')); // 2
+        
+        //medium
+        let fruits = ['banana', 'apple', 'grape'];
+        console.log(fruits.splice(1, 1, 'orange'));
+
+        let arr=[10,20,30,40,50,60]
+        console.log(arr.slice(2,5))
+
+        const chars = ['c', 'a', 't'];
+        console.log(chars.reverse().join(''));
+       
+        //hard
+        const source = [1, 2, 3, 4, 5, 6];
+        const target = [7, 8];        
+        console.log(source.slice(-3)); 
+        console.log(target.splice(0, 0));       
+        
+        const r = [5,10,15,20];
+        console.log(r.slice(2));
+        
+        const rr = [{id: 1}, {id: 2}];
+        console.log(rr.join(', '));
+    </script>
+</body>
+</html>
