@@ -1,0 +1,1330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Callbacks: Fundamental Practice Guide</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PrismJS Okaidia Theme & Line Numbers CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc; /* slate-50 */
+        color: #0f172a; /* slate-900 */
+      }
+      /* Smooth transitions for solution revealing */
+      .solution-container {
+        transition: all 0.3s ease-in-out;
+      }
+      /* Custom scrollbar for code blocks */
+      pre[class*="language-"] {
+        border-radius: 0.75rem;
+        margin-top: 1rem;
+        box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.1);
+      }
+    </style>
+  </head>
+  <body class="antialiased min-h-screen pb-20">
+    <header
+      class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-10"
+    >
+      <div
+        class="max-w-5xl mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">JS Basic Callbacks</h1>
+          <p class="text-sm text-slate-500 font-medium">
+            20 Core Practice Challenges (No Array Methods)
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            id="hideAllBtn"
+            class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+          >
+            Hide All
+          </button>
+          <button
+            id="revealAllBtn"
+            class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-colors"
+          >
+            Reveal All
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-6 mt-10">
+      <div class="mb-10 text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold mb-4">Core Callback Challenges</h2>
+        <p class="text-slate-600 text-lg">
+          Understand callbacks at their most fundamental level using simple
+          parameters, standard loops, math, and custom higher-order structures.
+          <strong>No built-in array methods used here!</strong>
+        </p>
+      </div>
+
+      <div id="challengesContainer" class="space-y-6">
+        <!-- Q1 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#1</span>Basic Execution
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function called <code>runMe</code> that accepts a single
+            callback argument and executes it inside.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              A callback is a function passed into another function that is
+              invoked after a specific action completes.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              In this question, the callback demonstrates basic function-as-data
+              behavior: the host function receives and executes the function
+              argument.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This pattern is used in event handling, such as running a button
+              click handler after a user interaction.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function runMe(callback) {
+  // Directly trigger the passed callback function
+  callback();
+}
+
+// Usage Example:
+runMe(() => {
+  console.log("Callback executed successfully!");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#2</span>String Builder
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function called <code>welcome</code> that accepts a
+            <code>name</code> string and a <code>callback</code>. The function
+            should concatenate the name into <code>"Hello, [name]!"</code> and
+            pass that final string to the callback.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can be used to pass results from one function to another
+              without returning them directly.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              Here the callback receives a constructed string and handles it
+              separately from the builder logic.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              A real-world use case is formatting a message and then sending it
+              to a UI updater or logger.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function welcome(name, callback) {
+  const greeting = "Hello, " + name + "!";
+  callback(greeting);
+}
+
+// Usage Example:
+welcome("Sarah", (message) => {
+  console.log(message); // Output: "Hello, Sarah!"
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#3</span>Arithmetic
+              Pass-through
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>addNumbers(a, b, callback)</code> that
+            calculates the sum of <code>a</code> and <code>b</code>, and passes
+            the resulting sum to the callback.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              A callback can receive computed values from the caller and act on
+              them.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This question shows how a function can process numbers and pass
+              the result onward via callback.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This is useful for passing calculation results into analytics
+              dashboards or display code.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function addNumbers(a, b, callback) {
+  const sum = a + b;
+  callback(sum);
+}
+
+// Usage Example:
+addNumbers(15, 25, (result) => {
+  console.log("The total is: " + result); // Output: "The total is: 40"
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#4</span>Delay and Notify
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function
+            <code>delayLog(message, delay, callback)</code> that uses
+            <code>setTimeout</code> to print the message, then immediately
+            executes the callback after the printing delay finishes.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks are often used for asynchronous sequencing after a delay
+              or timer.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The callback runs only once the timeout has finished, showing how
+              code can wait without blocking.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful for delayed notifications, animations, or retry logic after
+              waiting a set time.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function delayLog(message, delay, callback) {
+  setTimeout(() => {
+    console.log(message);
+    callback();
+  }, delay);
+}
+
+// Usage Example:
+delayLog("First log after 1 second!", 1000, () => {
+  console.log("Callback triggered after delayed print!");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#5</span>Execution filter
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>executeIfEven(num, callback)</code> that only
+            triggers the callback (passing <code>num</code> to it) if the given
+            number is even.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              A callback can be triggered conditionally, allowing control flow
+              to depend on data.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This example demonstrates executing a function only when a
+              specific condition holds true.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This pattern is common in validation code that only takes action
+              when input meets criteria.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function executeIfEven(num, callback) {
+  if (num % 2 === 0) {
+    callback(num);
+  }
+}
+
+// Usage Example:
+executeIfEven(8, (val) => {
+  console.log(val + " is even!"); // Executes
+});
+
+executeIfEven(7, (val) => {
+  console.log(val + " is even!"); // Will not execute
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#6</span>Looping Repeater
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function <code>repeatAction(times, callback)</code> that
+            uses a traditional <code>for</code> loop to execute the callback the
+            specified number of times. Pass the current index of the loop as an
+            argument to each iteration.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can be invoked repeatedly inside loops to handle each
+              item or iteration.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The callback runs for every loop iteration, making the function
+              customizable and reusable.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This is similar to applying a callback to each record in a batch
+              process or timer loop.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function repeatAction(times, callback) {
+  for (let i = 0; i < times; i++) {
+    callback(i);
+  }
+}
+
+// Usage Example:
+repeatAction(3, (index) => {
+  console.log("Iteration number: " + index);
+});
+// Output:
+// "Iteration number: 0"
+// "Iteration number: 1"
+// "Iteration number: 2"</code></pre>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#7</span>Wrap and Decorate
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>decorateText(str, callback)</code> that
+            forwards <code>str</code> to the callback, and returns whatever the
+            callback generates. Use it to wrap a string in asterisks (e.g.
+            <code>***hello***</code>).
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can wrap and transform values before returning the final
+              result.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This question uses the callback to decorate or modify a string
+              produced by the caller.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful for formatting user input before it is displayed or stored.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function decorateText(str, callback) {
+  return callback(str);
+}
+
+// Usage Example:
+const wrapped = decorateText("hello", (text) => {
+  return "***" + text + "***";
+});
+
+console.log(wrapped); // Output: "***hello***"</code></pre>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#8</span>Basic Auth Simulation
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write
+            <code>checkAuth(username, password, onSuccess, onFailure)</code>. If
+            password is exactly equal to <code>"admin123"</code>, run
+            <code>onSuccess()</code>. Otherwise, run
+            <code>onFailure()</code> with an error message.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks are a natural way to represent success and failure flows
+              separately.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function chooses between two callbacks depending on whether
+              authentication succeeds.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Commonly used in login systems, API responses, and workflow
+              branching.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function checkAuth(username, password, onSuccess, onFailure) {
+  if (password === "admin123") {
+    onSuccess(username);
+  } else {
+    onFailure("Incorrect password!");
+  }
+}
+
+// Usage Example:
+checkAuth(
+  "bob_developer", 
+  "wrong_pass", 
+  (user) => console.log("Welcome " + user),
+  (err) => console.error("Access Denied: " + err) // This runs
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#9</span>Event Coordinates
+              Mocking
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>triggerClick(callback)</code> that simulates
+            a cursor event by invoking the callback and passing a mockup
+            coordinates object containing coordinate keys
+            <code>{ x: 100, y: 150 }</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can accept data objects to simulate events or actions.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This exercise demonstrates passing an event-like object into the
+              callback for handling.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This pattern is used in event simulation, gesture handling, or
+              mock testing.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function triggerClick(callback) {
+  const dummyEvent = {
+    x: 100,
+    y: 150
+  };
+  callback(dummyEvent);
+}
+
+// Usage Example:
+triggerClick((event) => {
+  console.log("Click registered at coordinates: " + event.x + ", " + event.y);
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#10</span>Positive / Negative
+              Router
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>processSign(number, onPositive, onNegative)</code>. If
+            the number is greater than or equal to 0, execute
+            <code>onPositive</code> with the number. Otherwise, execute
+            <code>onNegative</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks let you route execution to different handlers based on
+              input.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function decides which callback to execute by inspecting the
+              number sign.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful in routers, decision engines, or validation pipelines that
+              branch by type.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function processSign(number, onPositive, onNegative) {
+  if (number >= 0) {
+    onPositive(number);
+  } else {
+    onNegative(number);
+  }
+}
+
+// Usage Example:
+processSign(-4, 
+  (val) => console.log(val + " is positive"),
+  (val) => console.log(val + " is negative") // Executes
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#11</span>Surcharges
+              Calculation
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function
+            <code>calculateTotal(subtotal, taxRate, callback)</code>. Perform
+            the tax addition calculation <code>subtotal * (1 + taxRate)</code>,
+            then forward the final sum to the callback.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can be used to forward computed values after performing
+              business logic.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function calculates a total and then passes that number into a
+              callback for next steps.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Used in checkout flows to apply tax and then update the order
+              summary or receipt.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function calculateTotal(subtotal, taxRate, callback) {
+  const total = subtotal * (1 + taxRate);
+  callback(total);
+}
+
+// Usage Example:
+calculateTotal(100, 0.08, (finalCost) => {
+  console.log("Total price with tax: $" + finalCost.toFixed(2)); 
+  // Output: "Total price with tax: $108.00"
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#12</span>Manual Array Iterator
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a custom function
+            <code>customForEach(arr, callback)</code> that uses a standard
+            <code>for</code> loop to iterate through any passed array. Execute
+            the callback on each pass, providing both the current element and
+            its index.
+            <em>Do not use the built-in <code>.forEach()</code> method.</em>
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Custom iteration callbacks let you mimic built-in array loops
+              using plain control flow.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              Instead of relying on built-in helpers, the function explicitly
+              iterates and invokes a callback for each item.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This is useful when building compatibility layers or custom
+              traversal behavior.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function customForEach(arr, callback) {
+  for (let i = 0; i < arr.length; i++) {
+    // Deliver the element and index manually via standard iteration
+    callback(arr[i], i);
+  }
+}
+
+// Usage Example:
+const colors = ["red", "green", "blue"];
+customForEach(colors, (color, index) => {
+  console.log("Color " + index + " is " + color);
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#13</span>Custom Split Decision
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>splitNumber(num, onEven, onOdd)</code>. If
+            the integer is even, run <code>onEven(num)</code>. If the integer is
+            odd, run <code>onOdd(num)</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can represent alternate actions for different branches
+              of logic.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function delegates even and odd handling to separate
+              callbacks.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              This can be used for routing tasks between different processing
+              handlers, like admin vs user flows.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function splitNumber(num, onEven, onOdd) {
+  if (num % 2 === 0) {
+    onEven(num);
+  } else {
+    onOdd(num);
+  }
+}
+
+// Usage Example:
+splitNumber(11, 
+  (n) => console.log(n + " is even"),
+  (n) => console.log(n + " is odd") // Executes
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#14</span>Robust Fallbacks
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function <code>safeExecute(callback, fallback)</code>.
+            Check if the provided <code>callback</code> is actually a function
+            type. If yes, run it. If it is not provided or not a function,
+            execute the <code>fallback</code> callback.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Checking whether a callback is valid before calling it helps avoid
+              errors in flexible APIs.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This example protects code from invalid values and falls back
+              safely when needed.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful in plugin systems or optional hooks where a callback may
+              not always be supplied.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function safeExecute(callback, fallback) {
+  if (typeof callback === 'function') {
+    callback();
+  } else {
+    fallback();
+  }
+}
+
+// Usage Example:
+safeExecute("not-a-function", () => {
+  console.log("Primary failed, fallback executed!");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#15</span>Synchronous Math
+              Pipeline
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write two mathematical operations:
+            <code>double(val, cb)</code> (doubles value and passes to cb) and
+            <code>addTen(val, cb)</code> (adds 10 and passes to cb). Chain them
+            sequentially starting with the number <code>5</code> to output
+            <code>20</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can be chained sequentially so each step passes its
+              result to the next.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              This question illustrates a simple synchronous pipeline using
+              nested callbacks.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Used in processing pipelines, data transformations, or sequential
+              task runners.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function double(val, cb) {
+  cb(val * 2);
+}
+
+function addTen(val, cb) {
+  cb(val + 10);
+}
+
+// Sequential Synchronous Nesting:
+double(5, (doubledResult) => {
+  // doubledResult is 10
+  addTen(doubledResult, (finalResult) => {
+    console.log(finalResult); // Output: 20
+  });
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#16</span>Safe Division Router
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function
+            <code>divide(numerator, denominator, onSuccess, onError)</code>. If
+            the denominator is exactly <code>0</code>, execute
+            <code>onError("Cannot divide by zero")</code>. Otherwise, execute
+            <code>onSuccess(result)</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              This illustrates error handling by choosing a callback for success
+              or failure.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function decides between two callbacks based on whether the
+              denominator is valid.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful in calculator utilities and APIs that require safe division
+              or validation before processing.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function divide(numerator, denominator, onSuccess, onError) {
+  if (denominator === 0) {
+    onError("Cannot divide by zero!");
+  } else {
+    onSuccess(numerator / denominator);
+  }
+}
+
+// Usage Example:
+divide(10, 0,
+  (res) => console.log("Result: " + res),
+  (err) => console.error("Error: " + err) // Executes
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#17</span>Password Length
+              Validator
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>validatePassword(pw, onValid, onInvalid)</code>. If the
+            string length is 8 characters or more, call <code>onValid()</code>.
+            Otherwise, call <code>onInvalid()</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks allow distinct success and failure handlers in
+              validation logic.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The callback chosen depends on whether the password meets the
+              minimum criteria.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Used in signup forms and password checks to branch behavior after
+              validation.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function validatePassword(pw, onValid, onInvalid) {
+  if (pw.length >= 8) {
+    onValid();
+  } else {
+    onInvalid();
+  }
+}
+
+// Usage Example:
+validatePassword("abc12", 
+  () => console.log("Valid Password!"),
+  () => console.log("Invalid Password (too short)!") // Executes
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#18</span>Manual Array Finder
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create <code>findInArray(arr, checkFn, onFound, onNotFound)</code>.
+            Use a manual <code>for</code> loop to traverse the array. For each
+            item, evaluate <code>checkFn(item)</code>. If it returns true,
+            immediately call <code>onFound(item)</code> and end the loop. If the
+            loop completes without finding anything, call
+            <code>onNotFound()</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              This uses a callback predicate to find the first array item that
+              matches a condition.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function loops manually and chooses the success or failure
+              callback based on the search result.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Helpful for search operations that trigger a handler when a
+              matching item is located.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function findInArray(arr, checkFn, onFound, onNotFound) {
+  for (let i = 0; i < arr.length; i++) {
+    if (checkFn(arr[i])) {
+      onFound(arr[i]);
+      return; // Stop function execution once found
+    }
+  }
+  onNotFound();
+}
+
+// Usage Example:
+const values = [3, 5, 11, 7];
+findInArray(
+  values, 
+  num => num > 10,
+  (item) => console.log("Found matching: " + item), // Executes
+  () => console.log("No match found")
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#19</span>Role Handler Routing
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write
+            <code>processUser(userObj, adminCallback, regularCallback)</code>.
+            If <code>userObj.role</code> is exactly equal to
+            <code>"admin"</code>, trigger
+            <code>adminCallback(userObj.name)</code>. Otherwise, execute
+            <code>regularCallback(userObj.name)</code>.
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              Callbacks can route users into different behavior flows based on
+              roles.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The function delegates handling to an admin callback or a regular
+              user callback depending on the role.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Common in dashboards or access control systems where roles
+              determine behavior.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function processUser(userObj, adminCallback, regularCallback) {
+  if (userObj.role === "admin") {
+    adminCallback(userObj.name);
+  } else {
+    regularCallback(userObj.name);
+  }
+}
+
+// Usage Example:
+const client = { name: "Alice", role: "guest" };
+processUser(client,
+  (adminName) => console.log("Launching console for Admin: " + adminName),
+  (userName) => console.log("Launching console for User: " + userName) // Executes
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#20</span>Strict Sequence
+              Runner
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function <code>runSequence(cb1, cb2, cb3)</code> that runs
+            the three callbacks one after another in exact synchronous order
+            (first <code>cb1</code>, then <code>cb2</code>, then
+            <code>cb3</code>).
+          </p>
+          <div class="space-y-2 mb-4 text-sm text-slate-600">
+            <p class="font-semibold text-slate-800">Concept:</p>
+            <p>
+              This question demonstrates strict ordering of callback execution.
+            </p>
+            <p class="font-semibold text-slate-800">Explanation:</p>
+            <p>
+              The wrapper simply calls the callbacks in sequence so each step
+              runs in the correct order.
+            </p>
+            <p class="font-semibold text-slate-800">Real-time use case:</p>
+            <p>
+              Useful in multi-stage initialization or setup routines where each
+              step must complete before the next begins.
+            </p>
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function runSequence(cb1, cb2, cb3) {
+  cb1();
+  cb2();
+  cb3();
+}
+
+// Usage Example:
+runSequence(
+  () => console.log("Step 1 initialized"),
+  () => console.log("Step 2 processing"),
+  () => console.log("Step 3 completed")
+);</code></pre>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <!-- Application Logic -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleBtns = document.querySelectorAll(".toggle-btn");
+        const hideAllBtn = document.getElementById("hideAllBtn");
+        const revealAllBtn = document.getElementById("revealAllBtn");
+
+        // Individual Toggle
+        toggleBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const solutionContainer = e.target.nextElementSibling;
+            const isHidden = solutionContainer.classList.contains("hidden");
+
+            if (isHidden) {
+              solutionContainer.classList.remove("hidden");
+              e.target.textContent = "Hide Solution";
+              e.target.classList.replace("text-indigo-600", "text-slate-600");
+              e.target.classList.replace("bg-indigo-50", "bg-slate-100");
+            } else {
+              solutionContainer.classList.add("hidden");
+              e.target.textContent = "Reveal Solution";
+              e.target.classList.replace("text-slate-600", "text-indigo-600");
+              e.target.classList.replace("bg-slate-100", "bg-indigo-50");
+            }
+          });
+        });
+
+        // Global Hide All
+        hideAllBtn.addEventListener("click", () => {
+          toggleBtns.forEach((btn) => {
+            const solutionContainer = btn.nextElementSibling;
+            solutionContainer.classList.add("hidden");
+            btn.textContent = "Reveal Solution";
+            btn.classList.replace("text-slate-600", "text-indigo-600");
+            btn.classList.replace("bg-slate-100", "bg-indigo-50");
+          });
+        });
+
+        // Global Reveal All
+        revealAllBtn.addEventListener("click", () => {
+          toggleBtns.forEach((btn) => {
+            const solutionContainer = btn.nextElementSibling;
+            solutionContainer.classList.remove("hidden");
+            btn.textContent = "Hide Solution";
+            btn.classList.replace("text-indigo-600", "text-slate-600");
+            btn.classList.replace("bg-indigo-50", "bg-slate-100");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
