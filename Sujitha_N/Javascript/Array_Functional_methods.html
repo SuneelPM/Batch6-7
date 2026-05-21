@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Functional Methods</title>
+</head>
+<body>
+    <h1>Array.map(callback)</h1>
+    <script>
+        //1.Map() method
+        let arr1 = [1,2,3,4,5,6,7,8,9,10]
+        let arr2 = arr1.map(x => x * 2);      //implicit return
+        let arr3 = arr1.map(x => console.log(x*2));        //no return
+        console.log(arr1);
+        console.log(arr2);
+        console.log(arr3);
+
+       //create arr4 with square of each element from arr1 using forloop 
+        let arr4 = Array(arr1.length);
+         console.log(arr4);
+        for (let i = 0; i < arr1.length; i++) {
+            arr4[i] = arr1[i] ** 2;
+        }
+        console.log(arr4);
+
+        //2.filter() method
+        let arr5 =arr1.filter(n => n > 3);
+        console.log(arr5);
+
+        //print even num
+        let arr6 = arr1.filter(n => n % 2 === 0);
+        console.log(arr6);
+
+        
+        //print even nums and square them(filter+map)
+        let arr7 = [1,2,3,4,5,6,7,8,9,10];
+        let result = arr7.filter(n => n % 2 === 0).map(n => n * n);
+       console.log(result);
+
+       //3.foreach() method - modifies existing array (elements, index, array)
+       arr1.forEach((e) => console.log(e));
+       console.log("original", arr1);
+       arr1.forEach((e, i, a) => a[i] = e ** 2);
+       console.log("Modified", arr1);
+
+       //4.reduce()
+       let sum1 = arr1.reduce((acc, n)=> acc + n,0);  //add elemets of the array
+       console.log(sum1);
+
+       let sum2 = 0;
+       for (let i = 0; i < arr1.length; i++);{
+       sum2 = sum2 + arr1[i];
+       }
+       console.log(sum2);
+
+        
+       //print n! by using reduce
+       let n = 5;
+       let arr = [];
+       for (let i = 1; i <= n; i++) {
+           arr.push(i);
+       }
+       let fact = arr.reduce((acc, num) => acc * num, 1);
+        console.log(fact);
+
+        //5.Fill() method - will fill the items with given value
+        let num = Number(prompt("Enter a positive integer"));
+        let arr8 = Array(num)
+        .fill()
+        .map((_, i) => i + 1)
+        .reduce((acc, n) => acc * n,1);
+        console.log(arr8);
+
+              
+       
+
+
+
+    </script>
+    
+</body>
+</html>

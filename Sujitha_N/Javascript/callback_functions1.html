@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Functions in js</title>
+</head>
+<body>
+    <script>
+        //callback - it's always a function
+        function greet (name,callback) {
+            console.log("Hello "+ name + "!");
+            callback(name);        
+        }
+        function sayGoodbye(name){
+            console.log("goodbye! " + name);
+
+        }
+
+        function sayHi(name) {
+            console.log("Hi "+name);
+        }
+        greet("Suji", sayGoodbye);
+        greet("Suji", sayHi);
+
+        //write a function runme that acceptsa single callback
+        // argument and execute inside it
+
+        function runMe(callback) {
+            callback();
+
+        }
+
+        //general function
+        function Hello() {
+            console.log("Hello");
+        }
+
+        //function expression
+        const helloJs = function() {
+            console.log("Hello Javascript ")
+        };
+
+        runMe(Hello);//hello
+        runMe(HelloJs);//hello javascript
+
+
+        //anonymous arrow function
+        runMe(() => console.log("Hii"));//hii
+
+        //directly wrt function definition as an argument
+        runMe(function HelloWorld() {
+            console.log("Hello world");
+
+        });  //hello world
+
+
+    </script>
+    
+</body>
+</html>
