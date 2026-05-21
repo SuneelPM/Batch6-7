@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Ways of Array creation in JS</title>
+</head>
+<body>
+    <script>
+        let x;
+        console.log(x);
+        //array literal
+        let arr = [1,2,3]
+        console.log(arr)
+
+        //constructor.........new array()
+        let arr1 = new Array();
+        console.log(arr1)
+        console.log(arr1,typeof arr1)     //object
+
+        
+
+        for (let i = 0; i < arr1.length; i++) {
+            arr1[i] = (i + 1) ** 2;
+        }
+
+
+        let a = 0;
+        for (let element of arr1) {
+            arr1[a ] = (a + 1) ** 2;
+            a++;
+
+        }
+        console.log(arr1);
+
+
+        //array constructor with elements
+        let arr2 = Array(1,2,3);
+        console.log(arr2);
+
+
+        //methods in arrays.....(Mutator methods)
+        //1.push(item).......add at last
+        arr2.push(4)
+        console.log(arr2)
+
+        //2.pop().............remove at last
+        arr2.pop()
+        console.log(arr2)
+
+        //3.unshift(item).......add at first
+        arr2.unshift(0)
+        console.log(arr2)
+
+        //4.shift().....remove at first
+        arr2.shift()
+        console.log(arr2)
+
+
+        //const cart = ["bread","milk","egg"]...
+        // add butter to end,coffe to begining 
+        // and remove the last item,log the final cart
+        
+        const cart = ["bread", "milk", "egg"];
+
+        // add butter to end
+        cart.push("butter");
+        
+        // add coffee to beginning
+        cart.unshift("coffee");
+        
+        // remove last item
+        cart.pop();
+        
+        console.log(cart);
+
+
+        
+
+        //arr[0] = 1;
+        //arr[1] = 2;
+        //arr[2] = 3;
+        //arr[3] = 4;
+        //arr[4] = 5;
+        //arr[5] = 6;
+
+
+
+
+
+
+
+        
+
+
+
+    </script>
+    
+</body>
+</html>

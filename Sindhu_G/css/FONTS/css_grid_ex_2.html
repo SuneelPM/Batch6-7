@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid ex 3</title>
+    <style>
+        .grid-container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-template-rows: repeat(3,1fr);
+            /* gap: 10px; */
+            height: 300px; 
+        }
+        .grid-items{
+            background-color: blueviolet;
+            color: white;
+            text-align: center;
+            place-content: center;
+            border: 5px solid white;
+        }
+        .grid-item1{
+        grid-column: 1 /3;
+        grid-row: 1 /2;
+        }
+          .grid-item2{
+        grid-column: 3 /4;
+        grid-row: 1 /3;
+        }
+          .grid-item3{
+        grid-column: 2 /3;
+        grid-row: 2 /3;
+        }
+          .grid-item4{
+        grid-column: 2 /4;
+        grid-row: 3 /4;
+        }
+          .grid-item5{
+        grid-column: 1 /2;
+        grid-row: 2 /4;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-items grid-item1">Grid Item1</div>
+        <div class="grid-items grid-item2">Grid Item2</div>
+        <div class="grid-items grid-item3">Grid Item3</div>
+        <div class="grid-items grid-item4">Grid Item4</div>
+        <div class="grid-items grid-item5">Grid Item5</div>
+    </div>
+</body>
+</html>
