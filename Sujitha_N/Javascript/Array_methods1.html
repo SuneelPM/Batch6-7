@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array methods js</title>
+</head>
+<body>
+    <script>
+        let arr = ["a","b","c","d","e","f"];
+        //slice(startindex,endindex)...endindex not included
+        console.log(arr);
+        let arr1= arr.slice(1,5);
+        console.log(arr);
+        console.log(arr1)
+
+        //indexOf method
+        let fruits = ['apple','banana','mango','papaya','watermelon','iceapple',];
+        //fruits.indexOf(item)
+        console.log(fruits);
+        let i = fruits.indexOf("iceapple");
+        console.log(i,fruits);
+
+        //fruits.includes(item)
+        let fruitexists = fruits.includes('grapes');
+        console.log(fruitexists);
+
+        //write a function thet adds give item to the list
+        //if the item does not exists in the list..if
+        //the item exist in the list return item already
+        //in the list
+        function addItem(list, item) {
+         if (list.includes(item)) {
+           return "Item already in the list";
+         } else {
+           list.push(item);
+           return list;
+         }
+        }
+       
+       console.log(addItem(fruits, "grapes")); // adds
+       //console.log(addItem(fruits, "banana")); // already exists
+       //console.log(fruits); // final list
+
+       
+       //write a function by using guard clause
+       function addItems(list, item) {
+        //guard clause
+        if (!Array.isArray(list)) {
+          return "The given list is not an array";
+        }
+
+        //condition
+        if (list.includes(item)) {
+          return "Item already in the list";
+        } else {
+          list.push(item);
+          return list;
+        }
+     }     
+     
+     //reverse
+     console.log(fruits.reverse());
+
+     //join...convert array into string
+     console.log(fruits.join(" "));
+
+     //tostring
+     console.log(fruits.toString());
+     
+
+     //array literal
+     const favoriteFruits = ["Apple", "Mango", "Banana"];
+     console.log(favoriteFruits);
+
+     //empty constructor
+     const emptySlots = new Array(2);
+     console.log(emptySlots.length); // 2
+
+     //constructor with elemnets
+     const numbers = new Array(1, 2, 3);
+     console.log(numbers); 
+
+     //includes check
+     const mem = ['sravss', 'pragna', 'suji'];
+     console.log(mem.includes('suji')); // true
+
+     //find index
+     const colors = ['1', '2', '3', '4'];
+     console.log(colors.indexOf('3')); // 2
+
+    //toString comvertion
+    const arr2 = [1, 2, "one"];
+    console.log(arr2.toString()); // "1,2,one"
+
+    //reverse array
+    const nums = [1, 2, 3];
+    nums.reverse();
+    console.log(nums);
+
+    //join no separater
+    const letters = ['N', 'S'];
+    console.log(letters.join('')); // "NS"
+
+    //join with dash
+    const alp = ['one', 'two'];
+    console.log(alp.join('-'));
+
+    //slice first two
+    const arr3 = ['a', 'b', 'c'];
+    console.log(arr3.slice(0, 2)); // ["a", "b"]
+
+    //splice del one
+    const arr4 = [1, 2, 3];
+    arr.splice(1, 1);
+    console.log(arr4); // [1, 3]
+
+    //negative indexOf fallback
+    const fru = ['apple', 'mango'];
+    console.log(fru.indexOf('banana')); // -1
+
+    //replace element(splice)
+    const fru1 = ['banana', 'apple', 'grape'];
+    fruits.splice(1, 1, 'orange');
+    console.log(fruits); // ["banana", "orange", "grape"]
+
+    //join objects
+    const arr5 = [{id:1}, {id:2}];
+    console.log(arr5.join(','));
+
+    //last n elements
+    const arr6 =[5,10,15,20];
+    console.log(arr.slice(2,4));
+
+
+
+
+
+        
+        
+
+   </script>
+    
+</body>
+</html>

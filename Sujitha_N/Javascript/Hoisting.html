@@ -38,17 +38,6 @@
         };
         console.log(sum(12, 13));
         
-        //nfactorial
-        const nFactorial = function fact(n) {
-            if (n == 2) {
-                return 2;
-            }
-            return n * fact(n - 1);
-
-        };
-        nFactorial(-1);
-
-
         //guard clause
         const fact = function(n) {
          if (n < 0) {
@@ -63,6 +52,26 @@
          };
          
          console.log(nFactorial(n - 1))
+
+         const nFactorial = function fact(n) {
+
+    // Guard clause for wrong input
+    if (typeof n !== "number") {
+        return "Invalid input! Please enter a number.";
+    }
+
+    if (n < 0) {
+        return "Factorial is not defined for negative numbers.";
+    }
+
+    if (n === 0 || n === 1) {
+        return 1;
+    }
+
+    return n * fact(n - 1);
+    };
+    
+    console.log(nFactorial("hello"));
     </script>
 
     
