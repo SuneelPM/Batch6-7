@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Callbacks: Beginner Practice Guide</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- PrismJS Okaidia Theme & Line Numbers CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc; /* slate-50 */
+        color: #0f172a; /* slate-900 */
+      }
+      /* Smooth transitions for solution revealing */
+      .solution-container {
+        transition: all 0.3s ease-in-out;
+      }
+      /* Custom scrollbar for code blocks */
+      pre[class*="language-"] {
+        border-radius: 0.75rem;
+        margin-top: 1rem;
+        box-shadow: inset 0 2px 4px 0 rgb(0 0 0 / 0.1);
+      }
+    </style>
+  </head>
+  <body class="antialiased min-h-screen pb-20">
+    <header
+      class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-10"
+    >
+      <div
+        class="max-w-5xl mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center gap-4"
+      >
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900">
+            JS Callbacks Mastery
+          </h1>
+          <p class="text-sm text-slate-500 font-medium">
+            20 Beginner Practical Challenges
+          </p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            id="hideAllBtn"
+            class="px-4 py-2 text-sm font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+          >
+            Hide All
+          </button>
+          <button
+            id="revealAllBtn"
+            class="px-4 py-2 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-colors"
+          >
+            Reveal All
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-9xl mx-auto px-6 mt-10">
+      <div class="mb-10 text-center max-w-3xl mx-auto">
+        <h2 class="text-3xl font-bold mb-4">Practical Challenges</h2>
+        <p class="text-slate-600 text-lg">
+          Master the fundamental building block of asynchronous JavaScript. Read
+          the constraints, write your code in your local editor, and click
+          "Reveal Solution" to verify your logic.
+        </p>
+      </div>
+
+      <div id="challengesContainer" class="space-y-6 grid grid-cols-2 gap-4">
+        <!-- Questions dynamically populated in HTML structure -->
+
+        <!-- Q1 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#1</span>The Absolute Basics
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function called <code>executeCallback</code> that takes a
+            function (a callback) as its only argument and immediately executes
+            it.
+          </p>
+          <div
+            class="bg-slate-50 border border-slate-100 rounded-xl p-4 mb-4 text-sm font-mono text-slate-600"
+          >
+            Input: () => console.log("Hello!")<br />
+            Expected Output: Logs "Hello!" to the console.
+          </div>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function executeCallback(callback) {
+  // Check if callback is actually a function before executing
+  if (typeof callback === 'function') {
+    callback();
+  }
+}
+
+// Usage:
+executeCallback(() => {
+  console.log("Hello!");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#2</span>Passing Data to
+              Callbacks
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function called <code>greetUser</code> that accepts a
+            <code>name</code> (string) and a <code>callback</code>. The function
+            should pass the <code>name</code> into the callback.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function greetUser(name, callback) {
+  // The primary function dictates WHAT data is passed
+  callback(name);
+}
+
+// The callback dictates HOW the data is handled
+greetUser("Alice", (userName) => {
+  console.log(`Welcome to the platform, ${userName}!`);
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#3</span>Simple Array forEach
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Given the array
+            <code>const fruits = ["apple", "banana", "cherry"]</code>, use the
+            built-in <code>.forEach()</code> method and an anonymous callback
+            function to log each fruit to the console.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const fruits = ["apple", "banana", "cherry"];
+
+// .forEach() takes a callback that executes once for every array element
+fruits.forEach(function(fruit) {
+  console.log(fruit);
+});
+
+// Arrow function alternative:
+// fruits.forEach(fruit => console.log(fruit));</code></pre>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#4</span>Array Mapping
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use the <code>.map()</code> array method with a callback to create a
+            new array containing the squares of the numbers in
+            <code>[1, 2, 3, 4]</code>.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const numbers = [1, 2, 3, 4];
+
+// .map() transforms an array by returning a new value for each element
+const squares = numbers.map((num) => {
+  return num * num;
+});
+
+console.log(squares); // Output: [1, 4, 9, 16]</code></pre>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#5</span>Filtering Data
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use the <code>.filter()</code> method with a callback function to
+            extract only the <strong>even numbers</strong> from the array
+            <code>[1, 2, 3, 4, 5, 6]</code>.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const nums = [1, 2, 3, 4, 5, 6];
+
+// .filter() keeps items where the callback returns true
+const evens = nums.filter((num) => {
+  return num % 2 === 0;
+});
+
+console.log(evens); // Output: [2, 4, 6]</code></pre>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#6</span>Delayed Execution
+              (setTimeout)
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use the browser's <code>setTimeout</code> function to pass a
+            callback that logs "Time's up!" to the console exactly 2 seconds
+            (2000 milliseconds) after the code runs.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">// setTimeout takes a callback function and a delay in milliseconds
+setTimeout(() => {
+  console.log("Time's up!");
+}, 2000);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#7</span>The Calculator
+              Paradigm
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write a function <code>calculate(x, y, operation)</code>. The
+            <code>operation</code> parameter is a callback. Invoke
+            <code>calculate</code> to multiply two numbers.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function calculate(x, y, operation) {
+  // Execute the callback passing x and y
+  return operation(x, y);
+}
+
+// Define the logic in the callback
+const multiply = (a, b) => a * b;
+
+const result = calculate(5, 4, multiply);
+console.log(result); // Output: 20</code></pre>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#8</span>Conditional Execution
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function <code>runOnlyIf(condition, callback)</code>. If
+            <code>condition</code> evaluates to true, execute the callback.
+            Otherwise, do nothing.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function runOnlyIf(condition, callback) {
+  if (condition) {
+    callback();
+  }
+}
+
+// Usage:
+const isUserLoggedIn = true;
+runOnlyIf(isUserLoggedIn, () => {
+  console.log("Displaying secure dashboard...");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#9</span>Event Listener
+              Simulation
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>simulateClick(buttonId, onClickCallback)</code>. It
+            should <code>console.log("Locating " + buttonId)</code> and then
+            execute the callback to mimic a click event.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function simulateClick(buttonId, onClickCallback) {
+  console.log("Locating " + buttonId);
+  // Simulating the user actually clicking the button
+  onClickCallback();
+}
+
+simulateClick("submit-btn", () => {
+  console.log("Form submitted!");
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#10</span>Finding Array
+              Elements
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Given <code>[4, 8, 12, 15]</code>, use the
+            <code>.find()</code> method with a callback to retrieve the
+            <strong>first number</strong> that is greater than 10.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const items = [4, 8, 12, 15];
+
+// .find() returns the first element that satisfies the condition
+const firstLargeNumber = items.find((num) => {
+  return num > 10;
+});
+
+console.log(firstLargeNumber); // Output: 12 (15 is ignored)</code></pre>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#11</span>Reducing Data to a
+              Single Value
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use <code>.reduce()</code> with a callback function to calculate the
+            total sum of the array <code>[10, 20, 30]</code>. Don't forget the
+            initial value!
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const prices = [10, 20, 30];
+
+// .reduce() accumulates values. 
+// Parameters: callback(accumulator, currentValue), initialValue
+const total = prices.reduce((acc, curr) => {
+  return acc + curr;
+}, 0); // 0 is the initial value of 'acc'
+
+console.log(total); // Output: 60</code></pre>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#12</span>Success or Error
+              Handling
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>fetchData(onSuccess, onError)</code>. Generate a random
+            number. If it's greater than 0.5, call <code>onSuccess()</code>.
+            Otherwise, call <code>onError()</code>.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function fetchData(onSuccess, onError) {
+  const isSuccessful = Math.random() > 0.5;
+  
+  if (isSuccessful) {
+    onSuccess("Data successfully retrieved!");
+  } else {
+    onError("Network Error 404");
+  }
+}
+
+// Usage with two callbacks:
+fetchData(
+  (data) => console.log(data), 
+  (err) => console.error(err)
+);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#13</span>String Modification
+              Delegate
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>modifyString(str, modifierCallback)</code>. It should
+            return the result of passing <code>str</code> into the callback. Use
+            it to convert "hello" to uppercase.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function modifyString(str, modifierCallback) {
+  return modifierCallback(str);
+}
+
+// The callback provides the string manipulation logic
+const upperCased = modifyString("hello", (text) => {
+  return text.toUpperCase();
+});
+
+console.log(upperCased); // Output: HELLO</code></pre>
+          </div>
+        </div>
+
+        <!-- Q14 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#14</span>Validating at Least
+              One (Array.some)
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Given an array of objects:
+            <code>[{age: 25}, {age: 16}, {age: 30}]</code>, use the
+            <code>.some()</code> method with a callback to determine if
+            <em>any</em> user is under 18.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const users = [{age: 25}, {age: 16}, {age: 30}];
+
+// .some() returns true if AT LEAST ONE element passes the callback condition
+const hasMinors = users.some((user) => {
+  return user.age < 18;
+});
+
+console.log(hasMinors); // Output: true</code></pre>
+          </div>
+        </div>
+
+        <!-- Q15 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#15</span>Validating All
+              (Array.every)
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use <code>.every()</code> with a callback to check if
+            <em>all</em> strings in <code>["cat", "dog", "bat"]</code> have
+            exactly 3 characters.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const words = ["cat", "dog", "bat"];
+
+// .every() returns true ONLY IF ALL elements pass the callback condition
+const allThreeLetters = words.every((word) => {
+  return word.length === 3;
+});
+
+console.log(allThreeLetters); // Output: true</code></pre>
+          </div>
+        </div>
+
+        <!-- Q16 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#16</span>Intervals and
+              Callbacks
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use <code>setInterval</code> with a callback to log "Tick" every 1
+            second. Store the interval ID, and use a separate
+            <code>setTimeout</code> callback to clear it after 3.5 seconds.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">// setInterval repeatedly calls the callback
+const intervalId = setInterval(() => {
+  console.log("Tick");
+}, 1000);
+
+// We use setTimeout's callback to stop the interval later
+setTimeout(() => {
+  clearInterval(intervalId);
+  console.log("Timer stopped.");
+}, 3500);</code></pre>
+          </div>
+        </div>
+
+        <!-- Q17 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#17</span>Chaining Callbacks
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Write <code>stepOne(data, cb)</code> which adds 5 to data and passes
+            it to <code>cb</code>. Write <code>stepTwo(data, cb)</code> which
+            multiplies data by 2. Chain them together starting with the number
+            10.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function stepOne(data, cb) {
+  cb(data + 5);
+}
+
+function stepTwo(data, cb) {
+  cb(data * 2);
+}
+
+// Chaining them (this is the precursor to 'Callback Hell')
+stepOne(10, (resultOne) => {
+  // resultOne is 15
+  stepTwo(resultOne, (finalResult) => {
+    console.log(finalResult); // Output: 30
+  });
+});</code></pre>
+          </div>
+        </div>
+
+        <!-- Q18 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#18</span>Build Your Own Map
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create a function <code>myMap(array, callback)</code> that behaves
+            exactly like the built-in <code>.map()</code>. It should create a
+            new array, loop over the provided array, apply the callback, and
+            return the new array.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function myMap(array, callback) {
+  const result = [];
+  
+  for (let i = 0; i < array.length; i++) {
+    // Apply callback to each element and push to new array
+    const transformedValue = callback(array[i]);
+    result.push(transformedValue);
+  }
+  
+  return result;
+}
+
+const doubled = myMap([1, 2, 3], num => num * 2);
+console.log(doubled); // Output: [2, 4, 6]</code></pre>
+          </div>
+        </div>
+
+        <!-- Q19 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#19</span>Build Your Own Filter
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Create <code>myFilter(array, callback)</code> that mimics
+            <code>.filter()</code>. Return a new array containing only the items
+            where the callback returns a truthy value.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">function myFilter(array, callback) {
+  const result = [];
+  
+  for (let i = 0; i < array.length; i++) {
+    // If the callback evaluates to true, keep the item
+    if (callback(array[i])) {
+      result.push(array[i]);
+    }
+  }
+  
+  return result;
+}
+
+const isPositive = myFilter([-2, 5, -9, 10], num => num > 0);
+console.log(isPositive); // Output: [5, 10]</code></pre>
+          </div>
+        </div>
+
+        <!-- Q20 -->
+        <div class="bg-white rounded-2xl shadow-sm p-6 border border-slate-200">
+          <div class="flex justify-between items-start mb-4">
+            <h3 class="text-xl font-bold text-slate-800">
+              <span class="text-indigo-500 mr-2">#20</span>Sorting with
+              Callbacks
+            </h3>
+            <span
+              class="px-3 py-1 text-xs font-bold text-emerald-700 bg-emerald-100 rounded-full"
+              >Beginner</span
+            >
+          </div>
+          <p class="text-slate-700 mb-3">
+            Use the <code>.sort()</code> method with a comparator callback
+            function to sort the array <code>[40, 1, 5, 200]</code> in
+            <strong>ascending numerical order</strong>.
+          </p>
+          <button
+            class="toggle-btn px-4 py-2 text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 rounded-xl transition-colors"
+          >
+            Reveal Solution
+          </button>
+
+          <div class="solution-container hidden mt-2">
+            <pre
+              class="line-numbers language-javascript"
+            ><code class="language-javascript">const numbers = [40, 1, 5, 200];
+
+// The sort callback determines order based on a negative, zero, or positive return value.
+numbers.sort((a, b) => {
+  return a - b; 
+});
+
+console.log(numbers); // Output: [1, 5, 40, 200]</code></pre>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- PrismJS Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+    <!-- Application Logic -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const toggleBtns = document.querySelectorAll(".toggle-btn");
+        const hideAllBtn = document.getElementById("hideAllBtn");
+        const revealAllBtn = document.getElementById("revealAllBtn");
+
+        // Individual Toggle
+        toggleBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            const solutionContainer = e.target.nextElementSibling;
+            const isHidden = solutionContainer.classList.contains("hidden");
+
+            if (isHidden) {
+              solutionContainer.classList.remove("hidden");
+              e.target.textContent = "Hide Solution";
+              e.target.classList.replace("text-indigo-600", "text-slate-600");
+              e.target.classList.replace("bg-indigo-50", "bg-slate-100");
+            } else {
+              solutionContainer.classList.add("hidden");
+              e.target.textContent = "Reveal Solution";
+              e.target.classList.replace("text-slate-600", "text-indigo-600");
+              e.target.classList.replace("bg-slate-100", "bg-indigo-50");
+            }
+          });
+        });
+
+        // Global Hide All
+        hideAllBtn.addEventListener("click", () => {
+          toggleBtns.forEach((btn) => {
+            const solutionContainer = btn.nextElementSibling;
+            solutionContainer.classList.add("hidden");
+            btn.textContent = "Reveal Solution";
+            btn.classList.replace("text-slate-600", "text-indigo-600");
+            btn.classList.replace("bg-slate-100", "bg-indigo-50");
+          });
+        });
+
+        // Global Reveal All
+        revealAllBtn.addEventListener("click", () => {
+          toggleBtns.forEach((btn) => {
+            const solutionContainer = btn.nextElementSibling;
+            solutionContainer.classList.remove("hidden");
+            btn.textContent = "Hide Solution";
+            btn.classList.replace("text-indigo-600", "text-slate-600");
+            btn.classList.replace("bg-indigo-50", "bg-slate-100");
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
