@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>array functional methods</h1>
+    <script>
+        let arr1=[1,2,3,4,5];
+        // let arr2=arr1.map((x) => x*2);//implicit return
+        // let arr3=arr1.map((x) => console.log(x*2));//no return
+        // console.log(arr1);   
+        // console.log(arr2);
+        // let arr4=Array(arr1.length)
+        // for(i=0;i<arr1.length;i++){
+        //    arr4[i]=arr1[i]**2;
+        // }
+        // console.log(arr4);
+
+        // //filter
+        // let arr5=arr1.filter((n)=>n>3);
+        // console.log(arr5);
+
+        // let arr6=arr1.filter((m)=>m%2===0);
+        // console.log(arr6);
+
+        // let arr7=arr1.filter((m)=>m%2===0).map((a) => a**2);
+        // console.log(arr7);
+
+        // arr1.forEach((e)=>console.log(e));
+        // console.log('original:',arr1);
+        // arr1.forEach((e,i,a)=>(a[i]=e**2));
+        // console.log('modified:',arr1);
+
+        let sum1 = arr1.reduce((acc,n)=>acc+n,0)
+        console.log(sum1);
+
+        let sum2 = 0;
+        for(let i=0;i<arr1.length;i++){
+            sum2=sum2+arr1[i];
+        }
+        console.log(sum2);
+
+        let mul1 = arr1.reduce((acc,n)=>acc*n,1)
+        console.log(mul1);
+
+        let mul2 = 1;
+        for(let i=0;i<arr1.length;i++){
+            mul2=mul2*arr1[i];
+        }
+        console.log(mul2);
+
+        // let num=Number(prompt('enter a positive num:'));
+        // let arr8=Array(num)
+        //   .fill()
+        //   .map((_, i)=>)
+    </script>
+</body>
+</html>

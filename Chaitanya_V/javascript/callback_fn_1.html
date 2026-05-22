@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>call back function</h1>
+    <script>
+        // function greet(name,callback) {
+        //     console.log(`hello ${name}!`);
+        //     callback(name);
+        // }
+        // function saygoodbye(name) {
+        //     console.log(`'goodbye!' ${name}`);
+        // }
+        // function sayhi(name) {
+        //     console.log(`'hi!' ${name}`);
+        // }
+        // greet('virat',saygoodbye);
+        // greet('virat',sayhi);
+
+        function runMe(callback) {
+            callback();
+        }
+        //general fn
+        function hello() {
+            console.log('hello');
+        }
+        //fn expression
+        const hellojs=function () {
+             console.log('hello javascript');
+        }
+
+        runMe(hello);
+        runMe(hellojs);
+//anonymous arrow fn
+        runMe(()=> console.log('hi'));
+//directly write fn definition
+        runMe(function helloworld() {
+            console.log('hello world');
+        })
+
+
+
+
+
+    </script>
+</body>
+</html>
