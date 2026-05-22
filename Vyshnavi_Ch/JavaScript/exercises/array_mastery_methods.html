@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>arrays mastery</h1>
+    <script>
+        //The Array Literal
+//Create an array named favoriteFruits containing 3 of your favorite fruits as strings using the array literal syntax
+        const favoriteFruits = ["Apple", "Mango", "Banana"];
+        console.log(favoriteFruits);
+
+        // The Empty Constructor
+//Create an empty array named emptySlots with a length of 5 using the new Array() constructor.
+        const emptySlots = new Array(5);
+    console.log(emptySlots.length); 
+//Constructor with Elements
+//Create an array named numbers containing 10, 20, and 30 using the new Array(...) syntax.
+    const numbers = new Array(10, 20, 30);
+    console.log(numbers);
+   //Includes Check
+//Check if 'editor' exists in ['admin', 'editor', 'user']. 
+    const roles = ['admin', 'editor', 'user'];
+    console.log(roles.includes('editor'));
+   // Find Index
+//Find the index of 'blue' in ['red', 'green', 'blue', 'yellow'].
+
+    const colors = ['red', 'green', 'blue', 'yellow'];
+    console.log(colors.indexOf('blue')); 
+ //toString Conversion
+//Convert [1, 2, "three"] to a string using toString()
+    //const arr = [1, 2, "three"];
+    //console.log(arr.toString()); 
+    //Reverse Array
+//Reverse the array [10, 9, 8] in place.
+        const nums = [10, 9, 8];
+    nums.reverse();
+    console.log(nums);
+//Join No Separator
+//Join ['J', 'S'] into "JS".
+    const letters = ['J', 'S'];
+    console.log(letters.join(''));
+     //Join with Dash
+//Join ['one', 'two'] into "one-two".
+    const words = ['one', 'two'];
+    console.log(words.join('-'));
+     //Splice Delete One
+//Remove the second element from [1, 2, 3] using splice.
+   //Replace Element (splice)
+//Given ['banana', 'apple', 'grape'], replace 'apple' with 'orange' using splice()
+    const fruits = ['banana', 'apple', 'grape'];
+    fruits.splice(1, 1, 'orange');
+    console.log(fruits);
+
+
+    //const arr = [5, 10, 15, 20];
+//console.log(arr.slice(2,3));
+const arr = [1, 2, 3, 4, 5];
+const middle = arr.slice(1, 4);
+console.log(middle);
+    </script>
+</body>
+</html>
