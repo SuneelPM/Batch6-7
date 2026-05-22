@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS GRID LAYOUT EX 1</title>
+    <style>
+        .grid container{
+             display: grid;
+            grid-template-columns:1fr 5fr 1fr ;
+            grid-template-rows:1fr 10fr 1fr ;
+            height: 100vh;
+            gap: 10px
+        }
+        .gi{
+            background-color: yellow;
+
+        }
+        .gi1{
+            grid-area: header;
+
+        }
+        .gi2{
+             grid-area: aside1;
+        }
+        .gi3{
+             grid-area: body;
+        }
+        .gi4{
+            grid-area:aside2 ;
+        }
+        .gi5{
+            grid-area: footer;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-items grid-item-1">Header</div>
+        <div class="grid-items grid-item-2">Hero</div>
+        <div class="grid-items grid-item-3">content</div>
+        <div class="grid-items grid-item-4">side bar</div>
+        <div class="grid-items grid-item-5">Footer</div>
+    </div>
+</body>
+</html>

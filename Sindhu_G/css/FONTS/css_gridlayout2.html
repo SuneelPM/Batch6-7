@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cards</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        .layout{
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(249,230,224);
+            height: 100vh;
+            gap: 10px;
+            padding: 10px;
+        }
+        .header{
+            background-color: rgb(214, 243, 214);
+            flex: 1;
+            text-align: center;
+            place-content: center;
+        }
+        .footer{
+            background-color: rgb(186, 206, 186);
+            flex: 1;
+            text-align: center;
+            place-content: center;
+        }
+        .content{
+            flex:6;
+            display: flex;
+            gap: 10px;
+        }
+        .aside{
+            background-color: aquamarine;
+            flex: 1;
+            gap: 10px;
+            text-align: center;
+            place-content: center;
+        }
+        .article{
+            background-color: coral;
+            flex:3;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: end;
+            gap: 1;
+
+        }
+        .images{
+            background-color: bisque;
+            height: 100px;
+            flex: 1;
+            margin: 10px;
+            text-align: center;
+            place-content: center;
+            gap: 20px; 
+        }
+
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <div class="header">Header</div>
+         <div class="content">
+            <div class="aside">Aside</div>
+            <div class="article">
+                <div class="images image-1">Image1</div>
+                <div class="images image-2">Image2</div>
+                <div class="images image-3">Image3</div>
+            </div>
+         </div>
+         <div class="footer">Footer</div>
+    </div>
+</body>
+</html>

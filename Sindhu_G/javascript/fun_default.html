@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Functions - parameters default values</h1>
+    <script>
+        // write a function that defaults age to 18
+        // anything below 18 or above 26
+        // O/P - not eligible to write the exam
+        // 18 - 26 = eligible to write the exam
+
+
+        function examEligibilitycheck(age = 18){
+        function exam(age = 18) {
+
+  if (age >= 18 && age <= 26) {
+    console.log("Eligible to write the exam");
+  } else {
+    console.log("Not eligible to write the exam");
+  }
+
+}
+
+exam();
+exam(20);
+exam(30);
+        }
+
+        //write to greet a person with their name,default value "guest"
+
+
+    function greet (name = "Guest"){
+     return 'Hi $(name),how are you?';
+    }
+
+
+    console.log(greet())
+    console.log(greet ("Sindhu"))
+
+    </script>
+
+</body>
+</html>

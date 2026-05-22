@@ -1,0 +1,2127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Array Methods Masterclass - Interactive Study Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PrismJS Dark Okaidia Theme CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+    />
+    <!-- Google Fonts Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .resizable-sidebar {
+        resize: horizontal;
+        overflow: auto;
+        min-width: 20vw;
+        width: 28vw;
+        max-width: 45vw;
+      }
+      /* sidebar is resizable; collapse mode removed */
+      .challenge-num-badge {
+        min-width: 1.9rem;
+      }
+      .resizable-sidebar .first-word {
+        display: none;
+      }
+      .drag-splitter {
+        width: 10px;
+        cursor: col-resize;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(148, 163, 184, 0.06),
+          transparent
+        );
+        transition: background 0.15s ease;
+      }
+      .drag-splitter:hover {
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(148, 163, 184, 0.12),
+          transparent
+        );
+      }
+      @media (max-width: 1024px) {
+        .drag-splitter {
+          display: none;
+        }
+      }
+      /* no expand button (collapse mode removed) */
+      .font-mono-custom {
+        font-family: "Fira Code", monospace;
+      }
+      /* Custom scrollbars */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+    <!-- HEADER BAR -->
+    <header
+      class="bg-white border-b border-slate-200 sticky top-0 z-40 px-6 py-4 shadow-sm"
+    >
+      <div
+        class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="p-2.5 bg-indigo-600 rounded-xl text-white shadow-md shadow-indigo-200"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              ></path>
+            </svg>
+          </div>
+          <div>
+            <h1
+              class="text-xl font-extrabold text-slate-800 tracking-tight flex items-center gap-2"
+            >
+              JS Array Methods Masterclass
+              <span
+                class="text-xs font-semibold bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded-full"
+                >Interactive Studio</span
+              >
+            </h1>
+            <p class="text-xs text-slate-500 font-medium">
+              60 Progressive Sandbox Challenges with Live LeetCode-style
+              Verification
+            </p>
+          </div>
+        </div>
+
+        <!-- Global Interactive Stats Tracker -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div
+            class="flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-emerald-500 mr-2 animate-pulse"
+            ></span>
+            <span class="text-xs font-bold text-slate-600"
+              >Easy: <span id="stat-easy">0/20</span></span
+            >
+          </div>
+          <div
+            class="flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-amber-500 mr-2 animate-pulse"
+            ></span>
+            <span class="text-xs font-bold text-slate-600"
+              >Medium: <span id="stat-medium">0/20</span></span
+            >
+          </div>
+          <div
+            class="flex items-center bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200"
+          >
+            <span
+              class="w-2.5 h-2.5 rounded-full bg-rose-500 mr-2 animate-pulse"
+            ></span>
+            <span class="text-xs font-bold text-slate-600"
+              >Hard: <span id="stat-hard">0/20</span></span
+            >
+          </div>
+          <div class="h-6 w-px bg-slate-200 mx-1 hidden sm:block"></div>
+          <button
+            id="btn-reset-all"
+            class="text-xs font-semibold text-slate-500 hover:text-rose-600 border border-slate-200 hover:border-rose-200 bg-white hover:bg-rose-50 px-3 py-1.5 rounded-lg transition-all duration-200"
+          >
+            Reset Progress
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN BODY SYSTEM -->
+    <main
+      class="flex-1 w-full p-4 md:p-6 flex flex-col lg:flex-row gap-6 overflow-hidden"
+    >
+      <!-- SIDEBAR CHECKLIST & FILTERS (Lg: 4 Columns) -->
+      <section
+        class="resizable-sidebar flex flex-col gap-4 bg-white rounded-2xl border border-slate-200 p-4 h-[calc(100vh-140px)] min-h-[450px]"
+      >
+        <div
+          class="flex items-center justify-between border-b border-slate-100 pb-3"
+        >
+          <div class="flex items-center gap-2">
+            <h2
+              class="text-sm font-bold text-slate-800 tracking-tight uppercase"
+            >
+              Challenge Feed
+            </h2>
+          </div>
+          <span
+            class="text-xs bg-indigo-50 text-indigo-600 font-extrabold px-2.5 py-0.5 rounded-full"
+            id="stat-total-progress"
+            >0% Done</span
+          >
+        </div>
+
+        <!-- SEARCH & FILTERS -->
+        <div class="flex flex-col gap-2">
+          <input
+            type="text"
+            id="filter-search"
+            placeholder="Search concept or method..."
+            class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-800 placeholder-slate-400 focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 transition-all outline-none"
+          />
+
+          <div class="grid grid-cols-4 gap-1">
+            <button
+              id="filter-tab-all"
+              class="text-[10px] font-bold py-1.5 rounded-lg bg-indigo-600 text-white transition-all border border-indigo-600"
+            >
+              All (60)
+            </button>
+            <button
+              id="filter-tab-easy"
+              class="text-[10px] font-bold py-1.5 rounded-lg bg-slate-100 hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 transition-all border border-transparent"
+            >
+              Easy
+            </button>
+            <button
+              id="filter-tab-medium"
+              class="text-[10px] font-bold py-1.5 rounded-lg bg-slate-100 hover:bg-amber-50 text-slate-600 hover:text-amber-700 transition-all border border-transparent"
+            >
+              Med
+            </button>
+            <button
+              id="filter-tab-hard"
+              class="text-[10px] font-bold py-1.5 rounded-lg bg-slate-100 hover:bg-rose-50 text-slate-600 hover:text-rose-700 transition-all border border-transparent"
+            >
+              Hard
+            </button>
+          </div>
+        </div>
+
+        <!-- CHALLENGE LIST FEED -->
+        <div
+          class="flex-1 overflow-y-auto space-y-1.5 pr-1"
+          id="challenge-list-container"
+        >
+          <!-- Programmatically populated lists with beautiful custom tags and status icons -->
+        </div>
+      </section>
+
+      <!-- LIVE WORKSPACE & CODING SANDBOX (Lg: 8 Columns) -->
+
+      <div id="drag-splitter" class="drag-splitter"></div>
+
+      <section
+        class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 h-[calc(100vh-140px)] overflow-y-auto pr-1"
+      >
+        <!-- CHALLENGE OVERVIEW CARD -->
+        <div
+          class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm transition-all relative overflow-visible min-h-[480px] overflow-y-auto"
+        >
+          <div
+            class="absolute top-0 left-0 right-0 h-1.5 bg-indigo-600"
+            id="header-difficulty-bar"
+          ></div>
+          <div
+            class="flex flex-col sm:flex-row justify-between items-start gap-3 mb-4 mt-2"
+          >
+            <div>
+              <div class="flex items-center gap-2 mb-1.5 flex-wrap">
+                <span
+                  id="active-difficulty-badge"
+                  class="text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-md"
+                >
+                  Easy
+                </span>
+                <span
+                  id="active-category-method"
+                  class="text-[10px] bg-slate-100 text-slate-600 font-bold px-2.5 py-0.5 rounded-md border border-slate-200"
+                >
+                  array.push
+                </span>
+              </div>
+              <h3
+                class="text-xl font-extrabold text-slate-800 tracking-tight"
+                id="active-title"
+              >
+                Challenge Title Loads...
+              </h3>
+            </div>
+            <!-- Mark as completed manual trigger / Auto-completion track -->
+            <div
+              id="validation-indicator"
+              class="flex items-center gap-2 bg-slate-100 text-slate-600 font-bold text-xs px-3 py-1.5 rounded-lg border border-slate-200"
+            >
+              <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+              Not Checked
+            </div>
+          </div>
+
+          <div
+            class="prose prose-slate text-sm leading-relaxed text-slate-600 space-y-3 mb-6"
+            id="active-description"
+          >
+            <!-- Dynamic details go here -->
+          </div>
+
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+            <h4
+              class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2"
+            >
+              Technical Constraints
+            </h4>
+            <ul
+              class="list-disc pl-5 text-xs text-slate-500 space-y-1.5 font-medium"
+              id="active-constraints"
+            >
+              <!-- Dynamic bullets -->
+            </ul>
+          </div>
+        </div>
+
+        <!-- CODE RUNNER & INTERACTIVE EDITOR -->
+        <div
+          class="bg-white rounded-2xl border border-slate-200 flex flex-col shadow-sm overflow-hidden min-h-[400px]"
+        >
+          <div
+            class="bg-slate-900 px-4 py-3 flex items-center justify-between border-b border-slate-800"
+          >
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+              <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+              <span class="text-xs font-mono-custom text-slate-400 ml-2"
+                >sandbox_workspace.js</span
+              >
+            </div>
+            <div class="flex items-center gap-2">
+              <button
+                id="btn-reset-code"
+                class="text-[11px] font-bold text-slate-400 hover:text-white bg-slate-800 border border-slate-700 hover:border-slate-600 px-3 py-1 rounded-md transition duration-150 flex items-center gap-1.5"
+              >
+                <svg
+                  class="w-3.5 h-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 8H17.5M12 8v4l3 3"
+                  ></path>
+                </svg>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-1 relative">
+            <textarea
+              id="code-editor"
+              class="w-full h-full font-mono-custom text-sm bg-slate-950 text-slate-100 p-4 focus:ring-0 focus:outline-none resize-none leading-relaxed border-0"
+            ></textarea>
+          </div>
+
+          <!-- PLAYGROUND CONTROLS -->
+          <div
+            class="bg-slate-50 border-t border-slate-200 p-4 flex flex-wrap justify-between items-center gap-3"
+          >
+            <div class="flex gap-2">
+              <button
+                id="btn-reveal-solution"
+                class="text-xs font-bold text-indigo-700 hover:text-white border border-indigo-200 hover:border-indigo-600 bg-indigo-50 hover:bg-indigo-600 px-4 py-2.5 rounded-xl transition-all duration-200"
+              >
+                Show Solution & Explanation
+              </button>
+            </div>
+            <button
+              id="btn-run-code"
+              class="text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 px-6 py-2.5 rounded-xl flex items-center gap-2 shadow-md shadow-indigo-100 transition-all active:scale-[0.98]"
+            >
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fill-rule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+              Execute & Validate Output
+            </button>
+          </div>
+        </div>
+
+        <!-- LIVE CONSOLE & COMPILER REPORT -->
+        <div
+          class="bg-slate-900 rounded-2xl border border-slate-800 p-5 shadow-sm text-slate-200 font-mono-custom text-xs flex flex-col gap-4 lg:col-span-2"
+        >
+          <div
+            class="flex items-center justify-between border-b border-slate-800 pb-3"
+          >
+            <span
+              class="text-[10px] uppercase tracking-wider font-extrabold text-slate-400"
+              >Execution Output & Assertion Logs</span
+            >
+            <button
+              id="btn-clear-console"
+              class="text-[10px] text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              Clear Stream
+            </button>
+          </div>
+
+          <div
+            id="console-stream"
+            class="space-y-2 max-h-40 overflow-y-auto pr-1"
+          >
+            <div class="text-slate-500 italic">
+              Waiting for compiler instructions... click "Execute & Validate
+              Output" to evaluate code.
+            </div>
+          </div>
+
+          <div
+            id="test-suite-reporter"
+            class="border-t border-slate-800 pt-3 space-y-1.5 hidden"
+          >
+            <span
+              class="text-[10px] uppercase tracking-wider font-extrabold text-indigo-400 block mb-2"
+              >Automated Assertions Report</span
+            >
+            <div id="assertion-list" class="space-y-1">
+              <!-- Auto populating test assertions -->
+            </div>
+          </div>
+        </div>
+
+        <!-- MODEL SOLUTION & PEDAGOGICAL DECK (Expands dynamically) -->
+        <div
+          id="solution-container"
+          class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hidden transition-all duration-300 lg:col-span-2"
+        >
+          <div class="border-b border-slate-100 pb-3 mb-4">
+            <h3
+              class="text-sm font-extrabold text-slate-800 uppercase tracking-tight"
+            >
+              Model Solution & Pedagogical Deck
+            </h3>
+          </div>
+
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-2.5">
+              <span class="text-xs font-semibold text-slate-500"
+                >Structured Idiomatic Solution</span
+              >
+              <button
+                id="btn-copy-solution"
+                class="text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-bold transition"
+              >
+                Copy Code
+              </button>
+            </div>
+            <pre
+              class="rounded-xl overflow-hidden text-sm"
+            ><code class="language-javascript" id="solution-code-block"></code></pre>
+          </div>
+
+          <div
+            class="bg-indigo-50/50 rounded-xl p-5 border border-indigo-100 prose prose-slate text-sm text-slate-600"
+          >
+            <h4
+              class="text-xs font-bold text-indigo-900 uppercase tracking-wider mb-2"
+            >
+              Core Mechanics & Optimization
+            </h4>
+            <p
+              class="leading-relaxed text-indigo-950 font-medium"
+              id="solution-explanation"
+            >
+              Loading core mechanics details...
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- CORE JAVASCRIPT & EXERCISE DATABASE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script>
+      // Database of 60 Javascript Array challenges with zero duplicates
+      const challengeDb = [
+        // EASY TIERS (1-20)
+        {
+          id: "easy-1",
+          difficulty: "easy",
+          category: "literal",
+          title: "Initialize Base Retail Store Array Literal",
+          description:
+            "Create an array called <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>storeItems</code> containing 4 specific store items as strings using the Array Literal notation: 'laptop', 'tablet', 'monitor', and 'keyboard'. Finally, construct and return this array.",
+          constraints: [
+            "Must use modern Array literal format: [element1, element2, ...]",
+            "Do not use standard Constructor function 'new Array()'",
+          ],
+          starterCode: `function solve() {\n    // Write your code here\n    const storeItems = [];\n    \n    return storeItems;\n}`,
+          solution: `function solve() {\n    const storeItems = ['laptop', 'tablet', 'monitor', 'keyboard'];\n    return storeItems;\n}`,
+          explanation:
+            "Array literals (e.g., `[]`) are the most performance-optimized and readable method to create static arrays in ECMAScript. They instantly reserve continuous memory slots for standard primitive index maps.",
+          testCases: [
+            {
+              input: [],
+              expected: ["laptop", "tablet", "monitor", "keyboard"],
+            },
+          ],
+        },
+        {
+          id: "easy-2",
+          difficulty: "easy",
+          category: "constructor",
+          title: "Pre-allocate Storage Blocks with Size Constructor",
+          description:
+            "Construct a dynamic, blank database index registry with physical array pre-allocation. Create an array called <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>dbRegistry</code> of exactly 8 elements using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>new Array()</code> constructor. Return the created array.",
+          constraints: [
+            "Must construct empty index length using 'new Array(8)'",
+            "All slots will reside as sparse undefined items",
+          ],
+          starterCode: `function solve() {\n    // Write your code here\n    const dbRegistry = null;\n    \n    return dbRegistry;\n}`,
+          solution: `function solve() {\n    const dbRegistry = new Array(8);\n    return dbRegistry;\n}`,
+          explanation:
+            "Invoking `new Array(size)` designs a sparse array populated with placeholder slots (also referred to as holes). The length is reserved explicitly, which helps performance during continuous pushing loops.",
+          testCases: [{ input: [], expected: new Array(8) }],
+        },
+        {
+          id: "easy-3",
+          difficulty: "easy",
+          category: "constructor",
+          title: "Synthesize Element constructor directly",
+          description:
+            "Create a server cluster config list named <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>clusterList</code> containing the IP numbers: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>192.168.1.1</code>, <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>10.0.0.1</code>, and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>172.16.0.1</code> using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>new Array()</code> constructor populated with elements. Return it.",
+          constraints: [
+            "Must initialize directly using constructor argument elements",
+            "Return the final array reference",
+          ],
+          starterCode: `function solve() {\n    // Initialize with direct arguments inside Constructor\n    const clusterList = null;\n    \n    return clusterList;\n}`,
+          solution: `function solve() {\n    const clusterList = new Array('192.168.1.1', '10.0.0.1', '172.16.0.1');\n    return clusterList;\n}`,
+          explanation:
+            "When passing multiple elements (or non-numerical values) to `new Array()`, JavaScript acts as an item loader, returning a populated dense array rather than setting a custom length.",
+          testCases: [
+            { input: [], expected: ["192.168.1.1", "10.0.0.1", "172.16.0.1"] },
+          ],
+        },
+        {
+          id: "easy-4",
+          difficulty: "easy",
+          category: "ternary",
+          title: "Evaluate Priority with Arrow Ternary Operator",
+          description:
+            "Write an arrow function named <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>getUrgency</code> that accepts a boolean <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>isCritical</code>. Using a ternary operator, return <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'CRITICAL_QUEUE'</code> if true, and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'STANDARD_QUEUE'</code> if false. Wrap it inside the parent run code block.",
+          constraints: [
+            "Must use high-performance single-line arrow function syntax",
+            "Must evaluate with ternary execution '?' and ':'",
+          ],
+          starterCode: `function solve() {\n    // Assign arrow function with ternary to getUrgency\n    const getUrgency = null;\n    \n    // Do not modify the evaluation execution below\n    return [getUrgency(true), getUrgency(false)];\n}`,
+          solution: `function solve() {\n    const getUrgency = (isCritical) => isCritical ? 'CRITICAL_QUEUE' : 'STANDARD_QUEUE';\n    return [getUrgency(true), getUrgency(false)];\n}`,
+          explanation:
+            "Arrow functions combined with ternary operators are powerful for lightweight conditional mapping. It bypasses nested conditional blocks and preserves continuous expression bindings.",
+          testCases: [
+            { input: [], expected: ["CRITICAL_QUEUE", "STANDARD_QUEUE"] },
+          ],
+        },
+        {
+          id: "easy-5",
+          difficulty: "easy",
+          category: "push",
+          title: "Append Server Node Logs",
+          description:
+            "Initialize an array with logs: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'LOG_1'</code>, <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'LOG_2'</code>. Ingest a new log trace <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'LOG_3'</code> by appending it to the tail using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.push()</code> mutator. Return the altered array.",
+          constraints: [
+            "Use mutator array.push() explicitly",
+            "Do not reassign array reference",
+          ],
+          starterCode: `function solve() {\n    const logs = ['LOG_1', 'LOG_2'];\n    \n    // Code here\n    \n    return logs;\n}`,
+          solution: `function solve() {\n    const logs = ['LOG_1', 'LOG_2'];\n    logs.push('LOG_3');\n    return logs;\n}`,
+          explanation:
+            "`array.push()` appends elements to the end of an array. It executes in O(1) amortized time complexity, modifying the target array in-place and returning the new length.",
+          testCases: [{ input: [], expected: ["LOG_1", "LOG_2", "LOG_3"] }],
+        },
+        {
+          id: "easy-6",
+          difficulty: "easy",
+          category: "pop",
+          title: "Process Stack Element via Tail Extraction",
+          description:
+            "You are given a session stack list containing active elements: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Chrome', 'Slack', 'VSCode']</code>. Deconstruct the stack in-place using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.pop()</code> operator to remove the tail element. Return an object mapping containing both the extracted element and the modified stack: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>{ removed: string, active: array }</code>.",
+          constraints: [
+            "Extract precisely using array.pop() in-place",
+            "Keep original reference altered",
+          ],
+          starterCode: `function solve() {\n    const stack = ['Chrome', 'Slack', 'VSCode'];\n    \n    // Implement your pop strategy\n    \n    return { removed: null, active: stack };\n}`,
+          solution: `function solve() {\n    const stack = ['Chrome', 'Slack', 'VSCode'];\n    const removed = stack.pop();\n    return { removed: removed, active: stack };\n}`,
+          explanation:
+            "`array.pop()` deletes the last element of an array, shrinks its length by 1, and returns that element. It executes in strict O(1) time.",
+          testCases: [
+            {
+              input: [],
+              expected: { removed: "VSCode", active: ["Chrome", "Slack"] },
+            },
+          ],
+        },
+        {
+          id: "easy-7",
+          difficulty: "easy",
+          category: "unshift",
+          title: "Inject Urgent Signal via Array Prepending",
+          description:
+            "Implement unshift prioritizing inside alert queue buffers. Given an existing queue: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['SYS_OK', 'SYS_WARN']</code>, inject a crucial state string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'SYS_HALT'</code> at the absolute front of the array index using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.unshift()</code>. Return the adjusted array.",
+          constraints: ["Must shift indexes rightwards using array.unshift()"],
+          starterCode: `function solve() {\n    const alerts = ['SYS_OK', 'SYS_WARN'];\n    \n    // Add code\n    \n    return alerts;\n}`,
+          solution: `function solve() {\n    const alerts = ['SYS_OK', 'SYS_WARN'];\n    alerts.unshift('SYS_HALT');\n    return alerts;\n}`,
+          explanation:
+            "`array.unshift()` inserts elements at index 0. Because it requires shifting all subsequent indexes rightwards, its runtime complexity is O(N).",
+          testCases: [
+            { input: [], expected: ["SYS_HALT", "SYS_OK", "SYS_WARN"] },
+          ],
+        },
+        {
+          id: "easy-8",
+          difficulty: "easy",
+          category: "shift",
+          title: "Dequeue Front Customer Ticket",
+          description:
+            "Retrieve and drop the oldest active support ticket from the front of the tracking list. Given queue: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['TICKET_100', 'TICKET_101', 'TICKET_102']</code>, invoke the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.shift()</code> mutator to remove the first ticket. Return an object matching the format: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>{ dequeued: string, remaining: array }</code>.",
+          constraints: ["Extract from index 0 dynamically using array.shift()"],
+          starterCode: `function solve() {\n    const tickets = ['TICKET_100', 'TICKET_101', 'TICKET_102'];\n    \n    // Dequeue logic\n    \n    return { dequeued: null, remaining: tickets };\n}`,
+          solution: `function solve() {\n    const tickets = ['TICKET_100', 'TICKET_101', 'TICKET_102'];\n    const dequeued = tickets.shift();\n    return { dequeued: dequeued, remaining: tickets };\n}`,
+          explanation:
+            "`array.shift()` extracts the element at index 0, shifts remaining elements down, and returns the removed element. It is an O(N) complexity mutator.",
+          testCases: [
+            {
+              input: [],
+              expected: {
+                dequeued: "TICKET_100",
+                remaining: ["TICKET_101", "TICKET_102"],
+              },
+            },
+          ],
+        },
+        {
+          id: "easy-9",
+          difficulty: "easy",
+          category: "indexof",
+          title: "Locate Transaction Key Offset",
+          description:
+            "Determine the array index of target item <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'TX_DEBIT'</code> within this audit list: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['TX_CREDIT', 'TX_DEBIT', 'TX_PENDING']</code>. Return the resulting index number using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.indexOf()</code>.",
+          constraints: [
+            "Search using standard indexOf()",
+            "Verify returning dynamic correct number index",
+          ],
+          starterCode: `function solve() {\n    const audit = ['TX_CREDIT', 'TX_DEBIT', 'TX_PENDING'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const audit = ['TX_CREDIT', 'TX_DEBIT', 'TX_PENDING'];\n    return audit.indexOf('TX_DEBIT');\n}`,
+          explanation:
+            "`array.indexOf(element)` performs strict comparison (`===`) sequentially through the array, returning the lowest index where the value matches, or `-1` if absent.",
+          testCases: [{ input: [], expected: 1 }],
+        },
+        {
+          id: "easy-10",
+          difficulty: "easy",
+          category: "includes",
+          title: "Enforce User Security Presence Check",
+          description:
+            "Verify if role <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'root'</code> exists inside the configured system admin credentials array. Given <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['user', 'operator', 'admin', 'root']</code>, return the Boolean result using the modern <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.includes()</code> check.",
+          constraints: [
+            "Must return a native Boolean value (true/false)",
+            "Utilize array.includes() instead of comparing indexOf results",
+          ],
+          starterCode: `function solve() {\n    const roles = ['user', 'operator', 'admin', 'root'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const roles = ['user', 'operator', 'admin', 'root'];\n    return roles.includes('root');\n}`,
+          explanation:
+            "`includes()` checks for the presence of an element using the SameValueZero algorithm, meaning it can correctly detect `NaN` values unlike `indexOf`.",
+          testCases: [{ input: [], expected: true }],
+        },
+        {
+          id: "easy-11",
+          difficulty: "easy",
+          category: "reverse",
+          title: "In-Place Reversal of Process Steps",
+          description:
+            "You have a sequence of workflow codes: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['PREPARE', 'BUILD', 'DEPLOY']</code>. Reverse the list in-place using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.reverse()</code> and return the mutated reference array.",
+          constraints: [
+            "Must mutate original source",
+            "Avoid copying before reversing",
+          ],
+          starterCode: `function solve() {\n    const workflow = ['PREPARE', 'BUILD', 'DEPLOY'];\n    \n    // Reverse sequence\n    \n    return workflow;\n}`,
+          solution: `function solve() {\n    const workflow = ['PREPARE', 'BUILD', 'DEPLOY'];\n    workflow.reverse();\n    return workflow;\n}`,
+          explanation:
+            "The `reverse()` method flips array elements directly in-place. Modifying the original array minimizes garbage collection overhead.",
+          testCases: [{ input: [], expected: ["DEPLOY", "BUILD", "PREPARE"] }],
+        },
+        {
+          id: "easy-12",
+          difficulty: "easy",
+          category: "tostring",
+          title: "Render Default Serialization String",
+          description:
+            "Convert a flat status array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[200, 'SUCCESS', true]</code> into its standard default comma-separated string representation using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.toString()</code>. Return the output string.",
+          constraints: ["Call target.toString() method directly"],
+          starterCode: `function solve() {\n    const statusPayload = [200, 'SUCCESS', true];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const statusPayload = [200, 'SUCCESS', true];\n    return statusPayload.toString();\n}`,
+          explanation:
+            "`.toString()` joins elements with commas by internally calling `.join(',')`. It is handy for quick serialization of simple arrays.",
+          testCases: [{ input: [], expected: "200,SUCCESS,true" }],
+        },
+        {
+          id: "easy-13",
+          difficulty: "easy",
+          category: "join",
+          title: "Synthesize Path String via Hyphen Separator",
+          description:
+            "You have an array of folder paths: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['usr', 'local', 'bin']</code>. Synthesize a unified path string using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.join('/')</code> operator to output a formatted Unix-like path segment (without starting slash): <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'usr/local/bin'</code>.",
+          constraints: ["Must use custom delimiter '/' as join parameter"],
+          starterCode: `function solve() {\n    const folders = ['usr', 'local', 'bin'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const folders = ['usr', 'local', 'bin'];\n    return folders.join('/');\n}`,
+          explanation:
+            "The `join(separator)` method converts an array to a string. It is highly optimized compared to manual string concatenation loops.",
+          testCases: [{ input: [], expected: "usr/local/bin" }],
+        },
+        {
+          id: "easy-14",
+          difficulty: "easy",
+          category: "ternary",
+          title: "Verify Capacity via Threshold Arrow Ternary",
+          description:
+            "Write an arrow function named <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>isFull</code> that takes an array. If its length is greater than or equal to <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>3</code>, return the string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'OVERFLOW'</code>; otherwise, return <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'OK'</code>. Return evaluation inputs for arrays with lengths of 4 and 2 respectively: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[isFull([1,2,3,4]), isFull([1,2])]</code>.",
+          constraints: ["Must use single line arrow body ternary evaluation"],
+          starterCode: `function solve() {\n    const isFull = null;\n    \n    return [isFull([1,2,3,4]), isFull([1,2])];\n}`,
+          solution: `function solve() {\n    const isFull = (arr) => arr.length >= 3 ? 'OVERFLOW' : 'OK';\n    return [isFull([1,2,3,4]), isFull([1,2])];\n}`,
+          explanation:
+            "Checking `.length` is a constant-time operation (O(1)). Utilizing ternary returns clean states based on runtime boundaries.",
+          testCases: [{ input: [], expected: ["OVERFLOW", "OK"] }],
+        },
+        {
+          id: "easy-15",
+          difficulty: "easy",
+          category: "push",
+          title: "Dynamic Sequential Hydration Push",
+          description:
+            "Start with an empty array. Write a simple process to push numbers from <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>1</code> to <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>4</code> sequentially into this array. Return the final populated array.",
+          constraints: ["Do not use manual assignments like arr[0] = 1"],
+          starterCode: `function solve() {\n    const hydrated = [];\n    \n    // Pushes in sequence\n    \n    return hydrated;\n}`,
+          solution: `function solve() {\n    const hydrated = [];\n    hydrated.push(1);\n    hydrated.push(2);\n    hydrated.push(3);\n    hydrated.push(4);\n    return hydrated;\n}`,
+          explanation:
+            "Each push increments the length and sets the value at the index, maintaining array density with minimal overhead.",
+          testCases: [{ input: [], expected: [1, 2, 3, 4] }],
+        },
+        {
+          id: "easy-16",
+          difficulty: "easy",
+          category: "constructor",
+          title: "Construct Pre-populated Multi-arg Array",
+          description:
+            "Construct a dynamic error registry by passing elements directly into the constructor. Create a new Array using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>new Array()</code> containing three error strings: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'ERR_AUTH'</code>, <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'ERR_CONN'</code>, and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'ERR_TIMEOUT'</code>. Return the array.",
+          constraints: [
+            "Do not use literals",
+            "Utilize constructor instantiations",
+          ],
+          starterCode: `function solve() {\n    const registry = null;\n    return registry;\n}`,
+          solution: `function solve() {\n    const registry = new Array('ERR_AUTH', 'ERR_CONN', 'ERR_TIMEOUT');\n    return registry;\n}`,
+          explanation:
+            "Using `new Array()` with strings creates a densely populated array of the parameters, rather than an empty sparse array.",
+          testCases: [
+            { input: [], expected: ["ERR_AUTH", "ERR_CONN", "ERR_TIMEOUT"] },
+          ],
+        },
+        {
+          id: "easy-17",
+          difficulty: "easy",
+          category: "pop",
+          title: "Assert Stack Trace with Tail Checking",
+          description:
+            "Inspect stack traces. Deconstruct trace sequence <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['main', 'render', 'draw']</code>. Call <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.pop()</code>, and using an arrow function ternary, check if the popped element equals <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'draw'</code>. Return <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'CORRECT_STACK'</code> if it matches, and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'MALFORMED'</code> otherwise.",
+          constraints: [
+            "Extract the tail dynamically",
+            "Evaluate with a ternary conditional",
+          ],
+          starterCode: `function solve() {\n    const stack = ['main', 'render', 'draw'];\n    \n    // Implement pop extraction & evaluation logic\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const stack = ['main', 'render', 'draw'];\n    const popped = stack.pop();\n    return popped === 'draw' ? 'CORRECT_STACK' : 'MALFORMED';\n}`,
+          explanation:
+            "Stack verification patterns often pop and evaluate the last element to validate flow. This is clean and runs in O(1) time.",
+          testCases: [{ input: [], expected: "CORRECT_STACK" }],
+        },
+        {
+          id: "easy-18",
+          difficulty: "easy",
+          category: "shift",
+          title: "Queue Shift and Push Pipeline",
+          description:
+            "Simulate a basic job pipeline. Take queue: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['JOB_A', 'JOB_B']</code>. Shift out the first job from the beginning, then append <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'JOB_C'</code> using push. Return the modified queue array.",
+          constraints: ["Shift index 0 first", "Append new element to end"],
+          starterCode: `function solve() {\n    const jobs = ['JOB_A', 'JOB_B'];\n    \n    // Process shift and push\n    \n    return jobs;\n}`,
+          solution: `function solve() {\n    const jobs = ['JOB_A', 'JOB_B'];\n    jobs.shift();\n    jobs.push('JOB_C');\n    return jobs;\n}`,
+          explanation:
+            "This pattern represents a simple sliding window stream. Moving indices dynamically updates elements in constant time relative to operations.",
+          testCases: [{ input: [], expected: ["JOB_B", "JOB_C"] }],
+        },
+        {
+          id: "easy-19",
+          difficulty: "easy",
+          category: "indexof",
+          title: "Evaluate Dynamic User Access Offset",
+          description:
+            "Locate access permission index of user group <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'guest'</code> inside this access control list: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['root', 'admin', 'moderator']</code>. Since the target group is missing, return the fallback integer response returned by the search engine.",
+          constraints: ["Must use .indexOf() to test missing search handling"],
+          starterCode: `function solve() {\n    const acl = ['root', 'admin', 'moderator'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const acl = ['root', 'admin', 'moderator'];\n    return acl.indexOf('guest');\n}`,
+          explanation:
+            "When searching for an element that does not exist in an array, `indexOf` returns `-1` to represent a missing index.",
+          testCases: [{ input: [], expected: -1 }],
+        },
+        {
+          id: "easy-20",
+          difficulty: "easy",
+          category: "join",
+          title: "Synthesize Compact Character Join",
+          description:
+            "Synthesize a single word from individual character slots. Given elements: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['M', 'E', 'R', 'G', 'E']</code>, combine them without a separator to construct the word <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'MERGE'</code> using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.join()</code>.",
+          constraints: [
+            "Must configure join with an empty string: join('')",
+            "Do not allow comma separators",
+          ],
+          starterCode: `function solve() {\n    const letters = ['M', 'E', 'R', 'G', 'E'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const letters = ['M', 'E', 'R', 'G', 'E'];\n    return letters.join('');\n}`,
+          explanation:
+            "Passing an empty string `''` to `join()` merges elements without any delimiters, which is much faster than manual string building.",
+          testCases: [{ input: [], expected: "MERGE" }],
+        },
+
+        // MEDIUM TIERS (21-40)
+        {
+          id: "medium-21",
+          difficulty: "medium",
+          category: "slice",
+          title: "Safe Range Extraction via Index Slice",
+          description:
+            "Given a server response page: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['meta', 'h1', 'p', 'div', 'span']</code>, extract the middle structural subelements (index 1 to 3, inclusive of h1, p, div) using the safe, non-mutating <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.slice()</code> method. Return the extracted subelement list.",
+          constraints: [
+            "Must use slice() to return the subset",
+            "Ensure original response array is not altered",
+          ],
+          starterCode: `function solve() {\n    const elements = ['meta', 'h1', 'p', 'div', 'span'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const elements = ['meta', 'h1', 'p', 'div', 'span'];\n    return elements.slice(1, 4);\n}`,
+          explanation:
+            "`slice(start, end)` extracts a portion of an array up to, but not including, the `end` index. This returns a new array and leaves the original intact.",
+          testCases: [{ input: [], expected: ["h1", "p", "div"] }],
+        },
+        {
+          id: "medium-22",
+          difficulty: "medium",
+          category: "slice",
+          title: "Extract Terminal Elements via Negative Slice Offset",
+          description:
+            "Retrieve the last three events from a chronologically sorted timeline: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['EV1', 'EV2', 'EV3', 'EV4', 'EV5']</code>. Use the negative offset feature of the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.slice()</code> method to get these events without measuring the array length.",
+          constraints: [
+            "Must use slice with negative boundaries",
+            "Do not reference .length in your code",
+          ],
+          starterCode: `function solve() {\n    const events = ['EV1', 'EV2', 'EV3', 'EV4', 'EV5'];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const events = ['EV1', 'EV2', 'EV3', 'EV4', 'EV5'];\n    return events.slice(-3);\n}`,
+          explanation:
+            "Passing negative values to `slice` tells JavaScript to count backward from the end of the array. For example, `-3` targets the third-to-last element.",
+          testCases: [{ input: [], expected: ["EV3", "EV4", "EV5"] }],
+        },
+        {
+          id: "medium-23",
+          difficulty: "medium",
+          category: "splice",
+          title: "In-Place Modification via Splice",
+          description:
+            "Modify an active API cluster registry in-place. Given registry config: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['US_EAST', 'EU_WEST', 'AP_SOUTH']</code>, replace the element <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'EU_WEST'</code> at index 1 with <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'EU_EAST'</code> using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.splice()</code>. Return the modified original array.",
+          constraints: [
+            "Must use splice() explicitly",
+            "Do not use manual index assignments like arr[1] = ...",
+          ],
+          starterCode: `function solve() {\n    const cluster = ['US_EAST', 'EU_WEST', 'AP_SOUTH'];\n    \n    // Modify inline\n    \n    return cluster;\n}`,
+          solution: `function solve() {\n    const cluster = ['US_EAST', 'EU_WEST', 'AP_SOUTH'];\n    cluster.splice(1, 1, 'EU_EAST');\n    return cluster;\n}`,
+          explanation:
+            "`splice(start, deleteCount, item1)` modifies an array in-place. It returns the deleted elements, but here we return the mutated original array.",
+          testCases: [
+            { input: [], expected: ["US_EAST", "EU_EAST", "AP_SOUTH"] },
+          ],
+        },
+        {
+          id: "medium-24",
+          difficulty: "medium",
+          category: "splice",
+          title: "Remove Middle Segments via Splice Delete",
+          description:
+            "Delete obsolete modules from a production pipeline. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['auth', 'metrics', 'logging', 'cache', 'routing']</code>, remove exactly two elements starting from index 2 (<code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'logging'</code> and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'cache'</code>) using the <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.splice()</code> operator. Return the resulting array.",
+          constraints: [
+            "Do not create new helper variables",
+            "Must run splice in-place and return the mutated array",
+          ],
+          starterCode: `function solve() {\n    const pipeline = ['auth', 'metrics', 'logging', 'cache', 'routing'];\n    \n    // Implement removal\n    \n    return pipeline;\n}`,
+          solution: `function solve() {\n    const pipeline = ['auth', 'metrics', 'logging', 'cache', 'routing'];\n    pipeline.splice(2, 2);\n    return pipeline;\n}`,
+          explanation:
+            "`splice` shrinks the array size in-place when deleting, moving subsequent elements down to fill the gap.",
+          testCases: [{ input: [], expected: ["auth", "metrics", "routing"] }],
+        },
+        {
+          id: "medium-25",
+          difficulty: "medium",
+          category: "splice",
+          title: "Inject Non-Destructive Elements via Splice",
+          description:
+            "You have an inventory buffer of items: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['item1', 'item4']</code>. To avoid out-of-order issues, insert <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'item2'</code> and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'item3'</code> right after <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'item1'</code> (at index 1) *without* deleting any existing elements. Return the modified inventory array.",
+          constraints: [
+            "Must set deleteCount parameter to 0 in splice call",
+            "Return original reference altered",
+          ],
+          starterCode: `function solve() {\n    const inventory = ['item1', 'item4'];\n    \n    // Insert elements without deleting\n    \n    return inventory;\n}`,
+          solution: `function solve() {\n    const inventory = ['item1', 'item4'];\n    inventory.splice(1, 0, 'item2', 'item3');\n    return inventory;\n}`,
+          explanation:
+            "Setting the delete count to `0` in `splice` lets you insert elements at a specific index without removing any existing values.",
+          testCases: [
+            { input: [], expected: ["item1", "item2", "item3", "item4"] },
+          ],
+        },
+        {
+          id: "medium-26",
+          difficulty: "medium",
+          category: "slice",
+          title: "Shallow Cloning and Dynamic Mutator Pipeline",
+          description:
+            "Implement shallow cloning to safely reverse an array. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['A', 'B', 'C']</code>, create a copy of the array using parameterless <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.slice()</code>, reverse the copied array, and return an object matching the format: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>{ source: ['A','B','C'], mutated: ['C','B','A'] }</code>.",
+          constraints: [
+            "Original source reference must not be reversed",
+            "Use parameterless slice() to create the copy",
+          ],
+          starterCode: `function solve() {\n    const original = ['A', 'B', 'C'];\n    \n    // Create copy, reverse and structure the return object\n    \n    return { source: original, mutated: null };\n}`,
+          solution: `function solve() {\n    const original = ['A', 'B', 'C'];\n    const cloned = original.slice();\n    cloned.reverse();\n    return { source: original, mutated: cloned };\n}`,
+          explanation:
+            "Calling `slice()` with no arguments returns a shallow copy of the entire array. Reversing this copy protects the original array's order.",
+          testCases: [
+            {
+              input: [],
+              expected: { source: ["A", "B", "C"], mutated: ["C", "B", "A"] },
+            },
+          ],
+        },
+        {
+          id: "medium-27",
+          difficulty: "medium",
+          category: "includes",
+          title: "Strict Deduplication Assertions",
+          description:
+            "Write an arrow function ternary named <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>assertDistinct</code> that accepts an array and an item. If the array already contains the item (using includes), return the string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'DUPLICATE_BLOCK'</code>; otherwise, push the item into the array and return the string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'APPEND_OK'</code>.",
+          constraints: [
+            "Must perform membership validation with includes",
+            "Implement in-place modification on success",
+          ],
+          starterCode: `function solve() {\n    const stream = ['log1', 'log2'];\n    \n    const assertDistinct = null;\n    \n    const state1 = assertDistinct(stream, 'log2');\n    const state2 = assertDistinct(stream, 'log3');\n    \n    return { state1, state2, updated: stream };\n}`,
+          solution: `function solve() {\n    const stream = ['log1', 'log2'];\n    const assertDistinct = (arr, item) => {\n        if (arr.includes(item)) return 'DUPLICATE_BLOCK';\n        arr.push(item);\n        return 'APPEND_OK';\n    };\n    const state1 = assertDistinct(stream, 'log2');\n    const state2 = assertDistinct(stream, 'log3');\n    return { state1, state2, updated: stream };\n}`,
+          explanation:
+            "Using `includes` makes check-and-insert logic simple and clean, although doing this repeatedly over a large dataset runs in O(N^2) time.",
+          testCases: [
+            {
+              input: [],
+              expected: {
+                state1: "DUPLICATE_BLOCK",
+                state2: "APPEND_OK",
+                updated: ["log1", "log2", "log3"],
+              },
+            },
+          ],
+        },
+        {
+          id: "medium-28",
+          difficulty: "medium",
+          category: "unshift",
+          title: "Right Circular Shift Execution",
+          description:
+            "Perform a single rightward circular shift. Given database rows: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Row3', 'Row1', 'Row2']</code>, pop the last element and prepend it to the beginning using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>unshift</code> so the array matches the order: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Row2', 'Row3', 'Row1']</code>. Return the adjusted array.",
+          constraints: [
+            "Must use unshift and pop in-place",
+            "Do not create empty array containers",
+          ],
+          starterCode: `function solve() {\n    const dataRows = ['Row3', 'Row1', 'Row2'];\n    \n    // Implement right circular shift\n    \n    return dataRows;\n}`,
+          solution: `function solve() {\n    const dataRows = ['Row3', 'Row1', 'Row2'];\n    dataRows.unshift(dataRows.pop());\n    return dataRows;\n}`,
+          explanation:
+            "Popping the last element and unshifting it to the front shifts all elements to the right, which is a common array rotation technique.",
+          testCases: [{ input: [], expected: ["Row2", "Row3", "Row1"] }],
+        },
+        {
+          id: "medium-29",
+          difficulty: "medium",
+          category: "shift",
+          title: "Left Circular Shift Execution",
+          description:
+            "Perform a single leftward circular shift. Given database rows: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Row2', 'Row3', 'Row1']</code>, shift out the first element and push it to the end of the array to get: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Row3', 'Row1', 'Row2']</code>. Return the adjusted array.",
+          constraints: [
+            "Must use shift and push in-place",
+            "Do not create empty array containers",
+          ],
+          starterCode: `function solve() {\n    const dataRows = ['Row2', 'Row3', 'Row1'];\n    \n    // Implement left circular shift\n    \n    return dataRows;\n}`,
+          solution: `function solve() {\n    const dataRows = ['Row2', 'Row3', 'Row1'];\n    dataRows.push(dataRows.shift());\n    return dataRows;\n}`,
+          explanation:
+            "Shifting the first element off the front and pushing it to the end shifts all elements to the left.",
+          testCases: [{ input: [], expected: ["Row3", "Row1", "Row2"] }],
+        },
+        {
+          id: "medium-30",
+          difficulty: "medium",
+          category: "join",
+          title: "Reverse String Parsing via Delimiter Pipeliners",
+          description:
+            "Write a function to format key indicators. Given a namespace string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'prod.auth.service.handler'</code>, split the string by period separators, reverse the array order, and join it back using slash separators. Return the formatted string: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'handler/service/auth/prod'</code>.",
+          constraints: [
+            "Do not use manual loop parsers",
+            "Must use split, reverse, and join in sequence",
+          ],
+          starterCode: `function solve() {\n    const namespace = 'prod.auth.service.handler';\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const namespace = 'prod.auth.service.handler';\n    return namespace.split('.').reverse().join('/');\n}`,
+          explanation:
+            "Chaining string splitting, array reversal, and joining is an elegant and highly optimized way to transform data formats in JavaScript.",
+          testCases: [{ input: [], expected: "handler/service/auth/prod" }],
+        },
+        {
+          id: "medium-31",
+          difficulty: "medium",
+          category: "splice",
+          title: "Search-and-Replace via In-Place Splice",
+          description:
+            "Find the position of target element <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'STAGED'</code> in this list: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['STABLE', 'STAGED', 'PROD']</code>. If found, replace it in-place using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.splice()</code> with the string <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'TESTING'</code>. Return the modified original array.",
+          constraints: [
+            "Must search dynamically using indexOf",
+            "Modify using splice() if the element exists",
+          ],
+          starterCode: `function solve() {\n    const envs = ['STABLE', 'STAGED', 'PROD'];\n    \n    // Search and replace dynamically\n    \n    return envs;\n}`,
+          solution: `function solve() {\n    const envs = ['STABLE', 'STAGED', 'PROD'];\n    const targetIdx = envs.indexOf('STAGED');\n    if (targetIdx !== -1) {\n        envs.splice(targetIdx, 1, 'TESTING');\n    }\n    return envs;\n}`,
+          explanation:
+            "Combining `indexOf` and `splice` is a classic recipe for safely updating elements at dynamic index positions.",
+          testCases: [{ input: [], expected: ["STABLE", "TESTING", "PROD"] }],
+        },
+        {
+          id: "medium-32",
+          difficulty: "medium",
+          category: "slice",
+          title: "Identify Bounded Middle Subelement Offset",
+          description:
+            "Extract the exact middle element of an odd-length configuration block. Given <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['cfg1', 'cfg2', 'cfg3', 'cfg4', 'cfg5']</code>, calculate the middle index dynamically, use <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>.slice()</code> to extract it, and return the element from the sliced result.",
+          constraints: [
+            "Calculate the index dynamically (avoid hardcoding slice positions)",
+            "Must use slice() for extraction",
+          ],
+          starterCode: `function solve() {\n    const configs = ['cfg1', 'cfg2', 'cfg3', 'cfg4', 'cfg5'];\n    \n    // Calculate index dynamically\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const configs = ['cfg1', 'cfg2', 'cfg3', 'cfg4', 'cfg5'];\n    const mid = Math.floor(configs.length / 2);\n    return configs.slice(mid, mid + 1)[0];\n}`,
+          explanation:
+            "Using math utility methods with slice lets you extract relative indices from dynamic array shapes.",
+          testCases: [{ input: [], expected: "cfg3" }],
+        },
+        {
+          id: "medium-33",
+          difficulty: "medium",
+          category: "includes",
+          title: "Assert Referentially Evaluated Inclusions",
+          description:
+            "Investigate reference matching behavior. You are given a tracking list of objects: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>const itemA = {id: 1}; const itemB = {id: 2}; const registry = [itemA];</code>. Evaluate reference existence validations: check if `registry` contains `itemA`, and then check if it contains a duplicate literal copy `{id: 1}`. Return a Boolean array of the results: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[includesItemA, includesLiteralCopy]</code>.",
+          constraints: [
+            "Must use .includes() for both validations",
+            "Demonstrate value vs reference equality",
+          ],
+          starterCode: `function solve() {\n    const itemA = {id: 1};\n    const itemB = {id: 2};\n    const registry = [itemA];\n    \n    // Write checks\n    \n    return [];\n}`,
+          solution: `function solve() {\n    const itemA = {id: 1};\n    const itemB = {id: 2};\n    const registry = [itemA];\n    const test1 = registry.includes(itemA);\n    const test2 = registry.includes({id: 1});\n    return [test1, test2];\n}`,
+          explanation:
+            "Array membership methods like `includes` check object references rather than comparing values, so identical object literals evaluate as unique instances.",
+          testCases: [{ input: [], expected: [true, false] }],
+        },
+        {
+          id: "medium-34",
+          difficulty: "medium",
+          category: "join",
+          title: "Format Text via Oxford Comma Delimiters",
+          description:
+            "Convert a list of items into a readable string using Oxford comma formatting. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Red', 'Green', 'Blue']</code>, slice off the last item and join the remaining elements with commas, then append the last item with the prefix <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>', and '</code> to create: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'Red, Green, and Blue'</code>. Return this string.",
+          constraints: [
+            "Must use slice and join to handle the first segment",
+            "Support dynamic formatting without hardcoding offsets",
+          ],
+          starterCode: `function solve() {\n    const colors = ['Red', 'Green', 'Blue'];\n    \n    // Implement Oxford comma formatting\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const colors = ['Red', 'Green', 'Blue'];\n    const firstPart = colors.slice(0, -1).join(', ');\n    const lastPart = colors.slice(-1);\n    return firstPart + ', and ' + lastPart;\n}`,
+          explanation:
+            "Using `slice` to separate elements is a clean way to format list items with different ending separators.",
+          testCases: [{ input: [], expected: "Red, Green, and Blue" }],
+        },
+        {
+          id: "medium-35",
+          difficulty: "medium",
+          category: "splice",
+          title: "Index Swapping via Splice Extractions",
+          description:
+            "Swap the position of elements at index 0 and index 2 in-place. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['A', 'B', 'C']</code>, swap the elements so the array order becomes <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['C', 'B', 'A']</code> using <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>splice()</code>. Return the modified original array.",
+          constraints: [
+            "Must use splice to move the elements in-place",
+            "Do not use temporary helper arrays",
+          ],
+          starterCode: `function solve() {\n    const elements = ['A', 'B', 'C'];\n    \n    // Perform swap\n    \n    return elements;\n}`,
+          solution: `function solve() {\n    const elements = ['A', 'B', 'C'];\n    const temp = elements.splice(2, 1, elements[0])[0];\n    elements.splice(0, 1, temp);\n    return elements;\n}`,
+          explanation:
+            "`splice` returns an array of removed elements. You can use this to extract and swap elements at specific index offsets.",
+          testCases: [{ input: [], expected: ["C", "B", "A"] }],
+        },
+        {
+          id: "medium-36",
+          difficulty: "medium",
+          category: "indexof",
+          title: "Audit Dual Offset Matching",
+          description:
+            "Determine whether the value <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'DATA'</code> appears multiple times in an audit log array. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['INIT', 'DATA', 'TRACE', 'DATA', 'DONE']</code>, find the first match index of 'DATA'. If found, use `indexOf` with an index offset of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>firstMatch + 1</code> to find the second occurrence, and return that index.",
+          constraints: [
+            "Must use .indexOf() with its second parameter offset to find the second match",
+          ],
+          starterCode: `function solve() {\n    const log = ['INIT', 'DATA', 'TRACE', 'DATA', 'DONE'];\n    \n    // Implement dynamic double index search\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const log = ['INIT', 'DATA', 'TRACE', 'DATA', 'DONE'];\n    const first = log.indexOf('DATA');\n    return log.indexOf('DATA', first + 1);\n}`,
+          explanation:
+            "The second parameter of `indexOf(element, fromIndex)` lets you search starting from a specific index offset, which is useful for finding duplicate values.",
+          testCases: [{ input: [], expected: 3 }],
+        },
+        {
+          id: "medium-37",
+          difficulty: "medium",
+          category: "ternary",
+          title: "Interactive Array State Ternary Mapping",
+          description:
+            "Map an array of statuses to active descriptions. Loop over the array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[true, false, true]</code> and use an arrow ternary function inside map to convert <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>true</code> to <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'PASS'</code> and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>false</code> to <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'FAIL'</code>. Return the mapped array.",
+          constraints: ["Must use map combined with an arrow ternary function"],
+          starterCode: `function solve() {\n    const results = [true, false, true];\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const results = [true, false, true];\n    return results.map(status => status ? 'PASS' : 'FAIL');\n}`,
+          explanation:
+            "Using ternary expressions inside map statements keeps your code short, clean, and easy to read.",
+          testCases: [{ input: [], expected: ["PASS", "FAIL", "PASS"] }],
+        },
+        {
+          id: "medium-38",
+          difficulty: "medium",
+          category: "splice",
+          title: "Custom Conditional Element Replacer",
+          description:
+            "Safely find and replace elements inside a list. Given list: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['A', 'B', 'X', 'D']</code>, check if the value <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'X'</code> exists. If it does, replace it in-place with <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'C'</code> using `splice`. If it's missing, append <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'Y'</code> to the end using push. Return the final array.",
+          constraints: [
+            "Do not hardcode index positions",
+            "Check presence before running splice",
+          ],
+          starterCode: `function solve() {\n    const items = ['A', 'B', 'X', 'D'];\n    \n    // Implement conditional logic\n    \n    return items;\n}`,
+          solution: `function solve() {\n    const items = ['A', 'B', 'X', 'D'];\n    const idx = items.indexOf('X');\n    if (idx !== -1) {\n        items.splice(idx, 1, 'C');\n    } else {\n        items.push('Y');\n    }\n    return items;\n}`,
+          explanation:
+            "Combining indexing, dynamic conditional statements, and mutators ensures your data transformations run safely and predictably.",
+          testCases: [{ input: [], expected: ["A", "B", "C", "D"] }],
+        },
+        {
+          id: "medium-39",
+          difficulty: "medium",
+          category: "slice",
+          title: "Construct Bounded Index Page Scrapers",
+          description:
+            "Simulate paginating a list of records. Given records: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['r1', 'r2', 'r3', 'r4', 'r5', 'r6']</code>, write a pagination function that takes <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>pageSize = 2</code> and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>pageIndex = 1</code> (0-indexed, targets second page), and extracts the elements at those positions using `slice`. Return the extracted page records.",
+          constraints: [
+            "Calculate slice boundaries using formula calculations: start = pageIndex * pageSize",
+            "Return the records of the target page",
+          ],
+          starterCode: `function solve() {\n    const records = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'];\n    const pageSize = 2;\n    const pageIndex = 1;\n    \n    // Implement dynamic pagination\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const records = ['r1', 'r2', 'r3', 'r4', 'r5', 'r6'];\n    const pageSize = 2;\n    const pageIndex = 1;\n    const start = pageIndex * pageSize;\n    return records.slice(start, start + pageSize);\n}`,
+          explanation:
+            "`slice` is ideal for pagination systems because it creates segment copies without modifying the original dataset.",
+          testCases: [{ input: [], expected: ["r3", "r4"] }],
+        },
+        {
+          id: "medium-40",
+          difficulty: "medium",
+          category: "constructor",
+          title: "Initialize Nested Array Matrices",
+          description:
+            "Create a 2D grid matrix of size 3x3 filled with the value <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>0</code>. Construct three unique arrays using `new Array(3)`, populate each array with zeroes using `fill(0)`, and group them together in a main parent array. Return the final nested matrix array.",
+          constraints: [
+            "Do not hardcode literal array lists like [[0,0,0], ...]",
+            "Each row must be a unique array reference",
+          ],
+          starterCode: `function solve() {\n    // Build nested matrix grids dynamically\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const matrix = [];\n    for (let i = 0; i < 3; i++) {\n        matrix.push(new Array(3).fill(0));\n    }\n    return matrix;\n}`,
+          explanation:
+            "When creating multi-dimensional arrays, you must initialize each nested row individually to avoid copying references of the same nested array across multiple rows.",
+          testCases: [
+            {
+              input: [],
+              expected: [
+                [0, 0, 0],
+                [0, 0, 0],
+                [0, 0, 0],
+              ],
+            },
+          ],
+        },
+
+        // HARD TIERS (41-60)
+        {
+          id: "hard-41",
+          difficulty: "hard",
+          category: "shift",
+          title: "Design Custom Buffered Pipeline Queue",
+          description:
+            "Implement a buffered queue class named <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>Queue</code> that enforces a maximum size constraint of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>3</code>. When adding an item to the queue: if the length is already at maximum capacity, remove the oldest item from the front using `shift` before appending the new item with `push`. Create an instance, push elements <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['A', 'B', 'C', 'D']</code>, and return the final queue array.",
+          constraints: [
+            "Must use unshift/shift and push in-place for buffer management",
+            "Limit queue length to 3 elements max",
+          ],
+          starterCode: `function solve() {\n    // Create class or constructor function for Queue\n    \n    const q = []; // Implement buffer logic here\n    \n    return q;\n}`,
+          solution: `function solve() {\n    const q = [];\n    const pushToBuffer = (item) => {\n        if (q.length >= 3) {\n            q.shift();\n        }\n        q.push(item);\n    };\n    pushToBuffer('A');\n    pushToBuffer('B');\n    pushToBuffer('C');\n    pushToBuffer('D');\n    return q;\n}`,
+          explanation:
+            "This pattern represents a circular logging queue. It manages memory usage automatically by discarding old entries as new ones arrive.",
+          testCases: [{ input: [], expected: ["B", "C", "D"] }],
+        },
+        {
+          id: "hard-42",
+          difficulty: "hard",
+          category: "pop",
+          title: "Custom Stack Manager with Max Limit Monitor",
+          description:
+            "Design an optimized Stack that tracks its peak historical element size. Each time you push a numerical element, append it to the main stack. Additionally, maintain a secondary stack called <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>maxStack</code>. When you push, append the new value to `maxStack` if it is greater than or equal to the current maximum; otherwise, re-push the current maximum. When you pop from the main stack, also pop from `maxStack` to keep them in sync. Simulate pushing <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[10, 5, 20, 15]</code>, then pop once, and return the final state as <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>{ active: stack, max: currentMax }</code>.",
+          constraints: [
+            "Both stack and maxStack operations must run in O(1) time complexity",
+            "Must use push and pop",
+          ],
+          starterCode: `function solve() {\n    const stack = [];\n    const maxStack = [];\n    \n    // Implement your push/pop stack logic here\n    \n    return { active: stack, max: null };\n}`,
+          solution: `function solve() {\n    const stack = [];\n    const maxStack = [];\n    const push = (val) => {\n        stack.push(val);\n        if (maxStack.length === 0 || val >= maxStack[maxStack.length - 1]) {\n            maxStack.push(val);\n        } else {\n            maxStack.push(maxStack[maxStack.length - 1]);\n        }\n    };\n    const pop = () => {\n        stack.pop();\n        maxStack.pop();\n    };\n    push(10);\n    push(5);\n    push(20);\n    push(15);\n    pop();\n    return { active: stack, max: maxStack[maxStack.length - 1] };\n}`,
+          explanation:
+            "Tracking history states with twin stacks keeps updates running in O(1) constant time, avoiding the need for expensive array sorting operations.",
+          testCases: [
+            { input: [], expected: { active: [10, 5, 20], max: 20 } },
+          ],
+        },
+        {
+          id: "hard-43",
+          difficulty: "hard",
+          category: "splice",
+          title: "In-Place Deduplication via Reverse Splice",
+          description:
+            "Remove duplicate items from an array in-place, without using any helper arrays, objects, or modern collections like `Set`. Loop through the array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, 2, 2, 3, 1, 4]</code>, and use `splice` to remove duplicate values. To prevent index offsets from shifting during deletion, iterate through the array from right to left.",
+          constraints: [
+            "Must mutate the original array in-place",
+            "Do not use Set, Map, or temporary arrays",
+            "Must loop backward to keep indices stable during splice deletions",
+          ],
+          starterCode: `function solve() {\n    const values = [1, 2, 2, 3, 1, 4];\n    \n    // Remove duplicate items in-place\n    \n    return values;\n}`,
+          solution: `function solve() {\n    const values = [1, 2, 2, 3, 1, 4];\n    for (let i = values.length - 1; i >= 0; i--) {\n        if (values.indexOf(values[i]) !== i) {\n            values.splice(i, 1);\n        }\n    }\n    return values;\n}`,
+          explanation:
+            "Iterating backward through an array ensures that removing elements with `splice` doesn't throw off the index offsets of the remaining elements.",
+          testCases: [{ input: [], expected: [1, 2, 3, 4] }],
+        },
+        {
+          id: "hard-44",
+          difficulty: "hard",
+          category: "pop",
+          title: "Recursive Multi-Level Array Flattening",
+          description:
+            "Write an iterative flattening algorithm that flattens a nested array structure: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, [2, [3, 4], 5]]</code> into a single flat array, without using modern built-in methods like `flat` or `flatMap`. Implement this by maintaining a temporary stack array where you push and pop nested elements dynamically. Return the flattened array.",
+          constraints: [
+            "Do not use .flat() or .flatMap()",
+            "Process elements recursively or using stack arrays",
+          ],
+          starterCode: `function solve() {\n    const nested = [1, [2, [3, 4], 5]];\n    \n    // Flatten elements manually\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const nested = [1, [2, [3, 4], 5]];\n    const stack = [...nested];\n    const res = [];\n    while (stack.length) {\n        const next = stack.pop();\n        if (Array.isArray(next)) {\n            stack.push(...next);\n        } else {\n            res.push(next);\n        }\n    }\n    return res.reverse();\n}`,
+          explanation:
+            "Processing nested arrays using a stack lets you flatten multi-level deep arrays sequentially while avoiding recursion limits.",
+          testCases: [{ input: [], expected: [1, 2, 3, 4, 5] }],
+        },
+        {
+          id: "hard-45",
+          difficulty: "hard",
+          category: "slice",
+          title: "Calculate Sliding Window Average Matrix",
+          description:
+            "Calculate sliding averages over a data stream of numbers: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[10, 20, 30, 40, 50]</code>. Using a sliding window size of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>K = 3</code>, extract each 3-element window segment using `slice`. Compute the average of each segment, and return an array containing these averages.",
+          constraints: [
+            "Extract window segments using slice",
+            "Perform safe boundary calculations",
+          ],
+          starterCode: `function solve() {\n    const stream = [10, 20, 30, 40, 50];\n    const K = 3;\n    \n    // Calculate sliding averages\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const stream = [10, 20, 30, 40, 50];\n    const K = 3;\n    const results = [];\n    for (let i = 0; i <= stream.length - K; i++) {\n        const window = stream.slice(i, i + K);\n        const avg = window.reduce((sum, val) => sum + val, 0) / K;\n        results.push(avg);\n    }\n    return results;\n}`,
+          explanation:
+            "Extracting sliding windows with `slice` simplifies range isolation when calculating rolling metrics over sequence data.",
+          testCases: [{ input: [], expected: [20, 30, 40] }],
+        },
+        {
+          id: "hard-46",
+          difficulty: "hard",
+          category: "splice",
+          title: "Subarray Sequence Replacer Engine",
+          description:
+            "Write an algorithm to replace all occurrences of a specific sequence of values inside an array with a single replacement value. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, 2, 3, 1, 2, 3, 4]</code>, search for occurrences of the sequence <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, 2, 3]</code>. When found, replace that entire sequence in-place with the string value <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'MATCH'</code> using `splice`. Return the modified array.",
+          constraints: [
+            "Must perform all replacements in-place using splice",
+            "Support dynamic index tracking",
+          ],
+          starterCode: `function solve() {\n    const source = [1, 2, 3, 1, 2, 3, 4];\n    const target = [1, 2, 3];\n    \n    // Find and replace target sequences\n    \n    return source;\n}`,
+          solution: `function solve() {\n    const source = [1, 2, 3, 1, 2, 3, 4];\n    const target = [1, 2, 3];\n    for (let i = 0; i <= source.length - target.length; i++) {\n        let match = true;\n        for (let j = 0; j < target.length; j++) {\n            if (source[i + j] !== target[j]) {\n                match = false;\n                break;\n            }\n        }\n        if (match) {\n            source.splice(i, target.length, 'MATCH');\n            i--; // Adjust index offset to account for mutated elements\n        }\n    }\n    return source;\n}`,
+          explanation:
+            "Updating complex patterns with `splice` requires adjusting index counters immediately after mutations to keep subsequent checks accurate.",
+          testCases: [{ input: [], expected: ["MATCH", "MATCH", 4] }],
+        },
+        {
+          id: "hard-47",
+          difficulty: "hard",
+          category: "splice",
+          title: "In-Place Quick Partition Step",
+          description:
+            "Partition an array of numbers in-place based on a pivot value of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>5</code>. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[9, 2, 8, 3, 7, 4]</code>, rearrange the elements in-place: move all numbers smaller than 5 to the left side, and all numbers larger than or equal to 5 to the right side. Return the partitioned array.",
+          constraints: [
+            "Must partition in-place using splice to reposition elements",
+            "Do not create temporary arrays or assign to helper containers",
+          ],
+          starterCode: `function solve() {\n    const nums = [9, 2, 8, 3, 7, 4];\n    const pivot = 5;\n    \n    // Partition elements in-place\n    \n    return nums;\n}`,
+          solution: `function solve() {\n    const nums = [9, 2, 8, 3, 7, 4];\n    const pivot = 5;\n    let writeIdx = 0;\n    for (let i = 0; i < nums.length; i++) {\n        if (nums[i] < pivot) {\n            const [val] = nums.splice(i, 1);\n            nums.splice(writeIdx, 0, val);\n            writeIdx++;\n        }\n    }\n    return nums;\n}`,
+          explanation:
+            "Rearranging elements in-place using `splice` lets you partition datasets with minimal memory footprints, mirroring quick-sort strategies.",
+          testCases: [{ input: [], expected: [2, 3, 4, 9, 8, 7] }],
+        },
+        {
+          id: "hard-48",
+          difficulty: "hard",
+          category: "indexof",
+          title: "Calculate Index in Circular Buffer",
+          description:
+            "Find the index of a value in a circular array with an offset starting position. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['A', 'B', 'C', 'A', 'B']</code>, write a search function that takes a starting search index of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>2</code>. Search forward for the value <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'A'</code>. If you reach the end of the array, wrap around to the beginning to continue searching, and return the absolute index where the element is found.",
+          constraints: [
+            "Do not clone the array",
+            "Implement circular indexing logic using modulo calculations",
+          ],
+          starterCode: `function solve() {\n    const buffer = ['A', 'B', 'C', 'A', 'B'];\n    const target = 'A';\n    const startFrom = 2;\n    \n    // Implement circular index search\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const buffer = ['A', 'B', 'C', 'A', 'B'];\n    const target = 'A';\n    const startFrom = 2;\n    const len = buffer.length;\n    for (let i = 0; i < len; i++) {\n        const currentIdx = (startFrom + i) % len;\n        if (buffer[currentIdx] === target) {\n            return currentIdx;\n        }\n    }\n    return -1;\n}`,
+          explanation:
+            "Using modular arithmetic (`%`) is an efficient way to search circular buffers without copying array elements.",
+          testCases: [{ input: [], expected: 3 }],
+        },
+        {
+          id: "hard-49",
+          difficulty: "hard",
+          category: "slice",
+          title: "Chunk Array into Segments of Size N",
+          description:
+            "Write an algorithm to split a flat array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, 2, 3, 4, 5, 6, 7]</code> into nested chunks of a specific size, without using custom helper libraries. Implement this by slicing elements at increments of <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>N = 3</code> and pushing each chunk into a main results array. Return the final structured chunks array.",
+          constraints: [
+            "Must slice the array into distinct chunks of length N",
+            "Ensure the final chunk contains any remaining elements",
+          ],
+          starterCode: `function solve() {\n    const elements = [1, 2, 3, 4, 5, 6, 7];\n    const chunkSize = 3;\n    \n    // Chunk elements into nested arrays\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const elements = [1, 2, 3, 4, 5, 6, 7];\n    const chunkSize = 3;\n    const chunked = [];\n    for (let i = 0; i < elements.length; i += chunkSize) {\n        chunked.push(elements.slice(i, i + chunkSize));\n    }\n    return chunked;\n}`,
+          explanation:
+            "Slicing elements at step intervals is a standard, efficient technique for grouping data streams into structured batches.",
+          testCases: [{ input: [], expected: [[1, 2, 3], [4, 5, 6], [7]] }],
+        },
+        {
+          id: "hard-50",
+          difficulty: "hard",
+          category: "splice",
+          title: "In-Place Element Swapper",
+          description:
+            "Implement a function to safely move an element from one index to another in-place within the same array, shifting the other elements to adjust. Given: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Alpha', 'Beta', 'Gamma', 'Delta']</code>, move the item at index 2 (<code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'Gamma'</code>) to index 0. Return the modified original array.",
+          constraints: [
+            "Must move the element in-place using splice",
+            "Do not use helper index references or assign to temporary variables",
+          ],
+          starterCode: `function solve() {\n    const items = ['Alpha', 'Beta', 'Gamma', 'Delta'];\n    const fromIdx = 2;\n    const toIdx = 0;\n    \n    // Reposition element in-place\n    \n    return items;\n}`,
+          solution: `function solve() {\n    const items = ['Alpha', 'Beta', 'Gamma', 'Delta'];\n    const fromIdx = 2;\n    const toIdx = 0;\n    const [removed] = items.splice(fromIdx, 1);\n    items.splice(toIdx, 0, removed);\n    return items;\n}`,
+          explanation:
+            "Combining a deletion splice and an insertion splice allows you to cleanly reposition elements in-place with minimal memory footprint.",
+          testCases: [
+            { input: [], expected: ["Gamma", "Alpha", "Beta", "Delta"] },
+          ],
+        },
+        {
+          id: "hard-51",
+          difficulty: "hard",
+          category: "reverse",
+          title: "Reverse Subarray within Index Boundaries",
+          description:
+            "Reverse a specific segment of an array in-place, leaving the other elements untouched. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[10, 20, 30, 40, 50, 60]</code>, reverse only the elements from index 1 to index 4 inclusive (<code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[20, 30, 40, 50]</code>) so the array becomes: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[10, 50, 40, 30, 20, 60]</code>. Return the modified array.",
+          constraints: [
+            "Extract using slice, reverse the subset, and replace in-place using splice",
+            "Keep non-targeted elements in their original positions",
+          ],
+          starterCode: `function solve() {\n    const nums = [10, 20, 30, 40, 50, 60];\n    const start = 1;\n    const end = 4;\n    \n    // Reverse the target segment in-place\n    \n    return nums;\n}`,
+          solution: `function solve() {\n    const nums = [10, 20, 30, 40, 50, 60];\n    const start = 1;\n    const end = 4;\n    const reversedSegment = nums.slice(start, end + 1).reverse();\n    nums.splice(start, reversedSegment.length, ...reversedSegment);\n    return nums;\n}`,
+          explanation:
+            "Slicing, reversing, and splicing back the mutated segment is an elegant way to perform targeted in-place transformations.",
+          testCases: [{ input: [], expected: [10, 50, 40, 30, 20, 60] }],
+        },
+        {
+          id: "hard-52",
+          difficulty: "hard",
+          category: "pop",
+          title: "Evaluate Parentheses Balance with Pop Stack",
+          description:
+            "Write a function to check if a sequence of parentheses is validly balanced. Iterate through characters: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>'({[]})'</code>. For each opening bracket, push its matching closing bracket onto a stack. For each closing bracket, pop the top item from the stack and verify that it matches. Return a Boolean indicating whether the sequence is balanced.",
+          constraints: [
+            "Must use push and pop stack arrays to track matching brackets",
+            "Validate correct balances dynamically",
+          ],
+          starterCode: `function solve() {\n    const pattern = '({[]})';\n    \n    // Verify balanced brackets using a stack\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const pattern = '({[]})';\n    const stack = [];\n    const pairs = { '(': ')', '{': '}', '[': ']' };\n    for (let char of pattern) {\n        if (pairs[char]) {\n            stack.push(pairs[char]);\n        } else {\n            if (stack.pop() !== char) {\n                return false;\n            }\n        }\n    }\n    return stack.length === 0;\n}`,
+          explanation:
+            "Using stacks with matching pairs is the industry-standard, O(N) runtime approach to validating balanced brackets and compilers.",
+          testCases: [{ input: [], expected: true }],
+        },
+        {
+          id: "hard-53",
+          difficulty: "hard",
+          category: "includes",
+          title: "Compute Intersection of Multiple Arrays",
+          description:
+            "Compute the intersection of three numerical arrays. Find the common elements shared across: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, 2, 3, 4]</code>, <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[2, 3, 5, 8]</code>, and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[3, 2, 7, 9]</code>. Check for element presence across arrays using `includes`. Return an array of the intersecting elements.",
+          constraints: [
+            "Use .includes() to verify membership across all input arrays",
+            "Ensure the final results contain no duplicate values",
+          ],
+          starterCode: `function solve() {\n    const arr1 = [1, 2, 3, 4];\n    const arr2 = [2, 3, 5, 8];\n    const arr3 = [3, 2, 7, 9];\n    \n    // Calculate intersecting values\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const arr1 = [1, 2, 3, 4];\n    const arr2 = [2, 3, 5, 8];\n    const arr3 = [3, 2, 7, 9];\n    const intersect = arr1.filter(item => arr2.includes(item) && arr3.includes(item));\n    return intersect;\n}`,
+          explanation:
+            "Filtering matched values with `includes` is a simple, effective way to find common elements across multiple small datasets.",
+          testCases: [{ input: [], expected: [2, 3] }],
+        },
+        {
+          id: "hard-54",
+          difficulty: "hard",
+          category: "pop",
+          title: "Design State Undo-Redo History Registry",
+          description:
+            "Build an undo-redo history manager using twin stack arrays. Start with state: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['Init', 'State1', 'State2']</code>. Implement an undo operation: pop the current state and push it onto a `redoStack`. Next, simulate a redo operation: pop that state back from `redoStack` and push it back onto the main state stack. Return an object matching the format: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>{ history: mainStack, redo: redoStack }</code>.",
+          constraints: [
+            "Manage states in-place using push and pop on both stacks",
+          ],
+          starterCode: `function solve() {\n    const mainStack = ['Init', 'State1', 'State2'];\n    const redoStack = [];\n    \n    // Implement undo/redo operations\n    \n    return { history: mainStack, redo: redoStack };\n}`,
+          solution: `function solve() {\n    const mainStack = ['Init', 'State1', 'State2'];\n    const redoStack = [];\n    \n    // Perform undo\n    redoStack.push(mainStack.pop()); \n    \n    // Perform redo\n    mainStack.push(redoStack.pop());\n    \n    return { history: mainStack, redo: redoStack };\n}`,
+          explanation:
+            "Managing twin stacks with pop/push operations is the foundation of state history mechanisms in modern applications.",
+          testCases: [
+            {
+              input: [],
+              expected: { history: ["Init", "State1", "State2"], redo: [] },
+            },
+          ],
+        },
+        {
+          id: "hard-55",
+          difficulty: "hard",
+          category: "slice",
+          title: "Validate Sorted State with Bounded Subarrays",
+          description:
+            "Check if an array of numbers is sorted in ascending order. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[5, 10, 15, 12, 20]</code>, extract each pair of adjacent elements dynamically using `slice` and compare them. Return `true` if every pair is in order; otherwise, return `false`.",
+          constraints: [
+            "Do not use sorting methods like sort()",
+            "Compare elements using dynamic slice pairs",
+          ],
+          starterCode: `function solve() {\n    const sequence = [5, 10, 15, 12, 20];\n    \n    // Check if the array is sorted\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const sequence = [5, 10, 15, 12, 20];\n    for (let i = 0; i < sequence.length - 1; i++) {\n        const slicePair = sequence.slice(i, i + 2);\n        if (slicePair[0] > slicePair[1]) {\n            return false;\n        }\n    }\n    return true;\n}`,
+          explanation:
+            "Checking sorting order with `slice` prevents modifying the original array structure during validation checks.",
+          testCases: [{ input: [], expected: false }],
+        },
+        {
+          id: "hard-56",
+          difficulty: "hard",
+          category: "reverse",
+          title: "Perform 2D Matrix Rotation",
+          description:
+            "Rotate a 3x3 pixel color matrix 90 degrees clockwise in-place. Given matrix: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[[1,2,3], [4,5,6], [7,8,9]]</code>, transpose the matrix by swapping elements across the diagonal: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>matrix[i][j]</code> with <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>matrix[j][i]</code>. Next, reverse each row in-place using `reverse` to finish the rotation. Return the rotated matrix.",
+          constraints: [
+            "Perform matrix rotation in-place",
+            "Use reverse() to flip the rows after transposing",
+          ],
+          starterCode: `function solve() {\n    const matrix = [[1,2,3], [4,5,6], [7,8,9]];\n    \n    // Perform matrix rotation\n    \n    return matrix;\n}`,
+          solution: `function solve() {\n    const matrix = [[1,2,3], [4,5,6], [7,8,9]];\n    const n = matrix.length;\n    for (let i = 0; i < n; i++) {\n        for (let j = i + 1; j < n; j++) {\n            let temp = matrix[i][j];\n            matrix[i][j] = matrix[j][i];\n            matrix[j][i] = temp;\n        }\n    }\n    for (let i = 0; i < n; i++) {\n        matrix[i].reverse();\n    }\n    return matrix;\n}`,
+          explanation:
+            "Rotating matrices in-place using transpositions and row reversals avoids allocating extra memory, optimizing graphics performance.",
+          testCases: [
+            {
+              input: [],
+              expected: [
+                [7, 4, 1],
+                [8, 5, 2],
+                [9, 6, 3],
+              ],
+            },
+          ],
+        },
+        {
+          id: "hard-57",
+          difficulty: "hard",
+          category: "splice",
+          title: "Merge Sorted Arrays In-Place",
+          description:
+            "Merge a sorted array <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>nums2 = [2, 5, 6]</code> into a larger sorted array <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>nums1 = [1, 3, 8]</code> in-place. Insert the elements of `nums2` into `nums1` at the correct sorted positions using `splice`. Return the merged sorted `nums1` array.",
+          constraints: [
+            "Must merge in-place using splice without creating a new array",
+            "Do not use sorting methods like sort() after merging",
+          ],
+          starterCode: `function solve() {\n    const nums1 = [1, 3, 8];\n    const nums2 = [2, 5, 6];\n    \n    // Merge sorted arrays in-place\n    \n    return nums1;\n}`,
+          solution: `function solve() {\n    const nums1 = [1, 3, 8];\n    const nums2 = [2, 5, 6];\n    let i = 0, j = 0;\n    while (j < nums2.length) {\n        if (i >= nums1.length) {\n            nums1.push(nums2[j]);\n            j++;\n        } else if (nums2[j] < nums1[i]) {\n            nums1.splice(i, 0, nums2[j]);\n            j++;\n            i++;\n        } else {\n            i++;\n        }\n    }\n    return nums1;\n}`,
+          explanation:
+            "Merging sorted arrays in-place using `splice` runs in linear O(N + M) time, keeping operations fast and efficient.",
+          testCases: [{ input: [], expected: [1, 2, 3, 5, 6, 8] }],
+        },
+        {
+          id: "hard-58",
+          difficulty: "hard",
+          category: "splice",
+          title: "Iterative Right-to-Left Conditional Splicing",
+          description:
+            "Safely filter an array of numbers in-place. Loop through: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[4, 11, 15, 8, 21, 3]</code> and use `splice` to remove any odd values. Iterate from right to left to prevent index offsets from shifting during deletions, and return the filtered array.",
+          constraints: [
+            "Must modify the original array in-place",
+            "Do not use helper arrays or .filter()",
+            "Iterate backward to keep index offsets stable during splice deletions",
+          ],
+          starterCode: `function solve() {\n    const numbers = [4, 11, 15, 8, 21, 3];\n    \n    // Filter array in-place iterating from right to left\n    \n    return numbers;\n}`,
+          solution: `function solve() {\n    const numbers = [4, 11, 15, 8, 21, 3];\n    for (let i = numbers.length - 1; i >= 0; i--) {\n        if (numbers[i] % 2 !== 0) {\n            numbers.splice(i, 1);\n        }\n    }\n    return numbers;\n}`,
+          explanation:
+            "Iterating backward through an array ensures that removing elements with `splice` doesn't throw off the index offsets of the remaining elements.",
+          testCases: [{ input: [], expected: [4, 8] }],
+        },
+        {
+          id: "hard-59",
+          difficulty: "hard",
+          category: "tostring",
+          title: "Deep Compare Nested Array Structs",
+          description:
+            "Write a deep comparison function to check if two nested arrays are identical. Given nested arrays: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, [2, 3]]</code> and <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>[1, [2, 3]]</code>, convert each array to a string using `toString` or recursive checking to compare their values. Return `true` if they are identical; otherwise, return `false`.",
+          constraints: [
+            "Do not use JSON.stringify()",
+            "Must compare structure and values recursively",
+          ],
+          starterCode: `function solve() {\n    const arrA = [1, [2, 3]];\n    const arrB = [1, [2, 3]];\n    \n    // Compare nested structures recursively\n    \n    return null;\n}`,
+          solution: `function solve() {\n    const arrA = [1, [2, 3]];\n    const arrB = [1, [2, 3]];\n    const deepEqual = (a, b) => {\n        if (Array.isArray(a) && Array.isArray(b)) {\n            if (a.length !== b.length) return false;\n            for (let i = 0; i < a.length; i++) {\n                if (!deepEqual(a[i], b[i])) return false;\n            }\n            return true;\n        }\n        return a === b;\n    };\n    return deepEqual(arrA, arrB);\n}`,
+          explanation:
+            "Deep structural equality checks traverse nested arrays recursively, comparing values directly to determine if they match.",
+          testCases: [{ input: [], expected: true }],
+        },
+        {
+          id: "hard-60",
+          difficulty: "hard",
+          category: "splice",
+          title: "Rotate Array Circularly by K Steps",
+          description:
+            "Rotate an array to the right by <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>K = 2</code> steps in-place. Given array: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['S1', 'S2', 'S3', 'S4']</code>, extract the last K elements and move them to the beginning of the array using `splice` to get the rotated order: <code class='bg-slate-100 text-pink-600 px-1 py-0.5 rounded'>['S3', 'S4', 'S1', 'S2']</code>. Return the rotated array.",
+          constraints: [
+            "Must mutate the original array in-place using splice",
+            "Handle dynamic values of K smoothly",
+          ],
+          starterCode: `function solve() {\n    const items = ['S1', 'S2', 'S3', 'S4'];\n    const K = 2;\n    \n    // Rotate elements in-place by K steps\n    \n    return items;\n}`,
+          solution: `function solve() {\n    const items = ['S1', 'S2', 'S3', 'S4'];\n    const K = 2;\n    const offset = K % items.length;\n    if (offset > 0) {\n        const popped = items.splice(-offset);\n        items.splice(0, 0, ...popped);\n    }\n    return items;\n}`,
+          explanation:
+            "Splicing a dynamic slice segment and inserting it at the beginning of the array is an efficient, in-place way to handle array rotations.",
+          testCases: [{ input: [], expected: ["S3", "S4", "S1", "S2"] }],
+        },
+      ];
+
+      // Global State Engine
+      let activeChallengeId = "easy-1";
+      let solvedChallenges = {}; // ID -> true/false mapping
+
+      // DOM elements
+      const challengeListContainer = document.getElementById(
+        "challenge-list-container",
+      );
+      const activeTitle = document.getElementById("active-title");
+      const activeDifficultyBadge = document.getElementById(
+        "active-difficulty-badge",
+      );
+      const activeCategoryMethod = document.getElementById(
+        "active-category-method",
+      );
+      const activeDescription = document.getElementById("active-description");
+      const activeConstraints = document.getElementById("active-constraints");
+      const codeEditor = document.getElementById("code-editor");
+      const consoleStream = document.getElementById("console-stream");
+      const testSuiteReporter = document.getElementById("test-suite-reporter");
+      const assertionList = document.getElementById("assertion-list");
+      const solutionContainer = document.getElementById("solution-container");
+      const solutionCodeBlock = document.getElementById("solution-code-block");
+      const solutionExplanation = document.getElementById(
+        "solution-explanation",
+      );
+      const validationIndicator = document.getElementById(
+        "validation-indicator",
+      );
+
+      // Stat elements
+      const statEasy = document.getElementById("stat-easy");
+      const statMedium = document.getElementById("stat-medium");
+      const statHard = document.getElementById("stat-hard");
+      const statTotalProgress = document.getElementById("stat-total-progress");
+
+      // Action triggers
+      const btnRunCode = document.getElementById("btn-run-code");
+      const btnResetCode = document.getElementById("btn-reset-code");
+      const btnRevealSolution = document.getElementById("btn-reveal-solution");
+      const btnCopySolution = document.getElementById("btn-copy-solution");
+      const btnClearConsole = document.getElementById("btn-clear-console");
+      const btnResetAll = document.getElementById("btn-reset-all");
+
+      // Filter Inputs
+      const filterSearch = document.getElementById("filter-search");
+      const filterTabs = {
+        all: document.getElementById("filter-tab-all"),
+        easy: document.getElementById("filter-tab-easy"),
+        medium: document.getElementById("filter-tab-medium"),
+        hard: document.getElementById("filter-tab-hard"),
+      };
+      let activeFilterType = "all";
+      const sidebar = document.querySelector(".resizable-sidebar");
+
+      // Initialization
+      window.onload = function () {
+        loadProgress();
+        // collapse mode removed; keep resizable sidebar
+        renderChallengesFeed();
+        selectChallenge(activeChallengeId);
+        updateStats();
+      };
+
+      // collapse mode removed: no collapse/expand handlers
+
+      // Draggable splitter implementation
+      const splitter = document.getElementById("drag-splitter");
+      let isDragging = false;
+
+      function applySavedWidth() {
+        const savedW = localStorage.getItem(
+          "js_array_masterclass_sidebar_width",
+        );
+        if (savedW) {
+          sidebar.style.width = savedW;
+        }
+      }
+
+      // initialize splitter visibility and saved width
+      if (splitter) {
+        applySavedWidth();
+        splitter.style.display = "block";
+
+        const onPointerDown = (e) => {
+          e.preventDefault();
+          isDragging = true;
+          document.body.style.userSelect = "none";
+          document.body.style.cursor = "col-resize";
+        };
+
+        const onPointerMove = (e) => {
+          if (!isDragging) return;
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const mainRect = document
+            .querySelector("main")
+            .getBoundingClientRect();
+          const min = window.innerWidth * 0.2; // 20% min
+          const max = window.innerWidth * 0.6; // 60% max
+          let newW = clientX - mainRect.left;
+          newW = Math.max(newW, min);
+          newW = Math.min(newW, max);
+          sidebar.style.width = newW + "px";
+        };
+
+        const onPointerUp = () => {
+          if (!isDragging) return;
+          isDragging = false;
+          document.body.style.userSelect = "";
+          document.body.style.cursor = "";
+          localStorage.setItem(
+            "js_array_masterclass_sidebar_width",
+            sidebar.style.width,
+          );
+        };
+
+        splitter.addEventListener("mousedown", onPointerDown);
+        window.addEventListener("mousemove", onPointerMove);
+        window.addEventListener("mouseup", onPointerUp);
+
+        // touch support
+        splitter.addEventListener("touchstart", onPointerDown, {
+          passive: false,
+        });
+        window.addEventListener("touchmove", onPointerMove, { passive: false });
+        window.addEventListener("touchend", onPointerUp);
+
+        // keep width within bounds on resize
+        window.addEventListener("resize", () => {
+          const cur = parseFloat(getComputedStyle(sidebar).width);
+          const min = window.innerWidth * 0.2;
+          const max = window.innerWidth * 0.6;
+          if (cur < min) sidebar.style.width = min + "px";
+          if (cur > max) sidebar.style.width = max + "px";
+        });
+      }
+
+      // Load & Save State Engine
+      function loadProgress() {
+        const saved = localStorage.getItem("js_array_masterclass_solved");
+        if (saved) {
+          try {
+            solvedChallenges = JSON.parse(saved);
+          } catch (e) {
+            solvedChallenges = {};
+          }
+        }
+        const savedActive = localStorage.getItem("js_array_masterclass_active");
+        if (savedActive) {
+          activeChallengeId = savedActive;
+        }
+      }
+
+      function saveProgress() {
+        localStorage.setItem(
+          "js_array_masterclass_solved",
+          JSON.stringify(solvedChallenges),
+        );
+        localStorage.setItem("js_array_masterclass_active", activeChallengeId);
+        updateStats();
+      }
+
+      // Stats calculation
+      function updateStats() {
+        const counts = { easy: 0, medium: 0, hard: 0 };
+        challengeDb.forEach((c) => {
+          if (solvedChallenges[c.id]) {
+            counts[c.difficulty]++;
+          }
+        });
+
+        statEasy.innerText = `${counts.easy}/20`;
+        statMedium.innerText = `${counts.medium}/20`;
+        statHard.innerText = `${counts.hard}/20`;
+
+        const totalSolved = Object.keys(solvedChallenges).filter(
+          (key) => solvedChallenges[key],
+        ).length;
+        const percentage = Math.round((totalSolved / 60) * 100);
+        statTotalProgress.innerText = `${percentage}% Done`;
+      }
+
+      // Render Sidebar List items
+      function renderChallengesFeed() {
+        challengeListContainer.innerHTML = "";
+        const searchQuery = filterSearch.value.toLowerCase();
+
+        let visibleIndex = 0;
+        challengeDb.forEach((challenge) => {
+          // Apply Search query & Difficulty filters
+          const matchesSearch =
+            challenge.title.toLowerCase().includes(searchQuery) ||
+            challenge.category.toLowerCase().includes(searchQuery);
+          const matchesTab =
+            activeFilterType === "all" ||
+            challenge.difficulty === activeFilterType;
+
+          if (!matchesSearch || !matchesTab) return;
+
+          const isSolved = solvedChallenges[challenge.id];
+          const isActive = activeChallengeId === challenge.id;
+
+          const card = document.createElement("button");
+          card.className = `w-full sidebar-card text-left p-3 rounded-xl transition-all border flex items-start gap-2.5 ${
+            isActive
+              ? "bg-indigo-50 border-indigo-200 shadow-sm"
+              : "bg-white hover:bg-slate-50 border-slate-100"
+          }`;
+
+          card.onclick = () => selectChallenge(challenge.id);
+
+          // Build Difficulty Badge Color scheme
+          let badgeColor = "";
+          if (challenge.difficulty === "easy")
+            badgeColor = "bg-emerald-100 text-emerald-800 border-emerald-200";
+          else if (challenge.difficulty === "medium")
+            badgeColor = "bg-amber-100 text-amber-800 border-amber-200";
+          else badgeColor = "bg-rose-100 text-rose-800 border-rose-200";
+
+          visibleIndex++;
+          const qNumber = visibleIndex;
+          card.innerHTML = `
+                    <div class="mt-0.5">
+                        ${
+                          isSolved
+                            ? `<svg class="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>`
+                            : `<div class="w-4 h-4 rounded-full border border-slate-300 bg-white"></div>`
+                        }
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex items-center justify-between gap-2 mb-1">
+                            <span class="text-[9px] uppercase tracking-wider font-extrabold px-1.5 py-0.5 rounded border ${badgeColor}">
+                                ${challenge.difficulty}
+                            </span>
+                        <span class="text-[9px] text-slate-400 font-mono-custom">${challenge.category}</span>
+                        </div>
+                      <div class="flex items-center gap-2">
+                        <span class="text-[11px] font-mono-custom text-slate-500 text-center px-2 py-0.5 rounded-full border challenge-num-badge">${qNumber}</span>
+                        <h4 class="text-xs font-bold text-slate-800 line-clamp-1 leading-tight ${isActive ? "text-indigo-900" : ""}"><span class="first-word">${challenge.title.split(" ")[0]}</span><span class="full-title">${challenge.title}</span></h4>
+                      </div>
+                    </div>
+                `;
+
+          challengeListContainer.appendChild(card);
+        });
+      }
+
+      // Active Workspace management
+      function selectChallenge(id) {
+        activeChallengeId = id;
+        localStorage.setItem("js_array_masterclass_active", id);
+
+        // Re-render feed items to update highlight
+        const listItems = challengeListContainer.children;
+        renderChallengesFeed();
+
+        const challenge = challengeDb.find((c) => c.id === id);
+        if (!challenge) return;
+
+        // Clear Dynamic solution cards
+        solutionContainer.classList.add("hidden");
+        btnRevealSolution.innerText = "Show Solution & Explanation";
+
+        // Populate Overview Card
+        activeTitle.innerText = challenge.title;
+        activeCategoryMethod.innerText = `array.${challenge.category}`;
+        activeDescription.innerHTML = challenge.description;
+
+        // Configure dynamic constraints list
+        activeConstraints.innerHTML = "";
+        challenge.constraints.forEach((con) => {
+          const li = document.createElement("li");
+          li.innerText = con;
+          activeConstraints.appendChild(li);
+        });
+
+        // Adjust Top Border color matching tier
+        const headerBar = document.getElementById("header-difficulty-bar");
+        headerBar.className = "absolute top-0 left-0 right-0 h-1.5";
+        activeDifficultyBadge.className =
+          "text-[10px] uppercase tracking-wider font-extrabold px-2.5 py-0.5 rounded-md";
+
+        if (challenge.difficulty === "easy") {
+          headerBar.classList.add("bg-emerald-500");
+          activeDifficultyBadge.classList.add(
+            "bg-emerald-100",
+            "text-emerald-800",
+            "border",
+            "border-emerald-200",
+          );
+          activeDifficultyBadge.innerText = "Easy Tier";
+        } else if (challenge.difficulty === "medium") {
+          headerBar.classList.add("bg-amber-500");
+          activeDifficultyBadge.classList.add(
+            "bg-amber-100",
+            "text-amber-800",
+            "border",
+            "border-amber-200",
+          );
+          activeDifficultyBadge.innerText = "Medium Tier";
+        } else {
+          headerBar.classList.add("bg-rose-500");
+          activeDifficultyBadge.classList.add(
+            "bg-rose-100",
+            "text-rose-800",
+            "border",
+            "border-rose-200",
+          );
+          activeDifficultyBadge.innerText = "Hard Tier";
+        }
+
+        // Set Solved Badge on details card header
+        updateSolvedHeaderIndicator();
+
+        // Populate Textarea with starter code or locally stored cache
+        const cacheKey = `code_cache_${challenge.id}`;
+        const cachedCode = localStorage.getItem(cacheKey);
+        codeEditor.value = cachedCode ? cachedCode : challenge.starterCode;
+
+        // Clear Sandbox Outputs
+        consoleStream.innerHTML = `<div class="text-slate-500 italic">Console initialized... Click "Execute & Validate" to process checks.</div>`;
+        testSuiteReporter.classList.add("hidden");
+        assertionList.innerHTML = "";
+      }
+
+      function updateSolvedHeaderIndicator() {
+        const isSolved = solvedChallenges[activeChallengeId];
+        validationIndicator.className =
+          "flex items-center gap-2 font-bold text-xs px-3 py-1.5 rounded-lg border";
+        if (isSolved) {
+          validationIndicator.classList.add(
+            "bg-emerald-100",
+            "text-emerald-800",
+            "border-emerald-200",
+          );
+          validationIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Solved`;
+        } else {
+          validationIndicator.classList.add(
+            "bg-slate-100",
+            "text-slate-600",
+            "border-slate-200",
+          );
+          validationIndicator.innerHTML = `<span class="w-2 h-2 rounded-full bg-slate-400"></span> Not Solved`;
+        }
+      }
+
+      // Live Compiler Execution Sandbox
+      btnRunCode.onclick = function () {
+        const currentChallenge = challengeDb.find(
+          (c) => c.id === activeChallengeId,
+        );
+        if (!currentChallenge) return;
+
+        const userCode = codeEditor.value;
+        // Cache current typed script
+        localStorage.setItem(`code_cache_${currentChallenge.id}`, userCode);
+
+        // Setup custom evaluation stream catcher
+        consoleStream.innerHTML = "";
+        const logs = [];
+        const mockConsole = {
+          log: (...args) => {
+            const line = args
+              .map((arg) =>
+                typeof arg === "object" ? JSON.stringify(arg) : arg,
+              )
+              .join(" ");
+            logs.push(line);
+            appendConsoleLine(line, "normal");
+          },
+          error: (...args) => {
+            const line = args.join(" ");
+            logs.push(line);
+            appendConsoleLine(line, "error");
+          },
+        };
+
+        try {
+          // Scope wrapper to isolate parameters, injecting console hooks
+          const runnerBody = `
+                    ${userCode}
+                    return typeof solve === 'function' ? solve : null;
+                `;
+
+          const runnerFn = new Function("console", runnerBody);
+          const userSolve = runnerFn(mockConsole);
+
+          if (typeof userSolve !== "function") {
+            throw new Error(
+              "No function wrapper found. Ensure you define: function solve() { ... }",
+            );
+          }
+
+          // Run programmatic unit assertions
+          let allPassed = true;
+          assertionList.innerHTML = "";
+          testSuiteReporter.classList.remove("hidden");
+
+          currentChallenge.testCases.forEach((tc, index) => {
+            const inputClone = JSON.parse(JSON.stringify(tc.input));
+            const result = userSolve(...inputClone);
+
+            const expectedStr = JSON.stringify(tc.expected);
+            const resultStr = JSON.stringify(result);
+            const match = expectedStr === resultStr;
+
+            if (!match) allPassed = false;
+
+            // Render Assertion Row block
+            const row = document.createElement("div");
+            row.className = `flex items-center justify-between p-2 rounded border text-xs ${
+              match
+                ? "bg-slate-900/50 border-emerald-500/30 text-emerald-400"
+                : "bg-slate-900/50 border-rose-500/30 text-rose-400"
+            }`;
+            row.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <span>${match ? "✔" : "❌"}</span>
+                            <span>Assertion #${index + 1}</span>
+                        </div>
+                        <div class="font-semibold text-[10px] text-slate-400">
+                            Got: <span class="${match ? "text-emerald-300" : "text-rose-300"}">${resultStr}</span> | Expected: <span>${expectedStr}</span>
+                        </div>
+                    `;
+            assertionList.appendChild(row);
+          });
+
+          if (allPassed) {
+            solvedChallenges[currentChallenge.id] = true;
+            appendConsoleLine(
+              "⭐ System Verification Success! Assertions matching specifications.",
+              "success",
+            );
+            saveProgress();
+            updateSolvedHeaderIndicator();
+            renderChallengesFeed();
+          } else {
+            appendConsoleLine(
+              "❌ Output Verification Failed. Check assertions details.",
+              "error",
+            );
+          }
+        } catch (err) {
+          appendConsoleLine(`Compiler error: ${err.message}`, "error");
+          testSuiteReporter.classList.add("hidden");
+        }
+      };
+
+      function appendConsoleLine(text, type) {
+        const line = document.createElement("div");
+        if (type === "error") {
+          line.className =
+            "text-rose-400 font-bold border-l-2 border-rose-500 pl-2";
+        } else if (type === "success") {
+          line.className =
+            "text-emerald-400 font-bold border-l-2 border-emerald-500 pl-2";
+        } else {
+          line.className =
+            "text-indigo-200 border-l-2 border-indigo-500/30 pl-2";
+        }
+        line.innerText = `> ${text}`;
+        consoleStream.appendChild(line);
+        consoleStream.scrollTop = consoleStream.scrollHeight;
+      }
+
+      // Action controls mappings
+      btnResetCode.onclick = function () {
+        const current = challengeDb.find((c) => c.id === activeChallengeId);
+        if (!current) return;
+        if (
+          confirm("Reset current editor progress to boilerplate starter code?")
+        ) {
+          codeEditor.value = current.starterCode;
+          localStorage.removeItem(`code_cache_${current.id}`);
+          consoleStream.innerHTML = `<div class="text-slate-500 italic">Editor reset completely. Ready to re-evaluate.</div>`;
+          testSuiteReporter.classList.add("hidden");
+        }
+      };
+
+      btnRevealSolution.onclick = function () {
+        const current = challengeDb.find((c) => c.id === activeChallengeId);
+        if (!current) return;
+
+        if (solutionContainer.classList.contains("hidden")) {
+          solutionContainer.classList.remove("hidden");
+          btnRevealSolution.innerText = "Hide Solution & Explanation";
+
+          // Load dynamic highlighted prism code
+          solutionCodeBlock.innerText = current.solution;
+          solutionExplanation.innerText = current.explanation;
+          Prism.highlightElement(solutionCodeBlock);
+
+          // Scroll Solution directly into viewport
+          solutionContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+          });
+        } else {
+          solutionContainer.classList.add("hidden");
+          btnRevealSolution.innerText = "Show Solution & Explanation";
+        }
+      };
+
+      btnCopySolution.onclick = function () {
+        const code = solutionCodeBlock.innerText;
+        // Native custom clipboard copy using classical executive element
+        const el = document.createElement("textarea");
+        el.value = code;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+
+        btnCopySolution.innerText = "Copied!";
+        setTimeout(() => {
+          btnCopySolution.innerText = "Copy Code";
+        }, 1800);
+      };
+
+      btnClearConsole.onclick = function () {
+        consoleStream.innerHTML = `<div class="text-slate-500 italic font-mono-custom text-[10px]">Console stream cleared...</div>`;
+      };
+
+      btnResetAll.onclick = function () {
+        if (
+          confirm(
+            "This will permanently clear all your solved challenges history. Proceed?",
+          )
+        ) {
+          solvedChallenges = {};
+          saveProgress();
+          selectChallenge("easy-1");
+          renderChallengesFeed();
+          updateStats();
+        }
+      };
+
+      // Filter Actions
+      filterSearch.oninput = function () {
+        renderChallengesFeed();
+      };
+
+      function applyTabFilter(tabName) {
+        Object.keys(filterTabs).forEach((key) => {
+          filterTabs[key].className =
+            "text-[10px] font-bold py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:text-slate-800 transition-all border border-transparent";
+        });
+
+        activeFilterType = tabName;
+
+        if (tabName === "all") {
+          filterTabs.all.className =
+            "text-[10px] font-bold py-1.5 rounded-lg bg-indigo-600 text-white transition-all border border-indigo-600";
+        } else if (tabName === "easy") {
+          filterTabs.easy.className =
+            "text-[10px] font-bold py-1.5 rounded-lg bg-emerald-600 text-white transition-all border border-emerald-600";
+        } else if (tabName === "medium") {
+          filterTabs.medium.className =
+            "text-[10px] font-bold py-1.5 rounded-lg bg-amber-600 text-white transition-all border border-amber-600";
+        } else {
+          filterTabs.hard.className =
+            "text-[10px] font-bold py-1.5 rounded-lg bg-rose-600 text-white transition-all border border-rose-600";
+        }
+
+        renderChallengesFeed();
+      }
+
+      filterTabs.all.onclick = () => applyTabFilter("all");
+      filterTabs.easy.onclick = () => applyTabFilter("easy");
+      filterTabs.medium.onclick = () => applyTabFilter("medium");
+      filterTabs.hard.onclick = () => applyTabFilter("hard");
+    </script>
+  </body>
+</html>
