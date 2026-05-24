@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>String Methods</h1>
+    <script>
+      //Length
+      const text = "Karthik";
+      console.log(text.length);
+
+      const emptyString = "";
+      console.log(emptyString.length);
+      //charAt()
+      let str = "JavaScript is fun";
+      console.log("Empty space:", str.charAt(10));
+      //cancat()
+      let str1 = "Anil";
+      let str2 = "Kumar";
+      let str3 = str1.concat(str2);
+      console.log(str1.concat(" ", str2, "!"));
+      console.log(str3);
+      //includes()
+      let sentence = "A quick brown fox jumps over the lazy dog.";
+      console.log(sentence.includes("dog"));
+
+      let word = "Programming";
+      console.log(word.includes("pro"));
+      //indexOf
+      let text1 = "Hello world, welcome to the universe.";
+      console.log(text1.indexOf("world"));
+      console.log(text1.indexOf("w"));
+      console.log(text1.indexOf("W"));
+      //lastIndexOf
+      let text2 = "Hello world, welcome to the universe.";
+      console.log(text2.lastIndexOf("world"));
+      console.log(text2.lastIndexOf("w"));
+      console.log(text2.lastIndexOf("W"));
+      //replace-replaces First accurance
+      let oldStr = "Hello World World";
+      let newStr = oldStr.replace("World", "Universe");
+      console.log(newStr);
+      //split - uses a separator
+      let sen = "welcome to the universe.";
+      let words = sen.split(" ");
+      console.log(words);
+      let js = "Javascript";
+      console.log(js.split("").join(""));
+      //reverse a string
+      let jsReverse = js.split("").reverse().join();
+      console.log(jsReverse);
+
+      //reverse a string without using built-in methods
+      let js1 = "Karthik";
+      let js1Reverse = "";
+      for (let i = js.length - 1; i >= 0; i--) {
+        js1Reverse += js1[i];
+      }
+      console.log(js1Reverse);
+    </script>
+  </body>
+</html>
