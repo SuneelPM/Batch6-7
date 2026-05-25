@@ -1,0 +1,2853 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Array Methods Practice</title>
+    <!-- PrismJS Okaidia theme and line-numbers plugin (no other CSS) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      code,
+      pre {
+        font-family: "Fira Code", monospace;
+      }
+
+      /* Custom Styling for the Details/Summary */
+      details > summary {
+        list-style: none;
+        outline: none; /* Fix: Removes blue focus ring on click */
+        -webkit-tap-highlight-color: transparent; /* Fix: Removes mobile tap highlight */
+      }
+      details > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      /* --- CSS FIXES --- */
+      /* Fix: Prevent text from overlapping the absolute positioned badges */
+      .question-card > h3 {
+        padding-right: 5.5rem !important;
+      }
+
+      /* Fix: Ensure code block backgrounds cover the entire scrolling area */
+      .overflow-x-auto pre {
+        min-width: max-content;
+      }
+
+      /* Fix: Make badges flow naturally on very small mobile screens */
+      @media (max-width: 480px) {
+        .badge-container {
+          position: relative !important;
+          inset: auto !important;
+          display: inline-block;
+          margin-bottom: 0.5rem;
+          margin-top: -0.5rem;
+        }
+        .question-card > h3 {
+          padding-right: 0 !important;
+        }
+      }
+
+      /* Tabs styling */
+      .tabs {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+      .tab-btn {
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        border: 1px solid #e2e8f0;
+        color: #0f172a;
+        padding: 0.45rem 0.9rem;
+        margin: 0 0.25rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .tab-btn:hover {
+        background: #f8fafc;
+      }
+      .tab-btn:focus {
+        outline: 2px solid rgba(59, 130, 246, 0.3);
+        outline-offset: 2px;
+      }
+      .tab-btn.active {
+        background: #0f172a;
+        color: #fff;
+        border-color: #0f172a;
+        box-shadow: 0 6px 18px rgba(2, 6, 23, 0.08);
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 text-slate-800 min-h-screen p-6 md:p-12">
+    <header class="max-w-5xl mx-auto mb-12 text-center">
+      <h1
+        class="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight"
+      >
+        JavaScript Arrays Mastery
+      </h1>
+      <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+        60 coding challenges covering
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >splice</code
+        >,
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >slice</code
+        >,
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >indexOf</code
+        >,
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >includes</code
+        >,
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >reverse</code
+        >,
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600">join</code
+        >, and
+        <code class="bg-slate-200 px-1 rounded text-sm text-pink-600"
+          >toString</code
+        >.
+      </p>
+      <div class="mt-4 flex justify-center gap-4 text-sm font-medium">
+        <span class="text-emerald-600">Easy: 18 (30%)</span>
+        <span class="text-amber-500">Medium: 18 (30%)</span>
+        <span class="text-rose-600">Hard: 24 (40%)</span>
+      </div>
+    </header>
+
+    <!-- Simple Tabs: Easy / Medium / Hard -->
+    <div class="tabs" role="tablist" aria-label="Difficulty Tabs">
+      <button
+        class="tab-btn"
+        id="tab-easy"
+        role="tab"
+        aria-controls="easy"
+        aria-selected="true"
+      >
+        Easy
+      </button>
+      <button
+        class="tab-btn"
+        id="tab-medium"
+        role="tab"
+        aria-controls="medium"
+        aria-selected="false"
+      >
+        Medium
+      </button>
+      <button
+        class="tab-btn"
+        id="tab-hard"
+        role="tab"
+        aria-controls="hard"
+        aria-selected="false"
+      >
+        Hard
+      </button>
+    </div>
+
+    <main class="max-w-5xl mx-auto space-y-12">
+      <!-- ================= EASY SECTION (18 Questions) ================= -->
+      <section id="easy">
+        <div class="flex items-center gap-4 mb-6">
+          <h2 class="text-2xl font-bold text-emerald-600">Easy Level</h2>
+          <div class="h-px bg-emerald-200 flex-1"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Q1 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">1. The Array Literal</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create an array named
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >favoriteFruits</code
+              >
+              containing 3 of your favorite fruits as strings using the array
+              literal syntax.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const favoriteFruits = ["Apple", "Mango", "Banana"];
+console.log(favoriteFruits);</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q2 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">2. The Empty Constructor</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create an empty array named
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >emptySlots</code
+              >
+              with a length of 5 using the
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array()</code
+              >
+              constructor.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const emptySlots = new Array(5);
+console.log(emptySlots.length); // 5</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q3 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              3. Constructor with Elements
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create an array named
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >numbers</code
+              >
+              containing 10, 20, and 30 using the
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array(...)</code
+              >
+              syntax.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const numbers = new Array(10, 20, 30);
+console.log(numbers); // [10, 20, 30]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q4 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">4. Includes Check</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Check if 'editor' exists in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['admin', 'editor', 'user']</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const roles = ['admin', 'editor', 'user'];
+console.log(roles.includes('editor')); // true</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q5 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">5. Find Index</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Find the index of 'blue' in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['red', 'green', 'blue', 'yellow']</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const colors = ['red', 'green', 'blue', 'yellow'];
+console.log(colors.indexOf('blue')); // 2</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q6 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">6. toString Conversion</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Convert
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, "three"]</code
+              >
+              to a string using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >toString()</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, 2, "three"];
+console.log(arr.toString()); // "1,2,three"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q7 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">7. Reverse Array</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Reverse the array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[10, 9, 8]</code
+              >
+              in place.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const nums = [10, 9, 8];
+nums.reverse();
+console.log(nums); // [8, 9, 10]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q8 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">8. Join No Separator</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Join
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['J', 'S']</code
+              >
+              into "JS".
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const letters = ['J', 'S'];
+console.log(letters.join('')); // "JS"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q9 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">9. Join with Dash</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Join
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['one', 'two']</code
+              >
+              into "one-two".
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const words = ['one', 'two'];
+console.log(words.join('-')); // "one-two"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q10 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">10. Slice First Two</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Get the first 2 elements from
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'b', 'c']</code
+              >
+              using slice.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['a', 'b', 'c'];
+console.log(arr.slice(0, 2)); // ["a", "b"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q11 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">11. Splice Delete One</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Remove the second element from
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3]</code
+              >
+              using splice.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, 2, 3];
+arr.splice(1, 1);
+console.log(arr); // [1, 3]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q12 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              12. Negative IndexOf Fallback
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Try to find the index of 'apple' in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['orange', 'pear']</code
+              >. What does it return?
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const fruits = ['orange', 'pear'];
+console.log(fruits.indexOf('apple')); // -1</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q13 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              13. Clone with Slice (No Args)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create a shallow copy of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[5, 10, 15]</code
+              >
+              using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice()</code
+              >
+              without providing any arguments.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const original = [5, 10, 15];
+const copy = original.slice();
+console.log(copy); // [5, 10, 15]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q14 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">14. Splice Clear Array</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Empty the array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'b', 'c']</code
+              >
+              completely using the
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice()</code
+              >
+              method.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['a', 'b', 'c'];
+arr.splice(0); // or arr.splice(0, arr.length)
+console.log(arr); // []</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q15 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">15. Join with Spaces</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Combine
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['Hello', 'World']</code
+              >
+              into a single string separated by a space.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const words = ['Hello', 'World'];
+console.log(words.join(' ')); // "Hello World"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q16 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">16. Includes from Index</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Check if
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 4]</code
+              >
+              includes the number
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">2</code>,
+              but start the search from index
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">2</code>.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const nums = [1, 2, 3, 4];
+// Second parameter is the starting index
+console.log(nums.includes(2, 2)); // false</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q17 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">17. Double Reverse</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              What happens if you call
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >reverse()</code
+              >
+              twice on
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['up', 'down']</code
+              >?
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const dirs = ['up', 'down'];
+dirs.reverse(); // ['down', 'up']
+dirs.reverse(); // ['up', 'down']
+console.log(dirs); // Back to original order</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q18 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded"
+              >Easy</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              18. Slice with Negative Start
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice</code
+              >
+              with a negative index to get the very last element of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['x', 'y', 'z']</code
+              >
+              as a new array.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const letters = ['x', 'y', 'z'];
+console.log(letters.slice(-1)); // ["z"]</code></pre>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= MEDIUM SECTION (18 Questions) ================= -->
+      <section id="medium">
+        <div class="flex items-center gap-4 mb-6 mt-12">
+          <h2 class="text-2xl font-bold text-amber-500">Medium Level</h2>
+          <div class="h-px bg-amber-200 flex-1"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Q13 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              13. Extracting Middle (slice)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Extract
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >30, 40, 50</code
+              >
+              from
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[10, 20, 30, 40, 50, 60]</code
+              >
+              without modifying the original array.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [10, 20, 30, 40, 50, 60];
+const subArray = arr.slice(2, 5); 
+console.log(subArray); // [30, 40, 50]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q14 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              14. Multiple Deletions (splice)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['A', 'B', 'C', 'D', 'E']</code
+              >, remove 'C' and 'D' using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice()</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const letters = ['A', 'B', 'C', 'D', 'E'];
+letters.splice(2, 2); 
+console.log(letters); // ["A", "B", "E"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q15 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              15. Inserting Elements (splice)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['A', 'B', 'C']</code
+              >, insert 'X' and 'Y' right between 'A' and 'B'.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const chars = ['A', 'B', 'C'];
+chars.splice(1, 0, 'X', 'Y'); 
+console.log(chars); // ["A", "X", "Y", "B", "C"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q16 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              16. Replace Element (splice)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['banana', 'apple', 'grape']</code
+              >, replace 'apple' with 'orange' using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice()</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const fruits = ['banana', 'apple', 'grape'];
+fruits.splice(1, 1, 'orange');
+console.log(fruits); // ["banana", "orange", "grape"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q17 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">17. Safe Search Function</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >findItem(arr, val)</code
+              >. Return its index if found, else "Not Found". Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >includes</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function findItem(arr, val) {
+    if (arr.includes(val)) {
+        return arr.indexOf(val);
+    }
+    return "Not Found";
+}</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q18 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">18. Reverse and Join</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['c', 'a', 't']</code
+              >, reverse and combine them to form "tac".
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const chars = ['c', 'a', 't'];
+const reversed = chars.reverse().join('');
+console.log(reversed); // "tac"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q19 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">19. Slice & ToString</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >["Node", "React", "Vue"]</code
+              >, clone the first 2 elements and convert them to a string.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const frameworks = ["Node", "React", "Vue"];
+const result = frameworks.slice(0, 2).toString();
+console.log(result); // "Node,React"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q20 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              20. Slice Last N Elements
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice()</code
+              >
+              to extract the last 2 elements from
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[5, 10, 15, 20]</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [5, 10, 15, 20];
+console.log(arr.slice(-2)); // [15, 20]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q21 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">21. Start Index Search</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf()</code
+              >
+              to find the number
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">1</code> in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 0, 1, 0]</code
+              >
+              starting the search from index 1.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const bins = [1, 0, 1, 0];
+console.log(bins.indexOf(1, 1)); // 2</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q22 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              22. Clear Array Except Last
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 4]</code
+              >, use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice()</code
+              >
+              to remove everything except the last element.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const nums = [1, 2, 3, 4];
+nums.splice(0, nums.length - 1);
+console.log(nums); // [4]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q23 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">23. Clone with Slice</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create an exact shallow copy of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[9, 8, 7]</code
+              >
+              using only the
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice()</code
+              >
+              method.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const orig = [9, 8, 7];
+const copy = orig.slice();
+console.log(copy); // [9, 8, 7]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q24 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">24. Conditional Push</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write logic: If 'dog' is not
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >includes()</code
+              >
+              in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['cat', 'bird']</code
+              >, use splice to add it to the end.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const pets = ['cat', 'bird'];
+if (!pets.includes('dog')) {
+    pets.splice(pets.length, 0, 'dog');
+}
+console.log(pets); // ["cat", "bird", "dog"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q31 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              31. Slice Middle Elements
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given an array of odd length
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 4, 5]</code
+              >, use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice</code
+              >
+              to return the array without its first and last elements.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, 2, 3, 4, 5];
+const middle = arr.slice(1, -1);
+console.log(middle); // [2, 3, 4]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q32 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              32. Splice and Replace Multiple
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              In
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'bad', 'bad', 'b']</code
+              >, use one
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              call to replace both 'bad' elements with 'good1' and 'good2'.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['a', 'bad', 'bad', 'b'];
+arr.splice(1, 2, 'good1', 'good2');
+console.log(arr); // ["a", "good1", "good2", "b"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q33 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              33. IndexOf with Negative Start
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Find 'x' in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['x', 'y', 'x', 'y']</code
+              >, but start the search from the second-to-last element using a
+              negative index.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['x', 'y', 'x', 'y'];
+// -2 points to the second 'x'
+console.log(arr.indexOf('x', -2)); // 2</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q34 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">34. Join Objects</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              What happens when you
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >join()</code
+              >
+              an array of objects:
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[{id: 1}, {id: 2}]</code
+              >?
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [{id: 1}, {id: 2}];
+// join() calls toString() on each element
+console.log(arr.join(', ')); 
+// "[object Object], [object Object]"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q35 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">35. Check All Same</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >reverse</code
+              >
+              (or just clever indexing) to determine if
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'a', 'b']</code
+              >
+              consists of entirely the same element (assume length > 0).
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function allSame(arr) {
+    // If reverse searching finds the first element at the end, 
+    // it doesn't guarantee all middle elements are the same.
+    // Better array method constraint approach:
+    // (Though normally we'd use .every())
+    for (let i = 1; i < arr.length; i++) {
+        if (arr.indexOf(arr[0], i) !== i) return false;
+    }
+    return true;
+}
+console.log(allSame(['a', 'a', 'b'])); // false</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q36 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-amber-100 text-amber-700 text-xs font-bold px-2 py-1 rounded"
+              >Medium</span
+            >
+            <h3 class="font-semibold text-lg mb-2">36. Splice to Prepend</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to add 'start' to the very beginning of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['middle', 'end']</code
+              >
+              without removing anything.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['middle', 'end'];
+arr.splice(0, 0, 'start');
+console.log(arr); // ["start", "middle", "end"]</code></pre>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= HARD SECTION (24 Questions) ================= -->
+      <section id="hard">
+        <div class="flex items-center gap-4 mb-6 mt-12">
+          <h2 class="text-2xl font-bold text-rose-600">Hard Level</h2>
+          <div class="h-px bg-rose-200 flex-1"></div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Q25 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              25. Combine Slice & Splice
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Get the last 3 elements of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 4, 5, 6]</code
+              >
+              via slice, and use splice with spread to insert them at the start
+              of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[7, 8]</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const source = [1, 2, 3, 4, 5, 6];
+const target = [7, 8];
+
+const lastThree = source.slice(-3); 
+target.splice(0, 0, ...lastThree);
+
+console.log(target); // [4, 5, 6, 7, 8]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q26 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              26. Find Second Occurrence
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 2, 4, 2]</code
+              >, find the index of the <em>second</em> occurrence of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">2</code>
+              using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf()</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const nums = [1, 2, 3, 2, 4, 2];
+const first = nums.indexOf(2);
+const second = nums.indexOf(2, first + 1);
+
+console.log(second); // 3</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q27 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">27. Dynamic Deletion</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >removeItem(arr, item)</code
+              >
+              that finds
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">item</code>
+              and removes it completely using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >. If not found, do nothing.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function removeItem(arr, item) {
+    const index = arr.indexOf(item);
+    if (index !== -1) {
+        arr.splice(index, 1);
+    }
+    return arr;
+}</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q28 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              28. Safe Array Palindrome
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function to check if
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['m', 'a', 'd', 'a', 'm']</code
+              >
+              forms a palindrome. Clone before reversing so you don't mutate the
+              original.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function isPalindrome(arr) {
+    const orig = arr.join('');
+    // slice() creates copy before reverse
+    const rev = arr.slice().reverse().join('');
+    return orig === rev;
+}</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q29 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">29. The Master Chain</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array(1, 2, 3, 4, 5)</code
+              >. Slice index 1 to 3 (inclusive of 3). Reverse it, and join with
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >" -> "</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const nums = new Array(1, 2, 3, 4, 5);
+// slice(1, 4) gets indices 1, 2, 3
+const res = nums.slice(1, 4).reverse().join(' -> ');
+console.log(res); // "4 -> 3 -> 2"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q30 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              30. Splice to Move Element
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[10, 20, 30, 40]</code
+              >, use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to move
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">20</code>
+              to the very end of the array.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [10, 20, 30, 40];
+const idx = arr.indexOf(20);
+if(idx > -1) {
+    const item = arr.splice(idx, 1)[0];
+    arr.splice(arr.length, 0, item);
+}
+console.log(arr); // [10, 30, 40, 20]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q31 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              31. Insert Array into Array
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Insert
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['x', 'y']</code
+              >
+              into the middle of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'b', 'c', 'd']</code
+              >
+              using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              without leaving nested arrays.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const main = ['a', 'b', 'c', 'd'];
+const insert = ['x', 'y'];
+// Use spread operator to avoid nesting
+main.splice(2, 0, ...insert);
+console.log(main); // ["a", "b", "x", "y", "c", "d"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q32 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              32. Replace All Occurrences
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a loop using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to replace all instances of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >'bad'</code
+              >
+              with
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >'good'</code
+              >
+              in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['bad', 'ok', 'bad']</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const words = ['bad', 'ok', 'bad'];
+let idx = words.indexOf('bad');
+
+while (idx !== -1) {
+    words.splice(idx, 1, 'good');
+    idx = words.indexOf('bad', idx + 1);
+}
+console.log(words); // ["good", "ok", "good"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q33 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">33. Split, Reverse, Join</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Take string
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >"hello"</code
+              >. Convert it to array (can use split/spread), reverse it, and
+              join back to
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >"olleh"</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const str = "hello";
+// Spread syntax converts iterable to array
+const arr = [...str]; 
+const reversedStr = arr.reverse().join('');
+console.log(reversedStr); // "olleh"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q34 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              34. Slice to Exclude Ends
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >trimEnds(arr)</code
+              >
+              that uses
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >slice</code
+              >
+              to return a new array missing the first and last elements.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function trimEnds(arr) {
+    if (arr.length <= 2) return [];
+    return arr.slice(1, -1);
+}
+console.log(trimEnds([1, 2, 3, 4])); // [2, 3]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q35 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">35. Splice Return Values</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'b', 'c']</code
+              >. Use splice to delete 'b'. What exactly does the
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice()</code
+              >
+              call <em>return</em>? Log it.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = ['a', 'b', 'c'];
+// splice returns an array of the deleted items
+const deleted = arr.splice(1, 1); 
+console.log(deleted); // ["b"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q36 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              36. Strictly Boolean Includes
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Why does
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, '2', 3].includes(2)</code
+              >
+              return
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">false</code
+              >? Fix the array so it returns true without changing the search
+              term.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>// includes() uses strict equality (===).
+// Number 2 !== String '2'.
+
+// Fix: Change string '2' to number 2
+const arr = [1, 2, 3]; 
+console.log(arr.includes(2)); // true</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q37 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">37. Swap Two Elements</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[10, 50, 30]</code
+              >, use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to swap the positions of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">50</code>
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">30</code>.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [10, 50, 30];
+const i1 = arr.indexOf(50);
+const i2 = arr.indexOf(30);
+
+// Remove both, then insert in swapped order
+const val1 = arr.splice(i1, 1)[0]; 
+// Note: i2 is now wrong because array shifted. 
+// Easier swap logic without splice:
+// [arr[i1], arr[i2]] = [arr[i2], arr[i1]];
+
+// Splice approach (complex due to index shifting):
+arr.splice(i1, 0, 30);
+arr.splice(i2, 1);
+arr.splice(i2, 0, val1);
+console.log(arr); // [10, 30, 50]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q38 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              38. Negative Splice Index
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              What happens if you use a negative start index in
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >? Use it to replace the last element of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 99]</code
+              >
+              with
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">3</code>.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, 2, 99];
+// -1 starts from the very end
+arr.splice(-1, 1, 3);
+console.log(arr); // [1, 2, 3]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q39 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">39. Creating a Range</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Combine
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array()</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >join()</code
+              >
+              to generate the string
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >",,,"</code
+              >
+              (3 commas). Explain why
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array(4)</code
+              >
+              is needed for 3 commas.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const emptyArr = new Array(4);
+const str = emptyArr.join(',');
+console.log(str); // ",,,"
+
+// Explanation: A comma is placed *between* elements. 
+// To get 3 commas, you need 4 "empty slots" to separate.</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q40 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              40. The Array Constructor Trap
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Create array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">A</code>
+              using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array(3)</code
+              >
+              and array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded">B</code>
+              using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >new Array('3')</code
+              >. Log both to see how the single argument type drastically
+              changes the constructor's behavior.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>// Passes a Number: Creates 3 empty slots
+const A = new Array(3); 
+console.log(A); // [empty × 3]
+
+// Passes a String: Creates array with 1 element
+const B = new Array('3');
+console.log(B); // ["3"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q53 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              41. Splice Injection (Multiple Arrays)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Inject the elements of array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >B = [3, 4]</code
+              >
+              into array
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >A = [1, 2, 5, 6]</code
+              >
+              exactly between 2 and 5 using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              and `apply` or spread.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const A = [1, 2, 5, 6];
+const B = [3, 4];
+A.splice(2, 0, ...B);
+console.log(A); // [1, 2, 3, 4, 5, 6]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q54 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              42. Custom Join Implementation
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >customJoin(arr, sep)</code
+              >
+              that perfectly mimics array.join without using the native join or
+              toString methods.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function customJoin(arr, sep = ',') {
+    if (arr.length === 0) return "";
+    let result = String(arr[0] ?? "");
+    for (let i = 1; i < arr.length; i++) {
+        result += sep + String(arr[i] ?? "");
+    }
+    return result;
+}
+console.log(customJoin([1, null, 3], '-')); // "1--3"</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q55 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              43. Multi-dimensional Slice
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >const matrix = [[1, 2], [3, 4], [5, 6]]</code
+              >. What happens when you do
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >const shallow = matrix.slice(0, 1)</code
+              >
+              and modify
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >shallow[0][0] = 99</code
+              >? Log the original matrix.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const matrix = [[1, 2], [3, 4], [5, 6]];
+const shallow = matrix.slice(0, 1); // Returns [[1, 2]]
+shallow[0][0] = 99;
+
+// Because slice is a SHALLOW copy, the inner array reference is shared
+console.log(matrix[0][0]); // 99</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q56 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              44. Removing Duplicates (indexOf)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Write a function
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >unique(arr)</code
+              >
+              that uses a loop and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >indexOf</code
+              >
+              to return a new array with duplicates removed from
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 2, 3, 1]</code
+              >. Do not use Sets.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>function unique(arr) {
+    const result = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (result.indexOf(arr[i]) === -1) {
+            result.push(arr[i]);
+        }
+    }
+    return result;
+}
+console.log(unique([1, 2, 2, 3, 1])); // [1, 2, 3]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q57 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">45. Circular Shift Right</h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Use
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to perform a circular right shift on
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[1, 2, 3, 4]</code
+              >
+              so it becomes
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >[4, 1, 2, 3]</code
+              >
+              in place.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, 2, 3, 4];
+// Splice out the last element, get it, and splice it to the front
+const lastItem = arr.splice(-1, 1)[0];
+arr.splice(0, 0, lastItem);
+console.log(arr); // [4, 1, 2, 3]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q58 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              46. NaN Detection (indexOf vs includes)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >const arr = [1, NaN, 3]</code
+              >. Compare the output of
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >arr.indexOf(NaN)</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >arr.includes(NaN)</code
+              >. Why are they different?
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const arr = [1, NaN, 3];
+console.log(arr.indexOf(NaN)); // -1
+console.log(arr.includes(NaN)); // true
+
+// Explanation: indexOf uses Strict Equality (===). NaN === NaN is false.
+// includes uses SameValueZero algorithm, which considers NaN equal to NaN.</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q59 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              47. Interleaving Arrays (splice)
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >A = ['a', 'c', 'e']</code
+              >
+              and
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >B = ['b', 'd']</code
+              >. Write a loop using
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >splice</code
+              >
+              to modify A into
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['a', 'b', 'c', 'd', 'e']</code
+              >.
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const A = ['a', 'c', 'e'];
+const B = ['b', 'd'];
+
+// Iterate backwards or carefully manage indices
+let insertPos = 1;
+for (let i = 0; i < B.length; i++) {
+    A.splice(insertPos, 0, B[i]);
+    insertPos += 2; // Move 2 spaces forward to interleave
+}
+console.log(A); // ["a", "b", "c", "d", "e"]</code></pre>
+              </div>
+            </details>
+          </div>
+
+          <!-- Q60 -->
+          <div
+            class="question-card relative bg-white p-6 rounded-xl shadow-sm border border-slate-200"
+          >
+            <span
+              class="badge-container absolute top-4 right-4 bg-rose-100 text-rose-700 text-xs font-bold px-2 py-1 rounded"
+              >Hard</span
+            >
+            <h3 class="font-semibold text-lg mb-2">
+              48. Extracting and Joining Domains
+            </h3>
+            <p class="text-slate-600 mb-4 text-sm">
+              Given URLs
+              <code class="bg-slate-100 text-slate-800 px-1 rounded"
+                >['http://google.com', 'https://bing.com']</code
+              >, write code using string slice/indexOf within a loop to extract
+              just domains and join them: "google.com, bing.com".
+            </p>
+            <details
+              class="group border border-slate-200 rounded-lg overflow-hidden"
+            >
+              <summary
+                class="bg-slate-50 p-3 font-medium cursor-pointer text-indigo-600 hover:bg-slate-100 transition-colors flex justify-between items-center text-sm"
+              >
+                View Solution
+                <span class="group-open:rotate-180 transition-transform"
+                  >▼</span
+                >
+              </summary>
+              <div
+                class="p-4 bg-slate-900 text-slate-50 text-sm overflow-x-auto"
+              >
+                <pre><code>const urls = ['http://google.com', 'https://bing.com'];
+const domains = [];
+
+for (let url of urls) {
+    const slashIdx = url.indexOf('//');
+    if (slashIdx !== -1) {
+        // String slice, not array slice, but similar concept
+        domains.push(url.slice(slashIdx + 2)); 
+    }
+}
+console.log(domains.join(', ')); // "google.com, bing.com"</code></pre>
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-16 text-center text-slate-500 text-sm pb-8">
+      <p>Happy Coding! Keep mastering those array methods.</p>
+    </footer>
+    <!-- PrismJS scripts -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Tab logic: show one of the three sections and hide others
+      document.addEventListener("DOMContentLoaded", function () {
+        const tabs = {
+          easy: document.getElementById("easy"),
+          medium: document.getElementById("medium"),
+          hard: document.getElementById("hard"),
+        };
+
+        function show(target) {
+          for (const k in tabs) {
+            tabs[k].style.display = k === target ? "" : "none";
+          }
+        }
+
+        const tabButtons = document.querySelectorAll(".tab-btn");
+        tabButtons.forEach((btn) => {
+          const target = btn.id.replace("tab-", "");
+          btn.addEventListener("click", () => show(target));
+        });
+
+        // Default to easy
+        show("easy");
+
+        // Prepare code blocks for Prism: add language and line-numbers classes
+        document.querySelectorAll("pre > code").forEach((code) => {
+          code.classList.add("language-javascript");
+          const pre = code.parentElement;
+          if (pre && !pre.classList.contains("line-numbers"))
+            pre.classList.add("line-numbers");
+        });
+
+        // Update active tab visuals when showing a section
+        function updateActiveButton(target) {
+          tabButtons.forEach((btn) => {
+            const isActive = btn.id === "tab-" + target;
+            btn.classList.toggle("active", isActive);
+            btn.setAttribute("aria-selected", isActive ? "true" : "false");
+          });
+        }
+
+        // Wrap show to also update buttons
+        const originalShow = show;
+        show = function (target) {
+          originalShow(target);
+          updateActiveButton(target);
+        };
+
+        // Ensure initial active button reflects the visible section
+        show("easy");
+
+        if (window.Prism && Prism.highlightAll) Prism.highlightAll();
+      });
+    </script>
+  </body>
+</html>
