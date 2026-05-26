@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Js DOM- getElementsByTagName</h1>
+    <div id="grid">
+        <p></p>
+         <p></p>
+         <p></p>
+         <p></p>
+         <p></p>
+        </div>
+    <script>
+        let paraDataArray=[
+            "Biryani is a mixed rice dish originating in South Asia, traditionally made with rice, meat (chicken, goat, beef), seafood (prawns or fish), or vegetables, and spices. It was present in Mughal-era India, though the precise date and place of origin are debated.[1] It is thought to derive from a Persian rice dish, either pilau or birinj biryan.[1][2][3] The dish makes use of slow-cooking as in Persian pilau, combined with Persian-style yoghurt-marinated meat and a spicy Indian style of cooking; it was likely developed in the Mughal court kitchens.[1] It is also possible that biryani was brought to South India before the Mughal era, or that pilau was brought to India and biryani was developed from it before being adopted by the Mughals",
+            "Biryani is one of the most popular dishes in South Asia and among the South Asian diaspora. The dish is often associated with the region's Muslim population in particular,[4] but is nevertheless a mainstream culinary staple embraced by every demographic. Similar dishes are prepared in many other countries, often with local variations, and often brought there by South Asian diaspora populations. Biryani is the most-ordered dish on Indian online food ordering and delivery services, is used in weddings and celebrations throughout the region, and has been described as the most popular dish in India",
+            "The historian of food Lizzie Collingham writes that the modern biryani developed in India (Hindustan) in the royal kitchens of the Mughal Empire, specifically during the rule of the emperor Akbar (1556–1605), and is a mix of the native spicy rice dishes of South Asia, Persian yoghurt-marinated meat, and the Persian pilau style of garnished rice.[1] Collingham writes that in the kitchens [of the Mughal court]... the delicately flavoured Persian pilau met the pungent and spicy rice dishes of Hindustan to create the classic Mughlai dish, biryani",
+            "The cookery writer Pratibha Karan states that biryani is of Indian origin, derived from pilau which Muslim traders and invaders brought with them. She speculates that pilau was an army dish in medieval India. Armies would prepare a one-pot dish of rice with any available red meat. Over time, the dish became biryani due to different methods of cooking",
+            "In the view of the historian of Islamic cuisine Salma Hussein[3] and others, biryani came to South Asia from Persia before the Mughal era,[13] most probably arriving in South India's Deccan region, brought by travelling soldier-statesmen and pilgrims.[3] It has also been suggested that the dish was introduced from Persia by the Mughals.[19] Another variant theory, that biryani came to India with Timur's invasion, appears to be incorrect because there is no record of biryani having existed in his native region of Central Asia during that period"]
+        const paras=document.getElementsByTagName("p");
+        const gridDiv=document.getElementById("grid")
+        //style gridiv
+        gridDiv.style.display="grid"
+        gridDiv.style.gridTemplateColumns="1fr 1fr"
+        gridDiv.style.gap="10px"
+        
+        Array.from(paras).map((e,i)=>{e.innerText=paraDataArray[i];
+            e.style.color="blue";
+            e.style.backgroundColor="#d6f6fa";
+            e.style.border="1px solid blue";
+            e.style.padding="10px";
+            e.style.borderRadius="5px"
+            e.style.boxShadow="5px 5px 5px 5px lightpink";
+        });
+    </script>
+</body>
+</html>
