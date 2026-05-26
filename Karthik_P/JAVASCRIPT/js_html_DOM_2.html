@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator DOM</title>
+  </head>
+
+  <body>
+    <h1 id="heading">DOM Calculator</h1>
+
+    <table id="table">
+      <tr>
+        <td><label>Number 1</label></td>
+        <td><input id="num1" type="text" /></td>
+      </tr>
+
+      <tr>
+        <td><label>Number 2</label></td>
+        <td><input id="num2" type="text" /></td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <button id="btn1" onclick="addNumbers()">Add</button>
+          <button id="btn2" onclick="subNumber()">Subtract</button>
+          <button id="btn3" onclick="mulNumber()">Multiply</button>
+          <button id="btn4" onclick="divisionNumber()">Division</button>
+          <button id="btn5" onclick="modularNumber()">Modulus</button>
+          <button id="btn6" onclick="squareNumber()">Power</button>
+          <button id="btn7" onclick="clearData()">Clear</button>
+        </td>
+      </tr>
+    </table>
+
+    <p id="result">Result is shown here</p>
+
+    <script>
+      const input1 = document.getElementById("num1");
+      const input2 = document.getElementById("num2");
+      const result = document.getElementById("result");
+
+      // CSS USING DOM
+
+      document.body.style.backgroundColor = "grey";
+      document.body.style.fontFamily = "Arial";
+      document.body.style.textAlign = "center";
+
+      const heading = document.getElementById("heading");
+
+      heading.style.color = "darkblue";
+      heading.style.fontSize = "40px";
+
+      const table = document.getElementById("table");
+
+      table.style.margin = "auto";
+      table.style.padding = "20px";
+      table.style.backgroundColor = "white";
+      table.style.borderRadius = "10px";
+      table.style.boxShadow = "0px 0px 10px gray";
+
+      input1.style.padding = "10px";
+      input2.style.padding = "10px";
+
+      input1.style.margin = "10px";
+      input2.style.margin = "10px";
+
+      input1.style.borderRadius = "5px";
+      input2.style.borderRadius = "5px";
+
+      // Buttons
+
+      btn1.style.backgroundColor = "green";
+      btn2.style.backgroundColor = "red";
+      btn3.style.backgroundColor = "blue";
+      btn4.style.backgroundColor = "purple";
+      btn5.style.backgroundColor = "orange";
+      btn6.style.backgroundColor = "brown";
+      btn7.style.backgroundColor = "black";
+
+      const buttons = document.querySelectorAll("button");
+
+      buttons.forEach((button) => {
+        button.style.color = "white";
+        button.style.padding = "10px";
+        button.style.margin = "5px";
+        button.style.border = "none";
+        button.style.borderRadius = "5px";
+        button.style.cursor = "pointer";
+      });
+
+      // FUNCTIONS
+
+      function addNumbers() {
+        result.textContent = Number(input1.value) + Number(input2.value);
+
+        result.style.color = "green";
+      }
+
+      function subNumber() {
+        result.textContent = Number(input1.value) - Number(input2.value);
+
+        result.style.color = "red";
+      }
+
+      function mulNumber() {
+        result.textContent = Number(input1.value) * Number(input2.value);
+
+        result.style.color = "blue";
+      }
+
+      function divisionNumber() {
+        result.textContent = Number(input1.value) / Number(input2.value);
+
+        result.style.color = "purple";
+      }
+
+      function modularNumber() {
+        result.textContent = Number(input1.value) % Number(input2.value);
+
+        result.style.color = "orange";
+      }
+
+      function squareNumber() {
+        result.textContent = Number(input1.value) ** Number(input2.value);
+
+        result.style.color = "brown";
+      }
+
+      function clearData() {
+        input1.value = "";
+        input2.value = "";
+
+        result.textContent = "Result is shown here";
+
+        result.style.color = "black";
+      }
+    </script>
+  </body>
+</html>
