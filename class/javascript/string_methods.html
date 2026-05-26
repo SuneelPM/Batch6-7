@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let str = "JavaScript is fun";
+      console.log("Empty space: ", str.charAt(10));
+      let str1 = "Hello";
+      let str2 = "World";
+      let str3 = str1.concat(str2);
+      console.log(str1.concat(" ", str2, "!"));
+      console.log(str3);
+
+      // replace - replaces first occurance
+      let oldstr = "Hello Universe Universe";
+      let newStr = oldstr.replace("Universe", "World");
+      console.log(newStr);
+
+      // split - uses a separator
+      let sentence = "A quick brown fox";
+      let words = sentence.split(" ");
+      console.log(words);
+      let js = "JavaScript";
+      let jsReverse = js.split("").reverse().join("");
+
+      // reverse a string without using any built in methods
+
+      console.log(jsReverse);
+
+      // reverse a string
+    </script>
+  </body>
+</html>

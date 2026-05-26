@@ -67,11 +67,79 @@
 
      //tostring
      console.log(fruits.toString());
+     
+
+     //array literal
+     const favoriteFruits = ["Apple", "Mango", "Banana"];
+     console.log(favoriteFruits);
+
+     //empty constructor
+     const emptySlots = new Array(2);
+     console.log(emptySlots.length); // 2
+
+     //constructor with elemnets
+     const numbers = new Array(1, 2, 3);
+     console.log(numbers); 
+
+     //includes check
+     const mem = ['sravss', 'pragna', 'suji'];
+     console.log(mem.includes('suji')); // true
+
+     //find index
+     const colors = ['1', '2', '3', '4'];
+     console.log(colors.indexOf('3')); // 2
+
+    //toString comvertion
+    const arr2 = [1, 2, "one"];
+    console.log(arr2.toString()); // "1,2,one"
+
+    //reverse array
+    const nums = [1, 2, 3];
+    nums.reverse();
+    console.log(nums);
+
+    //join no separater
+    const letters = ['N', 'S'];
+    console.log(letters.join('')); // "NS"
+
+    //join with dash
+    const alp = ['one', 'two'];
+    console.log(alp.join('-'));
+
+    //slice first two
+    const arr3 = ['a', 'b', 'c'];
+    console.log(arr3.slice(0, 2)); // ["a", "b"]
+
+    //splice del one
+    const arr4 = [1, 2, 3];
+    arr.splice(1, 1);
+    console.log(arr4); // [1, 3]
+
+    //negative indexOf fallback
+    const fru = ['apple', 'mango'];
+    console.log(fru.indexOf('banana')); // -1
+
+    //replace element(splice)
+    const fru1 = ['banana', 'apple', 'grape'];
+    fruits.splice(1, 1, 'orange');
+    console.log(fruits); // ["banana", "orange", "grape"]
+
+    //join objects
+    const arr5 = [{id:1}, {id:2}];
+    console.log(arr5.join(','));
+
+    //last n elements
+    const arr6 =[5,10,15,20];
+    console.log(arr.slice(2,4));
+
+
+
+
 
         
         
 
-        </script>
+   </script>
     
 </body>
 </html>

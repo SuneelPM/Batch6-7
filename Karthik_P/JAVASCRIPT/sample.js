@@ -37,7 +37,7 @@ console.log(middleName);
 let lastName = "Paidipaga";
 console.log(lastName);
 let fullName = firstName + " " + middleName + " " + lastName;
-console.log(firstName);
+console.log(fullName);
 
 let firstNameStr = "John";
 console.log(firstNameStr);
