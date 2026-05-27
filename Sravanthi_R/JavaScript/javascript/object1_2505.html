@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js objects</title>
+</head>
+<body>
+    <h1>Js obejts</h1>
+    <script>
+        let person={
+            name:"Rohit sarma",
+            age:39,
+            profession:["Cricketer","Actor","Business Owner","Enterpreneur"],
+            hobbies:["visual arts","crafting"],
+             addresses:[
+                {
+                   houseno: 123,
+                    aptname:"malaysia township,block A",
+                    line1:"gandhi namgar",
+                    line2: "kphb",
+                    city: "hyderabad",
+                    district: "RR",
+                    state: "telangana",
+                    pincode:500087,  
+                },
+                {
+                    houseno: 11-54,
+                    aptname:"nageswara rao nilayam",
+                    line1:"kumar bazar1",
+                    line2: "kumar bazar2",
+                    city: "tenali",
+                    district: "guntur",
+                    state: "AP",
+                    pincode:522213,
+                },
+            ],
+            walk: function (){
+                console.log(this.name+" is Walking...");
+            },
+            talk:function talk(){
+                console.log(this.name+" is Talking...")
+            },
+            //here this object is not person object,it will become global object which is browser
+            sleep:()=>console.log(this.name+"is sleeping..."),
+        };
+
+        console.log(person.addresses[0].state);
+
+        person.walk();
+        person.talk();
+        person.sleep();
+
+    </script>
+</body>
+</html>

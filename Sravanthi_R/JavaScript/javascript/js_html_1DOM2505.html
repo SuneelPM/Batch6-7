@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM - Document object model</title>
+</head>
+<body>
+    <h1 id="heading">Document object model</h1>
+    <div>
+        <label for="num1">Number 1</label><input id="num1" type="text"/>
+    </div>
+    <div>     
+        <label for="num2">Number 2</label><input id="num2" type="text"/>
+    </div>
+    <button id="btn1" onclick="addNumbers()">Add</button>
+    <button id="btn2" onclick="multiply()">multiply</button>
+    <button onclick="clearText()">clear</button>
+    <p id="result">Result is shown here</p>
+    <div>
+        <h1 id="heading">this is text will be replaced</h1>
+        <p id="para1">result will be shown here</p>
+        <button id="para_btn" onclick="changeText()">click</button>
+    </div>
+    <script>
+       
+        const root=document;
+        // console.log(root);
+        //5 methods to access html elements
+         //1.getElementById
+        
+         function addNumbers(){
+            result.textContent=Number(input1.value)+Number(input2.value);
+         }
+         function multiply(){
+            result.textContent=Number(input1.value)*Number(input2.value)
+         }
+         function clearText(){
+            result.textContent="cleared"
+         }
+          function changeText(){        
+            para1.textContent = "Hello DOM";
+        }
+        const para1=document.getElementById("para1");
+         const heading=document.getElementById("heading")
+         console.log(heading.textContent)
+        //  heading.textContent=addNumbers(10,20)
+        
+        const input1=document.getElementById("num1");
+        const input2=document.getElementById("num2");
+        const btn=document.getElementById("btn");
+        
+
+
+        
+
+
+    </script>
+</body>
+</html>
