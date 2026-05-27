@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS HTML DOM - Create elements</title>
+</head>
+<body>
+    <h1>JS HTML DOM - Create elements</h1>
+    <ul>
+        <li>apple</li>
+        <li>banana</li>
+        <li>manago</li>
+        <li>orange</li>
+        <li>grapes</li>
+        <li>watermelon</li>
+        <li>guava</li>
+    </ul>
+
+    <script>
+        let fruits = ["apple", "banana","mango","oragnge","grapes","watermelon","guava"];
+        
+        //step-1 : create element
+        const para = document.createElement("p");
+        para.textContent= "This is a sample para";
+        const ul = document.createElement("ul");
+        //const li1 = document.createElement("li");
+        //const li2 = document.createElement("li");
+        //const li3 = document.createElement("li");
+        //const li4 = document.createElement("li");
+        //const li5 = document.createElement("li");
+        //const li6 = document.createElement("li");
+    
+
+        for (let i=0; i < fruits.length;i++) {
+            //create element
+            let li = document.createElement("li");
+            //assign value
+            li.textContent = fruits[i];
+            li.style.border = "10px solid lightblue";
+            li.style.margin = "5px";
+            li.style.padding = "10px";
+            //append li to ul
+            ul.append(li);
+        }
+
+        for(let i =0; i < animals.length; i++) {
+            //create element
+            let li = document.createElement("li");
+
+            //assign value
+            li.innerText = animals[i];
+
+            //append li to ul
+            ul.append(li);
+        }
+
+       
+        li1.textContent = fruits[0];
+        li2.textContent = fruits[1];
+        li3.textContent = fruits[2];
+        li4.textContent = fruits[3];
+        li5.textContent = fruits[4];
+        li6.textContent = fruits[5];
+    
+        //step-2 : Attach this element to a node
+        //Attaches the element at the end
+        //document.body.appendchild("para");
+        //insert before script
+        document.currentScript.before(para);
+        
+        //ul.append(li1); 
+        document.currentScript.before(ul);
+
+        //create ul element and 5 li elemnts and add after para
+
+        //create animals list
+        const para3 = document.createElement("p");
+        para3.textContent = "Animal List";
+        let animals = ["lion","tiger","monkey","donkey","pig","dog","camel","cat","horse","elephant","rabbit","peacock"];
+        const ul1 = document.createElement("ul")
+        for(let i = 0; i < animals.length; i++){
+            const li = document.createElement("li");
+            li.textContent = animals[i];
+            ul1.append(li)
+        }
+        document.currentScript.after(para3);
+    
+        
+    </script>
+
+
+
+
+</body>
+</html>
