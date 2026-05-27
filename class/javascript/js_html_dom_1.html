@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM - Document Object Model</title>
+  </head>
+  <body>
+    <h1 id="heading">DOM - Document Object Model</h1>
+    <div>
+      <p id="para1">This text will be replaced...</p>
+      <button id="para-btn" onclick="changeText()">Change Text</button>
+    </div>
+    <hr />
+    <div>
+      <label for="num1">Number 1</label> <input id="num1" type="text" />
+    </div>
+    <div>
+      <label for="num2">Number 2</label> <input id="num2" type="text" />
+    </div>
+    <button id="btn1" onclick="addNumbers()">Add</button>
+    <button id="btn2" onclick="multiply()">Multiply</button>
+    <button id="btn3" onclick="cleared()">Clear</button>
+    <p id="result">Result is shown here</p>
+    <script>
+      const root = document;
+      //   console.log(root);
+
+      // 5 methods to access html elements
+      // 1. getElementById
+
+      function changeText() {
+        para1.textContent = "Hello DOM!";
+      }
+
+      function addNumbers() {
+        result.textContent = Number(input1.value) + Number(input2.value);
+      }
+
+      function multiply() {
+        result.innerText = Number(input1.value) * Number(input2.value);
+      }
+
+      function cleared() {
+        input1.value = "";
+        input2.value = "";
+        result.textContent = "Cleared";
+      }
+
+      const heading = document.getElementById("heading");
+      console.log(heading.textContent);
+      //   heading.textContent = addNumbers(10, 14);
+
+      const para1 = document.getElementById("para1");
+
+      const input1 = document.getElementById("num1");
+      const input2 = document.getElementById("num2");
+      //   const btn1 = document.getElementById("btn1");
+      //   const btn2 = document.getElementById("btn2");
+      const result = document.getElementById("result");
+
+      console.log(result.parentNode);
+    </script>
+  </body>
+</html>
