@@ -21,11 +21,12 @@
 
     <script>
         const para = document.querySelector("p");
-        para.addEventListener("click",(event) => {
+        para.addEventListener("click",(event) =>{
             console.log("Event type: ",event.type);
             console.log("Event Target:",event.target);
             event.target.style.color = "blue";
         });
+
 
         para.addEventListener('mouseover',(event) => {
             event.target.style.cursor = "pointer";

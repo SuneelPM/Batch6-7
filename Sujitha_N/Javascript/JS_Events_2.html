@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Event day-2</title>
+</head>
+<body>
+    <h1>Min calculator</h1>
+    <input id="result"/>
+    <div>
+        <input type="button" id="firstnumber" value="1"/>
+        <input type="button" id="secondnumber" value="2"/>
+    </div> 
+        <button id="add">+</button>   
+         <button id="add">-</button>
+    
+
+    <script>
+        const result = document.querySelector("p");
+        const input1 = document.querySelector("firstnumber");
+        const input2 = document.querySelector("secondnumber");
+        const btn = document.querySelector("#add");
+
+        btn.addEventListener("click", function() {
+            result.textcontent = Number(input1.value) + Number(input2.value);
+
+        });
+
+        input1.addEventListener('click',(event)=> {
+            result.value=event.target.value;
+
+        })
+
+       
+    </script>
+   
+</body>
+</html>
