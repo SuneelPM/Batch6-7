@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS DOM - Methods</title>
+    <style>
+      .para1 {
+        border: 1px solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JS DOM methods</h1>
+    <p class="para1">1. QuerySelector</p>
+    <ul>
+      <li>Returns single HTMLElement - first occurance</li>
+      <li>Accepts any valid CSS Selector with notation</li>
+      <li></li>
+    </ul>
+    <p class="para1">2. QuerySelectorAll</p>
+    <script>
+      const para = document.querySelector(".para1");
+      console.log(para.textContent);
+      para.style.border = "3px dotted blue";
+      para.style.padding = "10px";
+
+      // you have to provide css selector
+      const paras1 = document.querySelectorAll(".para1");
+      console.log(paras1);
+      paras1.forEach((e, i) => {
+        // e.textContent = "Hello " + (i + 1);
+        e.style.border = "2px solid green";
+        e.style.borderRadius = "10px";
+      });
+
+      // you have to provide class name
+      const paras2 = document.getElementsByClassName("para1");
+      console.log(paras2);
+    </script>
+  </body>
+</html>
