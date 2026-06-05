@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS HTML DOM - Create Elements</title>
+</head>
+<body>
+    <h1>JS HTML DOM - Create Elements</h1>
+    <script>
+        //step 1 : Create an element
+        const para = document.createElement("p");
+        para.textContent = "Fruits List";
+        //srep 2 : assign a parent
+        // document.body.appendchild(para);
+        //insert before script
+        document.currentScript.before(para);
+
+        let fruits = ["Orange", "Apple", "Mango", "Watermelon", "Grape", "Guava"]
+        const ul = document.createElement("ul");
+        // const li1 = document.createElement("li");
+        // const li2 = document.createElement("li");
+        // const li3 = document.createElement("li");
+        // const li4 = document.createElement("li");
+        // const li5 = document.createElement("li");
+         for(let i = 0; i < fruits.length; i++){
+            const li = document.createElement("li");
+            li.textContent = fruits[i];
+            li.style.border = "5px dotted blue";
+            li.style.borderRadius = "5px";
+            li.style.background = "pink"
+            ul.append(li);
+         }
+        // li1.textContent = fruits[0];
+        // li2.textContent = fruits[1];
+        // li3.textContent = fruits[2];
+        // li4.textContent = fruits[3];
+        // li5.textContent = fruits[4];
+        // ul.append(li1, li2, li3, li4, li5);
+        document.currentScript.before(ul);
+
+        const para3 = document.createElement("p");
+        para3.textContent = "Animal List";
+        let animals = ["Lion", "Tiger", "Monkey","pig","rabbit","cat"]
+        const ul1 = document.createElement("ul")
+        for(let i = 0; i < animals.length; i++){
+            const li = document.createElement("li");
+            li.textContent = animals[i];
+            ul1.append(li)
+        }
+        document.currentScript.after(para3);
+        para3.after(ul1);
+    </script>
+</body>
+</html>

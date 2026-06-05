@@ -146,9 +146,83 @@
 
 # Tuple unpacking using user input
 
-a, b, c = input("Enter 3 values: ").split()
-print(a)
-print(b)
-print(c)
+# a, b, c = input("Enter 3 values: ").split()
+# print(a)
+# print(b)
+# print(c)
 
-name,detailes="logic","develoer","logicwhile",50000
+# name,detailes="logic","develoer","logicwhile",50000
+
+# def sum(a,b):
+#     sum=a+b
+#     print(sum)
+# sum(10,20)
+# sum(30,40)
+# sum(40,50)
+
+# def cls(name):
+#     print(name)
+# cls("sravss")
+
+# def sum(a,b):
+#    sum=a+b    
+#    print(sum)
+#    return sum
+# print(sum(10,20))
+# s=sum(10,29)
+# print(s)
+
+# def cls(name,age):
+#     print("name:",name)
+#     print("age:",age)
+# cls("sravss",22)
+
+# num = 153
+# sum = 0
+# for i in str(num):
+#     digit = int(i)
+#     sum = sum + digit ** 3
+# if sum == num:
+#     print("Armstrong Number")
+# else:
+#     print("Not Armstrong Number")
+
+
+# oops concept
+# class bike():
+#     color="black"
+#     def start(self):
+#         print("start")
+#     def stop(self):
+#         print("stop")
+# f=bike()
+# s=bike()
+# print(f.color)
+# f.start()
+# s.start()
+
+# class Bike():
+#     color = "Black"
+#     def start(self, Name, Engine):
+#         self.name = Name
+#         self.engine = Engine
+#         print(self.name, self.engine, "Bike starting")
+#     def stop(self):
+#         print(self.name, "Bike stop")
+# f = Bike()
+# s=Bike()
+# f.start("Royal Enfield", "v8")
+# f.stop()
+# s.start("Pulsar","bajaj")
+# s.stop()
+
+
+class add:
+    def sum(self):
+        self.n1=int(input("enter num1"))
+        self.n2=int(input("enter num2"))
+        return self.n1+self.n2
+f=add()
+s=f.sum()
+print("sum of two numbers:",s)
+

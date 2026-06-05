@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="heading"> this text will be replaced</h1>
+    <p id="para1">result is shown here</p>
+    <button id="par_btn" onclick="changeText()">Click</button>
+    <script>
+     function changeText(){        
+        para1.textContent = "Hello DOM";
+    }
+    const para1=document.getElementById("para1");
+    </script>
+</body>
+</html>

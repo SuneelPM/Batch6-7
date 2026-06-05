@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>mini calculator</h1>
+    <input>id="result"/>
+    <div>
+     <input type="button"id="firstnumber" value="1"/>
+      <input type="button"id="secondnumber" value="2"/>
+        </div>
+        <div></div>
+             <button id="add">+</button>
+             <button id ="add">-</button>
+    <script>
+        const result = document.querySelector("p");
+        const input1 = document.querySelector("#firstnumber");
+        const input2= document.querySelector("#secondnumber");
+        const btn=document.querySelector("#add");
+
+        btn.addEventListener("click",function(){
+            //console.log(typeof input1.value);
+            //console.log(typeof input2.value);
+            result.textContent=Number(input1.value)+number(input2.value);
+        });
+
+        input1.addEventListener("click",(event)=>{
+            result.value=event.target,values;
+        });
+    </script>
+   
+</body>
+</html>
