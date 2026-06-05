@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>JS Events Day 1</h1>
+    <p>How to write an event Listener?</p>
+    <button>Click Me</button>
+
+    <script>
+      const para = document.querySelector("p");
+      const btn = document.querySelector("button");
+      function colorHandler() {
+        para.style.color = "blue";
+      }
+
+      function addBorder() {
+        para.style.border = "3px solid green";
+      }
+
+      // write eventlistener for btn
+      btn.addEventListener("click", colorHandler);
+      btn.addEventListener("click", addBorder);
+
+      // event object
+
+      // addEventListener using arrow functions
+      btn.addEventListener("dblclick", () => {
+        para.style.backgroundColor = "red";
+        para.style.padding = "10px";
+      });
+
+      // change fontsize when mouseover
+      para.addEventListener("mouseover", () => (para.style.fontSize = "30px"));
+      para.addEventListener("mouseout", () => (para.style.fontSize = "16px"));
+    </script>
+  </body>
+</html>
