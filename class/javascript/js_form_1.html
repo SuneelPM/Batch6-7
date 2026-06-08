@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>DOM - FORM</h1>
+    <form action="submit" id="form">
+      <input type="text" id="input1" />
+      <input type="text" id="input2" />
+      <input type="text" id="input3" />
+      <input type="text" id="input4" />
+      <input type="text" id="input5" />
+    </form>
+    <form action="submit" id="form1">
+      <input type="text" id="input11" />
+      <input type="text" id="input22" />
+      <input type="text" id="input33" />
+      <input type="text" id="input44" />
+      <input type="text" id="input55" />
+    </form>
+    <script>
+      // get form array using index
+      //   const form = document.forms[0]; // HTML collection
+
+      const form = document.forms[0];
+      const formArray = Array.from(document.forms);
+      console.log(form);
+      console.log(formArray);
+      // get form element using id or name
+      //   const input1 = form.elements["input1"]; // HTML collection
+      //   console.log(input1);
+
+      const input2 = document.forms["form"].elements["input2"];
+      console.log("parent node:", input2.parentNode);
+      console.log("Next Sibling: ", input2.nextSibling);
+      console.log("Next Element Sibling: ", input2.nextElementSibling);
+      console.log("previous Element Sibling: ", input2.previousElementSibling);
+      input2.value = 2;
+      input2.nextElementSibling.value = 3;
+
+      const input10 = document.createElement("input");
+      input10.type = "text";
+      input10.id = "input10";
+      input10.value = 10;
+
+      form.append(input10);
+      console.log();
+
+      // element.parentNode
+      // element.children, element.childNodes
+      // element.nextSibling, element.nextElementSibling, element.previousSibling, element.previousElementSibling
+    </script>
+  </body>
+</html>
