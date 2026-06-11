@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>java script callback function</h1>
+    <script>
+        //callback-always it is a function
+        function greet(name,callback1){
+            console.log("Hello"+name+"!");
+            callback1(name);
+        }
+        function sayGoodbye(name){
+            console.log("goodbye! "+name);
+            
+        }
+        function sayHi(name){
+            console.log("Hi "+name);
+        }
+        greet("mahesh",sayGoodbye);
+         greet("mahesh",sayHi);
+
+
+         //write a function call runme that accepts a single callback argument and excutes it inside
+         function runme(callback){
+            callback();
+         }
+         //general function
+         function hello(){
+            console.log("Hello");
+         }
+         //function expression
+         const hellojs = function(){
+            console.log("Hello javascript");
+         }
+         runme(hello);
+         runme(hellojs);
+         //anonymous arroew function
+         runme(()=> console.log("Hi"));
+         //directly write function defition as an argument
+        runme(function helloworld(){
+           console.log("hello world");
+        });
+    </script>
+</body>
+</html>

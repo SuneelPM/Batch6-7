@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Js Event Object</h1>
+    <p>Event object - properties</p>
+    <ul>
+        <li>type: The type of event (e.g., "click")</li>
+        <li>target: The element that triggered the event</li>
+        <li>currentTarget: The element the event listener is attached to</li>
+        <li>bubbles: Boolean indicating if the event bubbles up through the DOM</li>
+        <li>cancelable: Boolean indicating if the events default action can be prevented</li>
+        <li>defaultPrevented: Boolean indicating if preventDefault() has been called</li>
+        <li>eventPhase: The phase of event propagation (capturing, at target, bubbling)</li>
+        <li>timeStamp: The time the event was created</li>
+    </ul>
+    <script>
+        const para=document.querySelector("p");
+        para.addEventListener("click",(event)=>{
+            console.log("Event Object",event);
+            console.log("Event Type",event.type);
+            console.log("Event Type",event.target);
+            event.target.style.color="blue"
+        }
+        );
+        para.addEventListener("mouseover",(event)=>{
+            event.target.style.cursor="pointer";
+        });
+    </script>
+    
+</body>
+</html>

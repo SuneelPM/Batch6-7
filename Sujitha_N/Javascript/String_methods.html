@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>string methods</h1>
+    <script>
+        //length property
+        const text = "hello world!";
+        console.log(text.length);
+
+        const emptystring ="";
+        console.log(emptystring.length);
+
+        //charAt()
+        const greeting ="Hello";
+        console.log(greeting.charAt(1));
+
+        //const str ="javaScript is fun";
+        console.log("Empty space:",str.charAt(10));
+
+        //concat
+        const str1 ="Hello";
+        const str2 ="world";
+        const str3=str1.concat(str2);
+        console.log(str1.concat(" ",str2, "!"));
+        console.log(str3);
+        //includes
+        const sentence = "A quick brown fox jumps over the lazy dog.";
+        console.log(sentence.includes("fox"));
+
+        const word = "programming";
+        console.log(word.includes("pro"));
+
+        //indexof()
+        const tex="Hello world,welocome to the universe.";
+        console.log(tex.indexof("world"));
+
+        //replace()
+        const oldstr ="Helloworld!";
+        let newstr = oldstr.replace("world","universe");
+        console.log(newstr);
+
+        //split-uses a seprateor
+        const csvData ="apple,banana,cherry,grape";
+        let fruits= csvData.split(" ");
+        console.log(fruits);
+
+        //reverse a string
+
+        let str = "JavaScript";
+         let reversed = str.split("").reverse().join("");
+            console.log(reversed);
+
+          //reverse a string without using any built in methods  
+        function reverseString(str) {
+    let reversed = "";
+    for (let i = str.length - 1; i >= 0; i--) {
+        reversed += str[i];
+    }
+    return reversed;
+    }
+    console.log(reverseString("hello"));
+
+
+    </script>
+</body>
+</html>

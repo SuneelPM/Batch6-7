@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Events object</title>
+</head>
+<body>
+    <h1>JS Event object</h1>
+    <p>Event object-properties</p>
+    <ul>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto doloribus dolor, aut!</li>
+    </ul>
+
+    <script>
+        const para = document.querySelector("p");
+        para.addEventListener("click",(event) =>{
+            console.log("Event type: ",event.type);
+            console.log("Event Target:",event.target);
+            event.target.style.color = "blue";
+        });
+
+
+        para.addEventListener('mouseover',(event) => {
+            event.target.style.cursor = "pointer";
+        });
+    </script>
+    
+</body>
+</html>
