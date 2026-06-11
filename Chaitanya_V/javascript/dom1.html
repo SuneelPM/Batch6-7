@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM-Document Object Model</title>
+</head>
+<body>
+    <h1 id="heading">DOM-Document Object Model</h1>
+    <div>
+        <p id="para1">This text will be replaced</p>
+        <button id="para1" onclick="changetext()">change Text</button>
+    </div>
+    <div>
+        <label for="num1">Number 1</label> <input id="num1" type="text"/>
+    </div>
+    <div>
+        <label for="num2">Number 2</label> <input id="num2" type="text"/>
+    </div>
+    <button id="btn1" onclick="addnum()">Add</button>
+    <button id="btn2" onclick="multiply()">Multiply</button>
+    <button id="btn3" onclick="cleardata()">Clear</button>
+
+    <p id="result">Result is shown here</p>
+    <script>
+        const root = document.body.children;
+        console.log(root);
+
+        //FIVE methods to access html elememts
+        //1.getElementById
+        function addnum() {
+            result.textContent = Number(input1.value) + Number(input2.value);
+        }
+
+        function multiply() {
+            result.innerText = Number(input1.value) * Number(input2.value);
+        }
+
+        function cleardata() {
+            result.innerText = "Cleared";
+            input1.value = "";
+            input2.value = "";
+        }
+
+        function changetext() {
+            paar1.textContent = "Hello DOM!"
+        }
+
+         const heading = document.getElementById("heading");
+        //console.log(heading);               //It will print complete heading
+        //console.log(heading.textContent);   //It will print text in heading
+        //heading.textContent = "Hello"       //It will change heading
+        //heading.textContent = addnum(10,20);
+
+        const input1 = document.getElementById("num1");
+        const input2 = document.getElementById("num2");
+        const btn1 = document.getElementById("btn1");
+        const btn2 = document.getElementById("btn2");
+        const btn3 = document.getElementById("btn3");
+        const result = document.getElementById("result");
+        const para1 = document.getElementById("para1");
+
+        //console.log(input1.value);
+        //console.log(input2.value);
+
+        
+
+    </script>
+
+
+    
+</body>
+</html>

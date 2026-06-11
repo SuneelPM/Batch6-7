@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>mini calculator</h1>
+   <!-- <p>result shown here</p> -->
+    <input id="result">
+    <div></div><input type="button" id="firstnum" value="1"><input type="button" id="secondnum" value="2"><input type="button" id="thirdnum" value="3"><button id="add">+</button><button id="sub">-</button>
+</div>
+    <div><input type="button" id="fourthnum" value="4"><input type="button" id="fifthnum" value="5"><input type="button" id="sixthnum" value="6"><button id="mul">*</button><button id="mod">%</button></div>
+     <div><input type="button" id="seventhnum" value="7"><input type="button" id="eighthnum" value="8"><input type="button" id="ninethnum" value="9"><button id="divide">/</button><button id="equal">=</button></div>
+    <!-- <button id="add">add</button> -->
+     
+     
+    <script>
+        // const result=document.querySelector('p');
+        const result=document.querySelector('result');
+        const inp1=document.querySelector('#firstnum');
+        const inp2=document.querySelector('#secondnum');
+        const btn1=document.querySelector('#add');
+        const btn2=document.querySelector('#sub');
+        const btn3=document.querySelector('#mul');
+        const btn4=document.querySelector('#mod');
+        const btn5=document.querySelector('#divide');
+        const btn6=document.querySelector('#equal');
+
+        
+
+        btn.addEventListener('click',function () {
+            result.textContent=Number(inp1.value)+Number(inp2.value);
+        });
+        inp1.addEventListener('click',(event)=>{
+            result.value=event.target.value;
+        });
+
+
+    </script>
+</body>
+</html>
