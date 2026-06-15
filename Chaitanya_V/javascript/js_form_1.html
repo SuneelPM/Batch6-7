@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>DOM-FORM</h1>
+    <form action="submit">
+        <input type="text" id="input1"/>
+        <input type="text" id="input2"/>
+        <input type="text" id="input3"/>
+        <input type="text" id="input4"/>
+        <input type="text" id="input5"/>
+    </form>
+    <script>
+        //get form array ussing index 
+        // const form=document.forms[0];//html collection 
+        const form=document.forms['form'];
+        console.log(form);
+        //get form element using id or name 
+        const input1=form.elements['input1'];
+        console.log(input1);
+
+        const input2=document.forms['form'].elements['input2']
+        console.log('parent node:',input2.parentnode);
+        console.log('next sibling:',input2.nextsibling);
+        console.log('next element sibling:',input2.nextelementsibling);
+        console.log('previous element sibling:',input2.previouselementsibling);
+        input2.value=2;
+        input2.nextelementsibling.value=3;
+
+    </script>
+</body>
+</html>

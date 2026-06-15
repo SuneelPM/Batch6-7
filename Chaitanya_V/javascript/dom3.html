@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM 3</title>
+</head>
+<body>
+    <h1>JS DOM-getElementsByTagName</h1>
+    <div>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+      <p></p>
+    </div>
+    <script>
+        let paraDataArray = ["Biryani is a mixed rice dish originating in South Asia, traditionally made with rice, meat (chicken, goat, beef), seafood (prawns or fish), or vegetables, and spices. It was present in Mughal-era India, though the precise date and place of origin are debated.It is thought to derive from a Persian rice dish, either pilau or birinj biryan.",
+
+        "Biryani is one of the most popular dishes in South Asia and among the South Asian diaspora. The dish is often associated with the region's Muslim population in particular,but is nevertheless a mainstream culinary staple embraced by every demographic.",
+
+        "Similar dishes are prepared in many other countries, often with local variations, and often brought there by South Asian diaspora populations. Biryani is the most-ordered dish on Indian online food ordering and delivery services, is used in weddings and celebrations throughout the region, and has been described as the most popular dish in India.",
+
+        "The cookery writer Pratibha Karan states that biryani is of Indian origin, derived from pilau which Muslim traders and invaders brought with them. She speculates that pilau was an army dish in medieval India. Armies would prepare a one-pot dish of rice with any available red meat. Over time, the dish became biryani due to different methods of cooking",
+
+        "Another variant theory, that biryani came to India with Timur's invasion, appears to be incorrect because there is no record of biryani having existed in his native region of Central Asia during that period."];
+
+
+       const paras = document.getElementsByTagName("p");
+       const gridDiv = document.getElementById("grid");
+
+        //let parasArray = Array.from(paras);
+        Array.from(paras).map((e,i)=> {
+            e.innerText=paraDataArray[i];
+            e.style.color = "blue";
+            e.style.backgroundColor = "#d6f6fa";
+            e.style.padding = "10px";
+            e.style.borderRadius = "5px";
+            e.style.boxShadow = "5px 5px 5px 5px lightgray";
+        });
+
+    </script>
+    
+</body>
+</html>

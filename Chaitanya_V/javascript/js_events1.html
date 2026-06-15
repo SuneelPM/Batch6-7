@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>js events day1</h1>
+    <p>how to write an event listener?</p>
+    <button >Click</button>
+    <!-- onclick="changecolor()" -->
+    <script>
+        const para=document.querySelector('p')
+        const btn=document.querySelector('button');
+        function changecolor() {
+            para.style.color='blue';
+        }
+        function border() {
+            para.style.border='3px solid pink';
+        }
+        btn.addEventListener('click',changecolor);
+        btn.addEventListener('click',border);
+        para.addEventListener('mouseover',()=>para.style.fontSize="30px");
+        para.addEventListener('mouseout',()=>para.style.fontSize="16px");
+        para.addEventListener('keyup',()=>para.style.fontSize="30px");
+
+
+
+        btn.addEventListener('dblclick',()=>para.style.color='red');
+
+    </script>
+</body>
+</html>
