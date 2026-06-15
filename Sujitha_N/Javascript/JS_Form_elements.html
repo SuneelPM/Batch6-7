@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Form Elements</title>
+</head>
+<body>
+    <h1>JS Form Elements</h1>
+    <form action="submit" name="genform">
+        <input type="radio" name="gender" id="gen1" value="Male" >
+        <label for="gen1">Male</label> 
+        <input type="radio" name="gender" id="gen2" value="Female">
+        <label for="gen2">Female</label> 
+        <input type="radio" name="gender" id="gen3" value="Other">
+        <label for="gen3">Other</label>
+    </form>
+
+    <script>
+        let genform= document.forms["genform"];
+        //console.log(genform.elements["gender"][0].checked);
+        let radioItems = document.querySelectorAll("input[name='gender']");
+        console.log(radioItems);
+        let selectedValue;
+        radioItems.foreach((item) => {
+            item.addEventListener("change",(event)=> {
+                //console.log(event.target.value);
+                if (event.target.checked) {
+                    selectedValue = event.target.value;
+                    console.log({ifobject:{gender: selectedValue}});
+                }
+                console.log({callbackobject:{gender: selectedValue}});
+            });
+        });
+        //wrong placement
+       //console.log({outside:{gender: selectedValue}});
+
+    </script>
+    
+
+    
+</body>
+</html>
