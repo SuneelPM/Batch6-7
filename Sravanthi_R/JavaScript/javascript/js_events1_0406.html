@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Events</title>
+</head>
+<body>
+    <h1>JS Events day 1</h1>
+    <p>How to write sn even listner?</p>
+    <button>Click Me</button>
+    <script>
+      const para = document.querySelector("p");
+      const btn = document.querySelector("button");
+      
+      function changeHandlor() {
+          para.style.color = "blue";
+      }
+      
+      function addBorder() {
+          para.style.border = "1px solid red";
+      }
+      
+      // Click event
+      btn.addEventListener("click", changeHandlor);
+      btn.addEventListener("click", addBorder);
+      
+      // Double click event
+      btn.addEventListener("dblclick", () => {
+          para.style.backgroundColor = "red";
+          para.style.padding = "10px";
+      });
+      //change font mouseover
+      para.addEventListener('mouseover',() => para.style.fontsize ="30px");
+      para.addEventListener('mouseout',() => para.style.fontsize ="16px");
+
+    </script>
+</body>
+</html>

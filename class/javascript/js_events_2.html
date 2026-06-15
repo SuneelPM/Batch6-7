@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Events mini calculator</title>
+  </head>
+  <body>
+    <h1>Mini Calculator</h1>
+    <input id="result" />
+    <div>
+      <input type="button" id="firstNumber" value="1" />
+      <input type="button" id="secondNumber" value="2" />
+    </div>
+    <div></div>
+    <button id="add">+</button>
+    <button id="add">-</button>
+    <script>
+      const result = document.querySelector("#result");
+      const input1 = document.querySelector("#firstNumber");
+      const input2 = document.querySelector("#secondNumber");
+      const btn = document.querySelector("#add");
+
+      btn.addEventListener("click", function () {
+        // console.log(typeof input1.value);
+        // console.log(typeof input2.value);
+        result.textContent = Number(input1.value) + Number(input2.value);
+      });
+
+      input1.addEventListener("click", (event) => {
+        result.value = event.target.value;
+      });
+    </script>
+  </body>
+</html>

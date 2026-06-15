@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>User Registration(Default GET Submission)</h2>
+    <form action="" method="GET" name="login">
+        <label for="username">Username:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="email">Email:</label><br>
+        <input type="email" name="email" id="email" required><br><br>
+
+        <button type="submit">Submit Form</button>
+    </form>
+    <script>
+        let loginForm=document.forms['login'];
+        let btnObj=loginForm.elements['btn'];
+        let usernameObj=loginForm.elements['username']
+        let emailObj=loginForm.elements['email']
+        console.log(loginForm)
+        console.log(btnObj)
+        console.log(usernameObj)
+        console.log(emailObj)
+        let loginObj;
+        loginForm.addEventListener("submit",(event)=>{
+            //stop default acton
+            event.preventDefault();
+            loginObj={
+                login:{username:usernameObj.value , email:emailObj.value}
+            }
+            console.log(loginObj)
+            console.log(JSON.stringify(loginObj))
+        })
+    </script>
+</body>
+</html>
+
