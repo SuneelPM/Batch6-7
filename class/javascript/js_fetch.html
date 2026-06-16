@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <ul></ul>
+    <script>
+      let dogbreedData = [];
+      // promise object with .then .catch methods
+      // HTTP method GET
+      fetch(" https://api.thecatapi.com/v1/images/search?limit=10")
+        .then((value) => {
+          // convert JSON to object
+          return value.json();
+        })
+        .then((dataObj) => {
+          console.log(dataObj);
+          // similar to fruits array
+        })
+        .catch((error) => console.log(error));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,3495 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mastering DOM Elements - High-Retention Study Guide</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts (Plus Jakarta Sans & Fira Code) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- PrismJS Core & Okaidia Theme for Premium Code Highlighting -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', "sans-serif"],
+              mono: ['"Fira Code"', "monospace"],
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Custom Scrollbars */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f1f5f9;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+      }
+      /* Prevent focus outline overrides but keep them aesthetic */
+      *:focus-visible {
+        outline: 2px solid #4f46e5;
+        outline-offset: 2px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen pb-20"
+  >
+    <!-- Header Banner -->
+    <header
+      class="bg-gradient-to-r from-slate-900 via-indigo-950 to-indigo-900 text-white relative overflow-hidden shadow-lg"
+    >
+      <div
+        class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"
+      ></div>
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 relative z-10"
+      >
+        <div
+          class="flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+        >
+          <div>
+            <div
+              class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm font-semibold mb-4 border border-indigo-400/20"
+            >
+              <span
+                class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"
+              ></span>
+              DOM Architecture Kit
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+              JavaScript DOM Elements
+            </h1>
+            <p class="mt-2 text-lg text-slate-300 max-w-2xl">
+              A hand-crafted interactive guide containing 20 core algorithmic
+              exercises to master selecting, creating, updating, traversing, and
+              removing DOM nodes.
+            </p>
+          </div>
+
+          <!-- Progress Dashboard Card -->
+          <div
+            class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 min-w-[280px]"
+          >
+            <h3
+              class="text-sm font-bold tracking-wider text-slate-300 uppercase"
+            >
+              Your Mastery Progress
+            </h3>
+            <div class="mt-4 flex items-baseline gap-2">
+              <span
+                id="mastered-count"
+                class="text-4xl font-extrabold text-white"
+                >0</span
+              >
+              <span class="text-slate-400 text-xl">/ 20</span>
+              <span
+                id="progress-percentage"
+                class="ml-auto text-sm font-bold text-emerald-400"
+                >0%</span
+              >
+            </div>
+            <!-- Progress Bar -->
+            <div
+              class="mt-3 w-full bg-slate-800 rounded-full h-3 overflow-hidden"
+            >
+              <div
+                id="progress-bar-fill"
+                class="bg-gradient-to-r from-emerald-400 to-indigo-400 h-full w-0 transition-all duration-500 ease-out"
+              ></div>
+            </div>
+            <div class="mt-3 flex justify-between text-xs text-slate-400">
+              <span id="easy-stats">Easy: 0/6</span>
+              <span id="medium-stats">Medium: 0/10</span>
+              <span id="hard-stats">Hard: 0/4</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Filter & Global Action Controls -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div
+        class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4"
+      >
+        <!-- Left: Filter & Search controls -->
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="relative min-w-[240px]">
+            <span
+              class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search selection, creation or properties..."
+              class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all"
+            />
+          </div>
+
+          <!-- Filter Dropdown -->
+          <select
+            id="difficulty-filter"
+            class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all"
+          >
+            <option value="all">All Difficulties</option>
+            <option value="easy">Easy (6)</option>
+            <option value="medium">Medium (10)</option>
+            <option value="hard">Hard (4)</option>
+          </select>
+
+          <select
+            id="status-filter"
+            class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all"
+          >
+            <option value="all">All Statuses</option>
+            <option value="todo">To Do</option>
+            <option value="mastered">Mastered</option>
+          </select>
+        </div>
+
+        <!-- Right: Global Actions -->
+        <div class="flex items-center gap-2">
+          <button
+            onclick="toggleAllSolutions(true)"
+            class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+          >
+            Expand Solutions
+          </button>
+          <button
+            onclick="toggleAllSolutions(false)"
+            class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors"
+          >
+            Collapse Solutions
+          </button>
+          <button
+            onclick="resetAllProgress()"
+            class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-lg transition-colors"
+          >
+            Reset Progress
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Notification Container (No alerts) -->
+    <div
+      id="toast-container"
+      class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"
+    ></div>
+
+    <!-- Main Grid Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <div id="challenges-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Challenge 1: getElementById Selection -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="1"
+          data-difficulty="easy"
+          data-category="selection"
+        >
+          <div>
+            <!-- Card Header -->
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 01 • Selection</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-1"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(1)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Targeted ID Isolation
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Select a target element uniquely by its ID attribute and alter its
+              standard text content directly.
+            </p>
+
+            <!-- Specifications -->
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Select element and modify text to "Target
+                Secured!".
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >document.getElementById()</code
+                >
+              </p>
+            </div>
+
+            <!-- HTML Starter Snippet -->
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="secretTarget"&gt;Classified Data&lt;/div&gt;</code></pre>
+            </div>
+
+            <!-- Interactive Sandbox Demo -->
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex items-center justify-between gap-4">
+                <div
+                  id="sandbox-target-1"
+                  class="text-xs font-mono p-3 bg-slate-200 border rounded-lg text-slate-700"
+                >
+                  Classified Data
+                </div>
+                <button
+                  id="sandbox-btn-1"
+                  class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow transition-all"
+                >
+                  Run Selection Code
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hidden Solution Container -->
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">// Retrieve reference to the element via unique identifier
+const targetNode = document.getElementById('secretTarget');
+
+// Swap node content safely
+targetNode.textContent = 'Target Secured!';</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  While `querySelector('#id')` can perform the same action,
+                  `getElementById` remains highly optimized as the browser
+                  builds direct hashing tables indexed by elements' ID
+                  attributes for rapid lookup.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 2: querySelector Class Lookup -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="2"
+          data-difficulty="easy"
+          data-category="selection"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 02 • Selection</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-2"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(2)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              CSS Selectors Query API
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Select the *first* instance of an element carrying a specific
+              helper style flag, and apply an inline color transform.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Find first `.alert-status` node and
+                change color to Crimson.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >document.querySelector()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div class="box alert-status"&gt;Check Level 1&lt;/div&gt;
+&lt;div class="box alert-status"&gt;Check Level 2&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  class="sandbox-status-2 p-2 bg-slate-200 rounded text-xs text-slate-700 font-medium"
+                >
+                  Status Item A
+                </div>
+                <div
+                  class="sandbox-status-2 p-2 bg-slate-200 rounded text-xs text-slate-700 font-medium"
+                >
+                  Status Item B
+                </div>
+                <button
+                  id="sandbox-btn-2"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Identify First Node
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">// querySelector matches the FIRST element satisfying the selector criteria
+const firstAlert = document.querySelector('.alert-status');
+
+if (firstAlert) {
+  firstAlert.style.color = '#dc2626'; // Apply inline Red color
+}</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  <code class="text-slate-300 font-mono">querySelector</code>
+                  takes any standard CSS selector (e.g. `main
+                  .alert-status:first-of-type`) making it incredibly versatile.
+                  It stops parsing immediately upon encountering its first
+                  match, keeping search traversal overhead low.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 3: querySelectorAll NodeLists -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="3"
+          data-difficulty="easy"
+          data-category="selection"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 03 • Selection</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-3"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(3)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              NodeList Iteration Loop
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Select all elements sharing a common class and systematically
+              append a standard text suffix onto all discovered matches.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Append "(Modified)" to every matched
+                paragraph.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >document.querySelectorAll()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;p class="item"&gt;Item Alpha&lt;/p&gt;
+&lt;p class="item"&gt;Item Beta&lt;/p&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  class="sandbox-item-3 text-xs bg-slate-100 p-2 border rounded"
+                >
+                  Row 1
+                </div>
+                <div
+                  class="sandbox-item-3 text-xs bg-slate-100 p-2 border rounded"
+                >
+                  Row 2
+                </div>
+                <button
+                  id="sandbox-btn-3"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow"
+                >
+                  Modify Nodes
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">// Retrieve a static NodeList of all matching structures
+const paragraphs = document.querySelectorAll('.item');
+
+// Iterate through elements safely using built-in NodeList .forEach()
+paragraphs.forEach(node => {
+  node.textContent += ' (Modified)';
+});</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Unlike `getElementsByClassName` which returns a *live*
+                  HTMLCollection (which can cause performance penalties or
+                  infinite loops as DOM mutations occur), `querySelectorAll`
+                  provides a *static* `NodeList`. Modern browsers support
+                  `forEach` directly on NodeLists, so you don't need to manually
+                  convert them into arrays.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 4: createElement and appendChild -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="4"
+          data-difficulty="easy"
+          data-category="creation"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 04 • Creation</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-4"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(4)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Element Fabrication and Insertion
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Programmatically instantiate a brand-new list element, apply
+              content onto it, and attach it to an existing parent container.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Generate `
+                <li>` containing text "Item C" and append to parent.</li>
+              </p>
+              <p>
+                <strong>Methods:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >createElement()</code
+                >
+                and
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >appendChild()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;ul id="todoList"&gt;
+  &lt;li&gt;Item A&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex flex-col gap-2">
+                <ul
+                  id="sandbox-list-4"
+                  class="list-disc pl-5 text-xs text-slate-700"
+                >
+                  <li>Original Content Element</li>
+                </ul>
+                <button
+                  id="sandbox-btn-4"
+                  class="py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow"
+                >
+                  Append New Node
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const todoList = document.getElementById('todoList');
+
+// 1. Create a blank element instance
+const newLi = document.createElement('li');
+
+// 2. Set safe text content
+newLi.textContent = 'Item C';
+
+// 3. Mount child onto target parent container
+todoList.appendChild(newLi);</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  <code class="text-slate-300 font-mono">createElement</code>
+                  keeps nodes isolated in-memory until they are explicitly
+                  mounted using attachment methods. This prevents unnecessary
+                  paint operations, making it much more performant than
+                  rewriting
+                  <code class="text-slate-300 font-mono">innerHTML</code>.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 5: textContent vs innerHTML -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="5"
+          data-difficulty="easy"
+          data-category="modification"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 05 • Modification</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-5"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(5)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Content Manipulation Strategy
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Understand the critical security difference between parsing text
+              nodes and interpreting rich parsed HTML. Modify an element using
+              the correct, safer content property.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Update text safely without interpreting
+                HTML entities.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >textContent</code
+                >
+                vs
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >innerHTML</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="container"&gt;Old Content&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex flex-col gap-2">
+                <div
+                  id="sandbox-content-5"
+                  class="text-xs p-2 bg-white border rounded"
+                >
+                  Unchanged Node Content
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    id="sandbox-btn-5-text"
+                    class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-lg shadow"
+                  >
+                    Apply textContent
+                  </button>
+                  <button
+                    id="sandbox-btn-5-html"
+                    class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow"
+                  >
+                    Apply innerHTML
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const container = document.getElementById('container');
+
+// Safer option (Recommended to prevent XSS vulnerability vectors):
+container.textContent = '&lt;strong&gt;No HTML injection here&lt;/strong&gt;';
+
+// Markup interpretation alternative:
+container.innerHTML = '&lt;strong&gt;Bold text rendered&lt;/strong&gt;';</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  While
+                  <code class="text-slate-300 font-mono">innerHTML</code> forces
+                  the browser to trigger its HTML parser (interpreting strings
+                  as dynamic nodes),
+                  <code class="text-slate-300 font-mono">textContent</code>
+                  treats strings purely as raw characters. This provides
+                  built-in protection against **Cross-Site Scripting (XSS)**
+                  vulnerabilities.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 6: classList management -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="6"
+          data-difficulty="easy"
+          data-category="modification"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 06 • Modification</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800"
+                  >Easy</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-6"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(6)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Class Attribute Management
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Modify class attributes on an element. Programmatically append,
+              toggle, and audit specific classes without overriding existing
+              class definitions.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Add "bg-indigo-600" and check if element
+                contains "active" class.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >classList</code
+                >
+                operations
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="card" class="rounded-xl shadow p-4"&gt;Content&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex items-center gap-4">
+                <div
+                  id="sandbox-card-6"
+                  class="w-20 h-20 bg-slate-200 rounded-lg flex items-center justify-center text-xs font-bold transition-all duration-300"
+                >
+                  Target Box
+                </div>
+                <button
+                  id="sandbox-btn-6"
+                  class="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Add Class
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const card = document.getElementById('card');
+
+// Add single or multiple classes
+card.classList.add('bg-indigo-600', 'text-white');
+
+// Remove classes
+card.classList.remove('p-4');
+
+// Verify if a class is currently active
+const hasActive = card.classList.contains('active');</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Manipulating `classList` methods (<code
+                    class="text-slate-300 font-mono"
+                    >add</code
+                  >, <code class="text-slate-300 font-mono">remove</code>,
+                  <code class="text-slate-300 font-mono">toggle</code>,
+                  <code class="text-slate-300 font-mono">contains</code>) is
+                  much cleaner and less error-prone than rewriting the
+                  <code class="text-slate-300 font-mono">className</code> string
+                  directly, which can accidentally erase existing classes.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 7: insertAdjacentHTML Placement -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="7"
+          data-difficulty="medium"
+          data-category="creation"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 07 • Creation</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-7"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(7)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Flexible Target Insertion Position
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Insert parsed HTML elements at a highly precise position relative
+              to an existing anchor node (e.g., immediately before its closing
+              tag).
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Add element "After Inside" using target
+                position keys.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >insertAdjacentHTML()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="container"&gt;
+  &lt;p&gt;Pre-existing inner item&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-container-7"
+                  class="p-3 bg-white border border-dashed rounded text-xs"
+                >
+                  <span>Core Target Text Anchor</span>
+                </div>
+                <button
+                  id="sandbox-btn-7"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Insert Element
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const container = document.getElementById('container');
+
+// Insert position options:
+// 'beforebegin' -> Before element itself
+// 'afterbegin'  -> Inside element, before first child
+// 'beforeend'   -> Inside element, after last child
+// 'afterend'    -> After element itself
+
+container.insertAdjacentHTML('beforeend', '&lt;p&gt;Inserted Item!&lt;/p&gt;');</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Unlike modifying
+                  <code class="text-slate-300 font-mono">innerHTML</code>
+                  directly (which re-parses and destroys all existing child DOM
+                  nodes and breaks their registered event listeners),
+                  <code class="text-slate-300 font-mono"
+                    >insertAdjacentHTML</code
+                  >
+                  parses content in-memory and inserts it cleanly into place
+                  without resetting existing children.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 8: Element Deletion -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="8"
+          data-difficulty="medium"
+          data-category="removal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 08 • Removal</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-8"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(8)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Self Node Removal API
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Eliminate a targeted element directly from the active DOM tree
+              without having to manually reference its parent element.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Delete target element directly when
+                actioned.
+              </p>
+              <p>
+                <strong>Methods:</strong> Modern
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >remove()</code
+                >
+                vs legacy
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >removeChild()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="container"&gt;
+  &lt;p id="alertPanel"&gt;Important Alert&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div
+                id="sandbox-wrapper-8"
+                class="p-3 bg-slate-100 border rounded flex justify-between items-center"
+              >
+                <span
+                  id="sandbox-alert-8"
+                  class="text-xs font-bold text-rose-600"
+                  >⚠️ Active System Alert Message</span
+                >
+                <button
+                  id="sandbox-btn-8"
+                  class="px-2 py-1 bg-rose-600 hover:bg-rose-700 text-white rounded text-[10px] font-bold"
+                >
+                  Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const alertEl = document.getElementById('alertPanel');
+
+// Modern Element API (removes itself directly):
+alertEl.remove();
+
+// Legacy Browser Fallback (requires parent navigation traversal):
+if (alertEl.parentNode) {
+  alertEl.parentNode.removeChild(alertEl);
+}</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The modern
+                  <code class="text-slate-300 font-mono">remove()</code> method
+                  is standard in all modern browsers. It simplifies your code by
+                  removing the need to navigate back up to the parent element
+                  via `parentNode` to run `removeChild()`.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 9: Manipulating data-* attributes -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="9"
+          data-difficulty="medium"
+          data-category="modification"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 09 • Modification</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-9"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(9)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Custom Dataset Attributes
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Extract and modify custom state attributes (`data-*`) on a DOM
+              element using the native dataset API.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Read `data-user-id` attribute and change
+                `data-role` to "admin".
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >element.dataset</code
+                >
+                API
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="userProfile" data-user-id="99" data-role="guest"&gt;&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex flex-col gap-2">
+                <div
+                  id="sandbox-user-9"
+                  data-id="101"
+                  data-status="pending"
+                  class="text-xs p-2 bg-white border rounded"
+                >
+                  User status dataset values: Pending
+                </div>
+                <button
+                  id="sandbox-btn-9"
+                  class="py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow"
+                >
+                  Set Dataset Status to Approved
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const profile = document.getElementById('userProfile');
+
+// 1. Read values (properties are converted to camelCase automatically)
+const userId = profile.dataset.userId; // Matches data-user-id
+
+// 2. Set updated properties directly
+profile.dataset.role = 'admin'; // Writes as data-role="admin"</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The <code class="text-slate-300 font-mono">dataset</code> API
+                  converts hyphenated attributes (like `data-user-id`) into
+                  camelCase property keys (like `userId`). It provides a clean,
+                  native way to attach metadata directly to markup structures.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 10: Parent / Child Traversal -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="10"
+          data-difficulty="medium"
+          data-category="traversal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 10 • Traversal</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-10"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(10)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Closest Ancestor Finder
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Navigate up the DOM tree from a deeply nested child node to find
+              its nearest ancestor matching a specific selector.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Locate the nearest wrapping container
+                component class.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >closest()</code
+                >
+                method
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div class="card-wrapper"&gt;
+  &lt;div class="body"&gt;
+    &lt;button id="innerAction"&gt;Launch&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div
+                class="p-3 bg-emerald-50 border border-emerald-300 rounded-xl sandbox-wrapper-10"
+              >
+                <p class="text-xs text-emerald-800 font-bold">
+                  Wrapper Ancestor Block
+                </p>
+                <div class="mt-2 p-2 bg-white rounded border">
+                  <button
+                    id="sandbox-btn-10"
+                    class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs"
+                  >
+                    Find Wrapper
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const actionButton = document.getElementById('innerAction');
+
+// Traverses upward through ancestors until it matches the criteria
+const cardWrapper = actionButton.closest('.card-wrapper');
+
+if (cardWrapper) {
+  cardWrapper.classList.add('border-indigo-600');
+}</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The
+                  <code class="text-slate-300 font-mono">closest()</code> method
+                  traverses upward (including the element itself) searching for
+                  matching selectors. It is extremely useful in event delegation
+                  models to trace back to parent card containers from clicked
+                  child elements.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 11: DocumentFragment Optimization -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="11"
+          data-difficulty="medium"
+          data-category="creation"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 11 • Creation</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-11"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(11)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              High-Performance Batch Append
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Append multiple dynamic nodes to the DOM in a single operation,
+              minimizing browser paint operations and reflows.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Append 3 items using DocumentFragment
+                buffer blocks.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >document.createDocumentFragment()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;ul id="targetContainer"&gt;&lt;/ul&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <ul
+                  id="sandbox-list-11"
+                  class="list-disc pl-5 text-xs text-slate-700"
+                ></ul>
+                <button
+                  id="sandbox-btn-11"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Batch Mount Elements
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const list = document.getElementById('targetContainer');
+
+// Instantiate a virtual offline DOM tree segment
+const fragment = document.createDocumentFragment();
+
+for (let i = 1; i <= 3; i++) {
+  const item = document.createElement('li');
+  item.textContent = `Batch item ${i}`;
+  
+  // Append onto virtual buffer fragment
+  fragment.appendChild(item);
+}
+
+// Write to the active DOM exactly ONCE
+list.appendChild(fragment);</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  A
+                  <code class="text-slate-300 font-mono">DocumentFragment</code>
+                  is a lightweight document object containing no parent wrapper
+                  element. Appending it to the DOM mounts only its child
+                  elements. This triggers a single **browser paint &amp;
+                  reflow** operation instead of one per child, yielding massive
+                  performance gains.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 12: Attribute Alteration -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="12"
+          data-difficulty="medium"
+          data-category="modification"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 12 • Modification</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-12"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(12)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Form State &amp; Attribute Control
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Toggle key structural states on interactive elements by
+              manipulating standard HTML attributes.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Disable input fields and set target
+                placeholders.
+              </p>
+              <p>
+                <strong>Methods:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >setAttribute()</code
+                >,
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >removeAttribute()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;input id="inputEl" type="text" placeholder="Edit profile"&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex gap-2">
+                <input
+                  id="sandbox-input-12"
+                  type="text"
+                  placeholder="Active input field..."
+                  class="flex-1 p-2 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+                <button
+                  id="sandbox-btn-12"
+                  class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg shadow"
+                >
+                  Toggle Block state
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const inputEl = document.getElementById('inputEl');
+
+// Disable field and update helper description text
+inputEl.setAttribute('disabled', 'true');
+inputEl.setAttribute('placeholder', 'Locked Profile Context');
+
+// Enable input field
+inputEl.removeAttribute('disabled');</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  For boolean attributes (like `disabled`, `checked`,
+                  `required`), modern standard properties are often mapped
+                  directly onto the elements as JS properties (e.g.,
+                  <code class="text-slate-300 font-mono"
+                    >element.disabled = true</code
+                  >). This is cleaner than calling the string-based
+                  <code class="text-slate-300 font-mono">setAttribute()</code>.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 13: Node Cloning -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="13"
+          data-difficulty="medium"
+          data-category="creation"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 13 • Creation</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-13"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(13)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Deep Element Cloning
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Clone an existing element, copying its entire subtree (descendant
+              elements and text nodes) to insert it as a duplicate on the page.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Clone target structure deep recursively.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >cloneNode(true)</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="originalItem"&gt;
+  &lt;span&gt;Core Label&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-orig-13"
+                  class="p-2 bg-slate-200 border rounded flex items-center justify-between text-xs font-bold"
+                >
+                  Cloneable Container Element <span>⚡️</span>
+                </div>
+                <div id="sandbox-clone-dest-13" class="space-y-1 mt-2"></div>
+                <button
+                  id="sandbox-btn-13"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Clone and Append
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const original = document.getElementById('originalItem');
+
+// Create a deep copy of the element
+const duplicateNode = original.cloneNode(true);
+
+// Modify its ID to maintain valid document standards
+duplicateNode.id = 'clonedItem';
+
+// Append onto parent container
+original.parentNode.appendChild(duplicateNode);</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Passing <code class="text-slate-300 font-mono">true</code> to
+                  `cloneNode` creates a **deep clone** (copying the element, its
+                  attributes, and all its children). Passing
+                  <code class="text-slate-300 font-mono">false</code> creates a
+                  **shallow clone** (copying only the tag and its attributes,
+                  leaving child contents empty).
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 14: Child Node Traversal -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="14"
+          data-difficulty="medium"
+          data-category="traversal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 14 • Traversal</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-14"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(14)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Child Element Audit
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Inspect the direct child elements of a parent container, ignoring
+              whitespace or formatting text nodes.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Loop only over valid sub-element nodes.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >children</code
+                >
+                collection vs
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >childNodes</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="parent"&gt;
+  &lt;!-- Blank text line gap --&gt;
+  &lt;p&gt;Child One&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-parent-14"
+                  class="p-2 bg-slate-200 border rounded flex flex-col gap-1"
+                >
+                  <span>Text Spacer node</span>
+                  <p class="text-xs p-1 bg-white rounded">
+                    Visual Child Element 1
+                  </p>
+                  <p class="text-xs p-1 bg-white rounded">
+                    Visual Child Element 2
+                  </p>
+                </div>
+                <button
+                  id="sandbox-btn-14"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Audit Child Elements
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const parent = document.getElementById('parent');
+
+// 1. Returns only actual HTML tags, ignoring text/comments
+const actualElements = parent.children; 
+
+// 2. Returns all child nodes including whitespace texts
+const rawNodes = parent.childNodes; 
+
+for (let i = 0; i < actualElements.length; i++) {
+  console.log("Element child:", actualElements[i].tagName);
+}</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Always use
+                  <code class="text-slate-300 font-mono">children</code> instead
+                  of `childNodes` when you only want to loop over HTML elements.
+                  `childNodes` includes text nodes created by formatting
+                  carriage-returns or whitespace gaps, which often causes
+                  unexpected bugs in your loops.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 15: Sibling Navigation -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="15"
+          data-difficulty="medium"
+          data-category="traversal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 15 • Traversal</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-15"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(15)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Adjacent Sibling Traversal
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Find the next immediate element at the same hierarchy level using
+              DOM sibling properties.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Select adjacent DOM neighbor directly.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >nextElementSibling</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;h2 id="heading"&gt;Title&lt;/h2&gt;
+&lt;p&gt;This is target element sibling content&lt;/p&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <h4
+                  id="sandbox-header-15"
+                  class="text-xs font-bold text-indigo-600"
+                >
+                  Step 1 Anchor Header
+                </h4>
+                <p
+                  class="text-[11px] text-slate-600 p-1.5 bg-white rounded border"
+                >
+                  Instructional description neighbor element.
+                </p>
+                <button
+                  id="sandbox-btn-15"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Highlight Sibling
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const header = document.getElementById('heading');
+
+// Safely trace forward to locate the next sibling node tag
+const siblingElement = header.nextElementSibling;
+
+if (siblingElement) {
+  siblingElement.style.fontWeight = 'bold';
+}</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Like child node traversal, use
+                  <code class="text-slate-300 font-mono"
+                    >nextElementSibling</code
+                  >
+                  and
+                  <code class="text-slate-300 font-mono"
+                    >previousElementSibling</code
+                  >
+                  to skip raw text gaps. This avoids matching empty whitespace
+                  nodes returned by older properties like `nextSibling`.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 16: CSS Variable injection -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="16"
+          data-difficulty="medium"
+          data-category="modification"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 16 • Modification</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800"
+                  >Medium</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-16"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(16)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              CSS Custom Variable Injection
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Inject and update custom CSS variables (`--*`) programmatically on
+              a DOM container to dynamically modify styling properties across
+              your layout.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Set styling variable `--theme-color`
+                using inline CSS.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >style.setProperty()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="themeContainer" style="color: var(--theme-color)"&gt;&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="flex items-center gap-4">
+                <div
+                  id="sandbox-card-16"
+                  class="w-16 h-16 rounded-xl border flex items-center justify-center text-[10px] text-white font-bold transition-all"
+                  style="background-color: var(--sandbox-color, #64748b)"
+                >
+                  Color Box
+                </div>
+                <button
+                  id="sandbox-btn-16"
+                  class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Inject Custom Color
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const container = document.getElementById('themeContainer');
+
+// Update a custom CSS variable dynamically via inline properties
+container.style.setProperty('--theme-color', '#4f46e5');</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  Using
+                  <code class="text-slate-300 font-mono"
+                    >style.setProperty()</code
+                  >
+                  is the preferred way to write and update CSS custom
+                  properties. It lets you write unified CSS rules in external
+                  stylesheets, keeping visual styles separated from your
+                  JavaScript logic.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 17: Node Replacement -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="17"
+          data-difficulty="hard"
+          data-category="removal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 17 • Replacement</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800"
+                  >Hard</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-17"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(17)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Safe Node Replacement
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Swap out an active DOM element entirely with a brand-new element
+              while keeping your document hierarchy clean.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Replace a placeholder node with an actual
+                profile element.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >replaceWith()</code
+                >
+                API
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="placeholder"&gt;Loading Content...&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-node-17"
+                  class="text-xs bg-amber-50 text-amber-800 p-3 rounded border border-amber-200"
+                >
+                  ⌛️ Loading simulated payload components...
+                </div>
+                <button
+                  id="sandbox-btn-17"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Run Replace Element Code
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const placeholder = document.getElementById('placeholder');
+
+// Create the new node structure
+const activeNode = document.createElement('div');
+activeNode.className = 'text-emerald-600 font-bold';
+activeNode.textContent = 'Data loaded successfully!';
+
+// Swap the nodes in-place directly
+placeholder.replaceWith(activeNode);</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The modern
+                  <code class="text-slate-300 font-mono">replaceWith()</code>
+                  element method removes the need to go through the parent
+                  element (avoiding legacy constructs like
+                  `parent.replaceChild(new, old)`). It also supports swapping
+                  elements out with plain text nodes or arrays of elements.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 18: Relationship Contains Checks -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="18"
+          data-difficulty="hard"
+          data-category="traversal"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 18 • Traversal</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800"
+                  >Hard</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-18"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(18)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Element Relationship Audit
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Verify whether an element exists inside another wrapping container
+              element (testing relationship structures recursively).
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Check if parent has sub-element
+                relationships.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >contains()</code
+                >
+                API
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="container"&gt;
+  &lt;div class="wrapper"&gt;
+    &lt;span id="target"&gt;&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div
+                id="sandbox-parent-18"
+                class="p-3 bg-slate-100 rounded-lg border"
+              >
+                <p class="text-[10px] font-bold text-slate-500 uppercase">
+                  Parent Component Boundary
+                </p>
+                <div class="mt-2 p-2 bg-indigo-50 border rounded-lg">
+                  <span
+                    id="sandbox-child-18"
+                    class="text-xs font-semibold text-indigo-700"
+                    >Child Node Segment</span
+                  >
+                </div>
+                <button
+                  id="sandbox-btn-18"
+                  class="mt-3 w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Check Relationship contains()
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const parent = document.getElementById('container');
+const target = document.getElementById('target');
+
+// Verify child element hierarchy relationship
+const isNestedInside = parent.contains(target);
+
+console.log("Relationship Verified:", isNestedInside); // Returns true or false</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The
+                  <code class="text-slate-300 font-mono">contains()</code>
+                  method queries deep descendant relationship trees (e.g.
+                  checking child nodes, grandchild nodes, and nested structures
+                  recursively). It is perfect for building dropdown menus that
+                  dismiss when a user clicks outside the menu boundaries.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 19: DOMParser Markup Translation -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="19"
+          data-difficulty="hard"
+          data-category="creation"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 19 • Advanced Creation</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800"
+                  >Hard</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-19"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(19)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Dynamic XML/HTML Document Parser
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Convert a plain string of HTML markup into an interactive,
+              standard in-memory DOM element node.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Translate raw text directly into safe
+                HTML elements.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >DOMParser().parseFromString()</code
+                >
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;!-- Plain JS parser execution --&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-parse-dest-19"
+                  class="text-xs p-3 bg-white border border-dashed rounded"
+                >
+                  Parser Destination Output Area (Plain Text)
+                </div>
+                <button
+                  id="sandbox-btn-19"
+                  class="w-full py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow"
+                >
+                  Parse Markup String
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const rawMarkup = '&lt;div class="parsed"&gt;&lt;p&gt;Active markup parsed!&lt;/p&gt;&lt;/div&gt;';
+
+// Initialize the native browser document compiler parser
+const parser = new DOMParser();
+const compiledDoc = parser.parseFromString(rawMarkup, 'text/html');
+
+// Isolate matching elements directly from the newly parsed virtual document
+const extractedElement = compiledDoc.querySelector('.parsed');
+
+document.body.appendChild(extractedElement);</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  The
+                  <code class="text-slate-300 font-mono">DOMParser</code> API
+                  compiles parsed strings into a fully isolated virtual document
+                  framework. This is extremely useful for sanitizing third-party
+                  strings, loading remote XML packets, or cleaning HTML strings
+                  before appending them to the active page.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- Challenge 20: MutationObserver Observation -->
+        <div
+          class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between"
+          data-id="20"
+          data-difficulty="hard"
+          data-category="advanced"
+        >
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span
+                class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono"
+                >Challenge 20 • Mutation Observer</span
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800"
+                  >Hard</span
+                >
+                <input
+                  type="checkbox"
+                  id="check-20"
+                  class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox"
+                  onchange="toggleMastered(20)"
+                />
+              </div>
+            </div>
+
+            <h3 class="text-lg font-bold text-slate-800 mb-2">
+              Structural Mutation Monitoring
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">
+              Watch for DOM modifications inside elements. Set up a listener to
+              respond automatically whenever target subnodes, text contents, or
+              attribute modifications occur.
+            </p>
+
+            <div
+              class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1"
+            >
+              <p>
+                <strong>Goal:</strong> Detect and log dynamic parent-node
+                alterations.
+              </p>
+              <p>
+                <strong>Method:</strong>
+                <code
+                  class="font-mono bg-slate-100 px-1 text-indigo-600 rounded"
+                  >MutationObserver()</code
+                >
+                API
+              </p>
+            </div>
+
+            <div class="mb-4">
+              <p
+                class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider"
+              >
+                Starter HTML
+              </p>
+              <pre><code class="language-html">&lt;div id="observeTarget"&gt;&lt;/div&gt;</code></pre>
+            </div>
+
+            <div
+              class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50"
+            >
+              <p
+                class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider"
+              >
+                Live Demo Sandbox
+              </p>
+              <div class="space-y-2">
+                <div
+                  id="sandbox-observe-20"
+                  class="p-3 bg-white border border-slate-300 rounded-xl text-center text-xs"
+                >
+                  Observation Target Container Box
+                </div>
+                <div class="flex gap-2">
+                  <button
+                    id="sandbox-btn-20-append"
+                    class="flex-1 py-1.5 bg-slate-800 hover:bg-slate-900 text-white rounded text-[10px] font-bold"
+                  >
+                    Append Child
+                  </button>
+                  <button
+                    id="sandbox-btn-20-attribute"
+                    class="flex-1 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-[10px] font-bold"
+                  >
+                    Alter Attribute
+                  </button>
+                </div>
+                <p
+                  id="sandbox-logs-20"
+                  class="text-[10px] text-slate-500 text-center font-mono mt-1"
+                >
+                  Observer Status: Awaiting Mutations...
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <details
+            class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800"
+          >
+            <summary
+              class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors"
+            >
+              <span>Reveal Solution &amp; Explanation</span>
+              <svg
+                class="w-4 h-4 transform group-open:rotate-180 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M19 9l-7 7-7-7"
+                ></path>
+              </svg>
+            </summary>
+            <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+              <pre><code class="language-javascript">const target = document.getElementById('observeTarget');
+
+// 1. Instantiate the mutation listener
+const observer = new MutationObserver((mutationsList) => {
+  for (const mutation of mutationsList) {
+    if (mutation.type === 'childList') {
+      console.log('Detected child node changes!');
+    } else if (mutation.type === 'attributes') {
+      console.log(`Modified attribute: ${mutation.attributeName}`);
+    }
+  }
+});
+
+// 2. Start monitoring changes
+observer.observe(target, { 
+  attributes: true, 
+  childList: true, 
+  subtree: true 
+});</code></pre>
+              <div class="mt-3 text-xs text-slate-400 space-y-2">
+                <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+                <p>
+                  <code class="text-slate-300 font-mono">MutationObserver</code>
+                  provides a high-performance way to monitor DOM tree changes,
+                  replacing the deprecated legacy 'Mutation Events' APIs. It
+                  aggregates multiple DOM changes into single callback batches,
+                  preventing performance bottlenecks.
+                </p>
+              </div>
+            </div>
+          </details>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footers -->
+    <footer
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 text-center border-t pt-8"
+    >
+      <p class="text-sm text-slate-500">
+        Built as an interactive, high-retention guide for mastering JavaScript
+        DOM Elements. Keep practice-focused, always code.
+      </p>
+    </footer>
+
+    <!-- Code Highlighting and Sandbox Core Logics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script>
+      // State of Mastered Challenges (in-memory with local storage preservation fallback)
+      let masteredState =
+        JSON.parse(localStorage.getItem("dom_elements_mastery_state")) || {};
+
+      // Initialization
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize checklist state visually
+        for (const id in masteredState) {
+          if (masteredState[id]) {
+            const checkbox = document.getElementById(`check-${id}`);
+            if (checkbox) checkbox.checked = true;
+          }
+        }
+
+        calculateStats();
+        initializeSandboxEvents();
+
+        // Prism Code Auto-Highlighting
+        Prism.highlightAll();
+
+        // Search & Filters Setup
+        document
+          .getElementById("search-input")
+          .addEventListener("input", runFilters);
+        document
+          .getElementById("difficulty-filter")
+          .addEventListener("change", runFilters);
+        document
+          .getElementById("status-filter")
+          .addEventListener("change", runFilters);
+      });
+
+      // Toast Custom Notification Component
+      function triggerToast(message, type = "success") {
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = `flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold transition-all duration-350 transform translate-y-2 opacity-0 ${
+          type === "success"
+            ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+            : "bg-indigo-50 border-indigo-200 text-indigo-800"
+        }`;
+
+        toast.innerHTML = `
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>${message}</span>
+      `;
+
+        container.appendChild(toast);
+
+        // Animate entry
+        setTimeout(() => {
+          toast.classList.remove("opacity-0", "translate-y-2");
+        }, 50);
+
+        // Dismiss automatically
+        setTimeout(() => {
+          toast.classList.add("opacity-0", "translate-y-2");
+          setTimeout(() => toast.remove(), 400);
+        }, 3000);
+      }
+
+      // Toggle Check State & Trigger Analytics calculations
+      function toggleMastered(id) {
+        const checkbox = document.getElementById(`check-${id}`);
+        masteredState[id] = checkbox.checked;
+        localStorage.setItem(
+          "dom_elements_mastery_state",
+          JSON.stringify(masteredState),
+        );
+
+        calculateStats();
+
+        if (checkbox.checked) {
+          triggerToast(
+            `Challenge ${id < 10 ? "0" + id : id} marked as Mastered! 🎉`,
+          );
+        }
+      }
+
+      // Dynamic Math Tracker calculations
+      function calculateStats() {
+        const cards = document.querySelectorAll(".challenge-card");
+        const total = cards.length;
+        let masteredCount = 0;
+
+        let easyTotal = 0,
+          easyMastered = 0;
+        let mediumTotal = 0,
+          mediumMastered = 0;
+        let hardTotal = 0,
+          hardMastered = 0;
+
+        cards.forEach((card) => {
+          const id = card.getAttribute("data-id");
+          const diff = card.getAttribute("data-difficulty");
+          const isMastered = masteredState[id] || false;
+
+          if (diff === "easy") easyTotal++;
+          if (diff === "medium") mediumTotal++;
+          if (diff === "hard") hardTotal++;
+
+          if (isMastered) {
+            masteredCount++;
+            if (diff === "easy") easyMastered++;
+            if (diff === "medium") mediumMastered++;
+            if (diff === "hard") hardMastered++;
+          }
+        });
+
+        // Update Header Text Values
+        document.getElementById("mastered-count").textContent = masteredCount;
+        const percentage =
+          total > 0 ? Math.round((masteredCount / total) * 100) : 0;
+        document.getElementById("progress-percentage").textContent =
+          `${percentage}%`;
+        document.getElementById("progress-bar-fill").style.width =
+          `${percentage}%`;
+
+        document.getElementById("easy-stats").textContent =
+          `Easy: ${easyMastered}/${easyTotal}`;
+        document.getElementById("medium-stats").textContent =
+          `Medium: ${mediumMastered}/${mediumTotal}`;
+        document.getElementById("hard-stats").textContent =
+          `Hard: ${hardMastered}/${hardTotal}`;
+      }
+
+      // Reset Progress Configuration
+      function resetAllProgress() {
+        masteredState = {};
+        localStorage.removeItem("dom_elements_mastery_state");
+
+        document
+          .querySelectorAll(".challenge-checkbox")
+          .forEach((box) => (box.checked = false));
+        calculateStats();
+        triggerToast("Your mastery stats has been reset.", "info");
+      }
+
+      // Filter Logic Core
+      function runFilters() {
+        const searchQuery = document
+          .getElementById("search-input")
+          .value.toLowerCase();
+        const selectedDifficulty =
+          document.getElementById("difficulty-filter").value;
+        const selectedStatus = document.getElementById("status-filter").value;
+
+        const cards = document.querySelectorAll(".challenge-card");
+
+        cards.forEach((card) => {
+          const id = card.getAttribute("data-id");
+          const difficulty = card.getAttribute("data-difficulty");
+          const title = card.querySelector("h3").textContent.toLowerCase();
+          const desc = card.querySelector("p").textContent.toLowerCase();
+          const isMastered = masteredState[id] || false;
+
+          // Matches search query
+          const matchesSearch =
+            title.includes(searchQuery) || desc.includes(searchQuery);
+
+          // Matches difficulty filter
+          const matchesDifficulty =
+            selectedDifficulty === "all" || difficulty === selectedDifficulty;
+
+          // Matches completion status
+          let matchesStatus = true;
+          if (selectedStatus === "todo") matchesStatus = !isMastered;
+          if (selectedStatus === "mastered") matchesStatus = isMastered;
+
+          if (matchesSearch && matchesDifficulty && matchesStatus) {
+            card.style.display = "flex";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+
+      // Expand/Collapse Solutions globally
+      function toggleAllSolutions(openState) {
+        const details = document.querySelectorAll(".challenge-card details");
+        details.forEach((detail) => {
+          detail.open = openState;
+        });
+        triggerToast(
+          openState
+            ? "All solution tabs expanded."
+            : "All solution tabs collapsed.",
+          "info",
+        );
+      }
+
+      // Wire Up the Sandbox Interactive Elements individually so users can test real features
+      function initializeSandboxEvents() {
+        // Sandbox 1: getElementById Selection
+        const s1Btn = document.getElementById("sandbox-btn-1");
+        const s1Target = document.getElementById("sandbox-target-1");
+        if (s1Btn && s1Target) {
+          s1Btn.addEventListener("click", () => {
+            s1Target.textContent = "Target Secured!";
+            s1Target.className =
+              "text-xs font-mono p-3 bg-emerald-100 border border-emerald-300 rounded-lg text-emerald-800 font-bold";
+          });
+        }
+
+        // Sandbox 2: querySelector Match
+        const s2Btn = document.getElementById("sandbox-btn-2");
+        if (s2Btn) {
+          s2Btn.addEventListener("click", () => {
+            const firstAlert = document.querySelector(".sandbox-status-2");
+            if (firstAlert) {
+              firstAlert.className =
+                "sandbox-status-2 p-2 bg-rose-100 border border-rose-300 rounded text-xs text-rose-800 font-bold";
+              firstAlert.textContent += " (Identified)";
+            }
+          });
+        }
+
+        // Sandbox 3: querySelectorAll Multiple Change
+        const s3Btn = document.getElementById("sandbox-btn-3");
+        if (s3Btn) {
+          s3Btn.addEventListener("click", () => {
+            const items = document.querySelectorAll(".sandbox-item-3");
+            items.forEach((item, index) => {
+              item.textContent = `Row ${index + 1} (Modified)`;
+              item.className =
+                "sandbox-item-3 text-xs bg-indigo-50 border border-indigo-200 p-2 rounded text-indigo-800 font-medium";
+            });
+          });
+        }
+
+        // Sandbox 4: Element Generation and Appending
+        const s4Btn = document.getElementById("sandbox-btn-4");
+        const s4List = document.getElementById("sandbox-list-4");
+        if (s4Btn && s4List) {
+          s4Btn.addEventListener("click", () => {
+            const newLi = document.createElement("li");
+            newLi.textContent = "Item C (Dynamically Created)";
+            newLi.className = "text-indigo-600 font-semibold";
+            s4List.appendChild(newLi);
+          });
+        }
+
+        // Sandbox 5: textContent vs innerHTML
+        const s5BtnText = document.getElementById("sandbox-btn-5-text");
+        const s5BtnHtml = document.getElementById("sandbox-btn-5-html");
+        const s5Content = document.getElementById("sandbox-content-5");
+        if (s5BtnText && s5BtnHtml && s5Content) {
+          s5BtnText.addEventListener("click", () => {
+            s5Content.textContent =
+              "<strong>Text Content Set Directly</strong>";
+          });
+          s5BtnHtml.addEventListener("click", () => {
+            s5Content.innerHTML =
+              '<strong class="text-indigo-600">HTML Entities Interpreted Boldly!</strong>';
+          });
+        }
+
+        // Sandbox 6: ClassList add
+        const s6Btn = document.getElementById("sandbox-btn-6");
+        const s6Card = document.getElementById("sandbox-card-6");
+        if (s6Btn && s6Card) {
+          s6Btn.addEventListener("click", () => {
+            s6Card.classList.add(
+              "bg-indigo-600",
+              "text-white",
+              "shadow-lg",
+              "scale-105",
+            );
+            s6Card.textContent = "Active State";
+          });
+        }
+
+        // Sandbox 7: insertAdjacentHTML Placement
+        const s7Btn = document.getElementById("sandbox-btn-7");
+        const s7Container = document.getElementById("sandbox-container-7");
+        if (s7Btn && s7Container) {
+          s7Btn.addEventListener("click", () => {
+            s7Container.insertAdjacentHTML(
+              "beforeend",
+              '<div class="mt-1 p-1 bg-indigo-100 text-indigo-800 rounded font-bold text-[10px]">Inserted Element Child Node</div>',
+            );
+          });
+        }
+
+        // Sandbox 8: Safe Node Deletion
+        const s8Btn = document.getElementById("sandbox-btn-8");
+        const s8Alert = document.getElementById("sandbox-alert-8");
+        const s8Wrapper = document.getElementById("sandbox-wrapper-8");
+        if (s8Btn && s8Alert && s8Wrapper) {
+          s8Btn.addEventListener("click", () => {
+            s8Alert.remove();
+            s8Btn.remove();
+            s8Wrapper.textContent = "No alerts active.";
+            s8Wrapper.className =
+              "p-3 bg-slate-50 border border-dashed rounded text-xs text-center text-slate-400 font-medium";
+          });
+        }
+
+        // Sandbox 9: data-* Attribute dataset access
+        const s9Btn = document.getElementById("sandbox-btn-9");
+        const s9User = document.getElementById("sandbox-user-9");
+        if (s9Btn && s9User) {
+          s9Btn.addEventListener("click", () => {
+            s9User.dataset.status = "approved";
+            s9User.textContent = `User dataset updated: ID = ${s9User.dataset.id}, Status = ${s9User.dataset.status.toUpperCase()}`;
+            s9User.className =
+              "text-xs p-2 bg-emerald-50 border border-emerald-300 text-emerald-800 rounded font-semibold";
+          });
+        }
+
+        // Sandbox 10: closest() ancestor lookup
+        const s10Btn = document.getElementById("sandbox-btn-10");
+        if (s10Btn) {
+          s10Btn.addEventListener("click", () => {
+            const wrapper = s10Btn.closest(".sandbox-wrapper-10");
+            if (wrapper) {
+              wrapper.className =
+                "p-3 bg-indigo-100 border-2 border-indigo-500 rounded-xl sandbox-wrapper-10 transition-all";
+              s10Btn.textContent = "Ancestor Secured!";
+            }
+          });
+        }
+
+        // Sandbox 11: DocumentFragment batch append
+        const s11Btn = document.getElementById("sandbox-btn-11");
+        const s11List = document.getElementById("sandbox-list-11");
+        if (s11Btn && s11List) {
+          s11Btn.addEventListener("click", () => {
+            s11List.innerHTML = ""; // reset first
+            const fragment = document.createDocumentFragment();
+            for (let i = 1; i <= 3; i++) {
+              const li = document.createElement("li");
+              li.textContent = `Offline Compiled Node ${i}`;
+              li.className = "text-indigo-600 font-medium";
+              fragment.appendChild(li);
+            }
+            s11List.appendChild(fragment);
+            triggerToast("All 3 elements appended in a single DOM reflow! ⚡️");
+          });
+        }
+
+        // Sandbox 12: SetAttribute field locking
+        const s12Btn = document.getElementById("sandbox-btn-12");
+        const s12Input = document.getElementById("sandbox-input-12");
+        if (s12Btn && s12Input) {
+          s12Btn.addEventListener("click", () => {
+            if (s12Input.hasAttribute("disabled")) {
+              s12Input.removeAttribute("disabled");
+              s12Input.setAttribute("placeholder", "Active input field...");
+              s12Btn.textContent = "Lock Field";
+              s12Btn.className =
+                "px-3 py-1.5 bg-indigo-600 text-white text-xs font-semibold rounded-lg";
+            } else {
+              s12Input.setAttribute("disabled", "true");
+              s12Input.setAttribute("placeholder", "🔒 Locked and Disabled");
+              s12Btn.textContent = "Unlock Field";
+              s12Btn.className =
+                "px-3 py-1.5 bg-rose-600 text-white text-xs font-semibold rounded-lg";
+            }
+          });
+        }
+
+        // Sandbox 13: Node Deep Cloning
+        const s13Btn = document.getElementById("sandbox-btn-13");
+        const s13Orig = document.getElementById("sandbox-orig-13");
+        const s13Dest = document.getElementById("sandbox-clone-dest-13");
+        if (s13Btn && s13Orig && s13Dest) {
+          s13Btn.addEventListener("click", () => {
+            const clone = s13Orig.cloneNode(true);
+            clone.id = ""; // remove ID
+            clone.className =
+              "p-2 bg-indigo-50 border border-indigo-200 rounded flex items-center justify-between text-xs text-indigo-700 font-medium";
+            clone.innerHTML = "Cloned Copy Element Instance <span>✅</span>";
+            s13Dest.appendChild(clone);
+          });
+        }
+
+        // Sandbox 14: Children vs ChildNodes loop
+        const s14Btn = document.getElementById("sandbox-btn-14");
+        const s14Parent = document.getElementById("sandbox-parent-14");
+        if (s14Btn && s14Parent) {
+          s14Btn.addEventListener("click", () => {
+            const childElements = s14Parent.children;
+            const childNodes = s14Parent.childNodes;
+            triggerToast(
+              `Audited: ${childElements.length} elements vs ${childNodes.length} raw nodes!`,
+              "info",
+            );
+          });
+        }
+
+        // Sandbox 15: Sibling elements traversal
+        const s15Btn = document.getElementById("sandbox-btn-15");
+        const s15Header = document.getElementById("sandbox-header-15");
+        if (s15Btn && s15Header) {
+          s15Btn.addEventListener("click", () => {
+            const sibling = s15Header.nextElementSibling;
+            if (sibling) {
+              sibling.className =
+                "text-[11px] text-indigo-800 p-1.5 bg-indigo-50 border border-indigo-300 rounded font-bold transition-all";
+              sibling.textContent = "Neighbor Node Highlighted!";
+            }
+          });
+        }
+
+        // Sandbox 16: CSS Variables
+        const s16Btn = document.getElementById("sandbox-btn-16");
+        const s16Card = document.getElementById("sandbox-card-16");
+        if (s16Btn && s16Card) {
+          s16Btn.addEventListener("click", () => {
+            const colors = [
+              "#dc2626",
+              "#16a34a",
+              "#2563eb",
+              "#db2777",
+              "#ca8a04",
+              "#7c3aed",
+            ];
+            const randomColor =
+              colors[Math.floor(Math.random() * colors.length)];
+            s16Card.style.setProperty("--sandbox-color", randomColor);
+          });
+        }
+
+        // Sandbox 17: replaceWith() element swapping
+        const s17Btn = document.getElementById("sandbox-btn-17");
+        const s17Node = document.getElementById("sandbox-node-17");
+        if (s17Btn && s17Node) {
+          s17Btn.addEventListener("click", () => {
+            const replacement = document.createElement("div");
+            replacement.className =
+              "text-xs bg-emerald-100 border border-emerald-300 text-emerald-800 p-3 rounded font-bold text-center animate-pulse";
+            replacement.textContent = "🎉 Node Successfully Replaced Inline!";
+            s17Node.replaceWith(replacement);
+            s17Btn.disabled = true;
+            s17Btn.className =
+              "w-full py-1.5 bg-slate-200 text-slate-400 rounded-lg text-xs font-semibold cursor-not-allowed";
+          });
+        }
+
+        // Sandbox 18: contains() validation checks
+        const s18Btn = document.getElementById("sandbox-btn-18");
+        const s18Parent = document.getElementById("sandbox-parent-18");
+        const s18Child = document.getElementById("sandbox-child-18");
+        if (s18Btn && s18Parent && s18Child) {
+          s18Btn.addEventListener("click", () => {
+            const hasDescendant = s18Parent.contains(s18Child);
+            triggerToast(
+              `Is Child nested inside Parent? -> ${hasDescendant ? "YES ✅" : "NO ❌"}`,
+            );
+          });
+        }
+
+        // Sandbox 19: DOMParser compile
+        const s19Btn = document.getElementById("sandbox-btn-19");
+        const s19Dest = document.getElementById("sandbox-parse-dest-19");
+        if (s19Btn && s19Dest) {
+          s19Btn.addEventListener("click", () => {
+            const textMarkup =
+              '<div class="p-2 bg-indigo-600 text-white rounded text-xs font-bold text-center">Successfully Parsed Node!</div>';
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(textMarkup, "text/html");
+            const element = doc.body.firstChild;
+            s19Dest.innerHTML = ""; // reset
+            s19Dest.appendChild(element);
+          });
+        }
+
+        // Sandbox 20: MutationObservers
+        const s20Append = document.getElementById("sandbox-btn-20-append");
+        const s20Attr = document.getElementById("sandbox-btn-20-attribute");
+        const s20Target = document.getElementById("sandbox-observe-20");
+        const s20Logs = document.getElementById("sandbox-logs-20");
+        if (s20Append && s20Attr && s20Target && s20Logs) {
+          // Setup structural observation
+          const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+              if (mutation.type === "childList") {
+                s20Logs.textContent =
+                  "Observer Logs: 👶 Detected child element node additions!";
+                s20Logs.className =
+                  "text-[10px] text-emerald-600 text-center font-mono font-bold";
+              } else if (mutation.type === "attributes") {
+                s20Logs.textContent = `Observer Logs: 🏷️ Attribute changed: "${mutation.attributeName}"`;
+                s20Logs.className =
+                  "text-[10px] text-indigo-600 text-center font-mono font-bold";
+              }
+            }
+          });
+
+          observer.observe(s20Target, { attributes: true, childList: true });
+
+          s20Append.addEventListener("click", () => {
+            const smallDot = document.createElement("span");
+            smallDot.textContent = " • ";
+            smallDot.className = "text-indigo-600 font-black";
+            s20Target.appendChild(smallDot);
+          });
+
+          s20Attr.addEventListener("click", () => {
+            const randID = Math.round(Math.random() * 100);
+            s20Target.setAttribute("data-mutation-id", randID);
+          });
+        }
+      }
+    </script>
+  </body>
+</html>

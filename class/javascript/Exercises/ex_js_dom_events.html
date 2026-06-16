@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mastering DOM Events with addEventListener - High-Retention Study Guide</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts (Plus Jakarta Sans & Fira Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- PrismJS Core & Okaidia Theme for Premium Code Highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"Fira Code"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    /* Prevent focus outline overrides but keep them aesthetic */
+    *:focus-visible {
+      outline: 2px solid #4f46e5;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen pb-20">
+
+  <!-- Header Banner -->
+  <header class="bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 text-white relative overflow-hidden shadow-lg">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 relative z-10">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-sm font-semibold mb-4 border border-indigo-400/20">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            Interactive Developer Kit
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+            JavaScript DOM Events
+          </h1>
+          <p class="mt-2 text-lg text-slate-300 max-w-2xl">
+            A high-retention guide containing 20 curated coding exercises to master event handling with <code class="bg-slate-900/60 px-1.5 py-0.5 rounded text-indigo-300 font-mono text-sm">addEventListener</code>.
+          </p>
+        </div>
+        
+        <!-- Progress Dashboard Card -->
+        <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/10 min-w-[280px]">
+          <h3 class="text-sm font-bold tracking-wider text-slate-300 uppercase">Your Mastery Progress</h3>
+          <div class="mt-4 flex items-baseline gap-2">
+            <span id="mastered-count" class="text-4xl font-extrabold text-white">0</span>
+            <span class="text-slate-400 text-xl">/ 20</span>
+            <span id="progress-percentage" class="ml-auto text-sm font-bold text-emerald-400">0%</span>
+          </div>
+          <!-- Progress Bar -->
+          <div class="mt-3 w-full bg-slate-800 rounded-full h-3 overflow-hidden">
+            <div id="progress-bar-fill" class="bg-gradient-to-r from-emerald-400 to-indigo-400 h-full w-0 transition-all duration-500 ease-out"></div>
+          </div>
+          <div class="mt-3 flex justify-between text-xs text-slate-400">
+            <span id="easy-stats">Easy: 0/6</span>
+            <span id="medium-stats">Medium: 0/10</span>
+            <span id="hard-stats">Hard: 0/4</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter & Global Action Controls -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <!-- Left: Filter & Search controls -->
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative min-w-[240px]">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          </span>
+          <input type="text" id="search-input" placeholder="Search event types or keywords..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all" />
+        </div>
+
+        <!-- Filter Dropdown -->
+        <select id="difficulty-filter" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all">
+          <option value="all">All Difficulties</option>
+          <option value="easy">Easy (6)</option>
+          <option value="medium">Medium (10)</option>
+          <option value="hard">Hard (4)</option>
+        </select>
+
+        <select id="status-filter" class="px-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-indigo-500 transition-all">
+          <option value="all">All Statuses</option>
+          <option value="todo">To Do</option>
+          <option value="mastered">Mastered</option>
+        </select>
+      </div>
+
+      <!-- Right: Global Actions -->
+      <div class="flex items-center gap-2">
+        <button onclick="toggleAllSolutions(true)" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors">
+          Expand Solutions
+        </button>
+        <button onclick="toggleAllSolutions(false)" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors">
+          Collapse Solutions
+        </button>
+        <button onclick="resetAllProgress()" class="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-semibold rounded-lg transition-colors">
+          Reset Progress
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notification Container (No alerts) -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+  <!-- Main Grid Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <div id="challenges-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      
+      <!-- Challenge 1: Single Click Background Swap -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="1" data-difficulty="easy" data-category="mouse">
+        <div>
+          <!-- Card Header -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 01 • Mouse Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-1" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(1)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Dynamic Background Switcher</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Write code to listen to click events on a button. When clicked, it must swap the background color of a container div to a random pastel shade.
+          </p>
+
+          <!-- Specifications -->
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Change container color on click.</p>
+            <p><strong>Event Type:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"click"</code></p>
+            <p><strong>Formula:</strong> <code class="font-mono text-slate-500">`hsl(${Math.random() * 360}, 70%, 85%)`</code></p>
+          </div>
+
+          <!-- HTML Starter Snippet -->
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;button id="colorBtn"&gt;Change Color&lt;/button&gt;
+&lt;div id="colorBox" class="w-24 h-24"&gt;&lt;/div&gt;</code></pre>
+          </div>
+
+          <!-- Interactive Sandbox Demo -->
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex items-center gap-4">
+              <button id="sandbox-btn-1" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold transition-all shadow-sm">
+                Change Color
+              </button>
+              <div id="sandbox-box-1" class="w-16 h-16 rounded-xl border border-slate-300 shadow-inner bg-slate-100 transition-colors duration-300"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Solution Container -->
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">// Select elements from DOM
+const colorBtn = document.getElementById('colorBtn');
+const colorBox = document.getElementById('colorBox');
+
+// Add the click listener
+colorBtn.addEventListener('click', () => {
+  // Generate random pastel shade
+  const randomColor = `hsl(${Math.random() * 360}, 70%, 85%)`;
+  
+  // Update styling
+  colorBox.style.backgroundColor = randomColor;
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">click</code> event triggers reliably across all input devices (touch screens, keyboards when focusing the button and hitting Enter/Space, and normal mice). Modifying CSS properties using <code class="text-slate-300 font-mono">style.backgroundColor</code> updates inline CSS which carries high styling specificity.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 2: Hover State Listener -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="2" data-difficulty="easy" data-category="mouse">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 02 • Hover Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-2" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(2)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Hover Active State Overlay</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Create mouse entered/left triggers on a target panel to display or hide an informational helper text. Do not use standard CSS pseudo-classes to display it.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Toggle helper text style on hover.</p>
+            <p><strong>Events:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"mouseenter"</code> and <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"mouseleave"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;div id="infoCard"&gt;Hover Me&lt;/div&gt;
+&lt;p id="helperText" class="hidden"&gt;Useful hints here!&lt;/p></code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div id="sandbox-card-2" class="p-6 bg-indigo-50 rounded-xl border border-dashed border-indigo-200 text-center cursor-pointer transition-all hover:bg-indigo-100">
+              <span class="text-sm text-indigo-700 font-semibold">Hover Cursor Here</span>
+              <p id="sandbox-helper-2" class="text-xs text-indigo-500 mt-2 opacity-0 transition-opacity duration-350">⭐️ Boom! Here are your tips!</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const infoCard = document.getElementById('infoCard');
+const helperText = document.getElementById('helperText');
+
+// Trigger visibility when mouse enters
+infoCard.addEventListener('mouseenter', () => {
+  helperText.classList.remove('hidden');
+});
+
+// Hide visibility when mouse leaves
+infoCard.addEventListener('mouseleave', () => {
+  helperText.classList.add('hidden');
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Unlike <code class="text-slate-300 font-mono">mouseover</code> and <code class="text-slate-300 font-mono">mouseout</code>, the events <code class="text-slate-300 font-mono">mouseenter</code> and <code class="text-slate-300 font-mono">mouseleave</code> **do not bubble**. This is highly beneficial because it prevents performance penalties and erratic trigger patterns when navigating past nesting layers containing multi-layered child structures.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 3: Real-time character counter -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="3" data-difficulty="easy" data-category="form">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 03 • Input Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-3" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(3)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Keystroke Character Counter</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Build a live counting widget. As the user inserts text into a text container, update a dynamic remaining counter showing length constraints (Max 50).
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Count characters and limit output.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"input"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;textarea id="textBox" maxlength="50"&gt;&lt;/textarea&gt;
+&lt;span id="count"&gt;0/50&lt;/span&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="space-y-2">
+              <textarea id="sandbox-text-3" maxlength="50" placeholder="Type custom thoughts..." class="w-full text-xs p-2.5 border rounded-xl shadow-inner focus:ring-1 focus:ring-indigo-500"></textarea>
+              <div class="text-right">
+                <span id="sandbox-count-3" class="text-xs font-bold text-indigo-600">0 / 50 characters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const textBox = document.getElementById('textBox');
+const countLabel = document.getElementById('count');
+
+textBox.addEventListener('input', (event) => {
+  // Capture current length of element value
+  const length = event.target.value.length;
+  countLabel.textContent = `${length}/50`;
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Prefer the <code class="text-slate-300 font-mono">input</code> event over <code class="text-slate-300 font-mono">keyup</code> or <code class="text-slate-300 font-mono">keydown</code>. The `input` event triggers for *any* character change, including mouse paste contexts, cut/deletion actions, drag-and-drop strings, or built-in voice-to-text assistants, while key events miss non-keyboard modifications.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 4: Preventing submission/Form Interceptor -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="4" data-difficulty="medium" data-category="form">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 04 • Form Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-4" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(4)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Form Submission Interceptor</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Intercept a registration form's submit action. Ensure the page does not reload. If the terms checkbox is not selected, abort and showcase a custom validation message.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Prevent default action, run dynamic verification checks.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"submit"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;form id="signupForm"&gt;
+  &lt;input type="checkbox" id="agree"&gt;
+  &lt;button type="submit"&gt;Sign Up&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <form id="sandbox-form-4" class="space-y-3">
+              <label class="flex items-center gap-2 text-xs font-medium text-slate-700">
+                <input type="checkbox" id="sandbox-check-4" class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500">
+                I agree to the Terms of Service
+              </label>
+              <button type="submit" class="w-full py-2 px-4 bg-indigo-600 text-white rounded-lg text-xs font-bold shadow hover:bg-indigo-700 transition">
+                Submit Form
+              </button>
+              <p id="sandbox-msg-4" class="text-xs font-bold text-center"></p>
+            </form>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const form = document.getElementById('signupForm');
+const checkbox = document.getElementById('agree');
+
+form.addEventListener('submit', (e) => {
+  // Prevent the natural browser navigation behavior
+  e.preventDefault();
+  
+  if (!checkbox.checked) {
+    console.error("Submission blocked: Accept Terms first.");
+    return;
+  }
+  
+  // Submit actions can safely occur here via fetch/API request.
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Calling <code class="text-slate-300 font-mono">event.preventDefault()</code> stops default browser workflows (like form action targets triggering full page refetches). Crucially, assign listeners to the <code class="text-slate-300 font-mono">form</code> container itself, rather than adding standard clicks onto the submit element, ensuring all accessibility configurations work.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 5: Capture Specific Keyboard Input -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="5" data-difficulty="easy" data-category="keyboard">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 05 • Keyboard Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-5" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(5)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Specific Keystroke Capture</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Listen for key presses globally. If the user hits the "Escape" key, change an active UI flag or display a notification panel.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Detect precise keypress globally.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"keydown"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;!-- No explicit local elements. Attach to 'window' object! --&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="p-4 bg-slate-100 border border-slate-300 rounded-xl text-center">
+              <p class="text-xs text-slate-600">Click below &amp; press <kbd class="px-2 py-1 bg-white border rounded shadow text-xs font-bold">Escape</kbd></p>
+              <input id="sandbox-key-5" type="text" placeholder="Type here..." class="mt-2 text-xs p-2 text-center border rounded-lg focus:ring-1 focus:ring-indigo-500">
+              <p id="sandbox-notif-5" class="text-xs font-bold text-rose-500 mt-2 opacity-0 transition-opacity">Escape Pressed!</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">window.addEventListener('keydown', (event) => {
+  // Use modern key attribute identification
+  if (event.key === 'Escape') {
+    // Execute safety triggers or modal dismissals
+    console.log("Escape key detected. Executing action...");
+  }
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Prefer modern <code class="text-slate-300 font-mono">event.key</code> values (like `"Escape"`, `"Enter"`, or `"ArrowUp"`) over older, deprecated <code class="text-slate-300 font-mono">event.keyCode</code> values (such as `27`, `13`, or `38`). The modern API is highly standardized and works cleanly across distinct keyboards and localization interfaces.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 6: Dynamic Class Toggles -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="6" data-difficulty="easy" data-category="mouse">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 06 • Mouse Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-6" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(6)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Class Toggle Dark Mode</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Toggle high-contrast themes. When a slider is toggled, swap class definitions on a preview panel to alternate styles.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Alter preview component state class list values.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"click"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;button id="themeToggle"&gt;Toggle Mode&lt;/button&gt;
+&lt;div id="previewCard" class="bg-white text-slate-950"&gt;&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex flex-col items-center gap-3">
+              <button id="sandbox-toggle-6" class="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold">
+                Toggle Sandbox Dark Mode
+              </button>
+              <div id="sandbox-card-6" class="w-full p-4 border rounded-xl text-center transition-colors bg-white text-slate-900 border-slate-200">
+                <p class="text-xs font-bold">Sandbox Card Mode Context</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const themeToggle = document.getElementById('themeToggle');
+const previewCard = document.getElementById('previewCard');
+
+themeToggle.addEventListener('click', () => {
+  // Use .toggle() on the element classList helper
+  previewCard.classList.toggle('dark-theme');
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">classList.toggle()</code> method is a built-in DOM utility. It automatically checks for the presence of a class: if it exists, it is removed; if it is missing, it is appended. This removes the need for manual boolean condition blocks, leading to cleaner, more maintainable code.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 7: Double Click Actions -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="7" data-difficulty="easy" data-category="mouse">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 07 • Mouse Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-7" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(7)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Double Click Reset Action</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Require double confirmation actions. Allow a single click to incrementalize score records, but demand a double click to clear totals.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Detect specific double tap patterns.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"dblclick"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;button id="resetBtn"&gt;Double Click to Reset&lt;/button&gt;
+&lt;span id="scoreDisplay"&gt;100&lt;/span&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex items-center gap-4">
+              <button id="sandbox-add-7" class="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 rounded-lg text-xs font-bold">Add Count</button>
+              <button id="sandbox-reset-7" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold">Double Click Reset</button>
+              <span id="sandbox-score-7" class="text-sm font-bold text-indigo-600">0</span>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const resetBtn = document.getElementById('resetBtn');
+const scoreDisplay = document.getElementById('scoreDisplay');
+
+resetBtn.addEventListener('dblclick', () => {
+  scoreDisplay.textContent = '0';
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The browser fires a standard <code class="text-slate-300 font-mono">click</code> event directly before triggering the target <code class="text-slate-300 font-mono">dblclick</code> callback. Make sure you don't bind conflicting logic onto both events on the exact same element, as clicking twice triggers the single click callbacks twice as well.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 8: Focus & Blur Event Pair -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="8" data-difficulty="medium" data-category="form">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 08 • Form Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-8" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(8)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Focus Field Highlighting</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Manage interactive states. Highlight input borders and reveal helpful instructional inline messages only while fields are actively focused.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Handle field state transitions cleanly.</p>
+            <p><strong>Events:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"focus"</code> and <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"blur"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;input id="inputField" type="text"&gt;
+&lt;div id="fieldHelp" class="invisible"&gt;Enter safe characters.&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="space-y-2">
+              <input id="sandbox-field-8" type="text" placeholder="Click to focus..." class="w-full text-xs p-2.5 border rounded-xl focus:outline-none transition-all">
+              <p id="sandbox-help-8" class="text-xs text-indigo-500 font-bold opacity-0 transition-opacity">💡 Type your official, legal full name.</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const inputField = document.getElementById('inputField');
+const fieldHelp = document.getElementById('fieldHelp');
+
+// Listen for focus (user clicks or tabs into the input)
+inputField.addEventListener('focus', () => {
+  fieldHelp.classList.remove('invisible');
+  inputField.classList.add('border-indigo-600');
+});
+
+// Listen for blur (user clicks away)
+inputField.addEventListener('blur', () => {
+  fieldHelp.classList.add('invisible');
+  inputField.classList.remove('border-indigo-600');
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">focus</code> and <code class="text-slate-300 font-mono">blur</code> events **do not bubble**. If you need event delegation (listening for focus on multiple inputs inside a container), you must use the bubbling equivalents: <code class="text-slate-300 font-mono">focusin</code> and <code class="text-slate-300 font-mono">focusout</code>.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 9: Scroll Progress Indicator -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="9" data-difficulty="medium" data-category="window">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 09 • Window Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-9" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(9)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Scroll To Top Indicator</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Monitor scroll actions. Reveal a hidden "Back to Top" navigation element only after the user scrolls down past a predefined pixel limit (e.g., 200px).
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Read dynamic window properties on change.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"scroll"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;button id="toTopBtn" class="hidden"&gt;↑ Top&lt;/button&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="text-center">
+              <p class="text-xs text-slate-600 mb-2">Simulate scrolling via this box:</p>
+              <div id="sandbox-scrollbox-9" class="h-24 overflow-y-auto border rounded-xl bg-white p-2 text-xs space-y-8 shadow-inner">
+                <p>Scroll down inside this box...</p>
+                <p>Keep scrolling...</p>
+                <p>Almost there...</p>
+                <p>End of simulated layout content.</p>
+              </div>
+              <button id="sandbox-top-9" class="mt-2 text-xs bg-indigo-600 text-white px-3 py-1.5 rounded-lg opacity-0 transition-opacity">↑ Back to Top</button>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+  // Capture current vertical position
+  const scrolledDistance = window.scrollY;
+  
+  if (scrolledDistance > 200) {
+    toTopBtn.classList.remove('hidden');
+  } else {
+    toTopBtn.classList.add('hidden');
+  }
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">scroll</code> event fires rapidly and continuously as the user scrolls. In high-performance production sites, wrapping this listener in a **throttle** or **debounce** utility helps avoid unnecessary layout reflows and guarantees smooth rendering performance.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 10: Change selection selector -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="10" data-difficulty="easy" data-category="form">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 10 • Form Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">Easy</span>
+              <input type="checkbox" id="check-10" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(10)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Dropdown Dynamic Selection</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Listen for alterations on a `<select>` dropdown. Render a live preview displaying details matching the selection options.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Read values when selection state updates.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"change"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;select id="avatarChoice"&gt;
+  &lt;option value="🐶"&gt;Dog&lt;/option&gt;
+&lt;/select&gt;
+&lt;div id="preview"&gt;&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex items-center gap-4">
+              <select id="sandbox-select-10" class="text-xs p-2 border rounded-lg focus:ring-1 focus:ring-indigo-500 bg-white">
+                <option value="🍕">Pizza Slice</option>
+                <option value="🍔">Big Burger</option>
+                <option value="🌮">Spicy Taco</option>
+              </select>
+              <div class="text-3xl" id="sandbox-preview-10">🍕</div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const selectEl = document.getElementById('avatarChoice');
+const previewEl = document.getElementById('preview');
+
+selectEl.addEventListener('change', (e) => {
+  // Capture updated option value directly
+  const selectedValue = e.target.value;
+  previewEl.textContent = selectedValue;
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">change</code> event only fires when a selection is finalized (unlike standard text inputs where <code class="text-slate-300 font-mono">input</code> fires per keystroke). For accessibility, users navigating via keyboard arrow keys will fire `change` events sequentially on each option change, which is why it's critical to avoid causing aggressive, unexpected page movements here.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 11: Prevent Context Menu -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="11" data-difficulty="medium" data-category="mouse">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 11 • Mouse Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-11" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(11)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Context Menu Blocker</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Protect media content. Prevent users from opening the default context menu (right-click) on an image container and show a warning message instead.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Block secondary click menus locally.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"contextmenu"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;img id="secureImg" src="logo.png"&gt;
+&lt;p id="alertMsg" class="hidden"&gt;Action protected.&lt;/p></code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div id="sandbox-area-11" class="p-6 bg-slate-100 border border-slate-300 rounded-xl text-center cursor-context-menu">
+              <span class="text-xs font-bold text-slate-700">Right-Click Inside This Box</span>
+              <p id="sandbox-msg-11" class="text-xs text-rose-500 font-bold mt-2 opacity-0 transition-opacity">⚠️ Content is right-click protected!</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const secureImg = document.getElementById('secureImg');
+const alertMsg = document.getElementById('alertMsg');
+
+secureImg.addEventListener('contextmenu', (e) => {
+  // Prevent normal browser contextual options
+  e.preventDefault();
+  
+  // Custom interface workflows
+  alertMsg.classList.remove('hidden');
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>While blocking <code class="text-slate-300 font-mono">contextmenu</code> can act as a simple friction layer, remember that standard browser tools (like DevTools or disabling JS) can easily bypass this barrier. Use it with caution, keeping the end-user accessibility experience in mind.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 12: Event Delegation -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="12" data-difficulty="hard" data-category="advanced">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 12 • Advanced Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800">Hard</span>
+              <input type="checkbox" id="check-12" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(12)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Efficient Event Delegation</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Instead of adding listeners to individual list items, register a *single* click listener on their parent `<ul>` node and identify the clicked list item.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Intercept clicks efficiently across many items.</p>
+            <p><strong>Method:</strong> Read <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">event.target</code> and check `.matches('li')`.</p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;ul id="itemParent"&gt;
+  &lt;li&gt;Item One&lt;/li&gt;
+  &lt;li&gt;Item Two&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <ul id="sandbox-list-12" class="p-2 border rounded-xl bg-white divide-y cursor-pointer">
+              <li class="p-2 text-xs hover:bg-slate-100 rounded transition-colors" data-id="Alpha">🎯 Click Item Alpha</li>
+              <li class="p-2 text-xs hover:bg-slate-100 rounded transition-colors" data-id="Beta">🎯 Click Item Beta</li>
+              <li class="p-2 text-xs hover:bg-slate-100 rounded transition-colors" data-id="Gamma">🎯 Click Item Gamma</li>
+            </ul>
+            <p id="sandbox-text-12" class="text-xs font-bold text-indigo-600 text-center mt-2">Clicked: None</p>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const parent = document.getElementById('itemParent');
+
+parent.addEventListener('click', (event) => {
+  // Check if the clicked target matches our list items
+  if (event.target && event.target.matches('li')) {
+    console.log("Clicked text:", event.target.textContent);
+    
+    // Perform operations on specific elements
+    event.target.classList.add('completed');
+  }
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>**Event Delegation** works because of **Event Bubbling**: events triggered on child elements bubble up to their parent nodes. Using a single listener saves system memory and guarantees that new items added to the list dynamically automatically inherit the click behavior without needing manual binding.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 13: Mouse Coordinates tracker -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="13" data-difficulty="medium" data-category="mouse">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 13 • Mouse Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-13" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(13)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Mouse Coordinates Tracker</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Track mouse cursor movements inside a target panel. Output the precise horizontal (`clientX`) and vertical (`clientY`) coordinates in real-time.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Read event properties dynamically.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"mousemove"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;div id="trackerBox"&gt;Move mouse here&lt;/div&gt;
+&lt;span id="coords"&gt;X: 0, Y: 0&lt;/span&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div id="sandbox-tracker-13" class="h-28 bg-slate-100 border border-slate-300 rounded-xl flex flex-col items-center justify-center cursor-crosshair">
+              <span class="text-xs font-bold text-slate-700">Hover inside to track</span>
+              <span id="sandbox-coords-13" class="text-xs font-mono text-indigo-600 mt-2 bg-white px-2 py-1 rounded shadow">X: 0, Y: 0</span>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const trackerBox = document.getElementById('trackerBox');
+const coords = document.getElementById('coords');
+
+trackerBox.addEventListener('mousemove', (event) => {
+  // Capture coordinates relative to the browser viewport
+  const x = event.clientX;
+  const y = event.clientY;
+  
+  // Render output layout
+  coords.textContent = `X: ${x}, Y: ${y}`;
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Use <code class="text-slate-300 font-mono">clientX/Y</code> to track coordinates relative to the visible viewport. If you need coordinates relative to the element boundaries itself, use <code class="text-slate-300 font-mono">offsetX/Y</code> instead.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 14: Transition End Cleanups -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="14" data-difficulty="hard" data-category="advanced">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 14 • Advanced Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800">Hard</span>
+              <input type="checkbox" id="check-14" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(14)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">CSS Transition End Cleanup</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Wait for animations to complete. When an element fades out via CSS transitions, capture the transition end event to safely remove the node from the DOM tree.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Clean up DOM elements after animation completes.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"transitionend"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;div id="notifPanel" class="transition-opacity duration-500"&gt;&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex items-center gap-4">
+              <button id="sandbox-btn-14" class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-xs font-bold shadow hover:bg-indigo-700 transition">
+                Fade Out Sandbox Alert
+              </button>
+              <div id="sandbox-alert-14" class="p-2 bg-amber-100 border border-amber-300 rounded text-xs text-amber-800 font-bold transition-opacity duration-1000">
+                Dismissable Alert Node
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const panel = document.getElementById('notifPanel');
+
+panel.addEventListener('transitionend', (event) => {
+  // Check if target property matches fade attributes
+  if (event.propertyName === 'opacity') {
+    panel.remove();
+    console.log("Panel node cleared from DOM successfully.");
+  }
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Removing items using simple <code class="text-slate-300 font-mono">remove()</code> before CSS transitions finish causes layout elements to snap out of view instantly. Listening for the <code class="text-slate-300 font-mono">transitionend</code> event lets you run smooth transitions first, then cleanly remove the node once the animation completes.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 15: Drag & Drop Basics -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="15" data-difficulty="hard" data-category="advanced">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 15 • Advanced Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800">Hard</span>
+              <input type="checkbox" id="check-15" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(15)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Simple Drag Target Validation</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Configure target areas to allow drop processes. Call `preventDefault()` on dragover events to permit dropping files or elements into targeted containers.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Unblock browser default rules protecting drag zones.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"dragover"</code> and <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"drop"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;div id="dropZone"&gt;Drop Elements Here&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="flex items-center gap-4 justify-between">
+              <div id="sandbox-drag-15" draggable="true" class="w-14 h-14 bg-indigo-600 text-white flex items-center justify-center rounded-xl cursor-grab text-xs font-bold shadow">Drag Me</div>
+              <div id="sandbox-zone-15" class="w-32 h-20 bg-slate-100 border-2 border-dashed border-indigo-200 text-center flex items-center justify-center rounded-xl text-[10px] text-indigo-400 font-semibold">Drop Zone</div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const dropZone = document.getElementById('dropZone');
+
+// Dragover event must be intercepted
+dropZone.addEventListener('dragover', (event) => {
+  // Prevent browser from blocking dropping actions
+  event.preventDefault();
+  dropZone.classList.add('bg-indigo-50');
+});
+
+dropZone.addEventListener('drop', (event) => {
+  event.preventDefault();
+  dropZone.classList.remove('bg-indigo-50');
+  dropZone.textContent = "Dropped successfully!";
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Browsers naturally block drops on most elements. You must call <code class="text-slate-300 font-mono">event.preventDefault()</code> inside the <code class="text-slate-300 font-mono">dragover</code> listener to unlock the dropped action and enable the <code class="text-slate-300 font-mono">drop</code> callback to execute properly.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 16: Live Filtering search -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="16" data-difficulty="medium" data-category="form">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 16 • Form Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-16" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(16)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Real-time Search Filter</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Build interactive index filter tools. Read keystroke updates and toggle css classes to hide list items that do not contain matching text.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Toggle visibility flags across many items during input.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"input"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;input id="search" type="text"&gt;
+&lt;div class="item"&gt;Apple&lt;/div&gt;
+&lt;div class="item"&gt;Banana&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="space-y-2">
+              <input id="sandbox-search-16" type="text" placeholder="Type letters to filter items..." class="w-full text-xs p-2 border rounded-xl bg-white focus:outline-none">
+              <div class="flex gap-2 flex-wrap" id="sandbox-list-16">
+                <span class="px-2 py-1 bg-slate-200 rounded text-xs text-slate-700 font-bold search-item">Apple</span>
+                <span class="px-2 py-1 bg-slate-200 rounded text-xs text-slate-700 font-bold search-item">Apricot</span>
+                <span class="px-2 py-1 bg-slate-200 rounded text-xs text-slate-700 font-bold search-item">Banana</span>
+                <span class="px-2 py-1 bg-slate-200 rounded text-xs text-slate-700 font-bold search-item">Berry</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const searchInput = document.getElementById('search');
+const items = document.querySelectorAll('.item');
+
+searchInput.addEventListener('input', (event) => {
+  const query = event.target.value.toLowerCase();
+  
+  items.forEach(item => {
+    const text = item.textContent.toLowerCase();
+    if (text.includes(query)) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  });
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Normalizing search strings by calling <code class="text-slate-300 font-mono">.toLowerCase()</code> on both user queries and target text ensures matching is case-insensitive, creating a more intuitive and user-friendly search experience.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 17: Clipboard event interception -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="17" data-difficulty="medium" data-category="window">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 17 • Clipboard Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-17" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(17)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Copy Trigger Interception</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Listen for copy actions inside a target element. When triggered, block the default behavior to append a custom copyright attribution notice to the user's clipboard selection.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Modify dynamic clipboard assets during copy operations.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"copy"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;p id="article"&gt;Copy this text.&lt;/p&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="space-y-2">
+              <p id="sandbox-text-17" class="text-xs p-2.5 bg-indigo-50 rounded-xl border border-indigo-200 font-medium select-all">Highlight &amp; copy this text!</p>
+              <p id="sandbox-msg-17" class="text-xs font-bold text-center text-emerald-600 opacity-0 transition-opacity">✅ Attribution appended on copy!</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const article = document.getElementById('article');
+
+article.addEventListener('copy', (event) => {
+  // Capture highlighted selection
+  const selectedText = window.getSelection().toString();
+  const modifiedText = `${selectedText}\n\nRead more at Source.`;
+  
+  // Set modified values in the event clipboard data transfer
+  event.clipboardData.setData('text/plain', modifiedText);
+  event.preventDefault(); // Required for modifications
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Modifying clipboard content using <code class="text-slate-300 font-mono">event.clipboardData.setData</code> inside a `copy` listener is highly secure. This approach is much more reliable than using the modern browser `navigator.clipboard` API, which requires requesting explicit user permissions before writing data.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 18: Window resize tracking -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="18" data-difficulty="medium" data-category="window">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 18 • Window Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-18" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(18)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Window Resize Dimensions Display</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Listen for viewport changes. Output updated layout screen measurements (`window.innerWidth` and `window.innerHeight`) dynamically inside target elements.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Track viewport alterations on scale.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"resize"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;span id="windowSize"&gt;Unknown&lt;/span&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="text-center bg-white border rounded-xl p-4">
+              <p class="text-xs text-slate-600 mb-1">Your current window viewport width:</p>
+              <span id="sandbox-width-18" class="text-xs font-mono font-bold text-indigo-600">Calculating...</span>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const sizeSpan = document.getElementById('windowSize');
+
+// Resize event must be bound onto window object
+window.addEventListener('resize', () => {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  
+  sizeSpan.textContent = `${width}px x ${height}px`;
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Just like scroll listeners, the <code class="text-slate-300 font-mono">resize</code> event fires constantly during resize actions. Wrapping this code inside a **debounce** function ensures it only runs once the user stops resizing their window, preventing performance bottlenecks.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 19: DOM Content Loaded initialization -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="19" data-difficulty="medium" data-category="window">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 19 • Document Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-amber-100 text-amber-800">Medium</span>
+              <input type="checkbox" id="check-19" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(19)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Safe DOM Initialization</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Protect setup scripts. Execute a setup script only after the DOM has been fully constructed, ensuring your JS code can safely select elements even if the script tag loads early.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Prevent script-loading errors by waiting for the DOM to load.</p>
+            <p><strong>Event:</strong> <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">"DOMContentLoaded"</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;!-- Script is loaded early in the HTML head tag! --&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div class="text-center bg-indigo-50 p-3 rounded-xl border border-indigo-200">
+              <span id="sandbox-state-19" class="text-xs font-bold text-indigo-600">ℹ️ DOM State Verified</span>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">// Attach listener onto the document object
+document.addEventListener('DOMContentLoaded', () => {
+  // Safe to query elements now
+  const initEl = document.getElementById('initTarget');
+  initEl.textContent = "Safe to manipulate!";
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>The <code class="text-slate-300 font-mono">DOMContentLoaded</code> event fires as soon as the HTML document is fully parsed and the DOM tree is built. It doesn't wait for heavy external resources like stylesheets, images, or subframes to load, making it much faster than the standard window `load` event.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <!-- Challenge 20: Event Propagation Blocking -->
+      <div class="challenge-card bg-white rounded-2xl border border-slate-200 p-6 shadow-sm hover:shadow-md transition-all relative flex flex-col justify-between" data-id="20" data-difficulty="hard" data-category="advanced">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-bold uppercase tracking-wider text-indigo-500 font-mono">Challenge 20 • Advanced Event</span>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 text-xs font-bold rounded-full bg-rose-100 text-rose-800">Hard</span>
+              <input type="checkbox" id="check-20" class="w-5 h-5 rounded text-indigo-600 focus:ring-indigo-500 cursor-pointer challenge-checkbox" onchange="toggleMastered(20)">
+            </div>
+          </div>
+          
+          <h3 class="text-lg font-bold text-slate-800 mb-2">Event Propagation Stop</h3>
+          <p class="text-sm text-slate-600 mb-4">
+            Manage bubbling flows. Prevent a button click from bubbling up and triggering a click listener on its parent card container.
+          </p>
+
+          <div class="mb-4 bg-slate-50 rounded-xl p-3 text-xs text-slate-600 space-y-1">
+            <p><strong>Goal:</strong> Block event bubbling along nested target trees.</p>
+            <p><strong>Method:</strong> Call <code class="font-mono bg-slate-100 px-1 text-indigo-600 rounded">event.stopPropagation()</code></p>
+          </div>
+
+          <div class="mb-4">
+            <p class="text-xs font-bold text-slate-400 mb-1.5 uppercase tracking-wider">Starter HTML</p>
+            <pre><code class="language-html">&lt;div id="parentCard"&gt;
+  &lt;button id="innerBtn"&gt;Action&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+
+          <div class="mb-4 border border-slate-100 rounded-xl p-4 bg-slate-50/50">
+            <p class="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Live Demo Sandbox</p>
+            <div id="sandbox-parent-20" class="p-4 bg-slate-200 border-2 border-indigo-400 rounded-xl text-center cursor-pointer transition-colors hover:bg-slate-300">
+              <p class="text-xs font-bold text-slate-700 mb-2">Parent Container Box</p>
+              <button id="sandbox-child-20" class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold shadow hover:bg-indigo-700">
+                Inner Button
+              </button>
+              <p id="sandbox-logs-20" class="text-[10px] text-slate-500 mt-2 font-mono">Click outputs show here...</p>
+            </div>
+          </div>
+        </div>
+
+        <details class="group bg-slate-900 rounded-xl overflow-hidden shadow-inner mt-4 border border-slate-800">
+          <summary class="list-none flex justify-between items-center px-4 py-3 text-sm font-semibold text-slate-300 cursor-pointer hover:bg-slate-800/50 select-none transition-colors">
+            <span>Reveal Solution &amp; Explanation</span>
+            <svg class="w-4 h-4 transform group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+          </summary>
+          <div class="px-4 pb-4 border-t border-slate-800 pt-3">
+            <pre><code class="language-javascript">const parent = document.getElementById('parentCard');
+const innerBtn = document.getElementById('innerBtn');
+
+parent.addEventListener('click', () => {
+  console.log("Parent card clicked!");
+});
+
+innerBtn.addEventListener('click', (event) => {
+  // Stop the event from bubbling up to the parent container
+  event.stopPropagation();
+  console.log("Inner button clicked!");
+});</code></pre>
+            <div class="mt-3 text-xs text-slate-400 space-y-2">
+              <p class="font-bold text-indigo-400">Pedagogical Insight:</p>
+              <p>Events bubble up by default from child nodes to parent nodes. Calling <code class="text-slate-300 font-mono">event.stopPropagation()</code> stops this bubble flow immediately, preventing parent element click listeners from triggering when a user clicks the child button.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footers -->
+  <footer class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 text-center border-t pt-8">
+    <p class="text-sm text-slate-500">
+      Built as an interactive, high-retention guide for mastering JavaScript DOM Events. Keep practice-focused, always code.
+    </p>
+  </footer>
+
+  <!-- Code Highlighting and Sandbox Core Logics -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+  <script>
+    // State of Mastered Challenges (in-memory with local storage preservation fallback)
+    let masteredState = JSON.parse(localStorage.getItem('dom_events_mastery_state')) || {};
+
+    // Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize checklist state visually
+      for (const id in masteredState) {
+        if (masteredState[id]) {
+          const checkbox = document.getElementById(`check-${id}`);
+          if (checkbox) checkbox.checked = true;
+        }
+      }
+      
+      calculateStats();
+      initializeSandboxEvents();
+      
+      // Prism Code Auto-Highlighting
+      Prism.highlightAll();
+
+      // Search & Filters Setup
+      document.getElementById('search-input').addEventListener('input', runFilters);
+      document.getElementById('difficulty-filter').addEventListener('change', runFilters);
+      document.getElementById('status-filter').addEventListener('change', runFilters);
+    });
+
+    // Toast Custom Notification Component
+    function triggerToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border text-sm font-semibold transition-all duration-350 transform translate-y-2 opacity-0 ${
+        type === 'success' 
+          ? 'bg-emerald-50 border-emerald-200 text-emerald-800' 
+          : 'bg-indigo-50 border-indigo-200 text-indigo-800'
+      }`;
+      
+      toast.innerHTML = `
+        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>${message}</span>
+      `;
+      
+      container.appendChild(toast);
+      
+      // Animate entry
+      setTimeout(() => {
+        toast.classList.remove('opacity-0', 'translate-y-2');
+      }, 50);
+
+      // Dismiss automatically
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
+    }
+
+    // Toggle Check State & Trigger Analytics calculations
+    function toggleMastered(id) {
+      const checkbox = document.getElementById(`check-${id}`);
+      masteredState[id] = checkbox.checked;
+      localStorage.setItem('dom_events_mastery_state', JSON.stringify(masteredState));
+      
+      calculateStats();
+
+      if (checkbox.checked) {
+        triggerToast(`Challenge ${id < 10 ? '0' + id : id} marked as Mastered! 🎉`);
+      }
+    }
+
+    // Dynamic Math Tracker calculations
+    function calculateStats() {
+      const cards = document.querySelectorAll('.challenge-card');
+      const total = cards.length;
+      let masteredCount = 0;
+      
+      let easyTotal = 0, easyMastered = 0;
+      let mediumTotal = 0, mediumMastered = 0;
+      let hardTotal = 0, hardMastered = 0;
+
+      cards.forEach(card => {
+        const id = card.getAttribute('data-id');
+        const diff = card.getAttribute('data-difficulty');
+        const isMastered = masteredState[id] || false;
+
+        if (diff === 'easy') easyTotal++;
+        if (diff === 'medium') mediumTotal++;
+        if (diff === 'hard') hardTotal++;
+
+        if (isMastered) {
+          masteredCount++;
+          if (diff === 'easy') easyMastered++;
+          if (diff === 'medium') mediumMastered++;
+          if (diff === 'hard') hardMastered++;
+        }
+      });
+
+      // Update Header Text Values
+      document.getElementById('mastered-count').textContent = masteredCount;
+      const percentage = total > 0 ? Math.round((masteredCount / total) * 100) : 0;
+      document.getElementById('progress-percentage').textContent = `${percentage}%`;
+      document.getElementById('progress-bar-fill').style.width = `${percentage}%`;
+
+      document.getElementById('easy-stats').textContent = `Easy: ${easyMastered}/${easyTotal}`;
+      document.getElementById('medium-stats').textContent = `Medium: ${mediumMastered}/${mediumTotal}`;
+      document.getElementById('hard-stats').textContent = `Hard: ${hardMastered}/${hardTotal}`;
+    }
+
+    // Reset Progress Configuration
+    function resetAllProgress() {
+      masteredState = {};
+      localStorage.removeItem('dom_events_mastery_state');
+      
+      document.querySelectorAll('.challenge-checkbox').forEach(box => box.checked = false);
+      calculateStats();
+      triggerToast("Your mastery stats has been reset.", "info");
+    }
+
+    // Filter Logic Core
+    function runFilters() {
+      const searchQuery = document.getElementById('search-input').value.toLowerCase();
+      const selectedDifficulty = document.getElementById('difficulty-filter').value;
+      const selectedStatus = document.getElementById('status-filter').value;
+
+      const cards = document.querySelectorAll('.challenge-card');
+
+      cards.forEach(card => {
+        const id = card.getAttribute('data-id');
+        const difficulty = card.getAttribute('data-difficulty');
+        const title = card.querySelector('h3').textContent.toLowerCase();
+        const desc = card.querySelector('p').textContent.toLowerCase();
+        const isMastered = masteredState[id] || false;
+
+        // Matches search query
+        const matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+        
+        // Matches difficulty filter
+        const matchesDifficulty = selectedDifficulty === 'all' || difficulty === selectedDifficulty;
+
+        // Matches completion status
+        let matchesStatus = true;
+        if (selectedStatus === 'todo') matchesStatus = !isMastered;
+        if (selectedStatus === 'mastered') matchesStatus = isMastered;
+
+        if (matchesSearch && matchesDifficulty && matchesStatus) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Expand/Collapse Solutions globally
+    function toggleAllSolutions(openState) {
+      const details = document.querySelectorAll('.challenge-card details');
+      details.forEach(detail => {
+        detail.open = openState;
+      });
+      triggerToast(openState ? "All solution tabs expanded." : "All solution tabs collapsed.", "info");
+    }
+
+    // Wire Up the Sandbox Interactive Elements individually so users can test real features
+    function initializeSandboxEvents() {
+      
+      // Sandbox 1: Dynamic Color Swap
+      const s1Btn = document.getElementById('sandbox-btn-1');
+      const s1Box = document.getElementById('sandbox-box-1');
+      if (s1Btn && s1Box) {
+        s1Btn.addEventListener('click', () => {
+          const randColor = `hsl(${Math.random() * 360}, 75%, 80%)`;
+          s1Box.style.backgroundColor = randColor;
+        });
+      }
+
+      // Sandbox 2: Hover Info displayer
+      const s2Card = document.getElementById('sandbox-card-2');
+      const s2Helper = document.getElementById('sandbox-helper-2');
+      if (s2Card && s2Helper) {
+        s2Card.addEventListener('mouseenter', () => s2Helper.style.opacity = '1');
+        s2Card.addEventListener('mouseleave', () => s2Helper.style.opacity = '0');
+      }
+
+      // Sandbox 3: Dynamic Keystroke character counter
+      const s3Area = document.getElementById('sandbox-text-3');
+      const s3Label = document.getElementById('sandbox-count-3');
+      if (s3Area && s3Label) {
+        s3Area.addEventListener('input', (e) => {
+          const len = e.target.value.length;
+          s3Label.textContent = `${len} / 50 characters`;
+          if (len >= 50) {
+            s3Label.className = "text-xs font-bold text-rose-500 animate-pulse";
+          } else {
+            s3Label.className = "text-xs font-bold text-indigo-600";
+          }
+        });
+      }
+
+      // Sandbox 4: Form validation interceptor
+      const s4Form = document.getElementById('sandbox-form-4');
+      const s4Check = document.getElementById('sandbox-check-4');
+      const s4Msg = document.getElementById('sandbox-msg-4');
+      if (s4Form && s4Check && s4Msg) {
+        s4Form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (!s4Check.checked) {
+            s4Msg.className = "text-xs font-bold text-center text-rose-500 mt-2";
+            s4Msg.textContent = "❌ Alert: Accept terms before submission!";
+          } else {
+            s4Msg.className = "text-xs font-bold text-center text-emerald-600 mt-2";
+            s4Msg.textContent = "✅ Success: API dispatch simulation complete!";
+          }
+        });
+      }
+
+      // Sandbox 5: Specific key detection
+      const s5Input = document.getElementById('sandbox-key-5');
+      const s5Notif = document.getElementById('sandbox-notif-5');
+      if (s5Input && s5Notif) {
+        s5Input.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            s5Notif.style.opacity = '1';
+            setTimeout(() => s5Notif.style.opacity = '0', 2500);
+          }
+        });
+      }
+
+      // Sandbox 6: Dark Mode preview card switcher
+      const s6Toggle = document.getElementById('sandbox-toggle-6');
+      const s6Card = document.getElementById('sandbox-card-6');
+      if (s6Toggle && s6Card) {
+        s6Toggle.addEventListener('click', () => {
+          if (s6Card.classList.contains('bg-white')) {
+            s6Card.className = "w-full p-4 border rounded-xl text-center bg-slate-800 text-white border-slate-700 shadow-inner";
+          } else {
+            s6Card.className = "w-full p-4 border rounded-xl text-center bg-white text-slate-900 border-slate-200";
+          }
+        });
+      }
+
+      // Sandbox 7: Confirm dblclick resets
+      const s7Add = document.getElementById('sandbox-add-7');
+      const s7Reset = document.getElementById('sandbox-reset-7');
+      const s7Score = document.getElementById('sandbox-score-7');
+      let scoreVal = 0;
+      if (s7Add && s7Reset && s7Score) {
+        s7Add.addEventListener('click', () => {
+          scoreVal++;
+          s7Score.textContent = scoreVal;
+        });
+        s7Reset.addEventListener('dblclick', () => {
+          scoreVal = 0;
+          s7Score.textContent = scoreVal;
+        });
+      }
+
+      // Sandbox 8: Focus / blur boundaries
+      const s8Field = document.getElementById('sandbox-field-8');
+      const s8Help = document.getElementById('sandbox-help-8');
+      if (s8Field && s8Help) {
+        s8Field.addEventListener('focus', () => {
+          s8Field.className = "w-full text-xs p-2.5 border rounded-xl focus:outline-none ring-2 ring-indigo-500 border-indigo-500 transition-all";
+          s8Help.style.opacity = '1';
+        });
+        s8Field.addEventListener('blur', () => {
+          s8Field.className = "w-full text-xs p-2.5 border rounded-xl focus:outline-none transition-all";
+          s8Help.style.opacity = '0';
+        });
+      }
+
+      // Sandbox 9: Simulated scroll target calculations
+      const s9Box = document.getElementById('sandbox-scrollbox-9');
+      const s9Btn = document.getElementById('sandbox-top-9');
+      if (s9Box && s9Btn) {
+        s9Box.addEventListener('scroll', () => {
+          if (s9Box.scrollTop > 40) {
+            s9Btn.style.opacity = '1';
+          } else {
+            s9Btn.style.opacity = '0';
+          }
+        });
+        s9Btn.addEventListener('click', () => {
+          s9Box.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      // Sandbox 10: Dropdown selector previewer
+      const s10Select = document.getElementById('sandbox-select-10');
+      const s10Preview = document.getElementById('sandbox-preview-10');
+      if (s10Select && s10Preview) {
+        s10Select.addEventListener('change', (e) => {
+          s10Preview.textContent = e.target.value;
+        });
+      }
+
+      // Sandbox 11: Context menu triggers
+      const s11Area = document.getElementById('sandbox-area-11');
+      const s11Msg = document.getElementById('sandbox-msg-11');
+      if (s11Area && s11Msg) {
+        s11Area.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+          s11Msg.style.opacity = '1';
+          setTimeout(() => s11Msg.style.opacity = '0', 2500);
+        });
+      }
+
+      // Sandbox 12: Event Delegation Parent List
+      const s12List = document.getElementById('sandbox-list-12');
+      const s12Text = document.getElementById('sandbox-text-12');
+      if (s12List && s12Text) {
+        s12List.addEventListener('click', (e) => {
+          if (e.target && e.target.matches('li')) {
+            s12Text.textContent = `Clicked: ${e.target.getAttribute('data-id')}`;
+          }
+        });
+      }
+
+      // Sandbox 13: Mouse move coordinates
+      const s13Box = document.getElementById('sandbox-tracker-13');
+      const s13Coords = document.getElementById('sandbox-coords-13');
+      if (s13Box && s13Coords) {
+        s13Box.addEventListener('mousemove', (e) => {
+          // Display coordinate offset positions
+          s13Coords.textContent = `X: ${e.clientX}, Y: ${e.clientY}`;
+        });
+      }
+
+      // Sandbox 14: CSS transition triggers
+      const s14Btn = document.getElementById('sandbox-btn-14');
+      const s14Alert = document.getElementById('sandbox-alert-14');
+      if (s14Btn && s14Alert) {
+        s14Btn.addEventListener('click', () => {
+          s14Alert.style.opacity = '0';
+        });
+        s14Alert.addEventListener('transitionend', (e) => {
+          if (e.propertyName === 'opacity') {
+            s14Alert.style.display = 'none';
+            s14Btn.textContent = "Removed from DOM!";
+            s14Btn.disabled = true;
+            s14Btn.className = "px-4 py-2 bg-slate-200 text-slate-400 rounded-lg text-xs font-bold cursor-not-allowed";
+          }
+        });
+      }
+
+      // Sandbox 15: Drag & Drop Area listeners
+      const s15Drag = document.getElementById('sandbox-drag-15');
+      const s15Zone = document.getElementById('sandbox-zone-15');
+      if (s15Drag && s15Zone) {
+        s15Zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          s15Zone.className = "w-32 h-20 bg-indigo-50 border-2 border-solid border-indigo-500 text-center flex items-center justify-center rounded-xl text-[10px] text-indigo-600 font-bold scale-105 transition-all duration-300";
+        });
+        s15Zone.addEventListener('dragleave', () => {
+          s15Zone.className = "w-32 h-20 bg-slate-100 border-2 border-dashed border-indigo-200 text-center flex items-center justify-center rounded-xl text-[10px] text-indigo-400 font-semibold transition-all";
+        });
+        s15Zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          s15Zone.className = "w-32 h-20 bg-emerald-50 border-2 border-solid border-emerald-500 text-center flex items-center justify-center rounded-xl text-[10px] text-emerald-600 font-extrabold";
+          s15Zone.textContent = "🎉 SUCCESS!";
+          s15Drag.style.display = "none";
+        });
+      }
+
+      // Sandbox 16: Live Item matching filter
+      const s16Input = document.getElementById('sandbox-search-16');
+      if (s16Input) {
+        s16Input.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase();
+          const items = document.querySelectorAll('.search-item');
+          items.forEach(item => {
+            const val = item.textContent.toLowerCase();
+            if (val.includes(query)) {
+              item.style.display = "inline-block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        });
+      }
+
+      // Sandbox 17: Clipboard Intercept copy
+      const s17Text = document.getElementById('sandbox-text-17');
+      const s17Msg = document.getElementById('sandbox-msg-17');
+      if (s17Text && s17Msg) {
+        s17Text.addEventListener('copy', (e) => {
+          const sel = window.getSelection().toString();
+          e.clipboardData.setData('text/plain', `${sel} \n\n© Custom Attribution`);
+          e.preventDefault();
+          s17Msg.style.opacity = '1';
+          setTimeout(() => s17Msg.style.opacity = '0', 2500);
+        });
+      }
+
+      // Sandbox 18: Dimensions calculator updates
+      const s18Width = document.getElementById('sandbox-width-18');
+      if (s18Width) {
+        s18Width.textContent = `${window.innerWidth} px`;
+        window.addEventListener('resize', () => {
+          s18Width.textContent = `${window.innerWidth} px`;
+        });
+      }
+
+      // Sandbox 19: DOM state indicators
+      const s19State = document.getElementById('sandbox-state-19');
+      if (s19State) {
+        s19State.textContent = "Ready: DOM Fully Loaded!";
+      }
+
+      // Sandbox 20: Event propagation stops
+      const s20Parent = document.getElementById('sandbox-parent-20');
+      const s20Child = document.getElementById('sandbox-child-20');
+      const s20Logs = document.getElementById('sandbox-logs-20');
+      if (s20Parent && s20Child && s20Logs) {
+        s20Parent.addEventListener('click', () => {
+          s20Logs.textContent = "💥 Bubbled Up to Parent Div!";
+          s20Logs.className = "text-[10px] text-rose-500 mt-2 font-mono font-bold animate-bounce";
+          setTimeout(() => s20Logs.className = "text-[10px] text-slate-500 mt-2 font-mono", 2000);
+        });
+        s20Child.addEventListener('click', (e) => {
+          e.stopPropagation();
+          s20Logs.textContent = "🛡️ Inner Button Clicked (Bubbling Blocked!)";
+          s20Logs.className = "text-[10px] text-emerald-600 mt-2 font-mono font-bold";
+        });
+      }
+    }
+  </script>
+</body>
+</html>

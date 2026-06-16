@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Default Form Submission Example</title>
+  </head>
+  <body>
+    <h2>User Registration (Default GET Submission)</h2>
+
+    <form action="submit" method="GET" name="login">
+      <label for="username">Username:</label><br />
+      <input type="text" id="username" name="username" required /><br /><br />
+
+      <label for="email">Email:</label><br />
+      <input type="email" id="email" name="email" required /><br /><br />
+
+      <button type="submit" id="btn">Submit Form</button>
+    </form>
+    <script>
+      let loginForm = document.forms["login"];
+      let btnObj = loginForm.elements["btn"];
+      let usernameObj = loginForm.elements["username"];
+      let emailObj = loginForm.elements["email"];
+      console.log(loginForm);
+      console.log(btnObj);
+      console.log(usernameObj);
+      console.log(emailObj);
+      console.log("String");
+      let loginObj;
+      loginForm.addEventListener("submit", (event) => {
+        // stop defalut action
+        event.preventDefault();
+        loginObj = {
+          login: { username: usernameObj.value, email: emailObj.value },
+        };
+        console.log(loginObj);
+        console.log(JSON.stringify(loginObj));
+      });
+    </script>
+  </body>
+</html>
