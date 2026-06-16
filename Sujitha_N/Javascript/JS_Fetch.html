@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS fetch</title>
+</head>
+<body>
+    <script>
+    let dogbreedData = fetch("http://dogapi.dog/api/v2/breeds")
+    .then((value) => {
+        return value.JSON();
+    })
+    .then((dataobj) => {
+        console.log(dataobj.data);
+        return daraobj.data;
+    })
+    .catch((error) => console.log(error));
+
+    
+</script>
+    
+</body>
+</html>
