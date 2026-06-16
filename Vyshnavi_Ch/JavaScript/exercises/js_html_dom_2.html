@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS DOM 2</title>
+     <!-- Prism Syntax Highlighting -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+    />
+</head>
+<body>
+    <h1>HTML DOM-getElementsBYClassName</h1>
+    <pre><code class="language-javascript line-numbers">const item=document.getElementByClassName("items")</code></pre>
+    <ul>
+        <li class="items">Returns an HTMLCollection (lie collection) of elements</li>
+        <li class="items">can be accesed like an array but is not a true array</li>
+        <li class="items">to convert to an array:Array.from(items)</li>
+    </ul>
+    <button id="btn" onclick="changetext()">change Text</button>
+    <hr>
+    <h2>Animal List</h2>
+    <ul>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+        <li class="animals"></li>
+    </ul>
+    <!-- Scripting Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script>
+        //step 1
+        const items = document.getElementsByClassName("items");
+        const animalcollection = document.getElementsByClassName("animals")
+        let fruits= ["Apple", "Mango", "Watermelon"];
+        let animalsarray = ["Dog","Cat","Lion","Tiger","Giraffe","Camel","Element","Goat","Horse","Rat"];
+        
+        //step 2
+        let itemsArray = Array.from(items);
+        let animalslist = Array.from(animalcollection);
+
+        //step 3
+        itemsArray.map((element,index) => (element.textContent = fruits[index]));
+        animalslist.map((element,index) => (element.textContent = animalsarray[index]));
+
+    //    function changetext() {
+    //         Array.from(items).map(
+    //            (element,index) => (element.textContent= fruits[index]),
+    //        
+    //    );
+    //}
+
+        //Array.from(items)[0].textContent= "Hello";
+        //Array.from(items)[1].textContent= "Hii";
+        //Array.from(items)[2].textContent= "Hehe";
+        console.log(Array.from(items)[0].textContent);
+    </script>
+
+</body>
+</html>

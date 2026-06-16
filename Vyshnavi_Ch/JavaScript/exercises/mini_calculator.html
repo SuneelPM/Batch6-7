@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Calculator</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: whitesmoke;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.calculator{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px gray;
+    text-align:center;
+}
+
+h1{
+    margin-bottom:15px;
+}
+
+#display{
+    width:100%;
+    height:50px;
+    font-size:22px;
+    text-align:right;
+    padding:10px;
+    margin-bottom:10px;
+}
+
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(3, 60px);
+    gap:10px;
+    justify-content:center;
+}
+
+button{
+    width:60px;
+    height:60px;
+    font-size:20px;
+    border:none;
+    border-radius:5px;
+    background-color:skyblue;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background-color:blue;
+}
+</style>
+</head>
+<body>
+
+<div class="calculator">
+    <h1>Mini Calculator</h1>
+
+    <input type="text" id="display" readonly>
+
+    <div class="buttons">
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+
+        <button>0</button>
+        <button>.</button>
+        <button>=</button>
+
+        <button>+</button>
+        <button>-</button>
+        <button>*</button>
+
+        <button>/</button>
+        <button>%</button>
+        <button>C</button>
+    </div>
+</div>
+
+<script>
+const display = document.getElementById("display");
+const buttons = document.querySelectorAll("button");
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+        const value = button.textContent;
+
+        if(value === "="){
+            try{
+                display.value = eval(display.value);
+            }catch{
+                display.value = "Error";
+            }
+        }
+        else if(value === "C"){
+            display.value = "";
+        }
+        else{
+            display.value += value;
+        }
+    });
+});
+</script>
+
+</body>
+</html>
